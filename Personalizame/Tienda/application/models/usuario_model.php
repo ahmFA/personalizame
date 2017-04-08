@@ -14,8 +14,7 @@ class Usuario_model extends CI_Model{
 	/*
 	 * guarda (o No guarda) el usuario en base de datos y devuelve el status 0,-1 para indicarle al cotroller el mensaje a mostrar 
 	 */
-	//public function crear($nick,$password,$perfil,$estado,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion,$descuento,$fecha_alta,$fecha_baja,$motivo_baja){
-	public function crear($nick,$password,$perfil,$estado,$nombre,$apellido1,$apellido2,$telefono1){	
+	public function crear($nick,$password,$perfil,$estado,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion,$descuento,$fecha_alta,$fecha_baja,$motivo_baja){
 		$status = 0;
 		if (!$this->existeNick($nick)) {
 			$usuario = R::dispense('usuario');
@@ -28,7 +27,7 @@ class Usuario_model extends CI_Model{
 			$usuario -> apellido1 = $apellido1;
 			$usuario -> apellido2 = $apellido2;
 			$usuario -> telefono1 = $telefono1;
-			/*$usuario -> telefono2 = $telefono2;
+			$usuario -> telefono2 = $telefono2;
 			$usuario -> mail1 = $mail1;
 			$usuario -> mail2 = $mail2;
 			$usuario -> comentario_contacto = $comentario_contacto;
@@ -41,7 +40,7 @@ class Usuario_model extends CI_Model{
 			$usuario -> descuento = $descuento;
 			$usuario -> fecha_alta = $fecha_alta;
 			$usuario -> fecha_baja = $fecha_baja;
-			$usuario -> motivo_baja = $motivo_baja;*/
+			$usuario -> motivo_baja = $motivo_baja;
 			
 			R::store($usuario);
 			R::close();
