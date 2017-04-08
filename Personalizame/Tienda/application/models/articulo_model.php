@@ -16,7 +16,24 @@ class Articulo_model extends CI_Model{
 		}
 	}
 	
+	public function existeArticulo($nombre){
+		return R::findOne('articulo', 'where nombre = ?', [$nombre]) ? true : false;
+	}
 	
+	public function crearArticulo($nombre, $precio, $imagen, $disponible){
+		if(!existeArticulo($nombre)){
+			$a = R::dispense('articulo');
+			$a->nombre = $nombre;
+			$a->precio = $precio;
+			$a->imagen = $imagen;
+			$a->disponible = $disponible;
+			R::store($a);
+			R::close();
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
 
 ?>
