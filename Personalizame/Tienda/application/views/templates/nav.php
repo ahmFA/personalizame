@@ -58,7 +58,9 @@
         </a>
 		<ul class="dropdown-menu">
 		  <li><a href="<?=base_url()?>articulo/verCrear">Crear</a></li>
-		  <li><a href="<?=base_url()?>articulo/listar">Gestionar</a></li>
+		  <li><a href="<?=base_url()?>articulo/modificar">Modificar</a></li>
+		  <li><a href="<?=base_url()?>articulo/listar">Listar</a></li>
+		  <li><a href="<?=base_url()?>articulo/borrar">Borrar</a></li>
 	     </ul>
       </li>
     </ul>

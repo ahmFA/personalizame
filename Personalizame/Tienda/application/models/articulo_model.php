@@ -34,6 +34,15 @@ class Articulo_model extends CI_Model{
 			return false;
 		}
 	}
+	
+	public function listar(){
+		return R::findAll('articulo');
+	}
+	
+	public function borrar($idArticulo){
+		$a = R::load('articulo', $idArticulo);
+		R::trash($a);
+		R::close();	}
 }
 
 ?>

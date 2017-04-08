@@ -39,6 +39,26 @@ class Articulo extends CI_Controller{
 			
 		//}
 	}
+	
+	public function listar(){
+		$this->load->model('articulo_model');
+		$datos['articulos'] = $this->articulo_model->listar();
+		enmarcar($this, 'articulo/listar', $datos);
+	}
+	
+	public function borrar(){
+		$this->load->model('articulo_model');
+		$datos['articulos'] = $this->articulo_model->listar();
+		enmarcar($this, 'articulo/borrar', $datos);
+	}
+	
+	public function borrarPost(){
+		$this->load->model('articulo_model');
+		$idArticulos = $_POST['idArticulos[]'];
+		foreach ($idArticulos as $idArt){
+			$this->articulo_model->borrar($idArt);
+		}
+	}
 }
 
 ?>
