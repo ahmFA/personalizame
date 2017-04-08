@@ -8,13 +8,13 @@
     <ul class="nav navbar-nav">
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-           Cliente<span class="caret"></span>
+           Usuario<span class="caret"></span>
         </a>
 		<ul class="dropdown-menu">
-		  <li><a href="<?=base_url()?>cliente/crear">Crear</a></li>
-		  <li><a href="<?=base_url()?>cliente/modificar">Modificar</a></li>
-		  <li><a href="<?=base_url()?>cliente/listar">Listar</a></li>
-		  <li><a href="<?=base_url()?>cliente/borrar">Borrar</a></li>
+		  <li><a href="<?=base_url()?>usuario/crear">Crear</a></li>
+		  <li><a href="<?=base_url()?>usuario/modificar">Modificar</a></li>
+		  <li><a href="<?=base_url()?>usuario/listar">Listar</a></li>
+		  <li><a href="<?=base_url()?>usuario/borrar">Borrar</a></li>
 	     </ul>
       </li>
 
