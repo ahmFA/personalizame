@@ -63,8 +63,9 @@ class Usuario_model extends CI_Model{
 	/*
 	 * recuperar un usuario por su id
 	 */
-	public function seleccionar($id){
+	public function getPorId($id){
 		return R::load('usuario',$id);
 	}
+	
 }
 ?>
