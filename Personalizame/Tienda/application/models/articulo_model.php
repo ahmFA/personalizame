@@ -5,10 +5,10 @@ class Articulo_model extends CI_Model{
 	public function validarImagen($nombreImagen, $tamanoImagen, $tipoImagen){
 		if($nombreImagen != null && $tamanoImagen <= 200000){
 			
-			if (($tamanoImagen == "image/gif")
-					|| ($tamanoImagen == "image/jpeg")
-					|| ($tamanoImagen == "image/jpg")
-					|| ($tamanoImagen == "image/png")){
+			if (($tipoImagen == "image/gif")
+					|| ($tipoImagen == "image/jpeg")
+					|| ($tipoImagen == "image/jpg")
+					|| ($tipoImagen == "image/png")){
 				return true;
 			}else{
 				return false;
@@ -21,7 +21,7 @@ class Articulo_model extends CI_Model{
 	}
 	
 	public function crearArticulo($nombre, $precio, $imagen, $disponible){
-		if(!existeArticulo($nombre)){
+		if(!$this->existeArticulo($nombre)){
 			$a = R::dispense('articulo');
 			$a->nombre = $nombre;
 			$a->precio = $precio;
@@ -42,7 +42,23 @@ class Articulo_model extends CI_Model{
 	public function borrar($idArticulo){
 		$a = R::load('articulo', $idArticulo);
 		R::trash($a);
-		R::close();	}
+		R::close();	
+	}
+	
+	public function getArticuloById($id){
+		return R::load('articulo', $id);
+	}
+	
+	public function editar($id, $nom, $precio, $nomImagen, $disponible){
+		$a = R::load('articulo', $id);
+		$a->nombre = $nom;
+		$a->precio = $precio;
+		$a->imagen = $nomImagen;
+		$a->disponible = $disponible;
+		
+		R::store($a);
+		R::close();
+	}
 }
 
 ?>
