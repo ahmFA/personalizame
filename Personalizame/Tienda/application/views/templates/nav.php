@@ -12,9 +12,7 @@
         </a>
 		<ul class="dropdown-menu">
 		  <li><a href="<?=base_url()?>usuario/crear">Crear</a></li>
-		  <li><a href="<?=base_url()?>usuario/modificar">Modificar</a></li>
 		  <li><a href="<?=base_url()?>usuario/listar">Listar</a></li>
-		  <li><a href="<?=base_url()?>usuario/borrar">Borrar</a></li>
 	     </ul>
       </li>
 

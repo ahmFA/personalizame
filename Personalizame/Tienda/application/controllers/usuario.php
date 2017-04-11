@@ -32,7 +32,7 @@ class Usuario extends CI_Controller{
 		$nick = $_POST['nick'];
 		$password = $_POST['password'];
 		$perfil = $_POST['perfil'];
-		$estado = "Desconectado"; //se cambiará a conectado cuando haga Login
+		$estado = "Alta"; //se cambiará a Baja cuando se quiera eliminar el usuario
 		$nombre = $_POST['nombre'];
 		$apellido1 = $_POST['apellido1'];
 		$apellido2 = $_POST['apellido2'];
@@ -61,6 +61,70 @@ class Usuario extends CI_Controller{
 		else {
 			header('Location:'.base_url().'usuario/crearERROR');
 		}
+	}
+	
+	
+	public function listar() {
+		enmarcar($this, 'usuario/filtrar');
+	}
+	
+	public function listarPost() {
+		$filtroNick = isset($_POST['filtroNick']) ? $_POST['filtroNick'] : '';
+		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
+	
+		$this->load->model('usuario_model');
+		$datos['body']['usuarios'] = $this->usuario_model->getFiltrados($filtroNick,$filtroNombre);
+		$datos['body']['filtroNick'] = $filtroNick;
+		$datos['body']['filtroNombre'] = $filtroNombre;
+	
+		enmarcar($this, 'usuario/listar', $datos);
+	}
+	
+	public function borrar() {
+		enmarcar($this, 'usuario/filtrar');
+	}
+	
+	public function borrarPost() {
+		$idUsuario = $_POST['idUsuario'];
+	
+		$this->load->model('usuario_model');
+		$this->usuario_model->borrar($idUsuario);
+		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha desaparecido el cliente borrado
+		$this->listarPost();
+	}
+	
+	public function modificar() {
+		enmarcar($this, 'usuario/filtrar');
+	}
+	
+	public function modificarPost() {
+		$idUsuario = $_POST['idUsuario'];
+		$filtroNick = isset($_POST['filtroNick']) ? $_POST['filtroNick'] : '';
+		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
+	
+		$this->load->model('usuario_model');
+		$datos['body']['usuario'] = $this->usuario_model->getPorId($idUsuario);
+	
+		//los siguientes datos solo van para mantener el filtro y mostrar despues el resultado
+		$datos['body']['filtroNick'] = $filtroNick;
+		$datos['body']['filtroNombre'] = $filtroNombre;
+	
+		enmarcar($this, 'usuario/modificar', $datos);
+	}
+	
+	public function modificarPost2() {
+		$idUsuario = $_POST['idUsuario'];
+		$dni = $_POST['dni'];
+		$tlf = $_POST['tlf'];
+		$nombre = $_POST['nombre'];
+		$apellidos = $_POST['apellidos'];
+		$direccion = $_POST['direccion'];
+		$ids_fpago = isset ( $_POST ['idFpago'] ) ? $_POST ['idFpago'] : [ ];
+	
+		$this->load->model('usuario_model');
+		$this->usuario_model->modificar($id_cliente,$dni,$tlf,$nombre,$apellidos,$direccion,$ids_fpago);
+		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el cliente
+		$this->listarPost();
 	}
 }
 ?>

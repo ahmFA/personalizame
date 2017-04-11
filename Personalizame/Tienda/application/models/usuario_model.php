@@ -67,5 +67,43 @@ class Usuario_model extends CI_Model{
 		return R::load('usuario',$id);
 	}
 	
+	/*
+	 * recuperar los usuarios que cumplen el filtro
+	 */
+	public function getFiltrados($filtroNick,$filtroNombre){
+		return R::find('usuario','where nick like ? and (nombre like ? or apellido1 like ? or apellido2 like ?) order by nick',['%'.$filtroNick.'%','%'.$filtroNombre.'%','%'.$filtroNombre.'%','%'.$filtroNombre.'%']);
+	}
+	
+	/*
+	 * borrar (dar de baja) el usuario que se indique
+	 */
+	public function borrar($idUsuario){
+		$usuario = R::load('usuario', $idUsuario);
+		$usuario -> estado = "Baja";
+		$usuario -> fecha_baja = strftime("%Y/%m/%d");  //fecha actual en Formato(YYYY/MM/DD)
+		$usuario -> motivo_baja = "Administrador"; //si fuese el propio usuario se indicaría "Usuario"
+		R::store($usuario);
+		R::close();
+	}
+	
+	public function modificar($idUsuario,$dni,$tlf,$nombre,$apellidos,$direccion,$ids_fpago){
+	
+		$cli = R::load('cliente',$idUsuario);
+		$cli->dni = $dni;
+		$cli->tlf = $tlf;
+		$cli->nombre = $nombre;
+		$cli->apellidos = $apellidos;
+		$cli->direccion = $direccion;
+			
+		$cli->sharedFpagoList = []; // vacío lista forma de pago del cliente
+	
+		foreach ($ids_fpago as $id_fpago) {
+			$cli->sharedFpagoList[] = R::load('fpago',$id_fpago); //asigno nuevos valores marcados
+		}
+			
+		R::store($cli);
+		R::close();
+	}
+	
 }
 ?>

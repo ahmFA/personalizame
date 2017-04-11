@@ -230,12 +230,12 @@
 	
 	<div class="form-group col-xs-6">	
 		<label for="idMail1">Mail </label>
-		<input class="form-control" id="idMail1" type="text" name="mail1" maxlength="35" required="required" placeholder="completa este campo"> <br/>
+		<input class="form-control" id="idMail1" type="email" name="mail1" maxlength="35" required="required" placeholder="completa este campo"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-6">	
 		<label for="idMail2">Mail alternativo </label>
-		<input class="form-control" id="idMail2" type="text" name="mail2" maxlength="35"> <br/>
+		<input class="form-control" id="idMail2" type="email" name="mail2" maxlength="35"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-12">	
