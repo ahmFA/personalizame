@@ -8,7 +8,27 @@
 		<label>Disponible: </label>
 		<input type="radio" name="disponible" value="si" checked="checked">Sí<br>
 		<input type="radio" name="disponible" value="no">No<br>
+		
+		<div class="form-group">
+			<fieldset>
+			<legend>Colores disponibles</legend> 
+				
+				<?php foreach ($colores as $color):?>
+				<input type="checkbox" name="idColores[]" value="<?=$color['id'] ?>"> <?=$color['nombre'] ?>
+				<?php endforeach;?>
+			</fieldset>
+		</div>
+		
+		<div class="form-group">
+			<fieldset>
+			<legend>Tallas disponibles</legend> 
+				
+				<?php foreach ($tallas as $talla):?>
+				<input type="checkbox" name="idTallas[]" value="<?=$talla['id'] ?>"> <?=$talla['nombre'] ?>
+				<?php endforeach;?>
+			</fieldset>
+		</div>
+		
 		<input type="submit"><br>
 	</form>
-	<input type="text" value="<?= isset($ruta)? $ruta : '' ?>">
 </div>

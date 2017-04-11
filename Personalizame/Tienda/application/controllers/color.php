@@ -10,11 +10,10 @@ class Color extends CI_Controller{
 	public function crearPost(){
 		$nombre = $_POST['nombre'];
 		$valor = $_POST['valor'];
-		$disponible = $_POST['disponible'];
 		
 		$this->load->model('color_model');
 		$status = null;
-		$status = $this->color_model->crearColor($nombre, $valor, $disponible);
+		$status = $this->color_model->crearColor($nombre, $valor);
 		/*
 		 * Si no se ha metido en la base de datos (ya sea porque ya existe o por causa ajena)
 		 * se informa del error al administrador.
@@ -44,8 +43,7 @@ class Color extends CI_Controller{
 		$this->load->model('color_model');
 		$idColores = $_POST['idColores'];
 		foreach ($idColores as $idColor){
-			$this->color_model->borrar($idColor);
-			$color = $this->color_model->getColorById($idColor);				
+			$this->color_model->borrar($idColor);				
 		}
 		
 		$datos['colores'] = $this->color_model->listar();
@@ -63,9 +61,8 @@ class Color extends CI_Controller{
 		$id = $_POST['id'];
 		$nombre = $_POST['nombre'];
 		$valor = $_POST['valor'];
-		$disponible = $_POST['disponible'];
 		$this->load->model('color_model');
-		$this->color_model->editar($id, $nombre, $valor, $disponible);
+		$this->color_model->editar($id, $nombre, $valor);
 			
 		$datos['colores'] = $this->color_model->listar();
 		enmarcar($this, 'color/listar', $datos);

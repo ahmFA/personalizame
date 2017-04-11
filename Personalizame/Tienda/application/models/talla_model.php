@@ -6,11 +6,10 @@ class Talla_model extends CI_Model{
 		return R::findOne('talla', 'where nombre = ?', [$nombre]) ? true : false;
 	}
 
-	public function crearTalla($nombre, $disponible){
+	public function crearTalla($nombre){
 		if(!$this->existeTalla($nombre)){
 			$t = R::dispense('talla');
 			$t->nombre = $nombre;
-			$t->disponible = $disponible;
 			R::store($t);
 			R::close();
 			return true;
@@ -33,10 +32,9 @@ class Talla_model extends CI_Model{
 		return R::load('talla', $id);
 	}
 
-	public function editar($id, $nom, $disponible){
+	public function editar($id, $nom){
 		$t = R::load('talla', $id);
 		$t->nombre = $nom;
-		$t->disponible = $disponible;
 
 		R::store($t);
 		R::close();

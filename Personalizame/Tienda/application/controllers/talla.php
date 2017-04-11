@@ -9,12 +9,10 @@ class Talla extends CI_Controller{
 
 	public function crearPost(){
 		$nombre = $_POST['nombre'];
-		$valor = $_POST['valor'];
-		$disponible = $_POST['disponible'];
 
 		$this->load->model('talla_model');
 		$status = null;
-		$status = $this->talla_model->crearTalla($nombre, $valor, $disponible);
+		$status = $this->talla_model->crearTalla($nombre);
 		/*
 		 * Si no se ha metido en la base de datos (ya sea porque ya existe o por causa ajena)
 		 * se informa del error al administrador.
@@ -45,7 +43,6 @@ class Talla extends CI_Controller{
 		$idTallas = $_POST['idTallas'];
 		foreach ($idTallas as $idTalla){
 			$this->talla_model->borrar($idTalla);
-			$talla = $this->talla_model->getTallaById($idTalla);
 		}
 
 		$datos['tallas'] = $this->talla_model->listar();
@@ -62,12 +59,10 @@ class Talla extends CI_Controller{
 	public function editarPost(){
 		$id = $_POST['id'];
 		$nombre = $_POST['nombre'];
-		$valor = $_POST['valor'];
-		$disponible = $_POST['disponible'];
 		$this->load->model('talla_model');
-		$this->talla_model->editar($id, $nombre, $valor, $disponible);
+		$this->talla_model->editar($id, $nombre);
 			
-		$datos['Tallas'] = $this->talla_model->listar();
+		$datos['tallas'] = $this->talla_model->listar();
 		enmarcar($this, 'talla/listar', $datos);
 	}
 }

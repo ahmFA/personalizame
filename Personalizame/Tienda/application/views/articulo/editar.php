@@ -31,7 +31,45 @@
 			<input type="radio" name="disponible" value="si" >Sí
 			 <input type="radio" name="disponible" checked="checked" value="no" >No
 			<?php endif;?> 
-		</div>		
+		</div>
+
+		<div class="form-group">
+			<fieldset>
+			<legend>Colores del artículo</legend> 
+				
+				<?php foreach ($colores as $color):?>
+					<?php $mismo=false; ?>
+					<?php foreach ($articulo->sharedColorList as $micolor):?>
+						<?php if($micolor['id'] == $color['id']):?>
+							<?php $mismo=true; ?>
+							<input type="checkbox" name="idColores[]" value="<?=$color['id']; ?>" checked="checked"> <?=$color['nombre']; ?>
+						<?php endif;?>
+					<?php endforeach;?>
+					<?php if(!$mismo):?>
+						<input type="checkbox" name="idColores[]" value="<?=$color['id']; ?>"> <?=$color['nombre']; ?>
+					<?php endif;?>
+				<?php endforeach;?>
+			</fieldset>
+		</div>
+		
+		<div class="form-group">
+			<fieldset>
+			<legend>Tallas del artículoe</legend> 
+				
+				<?php foreach ($tallas as $talla):?>
+					<?php $mismot=false; ?>
+					<?php foreach ($articulo->sharedTallaList as $mitalla):?>
+						<?php if($mitalla['id'] == $talla['id']):?>
+							<?php $mismot=true; ?>
+							<input type="checkbox" name="idTallas[]" value="<?=$talla['id']; ?>" checked="checked"> <?=$talla['nombre']; ?>
+						<?php endif;?>
+					<?php endforeach;?>
+					<?php if(!$mismot):?>
+						<input type="checkbox" name="idTallas[]" value="<?=$talla['id']; ?>"> <?=$talla['nombre']; ?>
+					<?php endif;?>
+				<?php endforeach;?>
+			</fieldset>
+		</div>	
 
 		<div class="form-group">
 			<input  class="form-control" type="submit">
