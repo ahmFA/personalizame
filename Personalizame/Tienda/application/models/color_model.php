@@ -6,12 +6,11 @@ class Color_model extends CI_Model{
 		return R::findOne('color', 'where nombre = ?', [$nombre]) ? true : false;
 	}
 
-	public function crearColor($nombre, $valor, $disponible){
+	public function crearColor($nombre, $valor){
 		if(!$this->existeColor($nombre)){
 			$c = R::dispense('color');
 			$c->nombre = $nombre;
 			$c->valor = $valor;
-			$c->disponible = $disponible;
 			R::store($c);
 			R::close();
 			return true;
@@ -34,11 +33,10 @@ class Color_model extends CI_Model{
 		return R::load('color', $id);
 	}
 
-	public function editar($id, $nom, $valor, $disponible){
+	public function editar($id, $nom, $valor){
 		$c = R::load('color', $id);
 		$c->nombre = $nom;
 		$c->valor = $valor;
-		$c->disponible = $disponible;
 
 		R::store($c);
 		R::close();

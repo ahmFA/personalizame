@@ -2,8 +2,11 @@
 
 class Articulo extends CI_Controller{
 	
-	public function verCrear(){
-		$datos['ruta'] = $_SERVER['DOCUMENT_ROOT'];
+	public function crear(){
+		$this->load->model('color_model');
+		$this->load->model('talla_model');
+		$datos['colores'] = $this->color_model->listar();
+		$datos['tallas'] = $this->talla_model->listar();
 		enmarcar($this, 'articulo/crear', $datos);
 	}
 
@@ -14,6 +17,8 @@ class Articulo extends CI_Controller{
 		$tamanoImagen = $_FILES['imagen']['size'];
 		$tipoImagen = $_FILES['imagen']['type'];
 		$disponible = $_POST['disponible'];
+		$id_colores = isset($_POST['idColores']) ? $_POST['idColores'] : '';
+		$id_tallas = isset($_POST['idTallas']) ? $_POST['idTallas'] : '';
 		$this->load->model('articulo_model');
 		/*
 		 * Se comprueba que la imagen tenga el tama�o adecuado.
@@ -34,13 +39,13 @@ class Articulo extends CI_Controller{
 		
 		$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
 		move_uploaded_file($_FILES['imagen']['tmp_name'],$directorio.$nomImagen);
-		$status = $this->articulo_model->crearArticulo($nombre, $precio,$nomImagen, $disponible);
+		$status = $this->articulo_model->crearArticulo($nombre, $precio,$nomImagen, $disponible, $id_colores, $id_tallas);
 			/*
 			 * Si no se ha metido en la base de datos (ya sea porque ya existe o por causa ajena) 
 			 * se informa del error al administrador.
 			 */
 			if($status){
-				enmarcar($this,'articulo/crear');
+				$this->crear();
 			}else{
 				enmarcar($this,'articulo/crearERROR');
 			}
@@ -87,7 +92,11 @@ class Articulo extends CI_Controller{
 	public function editar(){
 		$idArticulo = $_GET['idArticulo'];
 		$this->load->model('articulo_model');
+		$this->load->model('color_model');
+		$this->load->model('talla_model');
 		$datos['articulo'] = $this->articulo_model->getArticuloById($idArticulo);
+		$datos['colores'] = $this->color_model->listar();
+		$datos['tallas'] = $this->talla_model->listar();
 		enmarcar($this, 'articulo/editar', $datos);
 	}
 	
@@ -101,13 +110,16 @@ class Articulo extends CI_Controller{
 		$tamanoImagen = isset($_FILES['nueva'])? $_FILES['nueva']['size']: '';
 		$tipoImagen = isset($_FILES['nueva'])? $_FILES['nueva']['type']: '';
 		$disponible = $_POST['disponible'];
+		$ids_colores = $_POST['idColores'];
+		$ids_tallas = $_POST['idTallas'];
+		
 		$imagenValida = true;
 		if($tamanoImagen != '' && $tipoImagen != ''){
 			$imagenValida = $this->articulo_model->validarImagen($nomImagen, $tamanoImagen, $tipoImagen);
 		}
 		
 		if($imagenValida){
-			$this->articulo_model->editar($id, $nombre, $precio, $nomImagen, $disponible);
+			$this->articulo_model->editar($id, $nombre, $precio, $nomImagen, $disponible, $ids_colores, $ids_tallas);
 			if(isset($_FILES['nueva'])){
 				$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
 				move_uploaded_file($_FILES['nueva']['tmp_name'],$directorio.$nomImagen);

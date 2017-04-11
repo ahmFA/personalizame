@@ -57,9 +57,31 @@
            Artículo<span class="caret"></span>
         </a>
 		<ul class="dropdown-menu">
-		  <li><a href="<?=base_url()?>articulo/verCrear">Crear</a></li>
+		  <li><a href="<?=base_url()?>articulo/crear">Crear</a></li>
 		  <li><a href="<?=base_url()?>articulo/listar">Listar</a></li>
 		  <li><a href="<?=base_url()?>articulo/borrar">Borrar</a></li>
+	     </ul>
+      </li>
+      
+         <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+           Color<span class="caret"></span>
+        </a>
+		<ul class="dropdown-menu">
+		  <li><a href="<?=base_url()?>color/crear">Crear</a></li>
+		  <li><a href="<?=base_url()?>color/listar">Listar</a></li>
+		  <li><a href="<?=base_url()?>color/borrar">Borrar</a></li>
+	     </ul>
+      </li>
+      
+       <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Talla<span class="caret"></span>
+        </a>
+		<ul class="dropdown-menu">
+		  <li><a href="<?=base_url()?>talla/crear">Crear</a></li>
+		  <li><a href="<?=base_url()?>talla/listar">Listar</a></li>
+		  <li><a href="<?=base_url()?>talla/borrar">Borrar</a></li>
 	     </ul>
       </li>
     </ul>
