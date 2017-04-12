@@ -80,16 +80,29 @@ class Usuario extends CI_Controller{
 		enmarcar($this, 'usuario/listar', $datos);
 	}
 	
-	public function borrar() {
+	public function baja() {
 		enmarcar($this, 'usuario/filtrar');
 	}
 	
-	public function borrarPost() {
+	public function bajaPost() {
 		$idUsuario = $_POST['idUsuario'];
 	
 		$this->load->model('usuario_model');
-		$this->usuario_model->borrar($idUsuario);
-		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha desaparecido el cliente borrado
+		$this->usuario_model->estadoBaja($idUsuario);
+		//llamo a listarPost para que mantenga el mismo filtro y se vea la modificacion
+		$this->listarPost();
+	}
+	
+	public function alta() {
+		enmarcar($this, 'usuario/filtrar');
+	}
+	
+	public function altaPost() {
+		$idUsuario = $_POST['idUsuario'];
+	
+		$this->load->model('usuario_model');
+		$this->usuario_model->estadoAlta($idUsuario);
+		//llamo a listarPost para que mantenga el mismo filtro y se vea la modificacion
 		$this->listarPost();
 	}
 	
@@ -114,15 +127,26 @@ class Usuario extends CI_Controller{
 	
 	public function modificarPost2() {
 		$idUsuario = $_POST['idUsuario'];
-		$dni = $_POST['dni'];
-		$tlf = $_POST['tlf'];
+		$nick = $_POST['nick'];
+		$password = $_POST['password'];
+		$perfil = $_POST['perfil'];
 		$nombre = $_POST['nombre'];
-		$apellidos = $_POST['apellidos'];
+		$apellido1 = $_POST['apellido1'];
+		$apellido2 = $_POST['apellido2'];
+		$telefono1 = $_POST['telefono1'];
+		$telefono2 = $_POST['telefono2'];
+		$mail1 = $_POST['mail1'];
+		$mail2 = $_POST['mail2'];
+		$comentario_contacto = $_POST['comentario_contacto'];
 		$direccion = $_POST['direccion'];
-		$ids_fpago = isset ( $_POST ['idFpago'] ) ? $_POST ['idFpago'] : [ ];
+		$cp = $_POST['cp'];
+		$localidad = $_POST['localidad'];
+		$provincia = $_POST['provincia'];
+		$pais = $_POST['pais'];
+		$comentario_direccion = $_POST['comentario_direccion'];
 	
 		$this->load->model('usuario_model');
-		$this->usuario_model->modificar($id_cliente,$dni,$tlf,$nombre,$apellidos,$direccion,$ids_fpago);
+		$this->usuario_model->modificar($idUsuario,$nick,$password,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el cliente
 		$this->listarPost();
 	}

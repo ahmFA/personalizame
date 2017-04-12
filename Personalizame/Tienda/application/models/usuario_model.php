@@ -20,7 +20,7 @@ class Usuario_model extends CI_Model{
 			$usuario = R::dispense('usuario');
 			
 			$usuario -> nick = $nick;
-			$usuario -> password = $password;
+			$usuario -> password = $password; // mirar como funciona encriptado md5($password);
 			$usuario -> perfil = $perfil;
 			$usuario -> estado = $estado;
 			$usuario -> nombre = $nombre;
@@ -75,9 +75,9 @@ class Usuario_model extends CI_Model{
 	}
 	
 	/*
-	 * borrar (dar de baja) el usuario que se indique
+	 * dar de Baja el usuario que se indique
 	 */
-	public function borrar($idUsuario){
+	public function estadoBaja($idUsuario){
 		$usuario = R::load('usuario', $idUsuario);
 		$usuario -> estado = "Baja";
 		$usuario -> fecha_baja = strftime("%Y/%m/%d");  //fecha actual en Formato(YYYY/MM/DD)
@@ -86,22 +86,40 @@ class Usuario_model extends CI_Model{
 		R::close();
 	}
 	
-	public function modificar($idUsuario,$dni,$tlf,$nombre,$apellidos,$direccion,$ids_fpago){
+	/*
+	 * Volver a dar de Alta el usuario que se indique
+	 */
+	public function estadoAlta($idUsuario){
+		$usuario = R::load('usuario', $idUsuario);
+		$usuario -> estado = "Alta";
+		$usuario -> fecha_baja = "";
+		$usuario -> motivo_baja = "";
+		R::store($usuario);
+		R::close();
+	}
 	
-		$cli = R::load('cliente',$idUsuario);
-		$cli->dni = $dni;
-		$cli->tlf = $tlf;
-		$cli->nombre = $nombre;
-		$cli->apellidos = $apellidos;
-		$cli->direccion = $direccion;
-			
-		$cli->sharedFpagoList = []; // vacío lista forma de pago del cliente
-	
-		foreach ($ids_fpago as $id_fpago) {
-			$cli->sharedFpagoList[] = R::load('fpago',$id_fpago); //asigno nuevos valores marcados
-		}
-			
-		R::store($cli);
+	public function modificar($idUsuario,$nick,$password,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion){
+		$usuario = R::load('usuario',$idUsuario);
+		
+		$usuario -> nick = $nick;
+		$usuario -> password = $password; // mirar como funciona encriptado md5($password);
+		$usuario -> perfil = $perfil;
+		$usuario -> nombre = $nombre;
+		$usuario -> apellido1 = $apellido1;
+		$usuario -> apellido2 = $apellido2;
+		$usuario -> telefono1 = $telefono1;
+		$usuario -> telefono2 = $telefono2;
+		$usuario -> mail1 = $mail1;
+		$usuario -> mail2 = $mail2;
+		$usuario -> comentario_contacto = $comentario_contacto;
+		$usuario -> direccion = $direccion;
+		$usuario -> cp = $cp;
+		$usuario -> localidad = $localidad;
+		$usuario -> provincia = $provincia;
+		$usuario -> pais = $pais;
+		$usuario -> comentario_direccion = $comentario_direccion;
+		
+		R::store($usuario);
 		R::close();
 	}
 	

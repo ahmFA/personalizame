@@ -108,7 +108,6 @@
 		var valNick = validarNick();
 		if (valNick == false){
 			document.getElementById("idNick").style.color = "red";
-			//document.getElementByid("idNick").setAttribute("title","El Nick debe contener 3 caracteres como mínimo");
 			if (foco == true){
 				document.getElementById("idNick").focus();
 				foco = false;
@@ -246,100 +245,113 @@
 
 <div class="container">
 	<div class="form-group col-xs-12">
-		<h2>Datos de usuario</h2>
+		<h2>Modificar datos de usuario</h2>
 	</div>
 	
-	<form name="form1" class="form" action="<?=base_url() ?>usuario/crearPost" method="post">
+	<form name="form1" class="form" action="<?=base_url() ?>usuario/modificarPost2" method="post">
+	
+	<!-- campos ocultos para volver al filtro en la misma posicion y ver los resultados del cambio -->
+	<input type="hidden" name="filtroNick" value="<?= $body['filtroNick'] ?>">
+	<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
+	<input type="hidden" name="idUsuario" value="<?= $body['usuario']->id ?>">
 	
 	<div class="form-group col-xs-4">
 		<label for="idNick">Nick </label> 
-		<input class="form-control" id="idNick" type="text" name="nick" maxlength="20" required="required" placeholder="completa este campo" title="El Nick debe contener 3 caracteres como mínimo"> <br/>
+		<input class="form-control" id="idNick" type="text" name="nick" maxlength="20" required="required" placeholder="completa este campo" title="El Nick debe contener 3 caracteres como mínimo" value="<?= $body['usuario']->nick ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">
 		<label for="idPassword">Password </label> 
-		<input class="form-control" id="idPassword" type="password" name="password" maxlength="20" required="required" placeholder="completa este campo" title="La Password debe contener 5 caracteres como mínimo"> <br/>
+		<input class="form-control" id="idPassword" type="password" name="password" maxlength="20" required="required" placeholder="completa este campo" title="La Password debe contener 5 caracteres como mínimo" value="<?= $body['usuario']->password ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">
 		<label for="idPerfil">Perfil </label> 
 		<select class="form-control" id="idPerfil" name="perfil"> 
-			<?php foreach ($perfiles as $perfil): ?>
+		<?php foreach ($perfiles as $perfil): ?>
+ 			<?php if($body['usuario']->perfil == $perfil):?>
+ 				<option value='<?= $perfil?>' selected="selected"><?= $perfil?></option>
+ 			<?php else:?>
  				<option value='<?= $perfil?>'><?= $perfil?></option>
-			<?php endforeach;?> 
+ 			<?php endif;?>
+		<?php endforeach;?>
 		</select>
 		<br/>
 	</div>
 	
 	<div class="form-group col-xs-4">	
 		<label for="idNombre">Nombre </label>
-		<input class="form-control" id="idNombre" type="text" name="nombre" maxlength="35" required="required" placeholder="completa este campo" title="El Nombre debe contener entre 2 y 35 letras"> <br/>
+		<input class="form-control" id="idNombre" type="text" name="nombre" maxlength="35" required="required" placeholder="completa este campo" title="El Nombre debe contener entre 2 y 35 letras" value="<?= $body['usuario']->nombre ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">	
 		<label for="idApellido1">Primer apellido </label>
-		<input class="form-control" id="idApellido1" type="text" name="apellido1" maxlength="35" required="required" placeholder="completa este campo" title="El Apellido debe contener entre 2 y 35 letras"> <br/>
+		<input class="form-control" id="idApellido1" type="text" name="apellido1" maxlength="35" required="required" placeholder="completa este campo" title="El Apellido debe contener entre 2 y 35 letras" value="<?= $body['usuario']->apellido1 ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">	
 		<label for="idApellido2">Segundo apellido </label>
-		<input class="form-control" id="idApellido2" type="text" name="apellido2" maxlength="35" required="required" placeholder="completa este campo" title="El Apellido debe contener entre 2 y 35 letras"> <br/>
+		<input class="form-control" id="idApellido2" type="text" name="apellido2" maxlength="35" required="required" placeholder="completa este campo" title="El Apellido debe contener entre 2 y 35 letras" value="<?= $body['usuario']->apellido2 ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-12">
-		<h2>Datos de contacto</h2>
+		<h2>Modificar datos de contacto</h2>
 	</div>
 	
 	<div class="form-group col-xs-4">	
 		<label for="idTelefono1">Teléfono </label>
-		<input class="form-control" id="idTelefono1" type="text" name="telefono1" maxlength="9" title="El Teléfono debe contener 9 dígitos y empezar por 6-9"> <br/>
+		<input class="form-control" id="idTelefono1" type="text" name="telefono1" maxlength="9" title="El Teléfono debe contener 9 dígitos y empezar por 6-9" value="<?= $body['usuario']->telefono1 ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">	
 		<label for="idTelefono2">Teléfono alternativo</label>
-		<input class="form-control" id="idTelefono2" type="text" name="telefono2" maxlength="9" title="El Teléfono debe contener 9 dígitos y empezar por 6-9"> <br/>
+		<input class="form-control" id="idTelefono2" type="text" name="telefono2" maxlength="9" title="El Teléfono debe contener 9 dígitos y empezar por 6-9" value="<?= $body['usuario']->telefono2 ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-6">	
 		<label for="idMail1">Mail </label>
-		<input class="form-control" id="idMail1" type="email" name="mail1" maxlength="40" required="required" placeholder="completa este campo" title="El Correo debe contener @ y . dominio"> <br/>
+		<input class="form-control" id="idMail1" type="email" name="mail1" maxlength="40" required="required" placeholder="completa este campo" title="El Correo debe contener @ y . dominio" value="<?= $body['usuario']->mail1 ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-6">	
 		<label for="idMail2">Mail alternativo </label>
-		<input class="form-control" id="idMail2" type="email" name="mail2" maxlength="40" title="El Correo debe contener @ y . dominio"> <br/>
+		<input class="form-control" id="idMail2" type="email" name="mail2" maxlength="40" title="El Correo debe contener @ y . dominio" value="<?= $body['usuario']->mail2 ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-12">	
 		<label for="idComentarioContacto">Comentario de contacto </label>
-		<textarea class="form-control" id="idComentarioContacto" rows="3" name="comentario_contacto" maxlength="200"></textarea><br/>
+		<textarea class="form-control" id="idComentarioContacto" rows="3" name="comentario_contacto" maxlength="200"><?= $body['usuario']->comentario_contacto ?></textarea><br/>
 	</div>
 	
 	<div class="form-group col-xs-12">
-		<h2>Datos de dirección</h2>
+		<h2>Modificar datos de dirección</h2>
 	</div>
 	
 	<div class="form-group col-xs-8">	
 		<label for="idDireccion">Dirección </label>
-		<input class="form-control" id="idDireccion" type="text" name="direccion" maxlength="60"> <br/>
+		<input class="form-control" id="idDireccion" type="text" name="direccion" maxlength="60" value="<?= $body['usuario']->direccion ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">	
 		<label for="idCP">CP </label>
-		<input class="form-control" id="idCP" type="text" name="cp" maxlength="5" title="El C.P. debe contener 5 dígitos"> <br/>
+		<input class="form-control" id="idCP" type="text" name="cp" maxlength="5" title="El C.P. debe contener 5 dígitos" value="<?= $body['usuario']->cp ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-6">	
 		<label for="idLocalidad">Localidad </label>
-		<input class="form-control" id="idLocalidad" type="text" name="localidad" maxlength="35"> <br/>
+		<input class="form-control" id="idLocalidad" type="text" name="localidad" maxlength="35" value="<?= $body['usuario']->localidad ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-3">	
 		<label for="idProvincia">Provincia </label>
-		<select class="form-control" id="idProvincia" name="provincia">         
- 			<option value=' '>Seleccione una</option>       	
+		<select class="form-control" id="idProvincia" name="provincia">  
+				<option value=' '>Seleccione una</option>       	
  		<?php foreach ($provincias as $provincia): ?>
- 			<option value='<?= $provincia?>'><?= $provincia?></option>
+ 			<?php if($body['usuario']->provincia == $provincia):?>
+ 				<option value='<?= $provincia?>' selected="selected"><?= $provincia?></option>
+ 			<?php else:?>
+ 				<option value='<?= $provincia?>'><?= $provincia?></option>
+ 			<?php endif;?>
 		<?php endforeach;?>
         </select><br/>
 	
@@ -349,18 +361,22 @@
 		<label for="idPais">Pais </label>
 		<select class="form-control" id="idPais" name="pais">
 		<?php foreach ($paises as $pais): ?>
+ 			<?php if($body['usuario']->pais == $pais):?>
+ 				<option value='<?= $pais?>' selected="selected"><?= $pais?></option>
+ 			<?php else:?>
  				<option value='<?= $pais?>'><?= $pais?></option>
+ 			<?php endif;?>
 		<?php endforeach;?>
 		</select><br/>
 	</div>
 	
 	<div class="form-group col-xs-12">	
 		<label for="idComentarioDireccion">Comentario de dirección </label>
-		<textarea class="form-control" id="idComentarioDireccion" rows="3" name="comentario_direccion" maxlength="200"></textarea> <br/>
+		<textarea class="form-control" id="idComentarioDireccion" rows="3" name="comentario_direccion" maxlength="200"><?= $body['usuario']->comentario_direccion ?></textarea> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">	
-		<input class="btn btn-primary" id="idBotonEnviar" type="button" value="Enviar" onclick="validarTodo()">
+		<input class="btn btn-primary" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
 	</div>
 	
 	</form>

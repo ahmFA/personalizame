@@ -17,7 +17,7 @@
 		
 		<div class="form-group col-xs-4">
 			<br/>
-			<button class="btn btn-primary" onclick="function f() {document.getElementById('idFormFiltro').submit();}"><span class="glyphicon glyphicon-search"></span></button>
+			<button class="btn btn-primary" onclick="function f() {document.getElementById('idFormFiltro').submit();}"><span class="glyphicon glyphicon-search"></span> Filtrar</button>
 		</div>
 	</form>
 </div>
@@ -52,22 +52,32 @@
 			<td><?= $usuario->fecha_baja ?> <?= $usuario->motivo_baja ?></td>
 
 			<td>
-				<form id="idFormedit" action="<?=base_url()?>usuario/modificarPost" method="post">
+				<form id="idFormEdit" action="<?=base_url()?>usuario/modificarPost" method="post">
 					<input type="hidden" name="idUsuario" value="<?= $usuario->id ?>">
 					<input type="hidden" name="filtroNick" value="<?= $body['filtroNick'] ?>">
 					<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
-					<button onclick="function f() {document.getElementById('idFormEdit').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
+					<button class="btn btn-info" title="Modificar" onclick="function f() {document.getElementById('idFormEdit').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
 				</form>
 			</td>
-
+			<?php if($usuario->estado == "Alta"):?>
 			<td>
-				<form id="idFormRemove" action="<?=base_url()?>usuario/borrarPost" method="post">
+				<form id="idFormBaja" action="<?=base_url()?>usuario/bajaPost" method="post">
 					<input type="hidden" name="idUsuario" value="<?= $usuario->id?>">
 					<input type="hidden" name="filtroNick" value="<?= $body['filtroNick'] ?>">
 					<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
-					<button onclick="function f() {document.getElementById('idFormRemove').submit();}"><span class="glyphicon glyphicon-remove"></span></button>
+					<button class="btn btn-danger" title="Dar de Baja" onclick="function f() {document.getElementById('idFormBaja').submit();}"><span class="glyphicon glyphicon-arrow-down"></span></button>
 				</form>
 			</td>
+			<?php elseif($usuario->estado == "Baja"):?>
+			<td>
+				<form id="idFormAlta" action="<?=base_url()?>usuario/altaPost" method="post">
+					<input type="hidden" name="idUsuario" value="<?= $usuario->id?>">
+					<input type="hidden" name="filtroNick" value="<?= $body['filtroNick'] ?>">
+					<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
+					<button class="btn btn-success" title="Dar de Alta" onclick="function f() {document.getElementById('idFormAlta').submit();}"><span class="glyphicon glyphicon-arrow-up"></span></button>
+				</form>
+			</td>
+			<?php endif;?>
 		</tr>
 		<?php endforeach;?>
 	</table>

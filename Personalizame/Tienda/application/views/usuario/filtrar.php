@@ -17,7 +17,7 @@
 		
 		<div class="form-group col-xs-4">
 			<br/>
-			<button class="btn btn-primary" onclick="function f() {document.getElementById('idFormFiltro').submit();}"><span class="glyphicon glyphicon-search"></span></button>
+			<button class="btn btn-primary" onclick="function f() {document.getElementById('idFormFiltro').submit();}"><span class="glyphicon glyphicon-search"></span> Filtrar</button>
 		</div>
 	</form>
 </div>
