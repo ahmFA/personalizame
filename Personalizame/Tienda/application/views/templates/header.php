@@ -3,7 +3,15 @@
 </header>
 <div class="container">
   <div class="col-xs-12 text-right">
-	<a data-toggle="modal" href="#myModal">LOGUÉATE</a>
+  	<?= "Conectado como" //session_id() ?>
+  	<?= isset($_SESSION['perfil']) ? $_SESSION['perfil'] : "Invitado" ?>
+  	<?= isset($_SESSION['nick']) ?": ".$_SESSION['nick'] : null ?>
+  	
+  	<?php if(!isset($_SESSION['nick']) && !isset($_SESSION['perfil'])):?>
+		<a data-toggle="modal" href="#myModal">LOGUÉATE</a>
+	<?php else:?>
+		<a href="<?=base_url()?>usuario/logout">LOGOUT</a>
+	<?php endif;?>
   </div>
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -16,10 +24,10 @@
           <h4 style="color:red;"><span class="glyphicon glyphicon-lock"></span> Login</h4>
         </div>
         <div class="modal-body">
-          <form role="form">
+          <form role="form" action="<?=base_url()?>usuario/loginPost" method="post">
             <div class="form-group">
-              <label for="idMailUsuario"><span class="glyphicon glyphicon-user"></span> Usuario</label>
-              <input type="text" class="form-control" id="idMailUsuario" name="mailUsuario" placeholder="Introduce email">
+              <label for="idMail"><span class="glyphicon glyphicon-user"></span> Usuario</label>
+              <input type="text" class="form-control" id="idMail" name="mail" placeholder="Introduce email">
             </div>
             <div class="form-group">
               <label for="idPassword"><span class="glyphicon glyphicon-eye-open"></span> Password</label>

@@ -123,5 +123,8 @@ class Usuario_model extends CI_Model{
 		R::close();
 	}
 	
+	public function comprobarCredenciales($mail,$password){
+		return R::findOne('usuario','mail1 = ? and password = ? and estado = "Alta"',[$mail,$password]);
+	}
 }
 ?>

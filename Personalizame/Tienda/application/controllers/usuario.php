@@ -1,4 +1,5 @@
 <?php
+session_start();
 /* class Usuario
  * @author Luis
  * @packcage application\controllers
@@ -164,11 +165,27 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function loginPost() {
-		enmarcar($this, 'usuario/login');
+		$password = $_POST['password'];
+		$mail = $_POST['mail'];
+		
+		$this->load->model('usuario_model');
+		$usuarioValido = $this->usuario_model->comprobarCredenciales($mail,$password);
+
+		if ($usuarioValido) {
+			$_SESSION['idUsuario'] = $usuarioValido->id;
+			$_SESSION['nick'] = $usuarioValido->nick;
+			$_SESSION['perfil'] = $usuarioValido->perfil;
+			header('Location:'.base_url().'home');
+		}
+		else {
+			header('Location:'.base_url().'home');
+		}
+
 	}
 	
 	public function logout() {
-		enmarcar($this, 'usuario/logout');
+		session_destroy();
+		header('Location:'.base_url().'home');
 	}
 }
 ?>
