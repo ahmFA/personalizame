@@ -15,7 +15,7 @@
 		var valido = false;
 		var miPassword = document.getElementById("idPassword").value.length;
 		//longitud entre 5 y 20 caracteres
-		if(miPassword > 5 && miPassword < 20){
+		if(miPassword >= 5 && miPassword <= 20){
 			valido = true;
 		}
 		return valido;
@@ -25,7 +25,7 @@
 		var valido = false;
 		var miNombre = document.getElementById("idNombre").value;
 		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
-		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miNombre)){
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miNombre) || miNombre == ""){
 			valido = true;
 		}
 		return valido;
@@ -35,7 +35,7 @@
 		var valido = false;
 		var miApellido1 = document.getElementById("idApellido1").value;
 		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
-		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido1)){
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido1) || miApellido1 == ""){
 			valido = true;
 		}
 		return valido;
@@ -45,7 +45,7 @@
 		var valido = false;
 		var miApellido2 = document.getElementById("idApellido2").value;
 		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
-		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido2)){
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido2) || miApellido2 == ""){
 			valido = true;
 		}
 		return valido;
@@ -273,17 +273,17 @@
 	
 	<div class="form-group col-xs-4">	
 		<label for="idNombre">Nombre </label>
-		<input class="form-control" id="idNombre" type="text" name="nombre" maxlength="35" required="required" placeholder="completa este campo" title="El Nombre debe contener entre 2 y 35 letras"> <br/>
+		<input class="form-control" id="idNombre" type="text" name="nombre" maxlength="35" title="El Nombre debe contener entre 2 y 35 letras"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">	
 		<label for="idApellido1">Primer apellido </label>
-		<input class="form-control" id="idApellido1" type="text" name="apellido1" maxlength="35" required="required" placeholder="completa este campo" title="El Apellido debe contener entre 2 y 35 letras"> <br/>
+		<input class="form-control" id="idApellido1" type="text" name="apellido1" maxlength="35" title="El Apellido debe contener entre 2 y 35 letras"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">	
 		<label for="idApellido2">Segundo apellido </label>
-		<input class="form-control" id="idApellido2" type="text" name="apellido2" maxlength="35" required="required" placeholder="completa este campo" title="El Apellido debe contener entre 2 y 35 letras"> <br/>
+		<input class="form-control" id="idApellido2" type="text" name="apellido2" maxlength="35" title="El Apellido debe contener entre 2 y 35 letras"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-12">

@@ -14,5 +14,7 @@ $provincias = [
 		'Toledo','Valencia','Valladolid','Vizcaya','Zamora','Zaragoza'
 	];
 
-$paises = ['España','Andorra','Portugal']
+$paises = ['España','Andorra','Portugal'];
+
+$estados = ['Alta','Baja'];
 ?>

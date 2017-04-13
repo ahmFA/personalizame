@@ -1,3 +1,40 @@
 <header class="container">
 <img src="<?=base_url()?>assets/img/logtn1.jpg" class="img-rounded  center-block" alt="Tienda ejemplo" height="100">
 </header>
+<div class="container">
+  <div class="col-xs-12 text-right">
+	<a data-toggle="modal" href="#myModal">LOGUÉATE</a>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 style="color:red;"><span class="glyphicon glyphicon-lock"></span> Login</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form">
+            <div class="form-group">
+              <label for="idMailUsuario"><span class="glyphicon glyphicon-user"></span> Usuario</label>
+              <input type="text" class="form-control" id="idMailUsuario" name="mailUsuario" placeholder="Introduce email">
+            </div>
+            <div class="form-group">
+              <label for="idPassword"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="password" class="form-control" id="idPassword" name="password" placeholder="Introduce password">
+            </div>
+
+            <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          <p>¿Aún no eres miembro? <a href="#">Registrate</a></p>
+          <p>¿Olvidaste tu <a href="#">contraseña?</a></p>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>

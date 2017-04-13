@@ -71,11 +71,15 @@ class Usuario extends CI_Controller{
 	public function listarPost() {
 		$filtroNick = isset($_POST['filtroNick']) ? $_POST['filtroNick'] : '';
 		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
-	
+		$filtroMail = isset($_POST['filtroMail']) ? $_POST['filtroMail'] : '';
+		$filtroEstado = isset($_POST['filtroEstado']) ? $_POST['filtroEstado'] : '';
+		
 		$this->load->model('usuario_model');
-		$datos['body']['usuarios'] = $this->usuario_model->getFiltrados($filtroNick,$filtroNombre);
+		$datos['body']['usuarios'] = $this->usuario_model->getFiltrados($filtroNick,$filtroNombre,$filtroMail,$filtroEstado);
 		$datos['body']['filtroNick'] = $filtroNick;
 		$datos['body']['filtroNombre'] = $filtroNombre;
+		$datos['body']['filtroMail'] = $filtroMail;
+		$datos['body']['filtroEstado'] = $filtroEstado;
 	
 		enmarcar($this, 'usuario/listar', $datos);
 	}
@@ -114,14 +118,18 @@ class Usuario extends CI_Controller{
 		$idUsuario = $_POST['idUsuario'];
 		$filtroNick = isset($_POST['filtroNick']) ? $_POST['filtroNick'] : '';
 		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
-	
+		$filtroMail = isset($_POST['filtroMail']) ? $_POST['filtroMail'] : '';
+		$filtroEstado = isset($_POST['filtroEstado']) ? $_POST['filtroEstado'] : '';
+		
 		$this->load->model('usuario_model');
 		$datos['body']['usuario'] = $this->usuario_model->getPorId($idUsuario);
 	
 		//los siguientes datos solo van para mantener el filtro y mostrar despues el resultado
 		$datos['body']['filtroNick'] = $filtroNick;
 		$datos['body']['filtroNombre'] = $filtroNombre;
-	
+		$datos['body']['filtroMail'] = $filtroMail;
+		$datos['body']['filtroEstado'] = $filtroEstado;
+		
 		enmarcar($this, 'usuario/modificar', $datos);
 	}
 	
@@ -149,6 +157,18 @@ class Usuario extends CI_Controller{
 		$this->usuario_model->modificar($idUsuario,$nick,$password,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el cliente
 		$this->listarPost();
+	}
+	
+	public function login() {
+		enmarcar($this, 'usuario/login');
+	}
+	
+	public function loginPost() {
+		enmarcar($this, 'usuario/login');
+	}
+	
+	public function logout() {
+		enmarcar($this, 'usuario/logout');
 	}
 }
 ?>
