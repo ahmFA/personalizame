@@ -156,7 +156,7 @@ class Usuario extends CI_Controller{
 	
 		$this->load->model('usuario_model');
 		$this->usuario_model->modificar($idUsuario,$nick,$password,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
-		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el cliente
+		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
 		$this->listarPost();
 	}
 	
