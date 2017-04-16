@@ -1,5 +1,4 @@
 
-
 <nav class="container navbar navbar-inverse">
   <div class="navbar-header">
     <a class="navbar-brand" href="<?=base_url()?>">CRUD Tienda</a>
@@ -15,6 +14,41 @@
 		  <li><a href="<?=base_url()?>usuario/listar">Listar</a></li>
 	     </ul>
       </li>
+	
+	  <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+           Texto<span class="caret"></span>
+        </a>
+		<ul class="dropdown-menu">
+		  <li><a href="<?=base_url()?>texto/crear">Crear</a></li>
+		  <li><a href="<?=base_url()?>texto/listar">Listar</a></li>
+		  <li class="divider"></li>
+		  <li class="dropdown-submenu">
+        	<a class="test" href="#">Fuente <span class="caret"></span></a>
+        		<ul class="dropdown-menu">
+          			<li><a href="<?=base_url()?>fuente/crear">Crear</a></li>
+          			<li><a href="<?=base_url()?>fuente/listar">Listar</a></li>
+          		</ul>
+          </li>
+          <li class="divider"></li>
+		  <li class="dropdown-submenu">
+        	<a class="test" href="#">Tamaño <span class="caret"></span></a>
+        		<ul class="dropdown-menu">
+          			<li><a href="<?=base_url()?>tamano/crear">Crear</a></li>
+          			<li><a href="<?=base_url()?>tamano/listar">Listar</a></li>
+          		</ul>
+          </li>
+          <li class="divider"></li>
+		  <li class="dropdown-submenu">
+        	<a class="test" href="#">Color <span class="caret"></span></a>
+        		<ul class="dropdown-menu">
+          			<li><a href="<?=base_url()?>color/crear">Crear</a></li>
+          			<li><a href="<?=base_url()?>color/listar">Listar</a></li>
+          		</ul>
+          </li>			
+	    </ul>
+      </li>	
+
 
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -85,18 +119,6 @@
     </ul>
     
     <!-- para poner el menu a la derecha usariamos class="nav navbar-nav navbar-right" -->
-    
-    <ul class="nav navbar-nav">
-     <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-           Tipo Prod.<span class="caret"></span>
-        </a>
-		<ul class="dropdown-menu ">
-		  <li><a href="<?=base_url()?>tipo/crear">Crear</a></li>
-		  <li><a href="<?=base_url()?>tipo/listar">Gestionar</a></li>
-	     </ul>
-      </li>
-     </ul>
      
   </div>
 </nav>
