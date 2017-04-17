@@ -3,7 +3,6 @@
 class Talla extends CI_Controller{
 
 	public function crear(){
-		$datos['ruta'] = $_SERVER['DOCUMENT_ROOT'];
 		enmarcar($this, 'talla/crear', $datos);
 	}
 
