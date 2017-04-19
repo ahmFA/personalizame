@@ -13,9 +13,9 @@
 
 	function validarPassword(){
 		var valido = false;
-		var miPassword = document.getElementById("idPassword").value.length;
+		var miPwd = document.getElementById("idPwd").value.length;
 		//longitud entre 5 y 20 caracteres
-		if(miPassword >= 5 && miPassword <= 20){
+		if(miPwd >= 5 && miPwd <= 20){
 			valido = true;
 		}
 		return valido;
@@ -120,14 +120,14 @@
 		//PASSWORD
 		var valPassword = validarPassword();
 		if (valPassword == false){
-			document.getElementById("idPassword").style.color = "red";
+			document.getElementById("idPwd").style.color = "red";
 			if (foco == true){
-				document.getElementById("idPassword").focus();
+				document.getElementById("idPwd").focus();
 				foco = false;
 			}
 		}
 		else{
-			document.getElementById("idPassword").style.color = "black";
+			document.getElementById("idPwd").style.color = "black";
 		}
 		
 		//NOMBRE
@@ -263,8 +263,8 @@
 	</div>
 	
 	<div class="form-group col-xs-4">
-		<label for="idPassword">Password </label> 
-		<input class="form-control" id="idPassword" type="password" name="password" maxlength="20" required="required" placeholder="completa este campo" title="La Password debe contener 5 caracteres como mínimo" value="<?= $body['usuario']->password ?>"> <br/>
+		<label for="idPwd">Password </label> 
+		<input class="form-control" id="idPwd" type="password" name="pwd" maxlength="20" required="required" placeholder="completa este campo" title="La Password debe contener 5 caracteres como mínimo" value="<?= $body['usuario']->pwd ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">

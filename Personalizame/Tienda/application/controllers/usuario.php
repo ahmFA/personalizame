@@ -13,25 +13,11 @@ class Usuario extends CI_Controller{
 	}
 	
 	/*
-	 * muestra la vista de creado OK
-	 */
-	public function crearOK(){
-		enmarcar($this,'usuario/crearOK');
-	}
-	
-	/*
-	 * muestra la vista de Error al crear 
-	 */
-	public function crearERROR(){
-		enmarcar($this,'usuario/crearERROR');
-	}
-	
-	/*
 	 * recoge datos del formulario y los pasa al modelo
 	 */
 	public function crearPost() {
 		$nick = $_POST['nick'];
-		$password = $_POST['password'];
+		$pwd = $_POST['pwd'];
 		$perfil = $_POST['perfil'];
 		$estado = "Alta"; //se cambiará a Baja cuando se quiera eliminar el usuario
 		$nombre = $_POST['nombre'];
@@ -54,14 +40,10 @@ class Usuario extends CI_Controller{
 		$motivo_baja = ""; // será vacio al darse de alta
 		
 		$this->load->model('usuario_model');
-		$status = $this->usuario_model->crear($nick,$password,$perfil,$estado,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion,$descuento,$fecha_alta,$fecha_baja,$motivo_baja);
-		
-		if ($status>=0) {
-			header('Location:'.base_url().'usuario/crearOK');
-		}
-		else {
-			header('Location:'.base_url().'usuario/crearERROR');
-		}
+		$datos['body']['status'] = $this->usuario_model->crear($nick,$pwd,$perfil,$estado,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion,$descuento,$fecha_alta,$fecha_baja,$motivo_baja);
+		$datos['body']['nick'] = $nick;
+		$this->load->view('usuario/XcrearPost',$datos);
+
 	}
 	
 	
@@ -137,7 +119,7 @@ class Usuario extends CI_Controller{
 	public function modificarPost2() {
 		$idUsuario = $_POST['idUsuario'];
 		$nick = $_POST['nick'];
-		$password = $_POST['password'];
+		$pwd = $_POST['pwd'];
 		$perfil = $_POST['perfil'];
 		$nombre = $_POST['nombre'];
 		$apellido1 = $_POST['apellido1'];
@@ -155,7 +137,7 @@ class Usuario extends CI_Controller{
 		$comentario_direccion = $_POST['comentario_direccion'];
 	
 		$this->load->model('usuario_model');
-		$this->usuario_model->modificar($idUsuario,$nick,$password,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
+		$this->usuario_model->modificar($idUsuario,$nick,$pwd,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
 		$this->listarPost();
 	}
@@ -165,11 +147,11 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function loginPost() {
-		$password = $_POST['password'];
+		$pwd = $_POST['pwd'];
 		$mail = $_POST['mail'];
 		
 		$this->load->model('usuario_model');
-		$usuarioValido = $this->usuario_model->comprobarCredenciales($mail,$password);
+		$usuarioValido = $this->usuario_model->comprobarCredenciales($mail,$pwd);
 
 		if ($usuarioValido) {
 			$_SESSION['idUsuario'] = $usuarioValido->id;

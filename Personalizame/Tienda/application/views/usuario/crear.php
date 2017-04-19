@@ -1,4 +1,36 @@
 <?php include_once 'desplegables.php';?>
+<script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
+<script type="text/javascript">
+var conexion;
+
+	function accionAJAX() {
+		document.getElementById("idBanner").innerHTML = conexion.responseText;
+
+		//comprobacion para ver si borro o no los campos tras una insercion
+		var str = conexion.responseText;
+		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
+		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
+			document.getElementById("idForm1").reset();
+		}
+		
+	}
+
+	function crear() {
+		conexion = new XMLHttpRequest();
+
+		var datosSerializados = serialize(document.getElementById("idForm1"));
+		conexion.open('POST', '<?=base_url() ?>usuario/crearPost', true);
+		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		conexion.send(datosSerializados);
+		conexion.onreadystatechange = function() {
+			if (conexion.readyState==4 && conexion.status==200) {
+				accionAJAX();
+			}
+		}
+	}
+</script>
+
 <script type="text/javascript">
 	
 	function validarNick(){
@@ -13,9 +45,9 @@
 
 	function validarPassword(){
 		var valido = false;
-		var miPassword = document.getElementById("idPassword").value.length;
+		var miPwd = document.getElementById("idPwd").value.length;
 		//longitud entre 5 y 20 caracteres
-		if(miPassword >= 5 && miPassword <= 20){
+		if(miPwd >= 5 && miPwd <= 20){
 			valido = true;
 		}
 		return valido;
@@ -121,14 +153,14 @@
 		//PASSWORD
 		var valPassword = validarPassword();
 		if (valPassword == false){
-			document.getElementById("idPassword").style.color = "red";
+			document.getElementById("idPwd").style.color = "red";
 			if (foco == true){
-				document.getElementById("idPassword").focus();
+				document.getElementById("idPwd").focus();
 				foco = false;
 			}
 		}
 		else{
-			document.getElementById("idPassword").style.color = "black";
+			document.getElementById("idPwd").style.color = "black";
 		}
 		
 		//NOMBRE
@@ -237,7 +269,8 @@
 		
 		//Si todo esta a TRUE hace el submit
 		if(valNick && valPassword && valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP){
-			document.form1.submit();
+			//document.form1.submit();
+			crear();
 		}	
 
 	}
@@ -245,11 +278,12 @@
 </script>
 
 <div class="container">
+	<div id="idBanner"></div>
 	<div class="form-group col-xs-12">
 		<h2>Datos de usuario</h2>
 	</div>
 	
-	<form name="form1" class="form" action="<?=base_url() ?>usuario/crearPost" method="post">
+	<form name="form1" class="form" id="idForm1">
 	
 	<div class="form-group col-xs-4">
 		<label for="idNick">Nick </label> 
@@ -257,8 +291,8 @@
 	</div>
 	
 	<div class="form-group col-xs-4">
-		<label for="idPassword">Password </label> 
-		<input class="form-control" id="idPassword" type="password" name="password" maxlength="20" required="required" placeholder="completa este campo" title="La Password debe contener 5 caracteres como mínimo"> <br/>
+		<label for="idPwd">Password </label> 
+		<input class="form-control" id="idPwd" type="password" name="pwd" maxlength="20" required="required" placeholder="completa este campo" title="La Password debe contener 5 caracteres como mínimo"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">
@@ -302,12 +336,12 @@
 	
 	<div class="form-group col-xs-6">	
 		<label for="idMail1">Mail </label>
-		<input class="form-control" id="idMail1" type="email" name="mail1" maxlength="40" required="required" placeholder="completa este campo" title="El Correo debe contener @ y . dominio"> <br/>
+		<input class="form-control" id="idMail1" type="text" name="mail1" maxlength="40" required="required" placeholder="completa este campo" title="El Correo debe contener @ y . dominio"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-6">	
 		<label for="idMail2">Mail alternativo </label>
-		<input class="form-control" id="idMail2" type="email" name="mail2" maxlength="40" title="El Correo debe contener @ y . dominio"> <br/>
+		<input class="form-control" id="idMail2" type="text" name="mail2" maxlength="40" title="El Correo debe contener @ y . dominio"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-12">	
