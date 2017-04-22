@@ -15,7 +15,7 @@ class Usuario extends CI_Controller{
 	/*
 	 * recoge datos del formulario y los pasa al modelo
 	 */
-	public function crearPost() {
+	public function crearPost() { //AJAX
 		$nick = $_POST['nick'];
 		$pwd = $_POST['pwd'];
 		$perfil = $_POST['perfil'];
@@ -56,6 +56,7 @@ class Usuario extends CI_Controller{
 		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
 		$filtroMail = isset($_POST['filtroMail']) ? $_POST['filtroMail'] : '';
 		$filtroEstado = isset($_POST['filtroEstado']) ? $_POST['filtroEstado'] : '';
+		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
 		
 		$this->load->model('usuario_model');
 		$datos['body']['usuarios'] = $this->usuario_model->getFiltrados($filtroNick,$filtroNombre,$filtroMail,$filtroEstado);
@@ -63,6 +64,7 @@ class Usuario extends CI_Controller{
 		$datos['body']['filtroNombre'] = $filtroNombre;
 		$datos['body']['filtroMail'] = $filtroMail;
 		$datos['body']['filtroEstado'] = $filtroEstado;
+		$datos['body']['mensajeBanner'] = $mensajeBanner;
 	
 		enmarcar($this, 'usuario/listar', $datos);
 	}
@@ -103,6 +105,7 @@ class Usuario extends CI_Controller{
 		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
 		$filtroMail = isset($_POST['filtroMail']) ? $_POST['filtroMail'] : '';
 		$filtroEstado = isset($_POST['filtroEstado']) ? $_POST['filtroEstado'] : '';
+		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
 		
 		$this->load->model('usuario_model');
 		$datos['body']['usuario'] = $this->usuario_model->getPorId($idUsuario);
@@ -112,6 +115,7 @@ class Usuario extends CI_Controller{
 		$datos['body']['filtroNombre'] = $filtroNombre;
 		$datos['body']['filtroMail'] = $filtroMail;
 		$datos['body']['filtroEstado'] = $filtroEstado;
+		$datos['body']['mensajeBanner'] = $mensajeBanner;
 		
 		enmarcar($this, 'usuario/modificar', $datos);
 	}

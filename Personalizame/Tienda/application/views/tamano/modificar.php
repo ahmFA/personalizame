@@ -30,12 +30,15 @@
 		if(valNombre){
 			document.form1.submit();
 		}	
-
+		else{
+			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
+		}
 	}
 
 </script>
 
 <div class="container">
+	<div id="idBanner"></div>
 	<div class="form-group col-xs-12">
 		<h2>Modificar datos de tamaño</h2>
 	</div>
@@ -45,7 +48,8 @@
 	<!-- campos ocultos para volver al filtro en la misma posicion y ver los resultados del cambio -->
 	<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
 	<input type="hidden" name="idTamano" value="<?= $body['tamano']->id ?>">
-
+	<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
+	
 	<div class="form-group col-xs-4">	
 		<label for="idNombre">Nombre </label>
 		<input class="form-control" id="idNombre" type="text" name="nombre" maxlength="35" required="required" placeholder="completa este campo" title="El Nombre debe contener entre 2 y 35 letras" value="<?= $body['tamano']->nombre ?>"> <br/>

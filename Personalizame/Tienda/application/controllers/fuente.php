@@ -13,34 +13,15 @@ class Fuente extends CI_Controller{
 	}
 	
 	/*
-	 * muestra la vista de creado OK
-	 */
-	public function crearOK(){
-		enmarcar($this,'fuente/crearOK');
-	}
-	
-	/*
-	 * muestra la vista de Error al crear
-	 */
-	public function crearERROR(){
-		enmarcar($this,'fuente/crearERROR');
-	}
-	
-	/*
 	 * recoge datos del formulario y los pasa al modelo
 	 */
-	public function crearPost() {
+	public function crearPost() { //AJAX
 		$nombre = $_POST['nombre']; //nombre de la fuente
 	
 		$this->load->model('fuente_model');
-		$status = $this->fuente_model->crear($nombre);
-	
-		if ($status>=0) {
-			header('Location:'.base_url().'fuente/crearOK');
-		}
-		else {
-			header('Location:'.base_url().'fuente/crearERROR');
-		}
+		$datos['body']['status'] = $this->fuente_model->crear($nombre);
+		$datos['body']['nombre'] = $nombre;
+		$this->load->view('fuente/XcrearPost',$datos);
 	}
 	
 	
@@ -50,11 +31,13 @@ class Fuente extends CI_Controller{
 	
 	public function listarPost() {
 		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
-	
+		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
+		
 		$this->load->model('fuente_model');
 		$datos['body']['fuentes'] = $this->fuente_model->getFiltrados($filtroNombre);
 		$datos['body']['filtroNombre'] = $filtroNombre;
-	
+		$datos['body']['mensajeBanner'] = $mensajeBanner;
+		
 		enmarcar($this, 'fuente/listar', $datos);
 	}
 	
@@ -65,13 +48,15 @@ class Fuente extends CI_Controller{
 	public function modificarPost() {
 		$idFuente = $_POST['idFuente'];
 		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
-	
+		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
+		
 		$this->load->model('fuente_model');
 		$datos['body']['fuente'] = $this->fuente_model->getPorId($idFuente);
 	
 		//los siguientes datos solo van para mantener el filtro y mostrar despues el resultado
 		$datos['body']['filtroNombre'] = $filtroNombre;
-
+		$datos['body']['mensajeBanner'] = $mensajeBanner;
+		
 		enmarcar($this, 'fuente/modificar', $datos);
 	}
 	

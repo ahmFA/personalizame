@@ -13,34 +13,15 @@ class Tamano extends CI_Controller{
 	}
 	
 	/*
-	 * muestra la vista de creado OK
-	 */
-	public function crearOK(){
-		enmarcar($this,'tamano/crearOK');
-	}
-	
-	/*
-	 * muestra la vista de Error al crear
-	 */
-	public function crearERROR(){
-		enmarcar($this,'tamano/crearERROR');
-	}
-	
-	/*
 	 * recoge datos del formulario y los pasa al modelo
 	 */
-	public function crearPost() {
+	public function crearPost() { //AJAX
 		$nombre = $_POST['nombre']; //nombre del tamaño
 	
 		$this->load->model('tamano_model');
-		$status = $this->tamano_model->crear($nombre);
-	
-		if ($status>=0) {
-			header('Location:'.base_url().'tamano/crearOK');
-		}
-		else {
-			header('Location:'.base_url().'tamano/crearERROR');
-		}
+		$datos['body']['status'] = $this->tamano_model->crear($nombre);
+		$datos['body']['nombre'] = $nombre;
+		$this->load->view('tamano/XcrearPost',$datos);
 	}
 	
 	
@@ -50,11 +31,13 @@ class Tamano extends CI_Controller{
 	
 	public function listarPost() {
 		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
-	
+		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
+		
 		$this->load->model('tamano_model');
 		$datos['body']['tamanos'] = $this->tamano_model->getFiltrados($filtroNombre);
 		$datos['body']['filtroNombre'] = $filtroNombre;
-	
+		$datos['body']['mensajeBanner'] = $mensajeBanner;
+		
 		enmarcar($this, 'tamano/listar', $datos);
 	}
 	
@@ -65,13 +48,15 @@ class Tamano extends CI_Controller{
 	public function modificarPost() {
 		$idTamano = $_POST['idTamano'];
 		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
-	
+		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
+		
 		$this->load->model('tamano_model');
 		$datos['body']['tamano'] = $this->tamano_model->getPorId($idTamano);
 	
 		//los siguientes datos solo van para mantener el filtro y mostrar despues el resultado
 		$datos['body']['filtroNombre'] = $filtroNombre;
-
+		$datos['body']['mensajeBanner'] = $mensajeBanner;
+		
 		enmarcar($this, 'tamano/modificar', $datos);
 	}
 	

@@ -12,7 +12,7 @@ class Usuario_model extends CI_Model{
 	}
 	
 	/*
-	 * guarda (o No guarda) el usuario en base de datos y devuelve el status 0,-1 para indicarle al cotroller el mensaje a mostrar 
+	 * guarda (o No guarda) el usuario en base de datos y devuelve el status 0,-1  al cotroller 
 	 */
 	public function crear($nick,$pwd,$perfil,$estado,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion,$descuento,$fecha_alta,$fecha_baja,$motivo_baja){
 		$status = 0;

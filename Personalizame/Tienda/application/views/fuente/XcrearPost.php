@@ -1,9 +1,9 @@
 <?php if ($body['status']==0):?>
 <div class="container alert alert-success col-xs-5">
-  Usuario con nick <strong><?=$body['nick']?></strong> creado con éxito
+  Fuente con nombre <strong><?=$body['nombre']?></strong> creada con éxito
 </div>
 <?php elseif ($body['status']==-1):?>
 <div class="container alert alert-danger col-xs-5">
-  <strong>ERROR</strong> Usuario con nick <strong><?=$body['nick']?></strong> ya existente
+  <strong>ERROR</strong> Fuente con nombre <strong><?=$body['nombre']?></strong> ya existe
 </div>
 <?php endif;?>

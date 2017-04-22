@@ -1,5 +1,6 @@
 <?php include_once 'desplegables.php';?>
 <div class="container">
+	
 	<div class="form-group col-xs-12">
 		<h4>Introduce el filtro que desees</h4>
 	</div>
@@ -42,7 +43,14 @@
 	</form>
 </div>
 <br/>
+
 <div class="container">
+	<?php if ($body['mensajeBanner'] != ""):?>
+	<div id="idBanner" class="container alert alert-info col-xs-5">
+  		<strong><?= $body['mensajeBanner'] ?></strong>
+	</div>
+	<?php endif;?>
+	
 	<div class="form-group col-xs-12">
 		<h4>Listado de usuarios</h4>
 	</div>
@@ -74,6 +82,7 @@
 					<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
 					<input type="hidden" name="filtroMail" value="<?= $body['filtroMail'] ?>">
 					<input type="hidden" name="filtroEstado" value="<?= $body['filtroEstado'] ?>">
+					<input type="hidden" name="mensajeBanner" value="Modificado el usuario <?= $usuario->nick ?>">
 					<button class="btn btn-info" title="Modificar" onclick="function f() {document.getElementById('idFormEdit').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
 				</form>
 			</td>
@@ -85,6 +94,7 @@
 					<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
 					<input type="hidden" name="filtroMail" value="<?= $body['filtroMail'] ?>">
 					<input type="hidden" name="filtroEstado" value="<?= $body['filtroEstado'] ?>">
+					<input type="hidden" name="mensajeBanner" value="Dado de Baja el usuario <?= $usuario->nick ?>">
 					<button class="btn btn-danger" title="Dar de Baja" onclick="function f() {document.getElementById('idFormBaja').submit();}"><span class="glyphicon glyphicon-arrow-down"></span></button>
 				</form>
 			</td>
@@ -96,6 +106,7 @@
 					<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
 					<input type="hidden" name="filtroMail" value="<?= $body['filtroMail'] ?>">
 					<input type="hidden" name="filtroEstado" value="<?= $body['filtroEstado'] ?>">
+					<input type="hidden" name="mensajeBanner" value="Dado de Alta el usuario <?= $usuario->nick ?>">
 					<button class="btn btn-success" title="Dar de Alta" onclick="function f() {document.getElementById('idFormAlta').submit();}"><span class="glyphicon glyphicon-arrow-up"></span></button>
 				</form>
 			</td>

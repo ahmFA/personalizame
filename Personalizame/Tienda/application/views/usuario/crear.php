@@ -272,6 +272,9 @@ var conexion;
 			//document.form1.submit();
 			crear();
 		}	
+		else{
+			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
+		}
 
 	}
 

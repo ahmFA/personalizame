@@ -238,12 +238,15 @@
 		if(valNick && valPassword && valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP){
 			document.form1.submit();
 		}	
-
+		else{
+			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
+		}
 	}
 
 </script>
 
 <div class="container">
+	<div id="idBanner"></div>
 	<div class="form-group col-xs-12">
 		<h2>Modificar datos de usuario</h2>
 	</div>
@@ -256,10 +259,11 @@
 	<input type="hidden" name="filtroMail" value="<?= $body['filtroMail'] ?>">
 	<input type="hidden" name="filtroEstado" value="<?= $body['filtroEstado'] ?>">
 	<input type="hidden" name="idUsuario" value="<?= $body['usuario']->id ?>">
+	<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
 	
 	<div class="form-group col-xs-4">
 		<label for="idNick">Nick </label> 
-		<input class="form-control" id="idNick" type="text" name="nick" maxlength="20" required="required" placeholder="completa este campo" title="El Nick debe contener 3 caracteres como mínimo" value="<?= $body['usuario']->nick ?>"> <br/>
+		<input class="form-control" id="idNick" type="text" name="nick" maxlength="20" required="required" readonly="readonly" title="El Nick debe contener 3 caracteres como mínimo" value="<?= $body['usuario']->nick ?>"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-4">
