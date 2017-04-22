@@ -127,6 +127,17 @@
 		  <li><a href="<?=base_url()?>categoria/borrar">Borrar</a></li>
 	     </ul>
       </li>
+      
+       <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+        Imágenes<span class="caret"></span>
+        </a>
+		<ul class="dropdown-menu">
+		  <li><a href="<?=base_url()?>imagen/crear">Crear</a></li>
+		  <li><a href="<?=base_url()?>imagen/listar">Listar</a></li>
+		  <li><a href="<?=base_url()?>imagen/borrar">Borrar</a></li>
+	     </ul>
+      </li>
     </ul>
     
     <!-- para poner el menu a la derecha usariamos class="nav navbar-nav navbar-right" -->

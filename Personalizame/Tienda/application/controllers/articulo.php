@@ -25,21 +25,21 @@ class Articulo extends CI_Controller{
 		 * En ese caso, se guarda en la carpeta alojada en nuestro servidor.
 		 */
 		$imagenAceptada = $this->articulo_model->validarImagen($nomImagen, $tamanoImagen,$tipoImagen);
-		//if($imagenAceptada){
+		if($imagenAceptada){
 			/*
 			 * DOCUMENT_ROOT = c:/XAMPP/HTDOCS en mi caso.
 			 */
-		$status = null;
-		/*
-		 * Si no existe la carpeta de art�culos, se crea.
-		 */
-		if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/articulos/')){
-			mkdir($_SERVER['DOCUMENT_ROOT'].'/img/articulos/');
-		}
-		
-		$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
-		move_uploaded_file($_FILES['imagen']['tmp_name'],$directorio.$nomImagen);
-		$status = $this->articulo_model->crearArticulo($nombre, $precio,$nomImagen, $disponible, $id_colores, $id_tallas);
+			$status = null;
+			/*
+			 * Si no existe la carpeta de art�culos, se crea.
+			 */
+			if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/articulos/')){
+				mkdir($_SERVER['DOCUMENT_ROOT'].'/img/articulos/');
+			}
+			
+			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
+			move_uploaded_file($_FILES['imagen']['tmp_name'],$directorio.$nomImagen);
+			$status = $this->articulo_model->crearArticulo($nombre, $precio,$nomImagen, $disponible, $id_colores, $id_tallas);
 			/*
 			 * Si no se ha metido en la base de datos (ya sea porque ya existe o por causa ajena) 
 			 * se informa del error al administrador.
@@ -50,7 +50,7 @@ class Articulo extends CI_Controller{
 				enmarcar($this,'articulo/crearERROR');
 			}
 			
-		//}
+		}
 	}
 	
 	public function listar(){
@@ -69,7 +69,6 @@ class Articulo extends CI_Controller{
 		$this->load->model('articulo_model');
 		$idArticulos = $_POST['idArticulos'];
 		foreach ($idArticulos as $idArt){
-			$this->articulo_model->borrar($idArt);
 			$articulo = $this->articulo_model->getArticuloById($idArt);
 			$fichero = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/'.$articulo['imagen'];
 			/*
@@ -78,12 +77,10 @@ class Articulo extends CI_Controller{
 			 * Tengo que preguntar a Alberto.
 			 */
 			if(file_exists($fichero)){
-				chmod($fichero, 666);
+				chmod($fichero, 777);
 				unlink($fichero);
-			}else{
-				enmarcar($this, 'articulo/crear');
+				$this->articulo_model->borrar($idArt);
 			}
-			
 		}
 		$datos['articulos'] = $this->articulo_model->listar();
 		enmarcar($this, 'articulo/borrar', $datos);
@@ -106,21 +103,21 @@ class Articulo extends CI_Controller{
 		$art = $this->articulo_model->getArticuloById($id);
 		$nombre = $_POST['nombre'];
 		$precio = $_POST['precio'];
-		$nomImagen = isset($_FILES['nueva'])? $_FILES['nueva']['name']:$art['imagen'];
-		$tamanoImagen = isset($_FILES['nueva'])? $_FILES['nueva']['size']: '';
-		$tipoImagen = isset($_FILES['nueva'])? $_FILES['nueva']['type']: '';
+		$nomImagen = !empty($_FILES['nueva']['name']) ? $_FILES['nueva']['name']:$art['imagen'];
+		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
+		$tipoImagen = !empty($_FILES['nueva']['type']) ? $_FILES['nueva']['type']: null;
 		$disponible = $_POST['disponible'];
 		$ids_colores = $_POST['idColores'];
 		$ids_tallas = $_POST['idTallas'];
 		
 		$imagenValida = true;
-		if($tamanoImagen != '' && $tipoImagen != ''){
+		if($tamanoImagen != null && $tipoImagen != null){
 			$imagenValida = $this->articulo_model->validarImagen($nomImagen, $tamanoImagen, $tipoImagen);
 		}
 		
 		if($imagenValida){
 			$this->articulo_model->editar($id, $nombre, $precio, $nomImagen, $disponible, $ids_colores, $ids_tallas);
-			if(isset($_FILES['nueva'])){
+			if(!empty($_FILES['nueva']['name'])){
 				$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
 				move_uploaded_file($_FILES['nueva']['tmp_name'],$directorio.$nomImagen);
 				/*
