@@ -4,14 +4,7 @@ var conexion;
 
 	function accionAJAX() {
 		document.getElementById("idBanner").innerHTML = conexion.responseText;
-
-		//comprobacion para ver si borro o no los campos tras una insercion
-		var str = conexion.responseText;
-		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
-		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
-			document.getElementById("idForm1").reset();
-		}
-		
+		document.getElementById("idForm1").reset();
 	}
 
 	function crear() {
@@ -79,6 +72,12 @@ var conexion;
 	
 	<form name="form1" class="form" id="idForm1">
 	
+	<input type="hidden" name="idSesion" value="<?= session_id()?>">
+	<input type="hidden" name="idUsuario" value="<?= isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : null ?>">
+	<input type="hidden" name="rotacion" value="25">
+	<input type="hidden" name="coordenadaX" value="25">
+	<input type="hidden" name="coordenadaY" value="25">
+	
 	<div class="form-group col-xs-3">
 		<label for="idDatosTexto">Texto </label> 
 		<input class="form-control" id="idDatosTexto" type="text" name="datosTexto" maxlength="20" required="required" placeholder="completa este campo" title="El Texto puede contener entre 1 y 20 caracteres"> <br/>
@@ -89,7 +88,7 @@ var conexion;
 		<select class="form-control" id="idTamano" name="idTamano">         
  			<option value='1'>Seleccione uno</option>       	
  		<?php foreach ($body['tamanos'] as $tamano): ?>
- 			<option value='<?= $tamano->id?>'><?= $tamano->nombre?></option>
+ 			<option value='<?= $tamano['id']?>'><?= $tamano['nombre']?></option>
 		<?php endforeach;?>
         </select><br/>
 	</div>
@@ -99,7 +98,7 @@ var conexion;
 		<select class="form-control" id="idFuente" name="idFuente">         
  			<option value='1'>Seleccione una</option>       	
  		<?php foreach ($body['fuentes'] as $fuente): ?>
- 			<option value='<?= $fuente->id?>'><?= $fuente->nombre?></option>
+ 			<option value='<?= $fuente['id']?>'><?= $fuente['nombre']?></option>
 		<?php endforeach;?>
         </select><br/>
 	</div>
@@ -109,7 +108,7 @@ var conexion;
 		<select class="form-control" id="idColor" name="idColor">         
  			<option value='1'>Seleccione uno</option>       	
  		<?php foreach ($body['colores'] as $color): ?>
- 			<option value='<?= $color->id?>'><?= $color->nombre?></option>
+ 			<option value='<?= $color['id']?>'><?= $color['nombre']?></option>
 		<?php endforeach;?>
         </select><br/>
 	</div>

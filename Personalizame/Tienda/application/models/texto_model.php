@@ -3,7 +3,7 @@
  * @author Luis
  * @packcage application\models
  */
-class Tamano_model extends CI_Model{
+class Texto_model extends CI_Model{
 	/*
 	 * crear el texto
 	 */
@@ -51,8 +51,8 @@ class Tamano_model extends CI_Model{
 	 * recuperar textos que cumplen el filtro
 	 */
 	public function getFiltrados($filtroUsuario,$filtroDatosTexto){
-		//mirar como hacerlo para los casos en que venga un idUsuario ya que no puede ser Like sino =
-		return R::find('texto','where datosTexto like ? and idUsuario = ? order by id',['%'.$filtroDatosTexto.'%',$filtroUsuario]);
+		//mirar como hacerlo para los casos en que venga un idUsuario ya que no puede ser Like sino un igual
+		return R::find('texto','where datos_texto like ? and id_usuario like ? order by id',['%'.$filtroDatosTexto.'%','%'.$filtroUsuario.'%']);
 	}
 
 	/*

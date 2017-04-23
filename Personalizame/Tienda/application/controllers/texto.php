@@ -40,8 +40,8 @@ class Texto extends CI_Controller{
 		
 		$this->load->model('texto_model');
 		$this->texto_model->crear($idUsuario,$datosTexto,$idTamano,$idFuente,$rotacion,$idColor,$coordenadaX,$coordenadaY,$precio,$coste,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$idSesion);
-		$datos['body']['datos'] = $datosTexto;
-		$this->load->view('texto_model/XcrearPost',$datos);
+		$datos['body']['datosTexto'] = $datosTexto;
+		$this->load->view('texto/XcrearPost',$datos);
 
 	}
 		
@@ -56,6 +56,8 @@ class Texto extends CI_Controller{
 		
 		$this->load->model('texto_model');
 		$datos['body']['textos'] = $this->texto_model->getFiltrados($filtroUsuario,$filtroDatosTexto);
+		$datos['body']['filtroDatosTexto'] = $filtroDatosTexto;
+		$datos['body']['filtroUsuario'] = $filtroUsuario;
 		$datos['body']['mensajeBanner'] = $mensajeBanner;
 	
 		enmarcar($this, 'texto/listar', $datos);

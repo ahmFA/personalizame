@@ -31,7 +31,7 @@
             </div>
             <div class="form-group">
               <label for="idPassword"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="password" class="form-control" id="idPassword" name="password" placeholder="Introduce password">
+              <input type="password" class="form-control" id="idPassword" name="pwd" placeholder="Introduce password">
             </div>
 
             <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
