@@ -41,6 +41,15 @@ class Color_model extends CI_Model{
 		R::store($c);
 		R::close();
 	}
+	
+	/*
+	 * recuperar todos los colores
+	 */
+	public function getTodos() {
+		$colores = R::findAll('color','order by nombre');
+	
+		return  $colores;
+	}
 }
 
 ?>
