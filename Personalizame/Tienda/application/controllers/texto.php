@@ -89,6 +89,13 @@ class Texto extends CI_Controller{
 		$this->load->model('texto_model');
 		$datos['body']['texto'] = $this->texto_model->getPorId($idTexto);
 	
+		$this->load->model('fuente_model');
+		$this->load->model('tamano_model');
+		$this->load->model('color_model');
+		$datos ['body'] ['colores'] = $this->color_model->getTodos();
+		$datos ['body'] ['fuentes'] = $this->fuente_model->getTodos();
+		$datos ['body'] ['tamanos'] = $this->tamano_model->getTodos();
+		
 		//los siguientes datos solo van para mantener el filtro y mostrar despues el resultado
 		$datos['body']['filtroDatosTexto'] = $filtroDatosTexto;
 		$datos['body']['filtroUsuario'] = $filtroUsuario;

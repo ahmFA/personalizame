@@ -47,9 +47,9 @@
 		<tr>
 			<td><?= $texto->idUsuario ?></td>
 			<td><?= $texto->datosTexto ?></td>
-			<td><?= $texto->idTamano ?></td>
-			<td><?= $texto->idFuente ?></td>
-			<td><?= $texto->idColor ?> </td>
+			<td><?= $texto->tamano->nombre ?></td>
+			<td><?= $texto->fuente->nombre ?></td>
+			<td><?= $texto->color->nombre ?> </td>
 
 			<td>
 				<form id="idFormEdit" action="<?=base_url()?>texto/modificarPost" method="post">

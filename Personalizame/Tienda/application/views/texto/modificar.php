@@ -44,7 +44,7 @@
 		<h2>Modificar texto</h2>
 	</div>
 	
-	<form name="form1" class="form" id="idForm1">
+	<form name="form1" class="form" action="<?=base_url() ?>texto/modificarPost2" method="post">
 	
 	<!-- campos ocultos para volver al filtro en la misma posicion y ver los resultados del cambio -->
 	<input type="hidden" name="filtroDatosTexto" value="<?= $body['filtroDatosTexto'] ?>">
@@ -52,12 +52,10 @@
 	<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
 	<input type="hidden" name="idTexto" value="<?= $body['texto']->id ?>">
 	
-					
-	<input type="hidden" name="idSesion" value="<?= session_id()?>">
-	<input type="hidden" name="idUsuario" value="<?= isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : null ?>">
 	<input type="hidden" name="rotacion" value="25">
 	<input type="hidden" name="coordenadaX" value="25">
 	<input type="hidden" name="coordenadaY" value="25">
+	<input type="hidden" name="disponible" value="Si">
 	
 	<div class="form-group col-xs-3">
 		<label for="idDatosTexto">Texto </label> 
@@ -66,10 +64,10 @@
 	
 	<div class="form-group col-xs-3">	
 		<label for="idTamano">Tamaño </label>
-		<select class="form-control" id="idTamano" name="idTamano">         
- 			<option value='1'>Seleccione uno</option>       	
- 		<?php foreach ($body['tamanos'] as $tamano): ?>
- 			<option value='<?= $tamano['id']?>'><?= $tamano['nombre']?></option>
+		<select class="form-control" id="idTamano" name="idTamano">   
+		<?php foreach ($body['tamanos'] as $tamano): ?>
+			<?php $aux='';  if($tamano['id'] == $body['texto']->tamano){$aux='selected="selected"';}?>     
+ 			<option value='<?= $tamano['id']?>' <?= $aux ?>><?= $tamano['nombre']?></option>
 		<?php endforeach;?>
         </select><br/>
 	</div>
@@ -77,9 +75,9 @@
 	<div class="form-group col-xs-3">	
 		<label for="idFuente">Fuente </label>
 		<select class="form-control" id="idFuente" name="idFuente">         
- 			<option value='1'>Seleccione una</option>       	
- 		<?php foreach ($body['fuentes'] as $fuente): ?>
- 			<option value='<?= $fuente['id']?>'><?= $fuente['nombre']?></option>
+   		<?php foreach ($body['fuentes'] as $fuente): ?>
+			<?php $aux='';  if($fuente['id'] == $body['texto']->fuente){$aux='selected="selected"';}?>     
+ 			<option value='<?= $fuente['id']?>' <?= $aux ?>><?= $fuente['nombre']?></option>
 		<?php endforeach;?>
         </select><br/>
 	</div>
@@ -87,9 +85,9 @@
 	<div class="form-group col-xs-3">	
 		<label for="idColor">Color </label>
 		<select class="form-control" id="idColor" name="idColor">         
- 			<option value='1'>Seleccione uno</option>       	
  		<?php foreach ($body['colores'] as $color): ?>
- 			<option value='<?= $color['id']?>'><?= $color['nombre']?></option>
+			<?php $aux='';  if($color['id'] == $body['texto']->color){$aux='selected="selected"';}?>     
+ 			<option value='<?= $color['id']?>' <?= $aux ?>><?= $color['nombre']?></option>
 		<?php endforeach;?>
         </select><br/>
 	</div>
