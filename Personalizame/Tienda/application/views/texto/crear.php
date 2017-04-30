@@ -126,8 +126,8 @@ var conexion;
 	<div class="form-group col-xs-12">
 		<h2>Pruebas con el texto</h2>
 		
-		<div id="pruebasContainer" style="width: 150px; height: 250px; border: 1px solid black; padding:2px 2px 30px 2px;">
-			<div id="pruebasTexto" style="border: 1px solid red; display: inline-block; padding: 2px;">Aqui el Texto</div>
+		<div id="pruebasContainer" style="width: 150px; height: 250px; border: 1px solid black; padding:10px 10px 10px 10px; text-align: center; display:table;">
+			<div id="pruebasTexto" style="border: 1px solid red; display: inline-block; padding: 2px;">Introduce Texto</div>
 		</div>
 		
 		Rango Rotación: 
@@ -152,9 +152,9 @@ var conexion;
      	rotation();
        	*/
 
-       	/* Cuando la rotacion es muy elevada el texto se sale del div por abajo
-       	  hay que hacer algo para que el padding inferior aumente tanto como la rotacion 
-       	  de forma dinamica y que asi no se pueda salir
+       	/* Cuando la rotacion es muy elevada el texto se sale del div por los bordes 
+       		sobre todo abajo, hay que hacer algo con padding o lo que sea para que 
+       		la rotacion de forma dinamica no se pueda salir
        	 */
 
   		
@@ -183,7 +183,7 @@ var conexion;
         	var grados = parseInt(marcador.text());
         	$("#pruebasTexto").rotate(grados);
         	$("#pruebasTexto").text(texto);
-        	$("#pruebasTexto").css({"color": color,"font-size": tamano, "font-family": fuente});
+        	$("#pruebasTexto").css({"color": color,"font-size": tamano+"px", "font-family": fuente});
           }
 		
         $("#pruebasTexto").draggable({ containment: "#pruebasContainer" }).resizable({ containment: "#pruebasContainer" });
