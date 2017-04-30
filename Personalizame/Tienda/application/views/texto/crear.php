@@ -110,7 +110,7 @@ var conexion;
 		<select class="form-control" id="idColor" name="idColor">         
  			<option value='1'>Seleccione uno</option>       	
  		<?php foreach ($body['colores'] as $color): ?>
- 			<option value='<?= $color['id']?>'><?= $color['nombre']?></option>
+ 			<option value='<?= $color['id']?>'><?= $color['valor']?></option>
 		<?php endforeach;?>
         </select><br/>
 	</div>
@@ -157,6 +157,7 @@ var conexion;
        	  de forma dinamica y que asi no se pueda salir
        	 */
 
+  		
     	var marcador = $( "#marcadorRango" );
         $( "#rangoRotacion" ).slider({
           min: -20,
@@ -171,8 +172,18 @@ var conexion;
 
         function refrescar() {
             //var grados = parseInt($("#rotacion").val());
+			//var color = $("#idColor").val();
+			//var fuente = $("#idFuente").val();
+			//var tamano = $("#idTamano").val();
+			
+			var texto = $("#idDatosTexto").val();
+			var color = $("#idColor option:selected").text();
+			var fuente = $("#idFuente option:selected").text();
+			var tamano = $("#idTamano option:selected").text();
         	var grados = parseInt(marcador.text());
         	$("#pruebasTexto").rotate(grados);
+        	$("#pruebasTexto").text(texto);
+        	$("#pruebasTexto").css({"color": color,"font-size": tamano, "font-family": fuente});
           }
 		
         $("#pruebasTexto").draggable({ containment: "#pruebasContainer" }).resizable({ containment: "#pruebasContainer" });
