@@ -1,4 +1,6 @@
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
+<script type="text/javascript" src="<?=base_url()?>assets/js/jQueryRotateCompressed.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/js/jquery-ui.js"></script>
 <script type="text/javascript">
 var conexion;
 
@@ -74,7 +76,7 @@ var conexion;
 	
 	<input type="hidden" name="idSesion" value="<?= session_id()?>">
 	<input type="hidden" name="idUsuario" value="<?= isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : null ?>">
-	<input type="hidden" name="rotacion" value="25">
+	<input type="hidden" name="rotacion" id="rotacion" value="-30">
 	<input type="hidden" name="coordenadaX" value="25">
 	<input type="hidden" name="coordenadaY" value="25">
 	
@@ -119,3 +121,60 @@ var conexion;
 	
 	</form>
 </div>
+
+<div class="container">
+	<div class="form-group col-xs-12">
+		<h2>Pruebas con el texto</h2>
+		
+		<div id="pruebasContainer" style="width: 150px; height: 250px; border: 1px solid black; padding:2px 2px 30px 2px;">
+			<div id="pruebasTexto" style="border: 1px solid red; display: inline-block; padding: 2px;">Aqui el Texto</div>
+		</div>
+		
+		Rango Rotación: 
+		<div id="rangoRotacion">
+			<div id="marcadorRango" class="ui-slider-handle"></div>	
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		/*
+     	var rotation = function (){
+      		$("#pruebasTexto").rotate({
+        	angle:0,
+        	animateTo:360,
+        	duration: 2000,
+        	callback: rotation,
+     		});
+    	}
+     	rotation();
+       	*/
+
+       	/* Cuando la rotacion es muy elevada el texto se sale del div por abajo
+       	  hay que hacer algo para que el padding inferior aumente tanto como la rotacion 
+       	  de forma dinamica y que asi no se pueda salir
+       	 */
+
+    	var marcador = $( "#marcadorRango" );
+        $( "#rangoRotacion" ).slider({
+          min: -20,
+          max: 20,
+          value: 0,      
+          slide: function( event, ui ) {
+        	  marcador.text( ui.value );
+        	  refrescar();
+          }
+        });
+        marcador.text($("#rangoRotacion").slider("values",0));
+
+        function refrescar() {
+            //var grados = parseInt($("#rotacion").val());
+        	var grados = parseInt(marcador.text());
+        	$("#pruebasTexto").rotate(grados);
+          }
+		
+        $("#pruebasTexto").draggable({ containment: "#pruebasContainer" }).resizable({ containment: "#pruebasContainer" });
+	});
+</script>
