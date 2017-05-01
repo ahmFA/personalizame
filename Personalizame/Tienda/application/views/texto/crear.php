@@ -1,5 +1,4 @@
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
-<script type="text/javascript" src="<?=base_url()?>assets/js/jQueryRotateCompressed.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/jquery-ui.js"></script>
 <script type="text/javascript">
 var conexion;
@@ -125,67 +124,85 @@ var conexion;
 <div class="container">
 	<div class="form-group col-xs-12">
 		<h2>Pruebas con el texto</h2>
-		
-		<div id="pruebasContainer" style="width: 150px; height: 250px; border: 1px solid black; padding:10px 10px 10px 10px; text-align: center; display:table;">
-			<div id="pruebasTexto" style="border: 1px solid red; display: inline-block; padding: 2px;">Introduce Texto</div>
-		</div>
-		
-		Rango Rotación: 
-		<div id="rangoRotacion">
-			<div id="marcadorRango" class="ui-slider-handle"></div>	
-		</div>
+	
+		<input class="btn btn-primary" id="idBotonAplicar" type="button" value="Aplicar" onclick="inicializar();">
+		<input class="btn btn-primary" id="idBotonAplicar" type="button" value="Ver como queda" onclick="ver();">
+		<br/><br/><br/>
+		<div id="pruebasContainer" style="width: 150px; height: 250px; border: 1px solid black; padding:10px 10px 10px 10px; text-align: center; display:table; background-color: aqua;">
+			<canvas id="pruebasTexto" width="150" height="250" style="border:1px solid #d3d3d3;display: inline-block">
+			Your browser does not support the HTML5 canvas tag.</canvas>
+		</div> 
 	</div>
 </div>
 
-
 <script type="text/javascript">
-	$(document).ready(function(){
-		/*
-     	var rotation = function (){
-      		$("#pruebasTexto").rotate({
-        	angle:0,
-        	animateTo:360,
-        	duration: 2000,
-        	callback: rotation,
-     		});
-    	}
-     	rotation();
-       	*/
+	var canvas,ctx,texto,fuente,tamano,rotacion,hipo,dataUrl;
+    
+	inicializar();
 
-       	/* Cuando la rotacion es muy elevada el texto se sale del div por los bordes 
-       		sobre todo abajo, hay que hacer algo con padding o lo que sea para que 
-       		la rotacion de forma dinamica no se pueda salir
-       	 */
+	function inicializar(){
+		tomarDatos();
+		dibujar();
+	}
 
-  		
-    	var marcador = $( "#marcadorRango" );
-        $( "#rangoRotacion" ).slider({
-          min: -20,
-          max: 20,
-          value: 0,      
-          slide: function( event, ui ) {
-        	  marcador.text( ui.value );
-        	  refrescar();
-          }
-        });
-        marcador.text($("#rangoRotacion").slider("values",0));
+	function tomarDatos() {
+		//crear
+		canvas = document.getElementById("pruebasTexto");
+		ctx = canvas.getContext("2d");
 
-        function refrescar() {
-            //var grados = parseInt($("#rotacion").val());
-			//var color = $("#idColor").val();
-			//var fuente = $("#idFuente").val();
-			//var tamano = $("#idTamano").val();
-			
-			var texto = $("#idDatosTexto").val();
-			var color = $("#idColor option:selected").text();
-			var fuente = $("#idFuente option:selected").text();
-			var tamano = $("#idTamano option:selected").text();
-        	var grados = parseInt(marcador.text());
-        	$("#pruebasTexto").rotate(grados);
-        	$("#pruebasTexto").text(texto);
-        	$("#pruebasTexto").css({"color": color,"font-size": tamano+"px", "font-family": fuente});
-          }
+		//limpiar lo que tenga de antes
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		//tamaño x defecto
+		//canvas.width = 140;
+		//canvas.height = 240;
 		
-        $("#pruebasTexto").draggable({ containment: "#pruebasContainer" }).resizable({ containment: "#pruebasContainer" });
-	});
+		//si no hay texto o algo seleccionado en los combos coge valor por defecto
+		texto = ($("#idDatosTexto").val() =="")? "Introduzca su Texto " : $("#idDatosTexto").val();
+		color = ($("#idColor option:selected").text() =="Seleccione uno")? "black" : $("#idColor option:selected").text();
+		fuente = ($("#idFuente option:selected").text() =="Seleccione una")? "Arial" : $("#idFuente option:selected").text();
+		tamano = ($("#idTamano option:selected").text() =="Seleccione uno")? 15 : $("#idTamano option:selected").text();		
+		rotacion = 0;
+
+		ctx.font = tamano+"px "+fuente;
+		hipo = Math.sqrt(Math.pow(tamano,2) + Math.pow(ctx.measureText(texto).width,2));
+		canvas.width = hipo + 5;
+		canvas.height = hipo + 5;
+	}
+
+	function dibujar(){
+		//segun el angulo de rotacion se sale del div por lo que hay que hacer apaños
+		//y usar el translate para que se posicione en diferente sitio
+		var coef = rotacion % 360;
+		if(coef >= 0 && coef <= 90){
+			ctx.translate(5+(coef*0.2),5);
+		}
+		if(coef > 90 && coef <= 180){
+			ctx.translate(145-(coef*0.05),20);
+		}
+		if(coef > 180 && coef <= 270){
+			ctx.translate(145-(coef*0.1),145);
+		}
+		if(coef > 270 && coef < 360){
+			ctx.translate(5+(coef*0.01),145);
+		}
+		
+		//Color, Fuente, Posicion
+		ctx.fillStyle = color;
+		ctx.font = tamano+"px "+fuente;
+		ctx.textAlign="start"; 
+		ctx.textBaseline="top"; 
+		ctx.rotate(rotacion * Math.PI / 180);
+		
+		ctx.fillText(texto, 0, 0);
+		
+	} 
+
+	function ver(){
+		var dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
+		window.open(dataUrl, "Ejemplo", "width=400, height=400"); //mostramos en popUp
+	}
+
+	//el canvas es dragable y no puede salir del contenedor
+	$("#pruebasTexto").draggable({ containment: "#pruebasContainer" });
 </script>
