@@ -24,6 +24,7 @@
 	<meta charset="utf-8">
 	 <meta http-equiv="X-UA-Compatible" content="IE=edge">
         	<meta name="viewport" content="width=device-width, initial-scale=1">
+        	<title>Personalizame</title>
 	<link href="<?=base_url()?>assets/css/personalizame.css" rel="stylesheet">
 	<link href="<?=base_url()?>assets/css/jquery-ui.css" rel="stylesheet">
 	 <link href="<?=base_url()?>assets/vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
@@ -45,8 +46,6 @@
         <link href="<?=base_url()?>assets/css/app.min.1.css" rel="stylesheet">
         <link href="<?=base_url()?>assets/css/app.min.2.css" rel="stylesheet">
 	
-    <script src="<?=base_url()?>assets/js/personalizame.js">
-        </script>
-	<title>Personalizame</title>
+	
 </head>
 <body>

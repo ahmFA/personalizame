@@ -46,7 +46,9 @@
         
         <script src="<?=base_url()?>assets/js/charts.js"></script>
         <script src="<?=base_url()?>assets/js/functions.js"></script>
-        <script src="<?=base_url()?>assets/js/demo.js"></script>     
+        <script src="<?=base_url()?>assets/js/demo.js"></script>
+        <script src="<?=base_url()?>assets/js/personalizame.js">
+        </script>
 
         <script type="text/javascript">
      
