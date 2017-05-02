@@ -66,7 +66,7 @@
 		<label for="idTamano">Tamaño </label>
 		<select class="form-control" id="idTamano" name="idTamano">   
 		<?php foreach ($body['tamanos'] as $tamano): ?>
-			<?php $aux='';  if($tamano['id'] == $body['texto']->tamano){$aux='selected="selected"';}?>     
+			<?php $aux='';  if($tamano['id'] == $body['texto']->tamano_id){$aux='selected="selected"';}?>     
  			<option value='<?= $tamano['id']?>' <?= $aux ?>><?= $tamano['nombre']?></option>
 		<?php endforeach;?>
         </select><br/>
@@ -76,7 +76,7 @@
 		<label for="idFuente">Fuente </label>
 		<select class="form-control" id="idFuente" name="idFuente">         
    		<?php foreach ($body['fuentes'] as $fuente): ?>
-			<?php $aux='';  if($fuente['id'] == $body['texto']->fuente){$aux='selected="selected"';}?>     
+			<?php $aux='';  if($fuente['id'] == $body['texto']->fuente_id){$aux='selected="selected"';}?>     
  			<option value='<?= $fuente['id']?>' <?= $aux ?>><?= $fuente['nombre']?></option>
 		<?php endforeach;?>
         </select><br/>
@@ -86,7 +86,7 @@
 		<label for="idColor">Color </label>
 		<select class="form-control" id="idColor" name="idColor">         
  		<?php foreach ($body['colores'] as $color): ?>
-			<?php $aux='';  if($color['id'] == $body['texto']->color){$aux='selected="selected"';}?>     
+			<?php $aux='';  if($color['id'] == $body['texto']->color_id){$aux='selected="selected"';}?>     
  			<option value='<?= $color['id']?>' <?= $aux ?>><?= $color['nombre']?></option>
 		<?php endforeach;?>
         </select><br/>

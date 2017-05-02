@@ -35,8 +35,8 @@ var conexion;
 	function validarNombre(){
 		var valido = false;
 		var miNombre = document.getElementById("idNombre").value;
-		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
-		if(/^[A-Za-z0-9Ññ áéíóúÁÉÍÓÚ]{2,35}$/.test(miNombre)){
+		//longitud de 2
+		if(/^[0-9]{2}$/.test(miNombre)){
 			valido = true;
 		}
 		return valido;
@@ -81,7 +81,7 @@ var conexion;
 	
 	<div class="form-group col-xs-4">	
 		<label for="idNombre">Nombre </label>
-		<input class="form-control" id="idNombre" type="text" name="nombre" maxlength="35" required="required" placeholder="completa este campo" title="El Nombre debe contener entre 2 y 35 letras"> <br/>
+		<input class="form-control" id="idNombre" type="text" name="nombre" maxlength="2" required="required" placeholder="completa este campo" title="El Tamaño debe contener 2 dígitos"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-12">
