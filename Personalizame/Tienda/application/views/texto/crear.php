@@ -132,16 +132,28 @@ var conexion;
 			<canvas id="pruebasTexto" width="150" height="250" style="border:1px solid #d3d3d3;display: inline-block">
 			Your browser does not support the HTML5 canvas tag.</canvas>
 		</div> 
+		Rotacion <input type="text" id="idRotacion" name="rotacion" value="0" size="3" readonly="readonly">
+		<input id="idSlider" type ="range" min ="0" max="360" step ="10" value ="0" onchange="updateRotacion(this.value);"/>
+		
 	</div>
 </div>
 
 <script type="text/javascript">
+
+
 	var canvas,ctx,texto,fuente,tamano,rotacion,hipo,dataUrl;
-    
+	var anchoTexto,altoTexto,anchoCanvas,altoCanvas,Y_txt_centrado,X_txt_centrado;
+
+	function updateRotacion(val) {
+    	document.getElementById('idRotacion').value=val; 
+    	inicializar();
+  	}
+	
 	inicializar();
 
 	function inicializar(){
 		tomarDatos();
+		posicionar();
 		dibujar();
 	}
 
@@ -152,51 +164,75 @@ var conexion;
 
 		//limpiar lo que tenga de antes
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-		//tamaño x defecto
-		//canvas.width = 140;
-		//canvas.height = 240;
 		
 		//si no hay texto o algo seleccionado en los combos coge valor por defecto
 		texto = ($("#idDatosTexto").val() =="")? "Introduzca su Texto " : $("#idDatosTexto").val();
 		color = ($("#idColor option:selected").text() =="Seleccione uno")? "black" : $("#idColor option:selected").text();
 		fuente = ($("#idFuente option:selected").text() =="Seleccione una")? "Arial" : $("#idFuente option:selected").text();
 		tamano = ($("#idTamano option:selected").text() =="Seleccione uno")? 15 : $("#idTamano option:selected").text();		
-		rotacion = 0;
-
-		ctx.font = tamano+"px "+fuente;
-		hipo = Math.sqrt(Math.pow(tamano,2) + Math.pow(ctx.measureText(texto).width,2));
-		canvas.width = hipo + 5;
-		canvas.height = hipo + 5;
+		rotacion = document.getElementById('idRotacion').value;
 	}
 
+	function posicionar(){
+		ctx.font = tamano+"px "+fuente;  //necesito indicar el tamaño y fuente para poder calcular el tamaño del texto con measureText
+		hipo = Math.sqrt(Math.pow(tamano,2) + Math.pow(ctx.measureText(texto).width,2));  //calculo la hipotenusa para crear un canvas suficientemente grande para que entre el texto
+		if (hipo > 145){hipo = 145;} //si hipo sale muy grande como maximo sera 145
+		anchoTexto = ctx.measureText(texto).width; //tomo el ancho del texto
+		altoTexto = tamano; //tomo el alto del texto
+		//alert("anT: "+anchoTexto+" alT: "+altoTexto);
+		anchoCanvas = hipo + 5; //el canvas será un poco mas que la hipotenusa para que no se salga el tope es 150 como el div
+		altoCanvas = hipo + 5;
+		//alert("anC: "+anchoCanvas+" alC: "+altoCanvas);
+
+		canvas.width = anchoCanvas; //asigno valor al ancho del canvas
+		canvas.height = altoCanvas; //asigno valor al alto del canvas
+
+		X_txt_centrado = (anchoCanvas - anchoTexto)/2; //calculo coordenada X para que comience el texto
+		Y_txt_centrado = (altoCanvas - altoTexto)/2;  //calculo coordenada Y para que comience el texto
+
+		//alert("X: "+X_txt_centrado+" Y: "+Y_txt_centrado);
+	}
+	
 	function dibujar(){
-		//segun el angulo de rotacion se sale del div por lo que hay que hacer apaños
-		//y usar el translate para que se posicione en diferente sitio
-		var coef = rotacion % 360;
-		if(coef >= 0 && coef <= 90){
-			ctx.translate(5+(coef*0.2),5);
-		}
-		if(coef > 90 && coef <= 180){
-			ctx.translate(145-(coef*0.05),20);
-		}
-		if(coef > 180 && coef <= 270){
-			ctx.translate(145-(coef*0.1),145);
-		}
-		if(coef > 270 && coef < 360){
-			ctx.translate(5+(coef*0.01),145);
-		}
 		
 		//Color, Fuente, Posicion
 		ctx.fillStyle = color;
 		ctx.font = tamano+"px "+fuente;
 		ctx.textAlign="start"; 
 		ctx.textBaseline="top"; 
-		ctx.rotate(rotacion * Math.PI / 180);
-		
-		ctx.fillText(texto, 0, 0);
-		
+		ctx.fillText(texto, X_txt_centrado, Y_txt_centrado);	
+		dataUrl = canvas.toDataURL(); //guardo el canvas como imagen png
+		girar()	
 	} 
+
+	function girar(){
+		// canvas auxiliar que será una copia del primero
+		var canvas2 = canvas;
+		var ctx2 = canvas2.getContext("2d");
+
+		// indica donde se encuentra la imagen del primer canvas  
+		var img = new Image();
+		img.src = dataUrl; 
+
+		//calcular el punto medio
+		var mitadAncho = canvas.width/2;
+		var mitadAlto = canvas.height/2;
+
+		//limpiamos el primer canvas para que no se vea
+		canvas.width=canvas.width;	
+		
+		//nos posicionamos en el punto medio
+		ctx.translate(mitadAncho, mitadAlto);
+
+		//rotamos los grados que pasemos
+		ctx.rotate(rotacion * Math.PI / 180);
+
+		//una vez cargada la imagen la dibujamos
+		img.onload = function(){
+			ctx.drawImage(img, -mitadAncho, -mitadAlto);
+		}
+
+	}
 
 	function ver(){
 		var dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
