@@ -255,7 +255,6 @@
 	
 	<!-- campos ocultos para volver al filtro en la misma posicion y ver los resultados del cambio -->
 	<input type="hidden" name="filtroNick" value="<?= $body['filtroNick'] ?>">
-	<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
 	<input type="hidden" name="filtroMail" value="<?= $body['filtroMail'] ?>">
 	<input type="hidden" name="filtroEstado" value="<?= $body['filtroEstado'] ?>">
 	<input type="hidden" name="idUsuario" value="<?= $body['usuario']->id ?>">

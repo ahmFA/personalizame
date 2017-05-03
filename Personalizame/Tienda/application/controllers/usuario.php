@@ -48,20 +48,18 @@ class Usuario extends CI_Controller{
 	
 	
 	public function listar() {
-		enmarcar($this, 'usuario/filtrar');
+		$this->listarPost();
 	}
 	
 	public function listarPost() {
 		$filtroNick = isset($_POST['filtroNick']) ? $_POST['filtroNick'] : '';
-		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
 		$filtroMail = isset($_POST['filtroMail']) ? $_POST['filtroMail'] : '';
 		$filtroEstado = isset($_POST['filtroEstado']) ? $_POST['filtroEstado'] : '';
 		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
 		
 		$this->load->model('usuario_model');
-		$datos['body']['usuarios'] = $this->usuario_model->getFiltrados($filtroNick,$filtroNombre,$filtroMail,$filtroEstado);
+		$datos['body']['usuarios'] = $this->usuario_model->getFiltrados($filtroNick,$filtroMail,$filtroEstado);
 		$datos['body']['filtroNick'] = $filtroNick;
-		$datos['body']['filtroNombre'] = $filtroNombre;
 		$datos['body']['filtroMail'] = $filtroMail;
 		$datos['body']['filtroEstado'] = $filtroEstado;
 		$datos['body']['mensajeBanner'] = $mensajeBanner;
@@ -70,7 +68,7 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function baja() {
-		enmarcar($this, 'usuario/filtrar');
+		$this->listarPost();
 	}
 	
 	public function bajaPost() {
@@ -83,7 +81,7 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function alta() {
-		enmarcar($this, 'usuario/filtrar');
+		$this->listarPost();
 	}
 	
 	public function altaPost() {
@@ -96,13 +94,12 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function modificar() {
-		enmarcar($this, 'usuario/filtrar');
+		$this->listarPost();
 	}
 	
 	public function modificarPost() {
 		$idUsuario = $_POST['idUsuario'];
 		$filtroNick = isset($_POST['filtroNick']) ? $_POST['filtroNick'] : '';
-		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
 		$filtroMail = isset($_POST['filtroMail']) ? $_POST['filtroMail'] : '';
 		$filtroEstado = isset($_POST['filtroEstado']) ? $_POST['filtroEstado'] : '';
 		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
@@ -112,7 +109,6 @@ class Usuario extends CI_Controller{
 	
 		//los siguientes datos solo van para mantener el filtro y mostrar despues el resultado
 		$datos['body']['filtroNick'] = $filtroNick;
-		$datos['body']['filtroNombre'] = $filtroNombre;
 		$datos['body']['filtroMail'] = $filtroMail;
 		$datos['body']['filtroEstado'] = $filtroEstado;
 		$datos['body']['mensajeBanner'] = $mensajeBanner;

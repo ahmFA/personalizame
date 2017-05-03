@@ -46,7 +46,7 @@ class Texto extends CI_Controller{
 	}
 		
 	public function listar() {
-		enmarcar($this, 'texto/filtrar');
+		$this->listarPost();
 	}
 	
 	public function listarPost() {
@@ -64,7 +64,7 @@ class Texto extends CI_Controller{
 	}
 	
 	public function borrar() {
-		enmarcar($this, 'texto/filtrar');
+		$this->listarPost();
 	}
 	
 	public function borrarPost() {
@@ -77,7 +77,7 @@ class Texto extends CI_Controller{
 	}
 	
 	public function modificar() {
-		enmarcar($this, 'texto/filtrar');
+		$this->listarPost();
 	}
 	
 	public function modificarPost() {

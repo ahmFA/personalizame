@@ -18,11 +18,6 @@
 		</div>
 		
 		<div class="form-group col-xs-2">
-			<label for="idFiltroNombre">Nombre </label>  
-			<input class="form-control" type="text" id="idFiltroNombre" name="filtroNombre" value="<?= $body['filtroNombre']?>">
-		</div>
-		
-		<div class="form-group col-xs-2">
 			<label for="idFiltroEstado">Estado </label>  
 			<select class="form-control" id="idFiltroEstado" name="filtroEstado">  
 				<option value=''>Todos</option>     	
@@ -79,7 +74,6 @@
 				<form id="idFormEdit" action="<?=base_url()?>usuario/modificarPost" method="post">
 					<input type="hidden" name="idUsuario" value="<?= $usuario->id ?>">
 					<input type="hidden" name="filtroNick" value="<?= $body['filtroNick'] ?>">
-					<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
 					<input type="hidden" name="filtroMail" value="<?= $body['filtroMail'] ?>">
 					<input type="hidden" name="filtroEstado" value="<?= $body['filtroEstado'] ?>">
 					<input type="hidden" name="mensajeBanner" value="Modificado el usuario <?= $usuario->nick ?>">
@@ -91,7 +85,6 @@
 				<form id="idFormBaja" action="<?=base_url()?>usuario/bajaPost" method="post">
 					<input type="hidden" name="idUsuario" value="<?= $usuario->id?>">
 					<input type="hidden" name="filtroNick" value="<?= $body['filtroNick'] ?>">
-					<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
 					<input type="hidden" name="filtroMail" value="<?= $body['filtroMail'] ?>">
 					<input type="hidden" name="filtroEstado" value="<?= $body['filtroEstado'] ?>">
 					<input type="hidden" name="mensajeBanner" value="Dado de Baja el usuario <?= $usuario->nick ?>">
@@ -103,7 +96,6 @@
 				<form id="idFormAlta" action="<?=base_url()?>usuario/altaPost" method="post">
 					<input type="hidden" name="idUsuario" value="<?= $usuario->id?>">
 					<input type="hidden" name="filtroNick" value="<?= $body['filtroNick'] ?>">
-					<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
 					<input type="hidden" name="filtroMail" value="<?= $body['filtroMail'] ?>">
 					<input type="hidden" name="filtroEstado" value="<?= $body['filtroEstado'] ?>">
 					<input type="hidden" name="mensajeBanner" value="Dado de Alta el usuario <?= $usuario->nick ?>">

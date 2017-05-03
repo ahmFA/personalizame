@@ -26,7 +26,7 @@ class Fuente extends CI_Controller{
 	
 	
 	public function listar() {
-		enmarcar($this, 'fuente/filtrar');
+		$this->listarPost();
 	}
 	
 	public function listarPost() {
@@ -42,7 +42,7 @@ class Fuente extends CI_Controller{
 	}
 	
 	public function modificar() {
-		enmarcar($this, 'fuente/filtrar');
+		$this->listarPost();
 	}
 	
 	public function modificarPost() {
@@ -71,7 +71,7 @@ class Fuente extends CI_Controller{
 	}
 	
 	public function borrar() {
-		enmarcar($this, 'fuente/filtrar');
+		$this->listarPost();
 	}
 	
 	public function borrarPost() {

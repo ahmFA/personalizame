@@ -70,8 +70,8 @@ class Usuario_model extends CI_Model{
 	/*
 	 * recuperar los usuarios que cumplen el filtro
 	 */
-	public function getFiltrados($filtroNick,$filtroNombre,$filtroMail,$filtroEstado){
-		return R::find('usuario','where nick like ? and (nombre like ? or apellido1 like ? or apellido2 like ?) and (mail1 like ? or mail2 like ?) and estado like ? order by perfil,nick',['%'.$filtroNick.'%','%'.$filtroNombre.'%','%'.$filtroNombre.'%','%'.$filtroNombre.'%','%'.$filtroMail.'%','%'.$filtroMail.'%','%'.$filtroEstado.'%']);
+	public function getFiltrados($filtroNick,$filtroMail,$filtroEstado){
+		return R::find('usuario','where nick like ? and (mail1 like ? or mail2 like ?) and estado like ? order by perfil,nick',['%'.$filtroNick.'%','%'.$filtroMail.'%','%'.$filtroMail.'%','%'.$filtroEstado.'%']);
 	}
 	
 	/*

@@ -26,7 +26,7 @@ class Tamano extends CI_Controller{
 	
 	
 	public function listar() {
-		enmarcar($this, 'tamano/filtrar');
+		$this->listarPost();
 	}
 	
 	public function listarPost() {
@@ -42,7 +42,7 @@ class Tamano extends CI_Controller{
 	}
 	
 	public function modificar() {
-		enmarcar($this, 'tamano/filtrar');
+		$this->listarPost();
 	}
 	
 	public function modificarPost() {
@@ -71,7 +71,7 @@ class Tamano extends CI_Controller{
 	}
 	
 	public function borrar() {
-		enmarcar($this, 'tamano/filtrar');
+		$this->listarPost();
 	}
 	
 	public function borrarPost() {

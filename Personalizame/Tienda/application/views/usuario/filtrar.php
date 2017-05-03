@@ -17,11 +17,6 @@
 		</div>
 		
 		<div class="form-group col-xs-2">
-			<label for="idFiltroNombre">Nombre </label>  
-			<input class="form-control" type="text" id="idFiltroNombre" name="filtroNombre">
-		</div>
-		
-		<div class="form-group col-xs-2">
 			<label for="idFiltroEstado">Estado </label>  
 			<select class="form-control" id="idFiltroEstado" name="filtroEstado">  
 				<option value=''>Todos</option>       	
