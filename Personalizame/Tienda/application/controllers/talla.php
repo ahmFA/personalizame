@@ -118,8 +118,7 @@ class Talla extends CI_Controller{
 		$this->load->model('talla_model');
 		$this->talla_model->editar($id, $nombre);
 			
-		$datos['tallas'] = $this->talla_model->listar();
-		enmarcar($this, 'talla/listar', $datos);
+		$this->listar();
 	}
 }
 

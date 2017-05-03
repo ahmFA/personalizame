@@ -115,8 +115,7 @@ class Color extends CI_Controller{
 		$this->load->model('color_model');
 		$this->color_model->editar($id, $nombre, $valor);
 			
-		$datos['colores'] = $this->color_model->listar();
-		enmarcar($this, 'color/listar', $datos);
+		$this->listar();
 	}
 }
 

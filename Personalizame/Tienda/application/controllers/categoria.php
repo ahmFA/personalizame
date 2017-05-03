@@ -112,8 +112,7 @@ class Categoria extends CI_Controller{
 		$this->load->model('categoria_model');
 		$this->categoria_model->editar($id, $nombre);
 			
-		$datos['categorias'] = $this->categoria_model->listar();
-		enmarcar($this, 'categoria/listar', $datos);
+		$this->listar();
 	}
 }
 
