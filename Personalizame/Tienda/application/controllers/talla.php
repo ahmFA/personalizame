@@ -102,8 +102,7 @@ class Talla extends CI_Controller{
 			$this->talla_model->borrar($idTalla);
 		}
 
-		$datos['tallas'] = $this->talla_model->listar();
-		enmarcar($this, 'talla/listar', $datos);
+		$this->listar();
 	}
 
 	public function editar(){

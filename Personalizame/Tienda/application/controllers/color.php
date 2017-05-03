@@ -98,8 +98,7 @@ class Color extends CI_Controller{
 			$this->color_model->borrar($idColor);				
 		}
 		
-		$datos['colores'] = $this->color_model->listar();
-		enmarcar($this, 'color/listar', $datos);
+		$this->listar();
 	}
 
 	public function editar(){
