@@ -128,22 +128,50 @@ var conexion;
 		<input class="btn btn-primary" id="idBotonAplicar" type="button" value="Aplicar" onclick="inicializar();">
 		<input class="btn btn-primary" id="idBotonAplicar" type="button" value="Ver como queda" onclick="ver();">
 		<br/><br/><br/>
-		<div id="pruebasContainer" style="width: 150px; height: 250px; border: 1px solid black; padding:10px 10px 10px 10px; text-align: center; display:table; background-color: aqua;">
+		<div id="kk"></div>
+		<div id="kk2"></div>
+		<div id="pruebasContainer" style="position: relative;width: 150px; height: 250px; border: 1px solid black; padding:10px 10px 10px 10px; text-align: center; display:table; background-color: aqua;">
+			<div id="marcoCanvas" style="border: 1px solid green;">
+			<img src="<?=base_url()?>assets/img/girar.png" height="8px" width="8px" style="float: left">
+			<img src="<?=base_url()?>assets/img/cerrar.png" height="8px" width="8px" style="float: right">
 			<canvas id="pruebasTexto" width="150" height="250" style="border:1px solid #d3d3d3;display: inline-block">
 			Your browser does not support the HTML5 canvas tag.</canvas>
+			<img src="<?=base_url()?>assets/img/mover.png" height="8px" width="8px" style="float: left">
+			<img src="<?=base_url()?>assets/img/redimensionar.png" height="8px" width="8px" style="float: right">
+			</div>
 		</div> 
 		Rotacion <input type="text" id="idRotacion" name="rotacion" value="0" size="3" readonly="readonly">
 		<input id="idSlider" type ="range" min ="0" max="360" step ="10" value ="0" onchange="updateRotacion(this.value);"/>
 		
 	</div>
 </div>
+<script>
+$(document).ready(function(){
+	$('#pruebasTexto').on({
+		'mousedown' : function (e) { 
+	   var x = e.offsetX;
+	   var y = e.offsetY;
 
+	   var div = document.getElementById("kk");
+	   div.innerHTML = "x: " + x + " y: " + y; 
+	}
+	}),
+
+	$('.container').on({
+		'mousemove' : function (e) { 
+	   var x = e.pageX;
+	   var y = e.pageY;
+
+	   var div = document.getElementById("kk2");
+	   div.innerHTML = "x: " + x + " y: " + y; 
+	}
+	});
+});
+</script>
 <script type="text/javascript">
-
-
 	var canvas,ctx,texto,fuente,tamano,rotacion,hipo,dataUrl;
 	var anchoTexto,altoTexto,anchoCanvas,altoCanvas,Y_txt_centrado,X_txt_centrado;
-
+	
 	function updateRotacion(val) {
     	document.getElementById('idRotacion').value=val; 
     	inicializar();
@@ -240,5 +268,5 @@ var conexion;
 	}
 
 	//el canvas es dragable y no puede salir del contenedor
-	$("#pruebasTexto").draggable({ containment: "#pruebasContainer" });
+	//$("#marcoCanvas").draggable({ containment: "#pruebasContainer" });
 </script>

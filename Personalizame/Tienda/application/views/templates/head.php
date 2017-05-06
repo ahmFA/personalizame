@@ -40,7 +40,7 @@
         <link href="<?=base_url()?>assets/vendors/farbtastic/farbtastic.css" rel="stylesheet">
         <link href="<?=base_url()?>assets/vendors/bower_components/chosen/chosen.min.css" rel="stylesheet">
         <link href="<?=base_url()?>assets/vendors/summernote/dist/summernote.css" rel="stylesheet">      
-            
+           <script src="<?=base_url()?>assets/js/jquery.min.js"> </script>
         <!-- CSS -->
        <link href="<?=base_url()?>assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="<?=base_url()?>assets/css/app.min.1.css" rel="stylesheet">
