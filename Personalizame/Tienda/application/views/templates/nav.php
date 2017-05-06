@@ -557,6 +557,18 @@
                             <li><a href="<?= base_url()?>tamano/borrar">Baja</a></li>
                         </ul>
                     </li>
+                    
+                    <li class="sub-menu">
+                        <a href=""><i class="zmdi zmdi-sort-asc"></i> Diseño</a>
+
+                        <ul>
+                            <li><a href="<?= base_url()?>diseno/crear">Alta</a></li>
+                            <li><a href="<?= base_url()?>diseno/listar">Listado</a></li>
+                            <li><a href="<?= base_url()?>diseno/modificar">Modificación</a></li>
+                            <li><a href="<?= base_url()?>diseno/borrar">Baja</a></li>
+                        </ul>
+                    </li>
+                    
                      <li class="sub-menu">
                         <a href=""><i class="zmdi zmdi-shopping-basket"></i> Pedidos</a>
 
