@@ -31,8 +31,8 @@ class Diseno extends CI_Controller{
 		$coordenada_y = $_POST['coordenada_y'];
 		$profundidad_z = $_POST['profundidad_z'];
 		$id_texto = $_POST['id_texto'];
-		$precio = $_POST['precio']; //precio de imagen + texto
-		$coste = $_POST['coste']; //coste de imagen + texto 
+		//$precio = $_POST['precio']; //precio de imagen + texto
+		//$coste = $_POST['coste']; //coste de imagen + texto 
 		$fecha_alta = strftime("%Y/%m/%d");  //fecha actual en Formato(YYYY/MM/DD)
 		$fecha_baja = ""; // será vacio al darse de alta
 		$motivo_baja = ""; // será vacio al darse de alta
@@ -40,7 +40,7 @@ class Diseno extends CI_Controller{
 		$id_sesion = $_POST['id_sesion']; // para tener un id único en caso de que el usuario no se loguee y sea Invitado
 		
 		$this->load->model('diseno_model');
-		$this->diseno_model->crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto,$precio,$coste,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
+		$this->diseno_model->crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
 		$datos['body']['nombre_diseno'] = $nombre_diseno;
 		$this->load->view('diseno/XcrearPost',$datos);
 
@@ -116,8 +116,8 @@ class Diseno extends CI_Controller{
 		$coordenada_y = $_POST['coordenada_y'];
 		$profundidad_z = $_POST['profundidad_z'];
 		$id_texto = $_POST['id_texto'];
-		$precio = $_POST['precio']; //precio de imagen + texto
-		$coste = $_POST['coste']; //coste de imagen + texto		
+		//$precio = $_POST['precio']; //precio de imagen + texto
+		//$coste = $_POST['coste']; //coste de imagen + texto		
 		
 		$this->load->model('diseno_model');
 		$this->diseno_model->modificar($id_diseno,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto,$precio,$coste);

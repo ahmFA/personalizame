@@ -7,7 +7,7 @@ class Diseno_model extends CI_Model{
 	/*
 	 * crear el diseño
 	 */
-	public function crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto,$precio,$coste,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion){
+	public function crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion){
 		$diseno = R::dispense('diseno');
 		
 		$diseno -> id_usuario = $id_usuario;
@@ -19,8 +19,8 @@ class Diseno_model extends CI_Model{
 		$diseno -> coordenada_x = $coordenada_x;
 		$diseno -> coordenada_y = $coordenada_y;
 		$diseno -> profundidad_z = $profundidad_z;
-		$diseno -> precio = $precio;
-		$diseno -> coste = $coste;
+		//$diseno -> precio = $precio;
+		//$diseno -> coste = $coste;
 		$diseno -> fecha_alta = $fecha_alta;
 		$diseno -> fecha_baja = $fecha_baja;
 		$diseno -> motivo_baja = $motivo_baja;
@@ -32,6 +32,9 @@ class Diseno_model extends CI_Model{
 		
 		$imagen -> xownDisenolist[] = $diseno; 
 		$texto -> xownDisenolist[] = $diseno;  
+		
+		$diseno -> precio = $imagen->precio + $texto->precio;
+		$diseno -> coste = $imagen->coste + $texto->coste;
 		
 		R::store($imagen);
 		R::store($texto);
@@ -76,7 +79,7 @@ class Diseno_model extends CI_Model{
 		R::close();
 	}
 
-	public function modificar($id_diseno,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto,$precio,$coste){
+	public function modificar($id_diseno,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto){
 		$diseno = R::load('diseno',$id_diseno);
 
 		$diseno -> nombre_diseno = $nombre_diseno;
@@ -87,14 +90,15 @@ class Diseno_model extends CI_Model{
 		$diseno -> coordenada_x = $coordenada_x;
 		$diseno -> coordenada_y = $coordenada_y;
 		$diseno -> profundidad_z = $profundidad_z;
-		$diseno -> precio = $precio;
-		$diseno -> coste = $coste;
 		
 		$imagen = R::load('imagen', $id_imagen);
 		$texto = R::load('texto', $id_texto);
 		
 		$imagen -> xownDisenolist[] = $diseno; 
 		$texto -> xownDisenolist[] = $diseno;  
+		
+		$diseno -> precio = $imagen->precio + $texto->precio;
+		$diseno -> coste = $imagen->coste + $texto->coste;
 		
 		R::store($imagen);
 		R::store($texto);
