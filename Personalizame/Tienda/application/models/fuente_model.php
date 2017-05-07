@@ -52,6 +52,13 @@ class Fuente_model extends CI_Model{
 	public function getFiltrados($filtroNombre){
 		return R::find('fuente','where nombre like ? order by nombre',['%'.$filtroNombre.'%']);
 	}
+	
+	/*
+	 * Lista un número determinado de tamaños
+	 */
+	public function getFiltradosConLimite($filtroNombre, $inicio){
+		return R::find('fuente','where nombre like ? order by nombre LIMIT ?,5',['%'.$filtroNombre.'%', $inicio]);
+	}
 
 	/*
 	 * Borrar la fuente que se indique

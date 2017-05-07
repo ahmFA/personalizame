@@ -20,20 +20,20 @@ class Usuario extends CI_Controller{
 		$pwd = $_POST['pwd'];
 		$perfil = $_POST['perfil'];
 		$estado = "Alta"; //se cambiará a Baja cuando se quiera eliminar el usuario
-		$nombre = $_POST['nombre'];
-		$apellido1 = $_POST['apellido1'];
-		$apellido2 = $_POST['apellido2'];
-		$telefono1 = $_POST['telefono1'];
-		$telefono2 = $_POST['telefono2'];
+		$nombre = isset($_POST['nombre'])? $_POST['nombre'] : '';
+		$apellido1 = isset($_POST['apellido1']) ? $_POST['apellido1'] : '' ;
+		$apellido2 = isset($_POST['apellido2']) ? $_POST['apellido2'] : '' ;
+		$telefono1 = isset($_POST['telefono1']) ? $_POST['telefono1'] : '';
+		$telefono2 = isset($_POST['telefono2']) ? $_POST['telefono2'] : '';
 		$mail1 = $_POST['mail1'];
 		$mail2 = $_POST['mail2'];
-		$comentario_contacto = $_POST['comentario_contacto'];
-		$direccion = $_POST['direccion'];
-		$cp = $_POST['cp'];
-		$localidad = $_POST['localidad'];
+		$comentario_contacto = isset($_POST['comentario_contacto']) ? $_POST['comentario_contacto'] : '';
+		$direccion = isset($_POST['direccion']) ? $_POST['direccion'] : '';
+		$cp = isset($_POST['cp']) ? $_POST['cp'] : '';
+		$localidad = isset($_POST['localidad']) ? $_POST['localidad'] : '';
 		$provincia = $_POST['provincia'];
 		$pais = $_POST['pais'];
-		$comentario_direccion = $_POST['comentario_direccion'];
+		$comentario_direccion = isset($_POST['comentario_direccion']) ? $_POST['comentario_direccion'] : '';
 		$descuento = 0; //valor cero por defecto al darse el alta
 		$fecha_alta = strftime("%Y/%m/%d");  //fecha actual en Formato(YYYY/MM/DD)
 		$fecha_baja = ""; // será vacio al darse de alta
@@ -63,6 +63,35 @@ class Usuario extends CI_Controller{
 		$datos['body']['filtroMail'] = $filtroMail;
 		$datos['body']['filtroEstado'] = $filtroEstado;
 		$datos['body']['mensajeBanner'] = $mensajeBanner;
+		
+		// PAGINACIÓN
+		
+		$tamanio_pagina = 5;
+		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
+		$num_usuarios = count($datos['body']['usuarios']);
+		$total_paginas = ceil($num_usuarios/$tamanio_pagina);
+		$inicio = ($pagina-1)*$tamanio_pagina;
+		$botones = '';
+		
+		for($i = 1; $i<= $total_paginas; $i++){
+			if($i == $pagina){
+				$botones .= '<li class="active" aria-disabled="false" aria-selected="false"><a
+						data-page="'.$i.'" class="button">'.$i.'</a></li>';
+			}else{
+				$botones .= '<li aria-disabled="false" aria-selected="false"><a
+						data-page="'.$i.'" class="button" href="?pagina='.$i.'&filtroNick='.$filtroNick.'&filtroMail='.$filtroMail.'&filtroEstado='.$filtroEstado.'">'.$i.'</a></li>';
+			}
+		
+		}
+		
+		$datos['previo'] = ($pagina == 1)? 'disabled': '';
+		$datos['next'] = ($pagina == $total_paginas)? 'disabled': '';
+		
+		$datos['botones'] = $botones;
+		$datos['paginaAnt'] = $pagina-1;
+		$datos['paginaSig'] = $pagina+1;
+		
+		$datos['usuarios'] = $this->usuario_model->getFiltradosConLimite($filtroNick,$filtroMail,$filtroEstado, $inicio);
 	
 		enmarcar($this, 'usuario/listar', $datos);
 	}
@@ -72,12 +101,16 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function bajaPost() {
-		$idUsuario = $_POST['idUsuario'];
+		$idUsuarios = $_POST['idUsuarios'];
 	
 		$this->load->model('usuario_model');
-		$this->usuario_model->estadoBaja($idUsuario);
+		
+		foreach ($idUsuarios as $idUsuario){
+			$this->usuario_model->estadoBaja($idUsuario);
+		}
+		
 		//llamo a listarPost para que mantenga el mismo filtro y se vea la modificacion
-		$this->listarPost();
+		enmarcar($this, 'usuario/borrarPost');
 	}
 	
 	public function alta() {
@@ -139,7 +172,7 @@ class Usuario extends CI_Controller{
 		$this->load->model('usuario_model');
 		$this->usuario_model->modificar($idUsuario,$nick,$pwd,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
-		$this->listarPost();
+		enmarcar($this, 'usuario/borrarPost');
 	}
 	
 	public function login() {

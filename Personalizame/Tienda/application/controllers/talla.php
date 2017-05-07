@@ -102,7 +102,7 @@ class Talla extends CI_Controller{
 			$this->talla_model->borrar($idTalla);
 		}
 
-		$this->listar();
+		enmarcar($this, 'talla/borrarPost');
 	}
 
 	public function editar(){
@@ -118,7 +118,7 @@ class Talla extends CI_Controller{
 		$this->load->model('talla_model');
 		$this->talla_model->editar($id, $nombre);
 			
-		$this->listar();
+		enmarcar($this, 'talla/borrarPost');
 	}
 }
 

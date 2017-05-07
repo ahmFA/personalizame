@@ -138,7 +138,7 @@ class Articulo extends CI_Controller{
 				$this->articulo_model->borrar($idArt);
 			}
 		}
-		$this->listar();
+		enmarcar($this, 'articulo/borrarPost');
 	}
 	
 	public function editar(){
@@ -185,7 +185,7 @@ class Articulo extends CI_Controller{
 			}
 			
 		//}
-		$this->listar();
+			enmarcar($this, 'articulo/borrarPost');
 	}
 }
 

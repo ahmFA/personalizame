@@ -64,6 +64,13 @@ class Texto_model extends CI_Model{
 		//mirar como hacerlo para los casos en que venga un idUsuario ya que no puede ser Like sino un igual
 		return R::find('texto','where datos_texto like ? and id_usuario like ? order by id',['%'.$filtroDatosTexto.'%','%'.$filtroUsuario.'%']);
 	}
+	
+	/*
+	 * Lista un número determinado de tamaños
+	 */
+	public function getFiltradosConLimite($filtroUsuario,$filtroDatosTexto, $inicio){
+		return R::find('texto','where datos_texto like ? and id_usuario like ? order by id LIMIT ?,5',['%'.$filtroDatosTexto.'%','%'.$filtroUsuario.'%' ,$inicio]);
+	}
 
 	/*
 	 * Borrar el texto que se indique

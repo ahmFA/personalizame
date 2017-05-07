@@ -18,11 +18,18 @@ var conexion;
 	function crear() {
 		conexion = new XMLHttpRequest();
 
-		var datosSerializados = serialize(document.getElementById("idForm1"));
+		//var datosSerializados = serialize(document.getElementById("idForm1"));
+		var datos = 'nick='+document.getElementById('idNick').value+'&pwd='+document.getElementById('idPwd').value+'&perfil='+document.getElementById('idPerfil').value+
+		'&nombre='+document.getElementById('idNombre').value+'&apellido1='+document.getElementById('idApellido1').value
+		+'&apellido2='+document.getElementById('idApellido2').value+'&telefono1='+document.getElementById('idTelefono1').value
+		+'&telefono2='+document.getElementById('idTelefono2').value+'&mail1='++document.getElementById('idMail1').value+'&mail2='+document.getElementById('idMail2').value
+		+'&comentario_contacto='+document.getElementById('idComentarioContacto').value+'&direccion='+document.getElementById('idDireccion').value
+		+'&cp='+document.getElementById('idCP').value+'&localidad='+document.getElementById('idLocalidad').value
+		+'&provincia='+document.getElementById('idProvincia').value+'&pais='+document.getElementById('idPais').value+'&comentario_direccion='+document.getElementById('idComentarioDireccion').value;
 		conexion.open('POST', '<?=base_url() ?>usuario/crearPost', true);
 		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		conexion.send(datosSerializados);
+		conexion.send(datos);
 		conexion.onreadystatechange = function() {
 			if (conexion.readyState==4 && conexion.status==200) {
 				accionAJAX();
@@ -280,6 +287,196 @@ var conexion;
 
 </script>
 
+<div class="card">
+	<div class="card-header">
+		<h2>
+			Crea un nuevo usuario<small>Introduce el filtro que desees.</small>
+		</h2>
+	</div>
+	
+	<div id="idBanner"></div>
+	
+	<form class="row" id="idForm1" role="form"
+			action="<?= base_url() ?>usuario/crearPost" method="post">
+		<div class="bootgrid-header container-fluid">
+		<div class="col-sm-12 m-b-15">
+			<h3>Datos de usuario</h3>
+			</div>
+			<br/>
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idNick">Nick</label>
+					<input type="text" class="search-field form-control"
+						 id="idNick" name="nick" maxlength="20" required="required" placeholder="completa este campo" title="El Nick debe contener 3 caracteres como mínimo">
+					
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idPwd">Contraseña </label> 	 
+					<input type="password" class="search-field form-control"
+						 id="idPwd" name="pwd" maxlength="20" required="required" placeholder="completa este campo" title="La Password debe contener 5 caracteres como mínimo">
+				</div>
+			</div>			 
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idPerfil">Perfil </label>
+					<div class="select"> 	 
+					<select class="form-control" id="idPerfil" name="perfil">
+						<?php foreach ($perfiles as $perfil): ?>
+		 					<option value='<?= $perfil?>'><?= $perfil?></option>
+						<?php endforeach;?>
+					</select>
+					</div>
+				</div>
+				
+			</div>
+		
+		
+		
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idNombre">Nombre </label>
+					<input type="text" class="search-field form-control"
+						 id="idNombre"  name="nombre" maxlength="35" title="El Nombre debe contener entre 2 y 35 letras">
+					
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idApellido1">Apellido 1 </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idApellido1"  name="apellido1" maxlength="35" title="El Apellido debe contener entre 2 y 35 letras">
+				</div>
+			</div>			 
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idApellido2">Apellido 2 </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idApellido2"  name="apellido2" maxlength="35" title="El Apellido debe contener entre 2 y 35 letras">
+				</div>
+				
+			</div>
+			<br/><br/>
+			<div class="col-sm-12 m-b-15">
+			<h3>Datos de contacto</h3>
+			</div>
+			<br/>
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idTelefono1">Telefono </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idTelefono1" name="telefono1" maxlength="9" title="El Teléfono debe contener 9 dígitos y empezar por 6-9">
+				</div>
+				
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idTelefono2">Telefono alternativo </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idTelefono2" name="telefono2" maxlength="9" title="El Teléfono debe contener 9 dígitos y empezar por 6-9">
+					
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-group fg-line">
+					<label for="idMail1">Mail </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idMail1" name="mail1" maxlength="40" required="required" placeholder="completa este campo" title="El Correo debe contener @ y . dominio">
+				</div>
+			</div>			 
+			<div class="col-sm-6">
+				<div class="form-group fg-line">
+					<label for="idMail2">Mail alternativo </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idMail2" name="mail2" maxlength="40" required="required" placeholder="completa este campo" title="El Correo debe contener @ y . dominio">
+				</div>
+				
+			</div>
+			<div class="col-sm-12">
+				<div class="form-group fg-line">
+					<label for="idComentarioContacto">Comentario de contacto </label>
+					<textarea class="form-control" id="idComentarioContacto" rows="3" name="comentario_contacto" maxlength="200">
+					</textarea>
+				</div>	
+			</div>
+			<br/><br/>
+			<div class="col-sm-12 m-b-15">
+			<h3>Datos de dirección</h3>
+			</div>
+			<br/>
+			<div class="col-sm-8">
+				<div class="form-group fg-line">
+					<label for="idDireccion">Dirección </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idDireccion" name="direccion" maxlength="60">
+				</div>
+				
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idCP">Código Postal </label>
+					<input type="text" class="search-field form-control"
+						 id="idCP" name="cp" maxlength="5" title="El C.P. debe contener 5 dígitos">
+					
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-group fg-line">
+					<label for="idLocalidad">Localidad </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idLocalidad" id="idLocalidad" name="localidad" maxlength="35" >
+				</div>
+			</div>			 
+			<div class="col-sm-3">
+				<div class="form-group fg-line">
+					<label for="idProvincia">Provincia </label>
+					<div class="select"> 
+					<select class="form-control"  id="idProvincia" name="provincia">
+						<option value=' '>Seleccione una</option>       	
+					 		<?php foreach ($provincias as $provincia): ?>
+					 			<option value='<?= $provincia?>'><?= $provincia?></option>
+							<?php endforeach;?>
+					</select>
+					</div>
+				</div>
+				
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group fg-line">
+					<label for="idPais">Pais </label>
+					<div class="select">	 
+					<select class="form-control"  id="idPais" name="pais">
+						<?php foreach ($paises as $pais): ?>
+			 				<option value='<?= $pais?>'><?= $pais?></option>
+						<?php endforeach;?>
+					</select>
+					</div>
+				</div>
+				
+			</div>
+			<div class="col-sm-12">
+				<div class="form-group fg-line">
+					<label for="idComentarioDireccion">Comentario Dirección </label>
+					<textarea class="form-control" id="idComentarioDireccion" rows="3" name="comentario_direccion" maxlength="200">
+					</textarea>
+				</div>	
+			</div>
+
+				<div class="col-sm-3">
+					<button class="btn btn-primary btn-sm m-t-10"
+						onclick="validarTodo()" id="idBotonEnviar">Guardar</button>
+				</div>
+			
+			
+			
+			
+		</div>
+	</form>
+</div>
+
+<!-- **************************     ANTIGUO      ***************************** -->
+<!-- 
 <div class="container">
 	<div id="idBanner"></div>
 	<div class="form-group col-xs-12">
@@ -402,3 +599,5 @@ var conexion;
 	
 	</form>
 </div>
+
+ -->

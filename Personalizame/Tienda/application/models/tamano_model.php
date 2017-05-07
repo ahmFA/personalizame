@@ -52,7 +52,14 @@ class Tamano_model extends CI_Model{
 	public function getFiltrados($filtroNombre){
 		return R::find('tamano','where nombre like ? order by nombre',['%'.$filtroNombre.'%']);
 	}
-
+	
+	/*
+	 * Lista un número determinado de tamaños
+	 */
+	public function getFiltradosConLimite($filtroNombre, $inicio){
+		return R::find('tamano','where nombre like ? order by nombre LIMIT ?,5',['%'.$filtroNombre.'%', $inicio]);
+	}
+	
 	/*
 	 * Borrar el tamaño que se indique
 	 */

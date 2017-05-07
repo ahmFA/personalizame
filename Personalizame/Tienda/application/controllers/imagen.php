@@ -143,7 +143,7 @@ class Imagen extends CI_Controller{
 		//chmod($directorio.$nomImagen, 666);
 		//unlink($fichero);
 
-		$this->listar();
+		enmarcar($this, 'imagen/borrarPost');
 	}
 
 	public function editar(){
@@ -191,7 +191,7 @@ class Imagen extends CI_Controller{
 				
 		//}
 		
-		$this->listar();
+			enmarcar($this, 'imagen/borrarPost');
 	}
 }
 

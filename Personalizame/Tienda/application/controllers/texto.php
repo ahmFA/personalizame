@@ -59,6 +59,35 @@ class Texto extends CI_Controller{
 		$datos['body']['filtroDatosTexto'] = $filtroDatosTexto;
 		$datos['body']['filtroUsuario'] = $filtroUsuario;
 		$datos['body']['mensajeBanner'] = $mensajeBanner;
+		
+		// PAGINACIÓN
+		
+		$tamanio_pagina = 5;
+		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
+		$num_textos = count($datos['body']['textos']);
+		$total_paginas = ceil($num_textos/$tamanio_pagina);
+		$inicio = ($pagina-1)*$tamanio_pagina;
+		$botones = '';
+		
+		for($i = 1; $i<= $total_paginas; $i++){
+			if($i == $pagina){
+				$botones .= '<li class="active" aria-disabled="false" aria-selected="false"><a
+						data-page="'.$i.'" class="button">'.$i.'</a></li>';
+			}else{
+				$botones .= '<li aria-disabled="false" aria-selected="false"><a
+						data-page="'.$i.'" class="button" href="?pagina='.$i.'&filtroDatosTexto='.$filtroDatosTexto.'&filtroUsuario='.$filtroUsuario.'">'.$i.'</a></li>';
+			}
+		
+		}
+		
+		$datos['previo'] = ($pagina == 1)? 'disabled': '';
+		$datos['next'] = ($pagina == $total_paginas)? 'disabled': '';
+		
+		$datos['botones'] = $botones;
+		$datos['paginaAnt'] = $pagina-1;
+		$datos['paginaSig'] = $pagina+1;
+		
+		$datos['textos'] = $this->texto_model->getFiltradosConLimite($filtroUsuario,$filtroDatosTexto, $inicio);
 	
 		enmarcar($this, 'texto/listar', $datos);
 	}
@@ -68,12 +97,16 @@ class Texto extends CI_Controller{
 	}
 	
 	public function borrarPost() {
-		$idTexto = $_POST['idTexto'];
+		$idTextos = $_POST['idTextos'];
 	
 		$this->load->model('texto_model');
-		$this->texto_model->borrar($idTexto);
+		
+		foreach ($idTextos as $idTexto){
+			$this->texto_model->borrar($idTexto);
+		}
+		
 		//llamo a listarPost para que mantenga el mismo filtro y se vea la modificacion
-		$this->listarPost();
+		enmarcar($this, 'texto/borrarPost');
 	}
 	
 	public function modificar() {
@@ -118,7 +151,7 @@ class Texto extends CI_Controller{
 		$this->load->model('texto_model');
 		$this->texto_model->modificar($idTexto,$datosTexto,$idTamano,$idFuente,$rotacion,$idColor,$coordenadaX,$coordenadaY,$disponible);
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
-		$this->listarPost();
+		enmarcar($this, 'texto/borrarPost');
 	}
 }
 ?>

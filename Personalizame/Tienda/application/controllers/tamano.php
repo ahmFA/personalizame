@@ -30,7 +30,8 @@ class Tamano extends CI_Controller{
 	}
 	
 	public function listarPost() {
-		$filtroNombre = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
+		
+		$filtroNombre = isset($_REQUEST['filtroNombre']) ? $_REQUEST['filtroNombre'] : '';
 		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
 		
 		$this->load->model('tamano_model');
@@ -38,11 +39,40 @@ class Tamano extends CI_Controller{
 		$datos['body']['filtroNombre'] = $filtroNombre;
 		$datos['body']['mensajeBanner'] = $mensajeBanner;
 		
+		// PAGINACIÓN
+		
+		$tamanio_pagina = 5;
+		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
+		$num_tamanos = count($datos['body']['tamanos']);
+		$total_paginas = ceil($num_tamanos/$tamanio_pagina);
+		$inicio = ($pagina-1)*$tamanio_pagina;
+		$botones = '';
+		
+		for($i = 1; $i<= $total_paginas; $i++){
+			if($i == $pagina){
+				$botones .= '<li class="active" aria-disabled="false" aria-selected="false"><a
+						data-page="'.$i.'" class="button">'.$i.'</a></li>';
+			}else{
+				$botones .= '<li aria-disabled="false" aria-selected="false"><a
+						data-page="'.$i.'" class="button" href="?pagina='.$i.'&filtroNombre='.$filtroNombre.'">'.$i.'</a></li>';
+			}
+		
+		}
+		
+		$datos['previo'] = ($pagina == 1)? 'disabled': '';
+		$datos['next'] = ($pagina == $total_paginas)? 'disabled': '';
+		
+		$datos['botones'] = $botones;
+		$datos['paginaAnt'] = $pagina-1;
+		$datos['paginaSig'] = $pagina+1;
+		
+		$datos['tamanos'] = $this->tamano_model->getFiltradosConLimite($filtroNombre, $inicio);
+		
 		enmarcar($this, 'tamano/listar', $datos);
 	}
 	
 	public function modificar() {
-		$this->listarPost();
+		enmarcar($this, 'tamano/borrarPost');
 	}
 	
 	public function modificarPost() {
@@ -67,7 +97,7 @@ class Tamano extends CI_Controller{
 		$this->load->model('tamano_model');
 		$this->tamano_model->modificar($idTamano,$nombre);
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado 
-		$this->listarPost();
+		enmarcar($this, 'tamano/borrarPost');
 	}
 	
 	public function borrar() {
@@ -75,12 +105,15 @@ class Tamano extends CI_Controller{
 	}
 	
 	public function borrarPost() {
-		$idTamano = $_POST['idTamano'];
-	
+		$idTamanos = $_POST['idTamanos'];
 		$this->load->model('tamano_model');
-		$this->tamano_model->borrar($idTamano);
+		
+		foreach ($idTamanos as $idTamano){
+			$this->tamano_model->borrar($idTamano);
+		}
+	
 		//llamo a listarPost para que mantenga el mismo filtro y se vea el borrado
-		$this->listarPost();
+		enmarcar($this, 'tamano/borrarPost');
 	}
 }
 ?>

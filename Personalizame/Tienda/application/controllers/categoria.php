@@ -96,7 +96,7 @@ class Categoria extends CI_Controller{
 			$this->categoria_model->borrar($idCategoria);
 		}
 
-		$this->listar();
+		enmarcar($this, 'categoria/borrarPost');
 	}
 
 	public function editar(){
@@ -112,7 +112,7 @@ class Categoria extends CI_Controller{
 		$this->load->model('categoria_model');
 		$this->categoria_model->editar($id, $nombre);
 			
-		$this->listar();
+		enmarcar($this, 'categoria/borrarPost');
 	}
 }
 
