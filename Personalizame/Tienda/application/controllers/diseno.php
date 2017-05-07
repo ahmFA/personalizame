@@ -117,12 +117,10 @@ class Diseno extends CI_Controller{
 		$profundidad_z = $_POST['profundidad_z'];
 		$id_texto = $_POST['id_texto'];
 		$precio = $_POST['precio']; //precio de imagen + texto
-		$coste = $_POST['coste']; //coste de imagen + texto
-		$disponible = $_POST['disponible'];
-		
+		$coste = $_POST['coste']; //coste de imagen + texto		
 		
 		$this->load->model('diseno_model');
-		$this->diseno_model->modificar($id_diseno,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto,$precio,$coste,$disponible);
+		$this->diseno_model->modificar($id_diseno,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto,$precio,$coste);
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
 		$this->listarPost();
 	}

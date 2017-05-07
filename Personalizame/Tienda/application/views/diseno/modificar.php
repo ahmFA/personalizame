@@ -47,8 +47,14 @@
 			<div id="idBanner"></div>
 		</div>
 	</div>	
-	<form name="form1" class="form" id="idForm1" action="<?=base_url() ?>diseño/modificarPost2" method="post">
-	<div class="card-body card-padding">		
+	<form name="form1" class="form" id="idForm1" action="<?=base_url() ?>diseno/modificarPost2" method="post">
+	<div class="card-body card-padding">
+		<!-- campos ocultos para volver al filtro en la misma posicion y ver los resultados del cambio -->
+		<input type="hidden" name="filtroNombreDiseno" value="<?= $body['filtroNombreDiseno'] ?>">
+		<input type="hidden" name="filtroUsuario" value="<?= $body['filtroUsuario'] ?>">
+		<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
+		<input type="hidden" name="id_diseno" value="<?= $body['diseno']->id ?>">
+		
 		<!-- campos ocultos que pasarán los datos del canvas de la imagen -->
 		<input type="hidden" name="tamano_imagen" value="<?= $body['diseno']->tamano_imagen ?>">
 		<input type="hidden" name="rotacion_imagen" value="<?= $body['diseno']->rotacion_imagen ?>">
@@ -77,14 +83,14 @@
 					<label>Ubicación</label>
 					<div class="radio m-b-15">
 				       	<label>
-				           	<input type="radio" name="ubicacion" value="Frontal" checked="checked">
+				           	<input type="radio" name="ubicacion" value="Frontal" <?= ($body['diseno']->ubicacion == "Frontal")?'checked="checked"':""?>>
 				            <i class="input-helper"></i>
 				               	Frontal
 				        </label>
 				    </div>
 				    <div class="radio m-b-15">
 				       	<label>
-				           	<input type="radio" name="ubicacion" value="Trasera">
+				           	<input type="radio" name="ubicacion" value="Trasera" <?= ($body['diseno']->ubicacion == "Trasera")?'checked="checked"':""?>>
 				            <i class="input-helper"></i>
 				               	Trasera
 				        </label>

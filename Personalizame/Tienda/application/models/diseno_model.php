@@ -76,17 +76,19 @@ class Diseno_model extends CI_Model{
 		R::close();
 	}
 
-	public function modificar($id_diseno,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto){
+	public function modificar($id_diseno,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto,$precio,$coste){
 		$diseno = R::load('diseno',$id_diseno);
 
-		$texto -> nombre_diseno = $nombre_diseno;
-		$texto -> comentario_diseno = $comentario_diseno;
-		$texto -> ubicacion = $ubicacion;
+		$diseno -> nombre_diseno = $nombre_diseno;
+		$diseno -> comentario_diseno = $comentario_diseno;
+		$diseno -> ubicacion = $ubicacion;
 		$diseno -> tamano_imagen = $tamano_imagen;
 		$diseno -> rotacion_imagen = $rotacion_imagen;
 		$diseno -> coordenada_x = $coordenada_x;
 		$diseno -> coordenada_y = $coordenada_y;
 		$diseno -> profundidad_z = $profundidad_z;
+		$diseno -> precio = $precio;
+		$diseno -> coste = $coste;
 		
 		$imagen = R::load('imagen', $id_imagen);
 		$texto = R::load('texto', $id_texto);
