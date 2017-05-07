@@ -4,11 +4,11 @@
 		<h4>Introduce el filtro que desees</h4>
 	</div>
 
-	<form id="idFormFiltro" class="form" action="<?= base_url() ?>texto/listarPost" method="post">
+	<form id="idFormFiltro" class="form" action="<?= base_url() ?>diseno/listarPost" method="post">
 		
 		<div class="form-group col-xs-4">
-			<label for="idFiltroDatosTexto">Texto </label>  
-			<input class="form-control" type="text" id="idFiltroDatosTexto" name="filtroDatosTexto" value="<?= $body['filtroDatosTexto'] ?>">
+			<label for="idFiltroNombreDiseno">Diseño </label>  
+			<input class="form-control" type="text" id="idFiltroNombreDiseno" name="filtroNombreDiseno" value="<?= $body['filtroNombreDiseno'] ?>">
 		</div>
 		
 		<div class="form-group col-xs-4">
@@ -32,40 +32,41 @@
 	<?php endif;?>
 	
 	<div class="form-group col-xs-12">
-		<h4>Listado de textos</h4>
+		<h4>Listado de diseños</h4>
 	</div>
 	<table class="table table-striped">
 		<tr>
 			<th>Usuario</th>
+			<th>Nombre Diseño</th>
+			<th>Ubicación</th>
+			<th>Fecha</th>
 			<th>Texto</th>
-			<th>Tamaño</th>
-			<th>Fuente</th>
-			<th>Color</th>
+			<th>Imagen</th>
 			<th colspan="2">Acciones</th>
 		</tr>
-		<?php foreach($body['textos'] as $texto): ?>
+		<?php foreach($body['disenos'] as $diseno): ?>
 		<tr>
-			<td><?= $texto->idUsuario ?></td>
-			<td><?= $texto->datosTexto ?></td>
-			<td><?= $texto->tamano->nombre ?></td>
-			<td><?= $texto->fuente->nombre ?></td>
-			<td><?= $texto->color->nombre ?> </td>
-
+			<td><?= $diseno->id_usuario ?></td>
+			<td><?= $diseno->nombre_diseno ?></td>
+			<td><?= $diseno->ubicacion ?></td>
+			<td><?= $diseno->fecha_alta ?></td>
+			<td><?= $diseno->texto->datos_texto ?></td>
+			<td><?= $diseno->imagen->nombre ?></td>
 			<td>
-				<form id="idFormEdit" action="<?=base_url()?>texto/modificarPost" method="post">
-					<input type="hidden" name="idTexto" value="<?= $texto->id ?>">
-					<input type="hidden" name="filtroDatosTexto" value="<?= $body['filtroDatosTexto'] ?>">
+				<form id="idFormEdit" action="<?=base_url()?>diseno/modificarPost" method="post">
+					<input type="hidden" name="id_diseno" value="<?= $diseno->id ?>">
+					<input type="hidden" name="filtroNombreDiseno" value="<?= $body['filtroNombreDiseno'] ?>">
 					<input type="hidden" name="filtroUsuario" value="<?= $body['filtroUsuario'] ?>">
-					<input type="hidden" name="mensajeBanner" value="Modificado el texto <?= $texto->datosTexto ?>">
+					<input type="hidden" name="mensajeBanner" value="Modificado el diseño <?= $diseno->nombre_diseno ?>">
 					<button class="btn btn-info" title="Modificar" onclick="function f() {document.getElementById('idFormEdit').submit();}"><span class="glyphicon glyphicon-pencil"></span></button>
 				</form>
 			</td>
 			<td>
-				<form id="idFormBorrar" action="<?=base_url()?>texto/borrarPost" method="post">
-					<input type="hidden" name="idTexto" value="<?= $texto->id ?>">
-					<input type="hidden" name="filtroDatosTexto" value="<?= $body['filtroDatosTexto'] ?>">
+				<form id="idFormBorrar" action="<?=base_url()?>diseno/borrarPost" method="post">
+					<input type="hidden" name="id_diseno" value="<?= $diseno->id ?>">
+					<input type="hidden" name="filtroNombreDiseno" value="<?= $body['filtroNombreDiseno'] ?>">
 					<input type="hidden" name="filtroUsuario" value="<?= $body['filtroUsuario'] ?>">
-					<input type="hidden" name="mensajeBanner" value="Borrado el texto <?= $texto->datosTexto ?>">
+					<input type="hidden" name="mensajeBanner" value="Borrado el diseño <?= $diseno->nombre_diseno ?>">
 					<button class="btn btn-danger" title="Borrar" onclick="function f() {document.getElementById('idFormBorrar').submit();}"><span class="glyphicon glyphicon-remove"></span></button>
 				</form>
 			</td>

@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
 <script type="text/javascript">
 var conexion;
 
@@ -28,7 +29,7 @@ var conexion;
 		var valido = false;
 		var miDiseno = document.getElementById("idNombreDiseno").value.length;
 		//longitud entre 3 y 30 caracteres
-		if(miTexto >= 3 && miTexto <= 30){
+		if(miDiseno >= 3 && miDiseno <= 30){
 			valido = true;
 		}
 		return valido;
@@ -68,72 +69,82 @@ var conexion;
 		<h2>Diseño</h2>
 	</div>
 	<div class="row">
-		<div class="col-sm-5">
-			<div id="idBanner" class="p-l-10"></div>
+		<div class="col-sm-12">
+			<div id="idBanner"></div>
 		</div>
 	</div>	
 	<form name="form1" class="form" id="idForm1">
 	<div class="card-body card-padding">
+		<!-- campos ocultos para conocer el autor -->
 		<input type="hidden" name="id_sesion" value="<?= session_id()?>">
 		<input type="hidden" name="id_usuario" value="<?= isset($_SESSION['id_usuario']) ? $_SESSION['id_usuario'] : null ?>">
-	
-		<input type="hidden" name="rotacion" id="rotacion" value="-30">
-		<input type="hidden" name="coordenadaX" value="25">
-		<input type="hidden" name="coordenadaY" value="25">
 		
-	<div class="row">
+		<!-- campos ocultos que pasarán los datos del canvas de la imagen -->
+		<input type="hidden" name="tamano_imagen" value="150x200">
+		<input type="hidden" name="rotacion_imagen" value="30">
+		<input type="hidden" name="coordenada_x" value="10">
+		<input type="hidden" name="coordenada_y" value="15">
+		<input type="hidden" name="profundidad_z" value="-3">
+		
+		<!-- campos ocultos con el calculo precio y coste de imagen + texto seleccionados-->
+		<input type="hidden" name="precio" value="6">
+		<input type="hidden" name="coste" value="2.5">
+		
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="cp-container">
 	
-	<div class="form-group fg-line">
-		<label for="idNombreDiseno">Nombre del Diseño </label> 
-		<input class="form-control input-sm" id="idNombreDiseno" type="text" name="nombre_diseno" maxlength="30" required="required" placeholder="completa este campo" title="El Texto puede contener entre 3 y 30 caracteres"> <br/>
-	</div>
+					<div class="form-group fg-line">
+						<label for="idNombreDiseno">Nombre del Diseño </label> 
+						<input class="form-control input-sm" id="idNombreDiseno" type="text" name="nombre_diseno" maxlength="30" required="required" placeholder="completa este campo" title="El Texto puede contener entre 3 y 30 caracteres">
+					</div>
 	
-	<div class="form-group fg-line">
-		<label for="idComentarioDiseno">Comentario del Diseño </label> 
-		<textarea class="form-control" id="idComentarioDiseno" name="comentario_diseno" maxlength="200"></textarea> <br/>
-	</div>
+					<div class="form-group fg-line">
+						<label for="idComentarioDiseno">Comentario del Diseño </label> 
+						<textarea class="form-control" id="idComentarioDiseno" name="comentario_diseno" maxlength="200"></textarea>
+					</div>
 	
-	<label>Ubicación</label>
-	<div class="radio m-b-15">
-       	<label>
-           	<input type="radio" name="ubicacion" value="Frontal" checked="checked">
-            <i class="input-helper"></i>
-               	Frontal
-        </label>
-    </div>
-    <div class="radio m-b-15">
-       	<label>
-           	<input type="radio" name="ubicacion" value="Trasera">
-            <i class="input-helper"></i>
-               	Trasera
-        </label>
-    </div>
-<!-- 
-		$id_imagen = $_POST['id_imagen'];
-		$tamano_imagen = $_POST['tamano_imagen'];
-		$rotacion_imagen = $_POST['rotacion_imagen'];
-		$coordenada_x = $_POST['coordenada_x'];
-		$coordenada_y = $_POST['coordenada_y'];
-		$profundidad_z = $_POST['profundidad_z'];
-		$id_texto = $_POST['id_texto'];
-		$precio = $_POST['precio']; //precio de imagen + texto
-		$coste = $_POST['coste'];
- -->	
-	<div class="form-group col-xs-3">	
-		<label for="idColor">Color </label>
-		<select class="form-control" id="idColor" name="idColor">         
- 			<option value='1'>Seleccione uno</option>       	
- 		<?php foreach ($body['colores'] as $color): ?>
- 			<option value='<?= $color['id']?>'><?= $color['valor']?></option>
-		<?php endforeach;?>
-        </select><br/>
-	</div>
-	
-	<div class="row">
-		<input class="btn btn-primary btn-sm m-t-10" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
-	</div>
-
-	</div>
+					<label>Ubicación</label>
+					<div class="radio m-b-15">
+				       	<label>
+				           	<input type="radio" name="ubicacion" value="Frontal" checked="checked">
+				            <i class="input-helper"></i>
+				               	Frontal
+				        </label>
+				    </div>
+				    <div class="radio m-b-15">
+				       	<label>
+				           	<input type="radio" name="ubicacion" value="Trasera">
+				            <i class="input-helper"></i>
+				               	Trasera
+				        </label>
+				    </div>
+ 				</div>
+				<div class=" m-b-25">
+			   		<p class="f-500 c-black m-b-15" id="select-form">Seleccione Texto</p>
+					<select class="form-control" id="idTexto" name="id_texto">         
+			 			<option value='0'>Seleccione uno</option>       	
+			 		<?php foreach ($body['textos'] as $texto): ?>
+			 			<option value='<?= $texto['id']?>'><?= $texto['datos_texto']?></option>
+					<?php endforeach;?>
+			        </select>
+				</div>
+				
+				<div class=" m-b-25">
+			   		<p class="f-500 c-black m-b-15" id="select-form">Seleccione Imagen</p>
+					<select class="form-control" id="idImagen" name="id_imagen">         
+			 			<option value='0'>Seleccione uno</option>       	
+			 		<?php foreach ($body['imagenes'] as $imagen): ?>
+			 			<option value='<?= $imagen['id']?>'><?= $imagen['nombre_imagen']?></option>
+					<?php endforeach;?>
+			        </select>
+				</div>
+				
+			</div>
+		</div>
+		<div class="row">
+			<input class="btn btn-primary btn-sm m-t-10" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
+		</div>
 	</div>
 	</form>
 </div>

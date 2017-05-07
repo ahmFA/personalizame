@@ -25,7 +25,7 @@ class Diseno_model extends CI_Model{
 		$diseno -> fecha_baja = $fecha_baja;
 		$diseno -> motivo_baja = $motivo_baja;
 		$diseno -> disponible = $disponible;
-		$diseno -> idSesion = $idSesion;
+		$diseno -> id_sesion = $id_sesion;
 		
 		$imagen = R::load('imagen', $id_imagen);
 		$texto = R::load('texto', $id_texto);
@@ -43,7 +43,7 @@ class Diseno_model extends CI_Model{
 	 * recuperar todos los diseños
 	 */
 	public function getTodos() {
-		$disenos = R::findAll('diseno','order by id');
+		$disenos = R::findAll('diseno','where disponible = "Si" order by id');
 
 		return  $disenos;
 	}
@@ -60,11 +60,11 @@ class Diseno_model extends CI_Model{
 	 */
 	public function getFiltrados($filtroUsuario,$filtroNombreDiseno){
 		//mirar como hacerlo para los casos en que venga un idUsuario ya que no puede ser Like sino un igual
-		return R::find('diseno','where nombre_diseno like ? and id_usuario like ? order by id',['%'.$filtroNombreDiseno.'%','%'.$filtroUsuario.'%']);
+		return R::find('diseno','where nombre_diseno like ? and id_usuario like ? and disponible = "Si" order by id',['%'.$filtroNombreDiseno.'%','%'.$filtroUsuario.'%']);
 	}
 
 	/*
-	 * Borrar el texto que se indique
+	 * Borrar el diseño que se indique
 	 */
 	public function borrar($id_diseno){
 		$diseno = R::load('diseno', $id_diseno);

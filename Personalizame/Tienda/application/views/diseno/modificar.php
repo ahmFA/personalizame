@@ -1,10 +1,10 @@
 <script type="text/javascript">
 	
-	function validarDatosTexto(){
+	function validarNombreDiseno(){
 		var valido = false;
-		var miTexto = document.getElementById("idDatosTexto").value.length;
-		//longitud entre 1 y 20 caracteres
-		if(miTexto >= 1 && miTexto <= 20){
+		var miDiseno = document.getElementById("idNombreDiseno").value.length;
+		//longitud entre 3 y 30 caracteres
+		if(miDiseno >= 3 && miDiseno <= 30){
 			valido = true;
 		}
 		return valido;
@@ -13,21 +13,21 @@
 	function validarTodo(){
 		var foco = true;
 		
-		//TEXTO
-		var valTexto = validarDatosTexto();
-		if (valTexto == false){
-			document.getElementById("idDatosTexto").style.color = "red";
+		//NOM DISEÑO
+		var valDiseno = validarNombreDiseno();
+		if (valDiseno == false){
+			document.getElementById("idNombreDiseno").style.color = "red";
 			if (foco == true){
-				document.getElementById("idDatosTexto").focus();
+				document.getElementById("idNombreDiseno").focus();
 				foco = false;
 			}
 		}
 		else{
-			document.getElementById("idDatosTexto").style.color = "black";
+			document.getElementById("idNombreDiseno").style.color = "black";
 		}
 		
 		//Si todo esta a TRUE hace el submit
-		if(valTexto){
+		if(valDiseno){
 			document.form1.submit();
 		}	
 		else{
@@ -38,63 +38,91 @@
 
 </script>
 
-<div class="container">
-	<div id="idBanner"></div>
-	<div class="form-group col-xs-12">
-		<h2>Modificar texto</h2>
+<div class="card">
+	<div class="card-header">
+		<h2>Modificar Diseño</h2>
 	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div id="idBanner"></div>
+		</div>
+	</div>	
+	<form name="form1" class="form" id="idForm1" action="<?=base_url() ?>diseño/modificarPost2" method="post">
+	<div class="card-body card-padding">		
+		<!-- campos ocultos que pasarán los datos del canvas de la imagen -->
+		<input type="hidden" name="tamano_imagen" value="<?= $body['diseno']->tamano_imagen ?>">
+		<input type="hidden" name="rotacion_imagen" value="<?= $body['diseno']->rotacion_imagen ?>">
+		<input type="hidden" name="coordenada_x" value="<?= $body['diseno']->coordenada_x ?>">
+		<input type="hidden" name="coordenada_y" value="<?= $body['diseno']->coordenada_y ?>">
+		<input type="hidden" name="profundidad_z" value="<?= $body['diseno']->profundidad_z ?>">
+		
+		<!-- campos ocultos con el calculo precio y coste de imagen + texto seleccionados-->
+		<input type="hidden" name="precio" value="<?= $body['diseno']->precio ?>">
+		<input type="hidden" name="coste" value="<?= $body['diseno']->coste ?>">
+		
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="cp-container">
 	
-	<form name="form1" class="form" action="<?=base_url() ?>texto/modificarPost2" method="post">
+					<div class="form-group fg-line">
+						<label for="idNombreDiseno">Nombre del Diseño </label> 
+						<input class="form-control input-sm" id="idNombreDiseno" type="text" name="nombre_diseno" maxlength="30" required="required" placeholder="completa este campo" title="El Texto puede contener entre 3 y 30 caracteres" value="<?= $body['diseno']->nombre_diseno ?>">
+					</div>
 	
-	<!-- campos ocultos para volver al filtro en la misma posicion y ver los resultados del cambio -->
-	<input type="hidden" name="filtroDatosTexto" value="<?= $body['filtroDatosTexto'] ?>">
-	<input type="hidden" name="filtroUsuario" value="<?= $body['filtroUsuario'] ?>">
-	<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
-	<input type="hidden" name="idTexto" value="<?= $body['texto']->id ?>">
+					<div class="form-group fg-line">
+						<label for="idComentarioDiseno">Comentario del Diseño </label> 
+						<textarea class="form-control" id="idComentarioDiseno" name="comentario_diseno" maxlength="200"><?= $body['diseno']->comentario_diseno ?></textarea>
+					</div>
 	
-	<input type="hidden" name="rotacion" value="25">
-	<input type="hidden" name="coordenadaX" value="25">
-	<input type="hidden" name="coordenadaY" value="25">
-	<input type="hidden" name="disponible" value="Si">
-	
-	<div class="form-group col-xs-3">
-		<label for="idDatosTexto">Texto </label> 
-		<input class="form-control" id="idDatosTexto" type="text" name="datosTexto" maxlength="20" required="required" placeholder="completa este campo" title="El Texto puede contener entre 1 y 20 caracteres" value="<?= $body['texto']->datosTexto ?>"> <br/>
+					<label>Ubicación</label>
+					<div class="radio m-b-15">
+				       	<label>
+				           	<input type="radio" name="ubicacion" value="Frontal" checked="checked">
+				            <i class="input-helper"></i>
+				               	Frontal
+				        </label>
+				    </div>
+				    <div class="radio m-b-15">
+				       	<label>
+				           	<input type="radio" name="ubicacion" value="Trasera">
+				            <i class="input-helper"></i>
+				               	Trasera
+				        </label>
+				    </div>
+ 				</div>
+				<div class=" m-b-25">
+			   		<p class="f-500 c-black m-b-15" id="select-form">Seleccione Texto</p>
+					<select class="form-control" id="idTexto" name="id_texto">         
+			 			<option value='0'>Ninguno</option>       	
+			 		<?php foreach ($body['textos'] as $texto): ?>
+			 			<?php if($body['diseno']->texto == $texto):?>
+			 				<option value='<?= $texto['id']?>' selected="selected"><?= $texto['datos_texto']?></option>
+			 			<?php else:?>
+			 				<option value='<?= $texto['id']?>'><?= $texto['datos_texto']?></option>
+			 			<?php endif;?>
+					<?php endforeach;?>
+			        </select>
+				</div>
+				
+				<div class=" m-b-25">
+			   		<p class="f-500 c-black m-b-15" id="select-form">Seleccione Imagen</p>
+					<select class="form-control" id="idImagen" name="id_imagen">         
+			 			<option value='0'>Ninguno</option>       	
+			 		<?php foreach ($body['imagenes'] as $imagen): ?>
+			 			<?php if($body['diseno']->imagen == $imagen):?>
+			 				<option value='<?= $imagen['id']?>' selected="selected"><?= $imagen['nombre_imagen']?></option>
+			 			<?php else:?>
+			 				<option value='<?= $imagen['id']?>'><?= $imagen['nombre_imagen']?></option>
+			 			<?php endif;?>
+					<?php endforeach;?>
+			        </select>
+				</div>
+				
+			</div>
+		</div>
+		<div class="row">
+			<input class="btn btn-primary btn-sm m-t-10" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
+		</div>
 	</div>
-	
-	<div class="form-group col-xs-3">	
-		<label for="idTamano">Tamaño </label>
-		<select class="form-control" id="idTamano" name="idTamano">   
-		<?php foreach ($body['tamanos'] as $tamano): ?>
-			<?php $aux='';  if($tamano['id'] == $body['texto']->tamano_id){$aux='selected="selected"';}?>     
- 			<option value='<?= $tamano['id']?>' <?= $aux ?>><?= $tamano['nombre']?></option>
-		<?php endforeach;?>
-        </select><br/>
-	</div>
-	
-	<div class="form-group col-xs-3">	
-		<label for="idFuente">Fuente </label>
-		<select class="form-control" id="idFuente" name="idFuente">         
-   		<?php foreach ($body['fuentes'] as $fuente): ?>
-			<?php $aux='';  if($fuente['id'] == $body['texto']->fuente_id){$aux='selected="selected"';}?>     
- 			<option value='<?= $fuente['id']?>' <?= $aux ?>><?= $fuente['nombre']?></option>
-		<?php endforeach;?>
-        </select><br/>
-	</div>
-	
-	<div class="form-group col-xs-3">	
-		<label for="idColor">Color </label>
-		<select class="form-control" id="idColor" name="idColor">         
- 		<?php foreach ($body['colores'] as $color): ?>
-			<?php $aux='';  if($color['id'] == $body['texto']->color_id){$aux='selected="selected"';}?>     
- 			<option value='<?= $color['id']?>' <?= $aux ?>><?= $color['nombre']?></option>
-		<?php endforeach;?>
-        </select><br/>
-	</div>
-	
-	<div class="form-group col-xs-4">	
-		<input class="btn btn-primary" id="idBotonEnviar" type="button" value="Enviar" onclick="validarTodo()">
-	</div>
-	
 	</form>
 </div>
