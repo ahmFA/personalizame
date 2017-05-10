@@ -27,10 +27,16 @@ class Talla extends CI_Controller{
 	}
 
 	public function listar(){
+		$filtroNombre = isset($_REQUEST['filtroNombre']) ? $_REQUEST['filtroNombre'] : '';
+		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
+		
+		$this->load->model('talla_model');
+		$tallas = $this->talla_model->getFiltrados($filtroNombre);
+		$datos['body']['filtroNombre'] = $filtroNombre;
+		$datos['body']['mensajeBanner'] = $mensajeBanner;
+		
 		$tamanio_pagina = 5;
 		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
-		$this->load->model('talla_model');
-		$tallas = $this->talla_model->listar();
 		$num_tallas = count($tallas);
 		$total_paginas = ceil($num_tallas/$tamanio_pagina);
 		$inicio = ($pagina-1)*$tamanio_pagina;
@@ -54,7 +60,7 @@ class Talla extends CI_Controller{
 		$datos['paginaAnt'] = $pagina-1;
 		$datos['paginaSig'] = $pagina+1;
 		
-		$datos['tallas'] = $this->talla_model->listarConLimite($inicio, $tamanio_pagina);
+		$datos['tallas'] = $this->talla_model->getFiltradosConLimite($filtroNombre,$inicio);
 		enmarcar($this, 'talla/listar', $datos);
 		
 		
@@ -106,6 +112,8 @@ class Talla extends CI_Controller{
 	}
 
 	public function editar(){
+		$datos['body']['filtroNombre'] = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
+		$datos['body']['mensajeBanner'] = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
 		$idTalla = $_REQUEST['idTalla'];
 		$this->load->model('talla_model');
 		$datos['talla'] = $this->talla_model->getTallaById($idTalla);

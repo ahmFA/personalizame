@@ -30,14 +30,13 @@ class Categoria extends CI_Controller{
 		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
 		
 		$this->load->model('categoria_model');
-		$datos['body']['tamanos'] = $this->categoria_model->getFiltrados($filtroNombre);
+		$categorias = $this->categoria_model->getFiltrados($filtroNombre);
 		$datos['body']['filtroNombre'] = $filtroNombre;
 		$datos['body']['mensajeBanner'] = $mensajeBanner;
 		
 		
 		$tamanio_pagina = 5;
 		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
-		$categorias = $this->categoria_model->listar();
 		$num_categorias = count($categorias);
 		$total_paginas = ceil($num_categorias/$tamanio_pagina);
 		$inicio = ($pagina-1)*$tamanio_pagina;
@@ -108,6 +107,8 @@ class Categoria extends CI_Controller{
 	}
 
 	public function editar(){
+		$datos['body']['filtroNombre'] = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
+		$datos['body']['mensajeBanner'] = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
 		$idCategoria = $_REQUEST['idCategoria'];
 		$this->load->model('categoria_model');
 		$datos['categoria'] = $this->categoria_model->getCategoriaById($idCategoria);

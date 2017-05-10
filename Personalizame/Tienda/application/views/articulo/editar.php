@@ -96,7 +96,9 @@
 		action="<?= base_url() ?>articulo/editarPost" enctype="multipart/form-data">
 		<div class="card-body card-padding">
 			<input type="hidden" name="id" value="<?=$articulo['id'];?>">
-			
+			<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
+			<input type="hidden" name="filtroImagen" value="<?= $body['filtroImagen'] ?>">
+			<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
 			<div class="row">
 				<div class="col-sm-4">
 					<div class="cp-container">

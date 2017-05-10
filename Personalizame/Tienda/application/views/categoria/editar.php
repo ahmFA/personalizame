@@ -11,6 +11,8 @@
 		action="<?= base_url() ?>categoria/editarPost" onsubmit="return comprobarTalla()">
 		<div class="card-body card-padding">
 			<input type="hidden" name="id" value="<?=$categoria['id'];?>">
+			<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
+			<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
 			<div class="row">
 				<div class="col-sm-4">
 					<div class="cp-container">

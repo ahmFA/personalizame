@@ -80,6 +80,9 @@
 		action="<?= base_url() ?>imagen/editarPost" enctype="multipart/form-data" onsubmit="return comprobarImagen()">
 		<div class="card-body card-padding">
 			<input type="hidden" name="id_imagen" value="<?=$imagen['id'];?>">
+			<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
+			<input type="hidden" name="filtroImagen" value="<?= $body['filtroImagen'] ?>">
+			<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
 			
 			<div class="row">
 				<div class="col-sm-4">

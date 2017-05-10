@@ -58,6 +58,16 @@ class Articulo extends CI_Controller{
 	}
 	
 	public function listar(){
+		$filtroNombre = isset($_REQUEST['filtroNombre']) ? $_REQUEST['filtroNombre'] : '';
+		$filtroImagen = isset($_REQUEST['filtroImagen']) ? $_REQUEST['filtroImagen'] : '';
+		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
+		
+		$this->load->model('articulo_model');
+		$imagenes = $this->articulo_model->getFiltrados($filtroNombre, $filtroImagen);
+		$datos['body']['filtroNombre'] = $filtroNombre;
+		$datos['body']['filtroImagen'] = $filtroImagen;
+		$datos['body']['mensajeBanner'] = $mensajeBanner;
+		
 		$tamanio_pagina = 5;
 		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
 		$this->load->model('articulo_model');
@@ -85,7 +95,7 @@ class Articulo extends CI_Controller{
 		$datos['paginaAnt'] = $pagina-1;
 		$datos['paginaSig'] = $pagina+1;
 		
-		$datos['articulos'] = $this->articulo_model->listarConLimite($inicio, $tamanio_pagina);
+		$datos['articulos'] = $this->articulo_model->getFiltradosConLimite($filtroNombre, $filtroImagen,$inicio);
 		enmarcar($this, 'articulo/listar', $datos);
 	}
 	
@@ -142,6 +152,9 @@ class Articulo extends CI_Controller{
 	}
 	
 	public function editar(){
+		$datos['body']['filtroNombre'] = isset($_POST['filtroNombre']) ? $_POST['filtroNombre'] : '';
+		$datos['body']['filtroImagen'] = isset($_POST['filtroImagen']) ? $_POST['filtroImagen'] : '';
+		$datos['body']['mensajeBanner'] = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
 		$idArticulo = $_REQUEST['idArticulo'];
 		$this->load->model('articulo_model');
 		$this->load->model('color_model');
