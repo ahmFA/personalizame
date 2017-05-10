@@ -25,6 +25,20 @@ class Categoria_model extends CI_Model{
 	public function listarConLimite($inicio, $cuantos){
 		return R::findAll('categoria', 'LIMIT ?,5',[$inicio]);
 	}
+	
+	/*
+	 * recuperar tamanos que cumplen el filtro
+	 */
+	public function getFiltrados($filtroNombre){
+		return R::find('categoria','where nombre like ? order by nombre',['%'.$filtroNombre.'%']);
+	}
+	
+	/*
+	 * Lista un número determinado de tamaños
+	 */
+	public function getFiltradosConLimite($filtroNombre, $inicio){
+		return R::find('categoria','where nombre like ? order by nombre LIMIT ?,5',['%'.$filtroNombre.'%', $inicio]);
+	}
 
 	public function borrar($idCategoria){
 		$t = R::load('categoria', $idCategoria);

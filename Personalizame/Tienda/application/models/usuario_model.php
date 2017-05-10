@@ -75,7 +75,7 @@ class Usuario_model extends CI_Model{
 	}
 	
 	/*
-	 * Lista un número determinado de tamaños
+	 * Lista un número determinado de usuarios
 	 */
 	public function getFiltradosConLimite($filtroNick,$filtroMail,$filtroEstado, $inicio){
 		return R::find('usuario','where nick like ? and (mail1 like ? or mail2 like ?) and estado like ? order by perfil,nick LIMIT ?,5',['%'.$filtroNick.'%','%'.$filtroMail.'%' ,'%'.$filtroMail.'%' ,'%'.$filtroEstado.'%' , $inicio]);

@@ -54,6 +54,20 @@ class Articulo_model extends CI_Model{
 		return R::findAll('articulo', 'LIMIT ?,5',[$inicio]);
 	}
 	
+	/*
+	 * recuperar los articulos que cumplen el filtro
+	 */
+	public function getFiltrados($filtroNombre,$filtroImagen){
+		return R::find('articulo','where nombre like ? or nombre_imagen like ? order by nombre',['%'.$filtroNombre.'%','%'.$filtroImagen.'%']);
+	}
+	
+	/*
+	 * Lista un número determinado de artículos
+	 */
+	public function getFiltradosConLimite($filtroNombre,$filtroImagen, $inicio){
+		return R::find('articulo','where nombre like ? or nombre_imagen like ? order by nombre LIMIT ?,5',['%'.$filtroNombre.'%','%'.$filtroImagen.'%', $inicio]);
+	}
+	
 	public function borrar($idArticulo){
 		$a = R::load('articulo', $idArticulo);
 		R::trash($a);

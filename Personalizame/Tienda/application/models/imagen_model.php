@@ -56,6 +56,20 @@ class Imagen_model extends CI_Model{
 	public function listarConLimite($inicio, $cuantos){
 		return R::findAll('imagen', 'LIMIT ?,5',[$inicio]);
 	}
+	
+	/*
+	 * recuperar las imágenes que cumplen el filtro
+	 */
+	public function getFiltrados($filtroNombre,$filtroImagen){
+		return R::find('articulo','where nombre like ? or nombre_imagen like ? order by nombre',['%'.$filtroNombre.'%','%'.$filtroImagen.'%']);
+	}
+	
+	/*
+	 * Lista un número determinado de imágenes
+	 */
+	public function getFiltradosConLimite($filtroNombre,$filtroImagen, $inicio){
+		return R::find('articulo','where nombre like ? or nombre_imagen like ? order by nombre LIMIT ?,5',['%'.$filtroNombre.'%','%'.$filtroImagen.'%', $inicio]);
+	}
 
 	public function borrar($idImagen){
 		$i = R::load('imagen', $idImagen);

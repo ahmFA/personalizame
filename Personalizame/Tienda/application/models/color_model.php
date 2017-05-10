@@ -26,6 +26,20 @@ class Color_model extends CI_Model{
 	public function listarConLimite($inicio, $cuantos){
 		return R::findAll('color', 'LIMIT ?,5',[$inicio]);
 	}
+	
+	/*
+	 * recuperar colores que cumplen el filtro
+	 */
+	public function getFiltrados($filtroNombre){
+		return R::find('color','where nombre like ? order by nombre',['%'.$filtroNombre.'%']);
+	}
+	
+	/*
+	 * Lista un número determinado de colores
+	 */
+	public function getFiltradosConLimite($filtroNombre, $inicio){
+		return R::find('color','where nombre like ? order by nombre LIMIT ?,5',['%'.$filtroNombre.'%', $inicio]);
+	}
 
 	public function borrar($idColor){
 		$c = R::load('color', $idColor);

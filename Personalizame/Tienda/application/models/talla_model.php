@@ -25,6 +25,20 @@ class Talla_model extends CI_Model{
 	public function listarConLimite($inicio, $cuantos){
 		return R::findAll('talla', 'LIMIT ?,5',[$inicio]);
 	}
+	
+	/*
+	 * recuperar tamanos que cumplen el filtro
+	 */
+	public function getFiltrados($filtroNombre){
+		return R::find('talla','where nombre like ? order by nombre',['%'.$filtroNombre.'%']);
+	}
+	
+	/*
+	 * Lista un número determinado de tamaños
+	 */
+	public function getFiltradosConLimite($filtroNombre, $inicio){
+		return R::find('talla','where nombre like ? order by nombre LIMIT ?,5',['%'.$filtroNombre.'%', $inicio]);
+	}
 
 	public function borrar($idTalla){
 		$t = R::load('talla', $idTalla);

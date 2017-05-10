@@ -26,9 +26,17 @@ class Categoria extends CI_Controller{
 	}
 
 	public function listar(){
+		$filtroNombre = isset($_REQUEST['filtroNombre']) ? $_REQUEST['filtroNombre'] : '';
+		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
+		
+		$this->load->model('categoria_model');
+		$datos['body']['tamanos'] = $this->categoria_model->getFiltrados($filtroNombre);
+		$datos['body']['filtroNombre'] = $filtroNombre;
+		$datos['body']['mensajeBanner'] = $mensajeBanner;
+		
+		
 		$tamanio_pagina = 5;
 		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
-		$this->load->model('categoria_model');
 		$categorias = $this->categoria_model->listar();
 		$num_categorias = count($categorias);
 		$total_paginas = ceil($num_categorias/$tamanio_pagina);
@@ -53,7 +61,7 @@ class Categoria extends CI_Controller{
 		$datos['paginaAnt'] = $pagina-1;
 		$datos['paginaSig'] = $pagina+1;
 		
-		$datos['categorias'] = $this->categoria_model->listarConLimite($inicio, $tamanio_pagina);
+		$datos['categorias'] = $this->categoria_model->getFiltradosConLimite($filtroNombre, $inicio);
 		enmarcar($this, 'categoria/listar', $datos);
 	}
 
