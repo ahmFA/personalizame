@@ -61,14 +61,14 @@ class Imagen_model extends CI_Model{
 	 * recuperar las imágenes que cumplen el filtro
 	 */
 	public function getFiltrados($filtroNombre,$filtroImagen){
-		return R::find('articulo','where nombre like ? or nombre_imagen like ? order by nombre',['%'.$filtroNombre.'%','%'.$filtroImagen.'%']);
+		return R::find('imagen','where nombre like ? and nombre_imagen like ? order by nombre',['%'.$filtroNombre.'%','%'.$filtroImagen.'%']);
 	}
 	
 	/*
 	 * Lista un número determinado de imágenes
 	 */
 	public function getFiltradosConLimite($filtroNombre,$filtroImagen, $inicio){
-		return R::find('articulo','where nombre like ? or nombre_imagen like ? order by nombre LIMIT ?,5',['%'.$filtroNombre.'%','%'.$filtroImagen.'%', $inicio]);
+		return R::find('imagen','where nombre like ? and nombre_imagen like ? order by nombre LIMIT ?,5',['%'.$filtroNombre.'%','%'.$filtroImagen.'%', $inicio]);
 	}
 
 	public function borrar($idImagen){

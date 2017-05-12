@@ -85,7 +85,7 @@ class Imagen extends CI_Controller{
 		}
 		
 		$datos['previo'] = ($pagina == 1)? 'disabled': '';
-		$datos['next'] = ($pagina == $total_paginas)? 'disabled': '';
+		$datos['next'] = ($pagina == $total_paginas) || ($num_imagenes == 0)? 'disabled': '';
 		
 		$datos['botones'] = $botones;
 		$datos['paginaAnt'] = $pagina-1;
@@ -96,10 +96,18 @@ class Imagen extends CI_Controller{
 	}
 
 	public function borrar(){
+		$filtroNombre = isset($_REQUEST['filtroNombre']) ? $_REQUEST['filtroNombre'] : '';
+		$filtroImagen = isset($_REQUEST['filtroImagen']) ? $_REQUEST['filtroImagen'] : '';
+		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
+		
+		$this->load->model('imagen_model');
+		$imagenes = $this->imagen_model->getFiltrados($filtroNombre, $filtroImagen);
+		$datos['body']['filtroNombre'] = $filtroNombre;
+		$datos['body']['filtroImagen'] = $filtroImagen;
+		$datos['body']['mensajeBanner'] = $mensajeBanner;
+		
 		$tamanio_pagina = 5;
 		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
-		$this->load->model('imagen_model');
-		$imagenes = $this->imagen_model->listar();
 		$num_imagenes = count($imagenes);
 		$total_paginas = ceil($num_imagenes/$tamanio_pagina);
 		$inicio = ($pagina-1)*$tamanio_pagina;
@@ -117,13 +125,13 @@ class Imagen extends CI_Controller{
 		}
 		
 		$datos['previo'] = ($pagina == 1)? 'disabled': '';
-		$datos['next'] = ($pagina == $total_paginas)? 'disabled': '';
+		$datos['next'] = ($pagina == $total_paginas)  || ($num_imagenes == 0)? 'disabled': '';
 		
 		$datos['botones'] = $botones;
 		$datos['paginaAnt'] = $pagina-1;
 		$datos['paginaSig'] = $pagina+1;
 		
-		$datos['imagenes'] = $this->imagen_model->listarConLimite($inicio, $tamanio_pagina);
+		$datos['imagenes'] = $this->imagen_model->getFiltradosConLimite($filtroNombre, $filtroImagen,$inicio);
 		
 		enmarcar($this, 'imagen/borrar', $datos);
 	}

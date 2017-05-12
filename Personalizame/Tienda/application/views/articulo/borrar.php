@@ -32,73 +32,32 @@
 				[data-identifier="true"] is set on one column header.</small>
 		</h2>
 	</div>
+	
 	<div id="data-table-command-header"
 		class="bootgrid-header container-fluid">
-		<div class="row">
-			<div class="col-sm-12 actionBar">
-				<div class="search form-group">
-					<div class="input-group">
-						<span class="zmdi icon input-group-addon glyphicon-search"></span>
-						<input type="text" class="search-field form-control"
-							placeholder="Search">
-					</div>
-				</div>
-				<div class="actions btn-group">
-					<div class="dropdown btn-group">
-						<button class="btn btn-default dropdown-toggle" type="button"
-							data-toggle="dropdown">
-							<span class="dropdown-text">10</span> <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu pull-right" role="menu">
-							<li class="active" aria-selected="true"><a data-action="10"
-								class="dropdown-item dropdown-item-button">10</a></li>
-							<li aria-selected="false"><a data-action="25"
-								class="dropdown-item dropdown-item-button">25</a></li>
-							<li aria-selected="false"><a data-action="50"
-								class="dropdown-item dropdown-item-button">50</a></li>
-							<li aria-selected="false"><a data-action="-1"
-								class="dropdown-item dropdown-item-button">All</a></li>
-						</ul>
-					</div>
-					<div class="dropdown btn-group">
-						<button class="btn btn-default dropdown-toggle" type="button"
-							data-toggle="dropdown">
-							<span class="dropdown-text"><span
-								class="zmdi icon zmdi-view-module"></span></span> <span
-								class="caret"></span>
-						</button>
-						<ul class="dropdown-menu pull-right" role="menu">
-							<li>
-								<div class="checkbox">
-									<label class="dropdown-item"> <input name="id" type="checkbox"
-										value="1" class="dropdown-item-checkbox" checked="checked"> ID<i
-										class="input-helper"></i>
-									</label>
-								</div>
-							</li>
-							<li><div class="checkbox">
-									<label class="dropdown-item"><input name="sender"
-										type="checkbox" value="1" class="dropdown-item-checkbox"
-										checked="checked"> Sender<i class="input-helper"></i></label>
-								</div></li>
-							<li><div class="checkbox">
-									<label class="dropdown-item"><input name="received"
-										type="checkbox" value="1" class="dropdown-item-checkbox"
-										checked="checked"> Received<i class="input-helper"></i></label>
-								</div></li>
-							<li><div class="checkbox">
-									<label class="dropdown-item"><input name="commands"
-										type="checkbox" value="1" class="dropdown-item-checkbox"
-										checked="checked"> Commands<i class="input-helper"></i></label>
-								</div></li>
-						</ul>
-					</div>
+		<form class="row" id="idFormFiltro" role="form"
+			action="<?= base_url() ?>articulo/borrar" method="post">
+			<div class="col-sm-3">
+				<div class="form-group fg-line">
+					<label for="idFiltroNombre">Nombre </label>
+					<input type="text" class="search-field form-control"
+						 id="idFiltroNombre" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
+					
 				</div>
 			</div>
-		</div>
+			<div class="col-sm-3">
+				<div class="form-group fg-line">
+					<label for="idFiltroImagen">Nombre Imagen </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idFiltroImagen" name="filtroImagen" value="<?= $body['filtroImagen'] ?>">
+				</div>
+			</div>			 
+			<div class="col-sm-4">
+			<button class="btn btn-primary" onclick="function f() {document.getElementById('idFormFiltro').submit();}"><span class="glyphicon glyphicon-search"></span> Filtrar</button>
+				
+			</div>
+		</form>
 	</div>
-	<form role="form" method="post"
-					action="<?= base_url() ?>articulo/borrarPost">
 	<table id="data-table-command"
 		class="table table-striped table-vmiddle">
 		<thead>

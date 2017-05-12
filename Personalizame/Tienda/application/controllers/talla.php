@@ -54,7 +54,7 @@ class Talla extends CI_Controller{
 		}
 		
 		$datos['previo'] = ($pagina == 1)? 'disabled': '';
-		$datos['next'] = ($pagina == $total_paginas)? 'disabled': '';
+		$datos['next'] = ($pagina == $total_paginas)|| ($num_tallas == 0)? 'disabled': '';
 		
 		$datos['botones'] = $botones;
 		$datos['paginaAnt'] = $pagina-1;
@@ -70,10 +70,16 @@ class Talla extends CI_Controller{
 	}
 
 	public function borrar(){
+		$filtroNombre = isset($_REQUEST['filtroNombre']) ? $_REQUEST['filtroNombre'] : '';
+		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
+		
+		$this->load->model('talla_model');
+		$tallas = $this->talla_model->getFiltrados($filtroNombre);
+		$datos['body']['filtroNombre'] = $filtroNombre;
+		$datos['body']['mensajeBanner'] = $mensajeBanner;
+		
 		$tamanio_pagina = 5;
 		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
-		$this->load->model('talla_model');
-		$tallas = $this->talla_model->listar();
 		$num_tallas = count($tallas);
 		$total_paginas = ceil($num_tallas/$tamanio_pagina);
 		$inicio = ($pagina-1)*$tamanio_pagina;
@@ -91,13 +97,13 @@ class Talla extends CI_Controller{
 		}
 		
 		$datos['previo'] = ($pagina == 1)? 'disabled': '';
-		$datos['next'] = ($pagina == $total_paginas)? 'disabled': '';
+		$datos['next'] = ($pagina == $total_paginas) || ($num_tallas == 0)? 'disabled': '';
 		
 		$datos['botones'] = $botones;
 		$datos['paginaAnt'] = $pagina-1;
 		$datos['paginaSig'] = $pagina+1;
 		
-		$datos['tallas'] = $this->talla_model->listarConLimite($inicio, $tamanio_pagina);
+		$datos['tallas'] = $this->talla_model->getFiltradosConLimite($filtroNombre,$inicio);
 		enmarcar($this, 'talla/borrar', $datos);
 	}
 

@@ -85,7 +85,7 @@ class Usuario extends CI_Controller{
 		}
 		
 		$datos['previo'] = ($pagina == 1)? 'disabled': '';
-		$datos['next'] = ($pagina == $total_paginas)? 'disabled': '';
+		$datos['next'] = ($pagina == $total_paginas) || ($num_usuarios == 0)? 'disabled': '';
 		
 		$datos['botones'] = $botones;
 		$datos['paginaAnt'] = $pagina-1;

@@ -63,15 +63,13 @@ class Articulo extends CI_Controller{
 		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
 		
 		$this->load->model('articulo_model');
-		$imagenes = $this->articulo_model->getFiltrados($filtroNombre, $filtroImagen);
+		$articulos = $this->articulo_model->getFiltrados($filtroNombre, $filtroImagen);
 		$datos['body']['filtroNombre'] = $filtroNombre;
 		$datos['body']['filtroImagen'] = $filtroImagen;
 		$datos['body']['mensajeBanner'] = $mensajeBanner;
 		
 		$tamanio_pagina = 5;
 		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
-		$this->load->model('articulo_model');
-		$articulos = $this->articulo_model->listar();
 		$num_articulos = count($articulos);
 		$total_paginas = ceil($num_articulos/$tamanio_pagina);
 		$inicio = ($pagina-1)*$tamanio_pagina;
@@ -89,7 +87,7 @@ class Articulo extends CI_Controller{
 		}
 		
 		$datos['previo'] = ($pagina == 1)? 'disabled': '';
-		$datos['next'] = ($pagina == $total_paginas)? 'disabled': '';
+		$datos['next'] = ($pagina == $total_paginas) || ($num_articulos == 0)? 'disabled': '';
 		
 		$datos['botones'] = $botones;
 		$datos['paginaAnt'] = $pagina-1;
@@ -100,10 +98,16 @@ class Articulo extends CI_Controller{
 	}
 	
 	public function borrar(){
+		$filtroNombre = isset($_REQUEST['filtroNombre']) ? $_REQUEST['filtroNombre'] : '';
+		$filtroImagen = isset($_REQUEST['filtroImagen']) ? $_REQUEST['filtroImagen'] : '';
+		
+		$this->load->model('articulo_model');
+		$articulos = $this->articulo_model->getFiltrados($filtroNombre, $filtroImagen);
+		$datos['body']['filtroNombre'] = $filtroNombre;
+		$datos['body']['filtroImagen'] = $filtroImagen;
+		
 		$tamanio_pagina = 5;
 		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
-		$this->load->model('articulo_model');
-		$articulos = $this->articulo_model->listar();
 		$num_articulos = count($articulos);
 		$total_paginas = ceil($num_articulos/$tamanio_pagina);
 		$inicio = ($pagina-1)*$tamanio_pagina;
@@ -121,13 +125,13 @@ class Articulo extends CI_Controller{
 		}
 		
 		$datos['previo'] = ($pagina == 1)? 'disabled': '';
-		$datos['next'] = ($pagina == $total_paginas)? 'disabled': '';
+		$datos['next'] = ($pagina == $total_paginas) || ($num_articulos == 0)? 'disabled': '';
 		
 		$datos['botones'] = $botones;
 		$datos['paginaAnt'] = $pagina-1;
 		$datos['paginaSig'] = $pagina+1;
 		
-		$datos['articulos'] = $this->articulo_model->listarConLimite($inicio, $tamanio_pagina);
+		$datos['articulos'] = $this->articulo_model->getFiltradosConLimite($filtroNombre, $filtroImagen,$inicio);
 		enmarcar($this, 'articulo/borrar', $datos);
 	}
 	

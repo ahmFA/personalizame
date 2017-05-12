@@ -113,8 +113,8 @@
 					<form id="idFormedit" action="<?=base_url();?>articulo/editar"
 						method="post">
 						<input type="hidden" name="idArticulo" value="<?= $articulo -> id?>">
-						<input type="hidden" name="filtroDatosTexto" value="<?= $body['filtroNombre'] ?>">
-						<input type="hidden" name="filtroUsuario" value="<?= $body['filtroImagen'] ?>">
+						<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
+						<input type="hidden" name="filtroImagen" value="<?= $body['filtroImagen'] ?>">
 						<input type="hidden" name="mensajeBanner" value="Modificado el artículo <?= $articulo->nombre ?>">
 						<button
 							class="btn btn-icon command-edit waves-effect waves-circle"
@@ -124,8 +124,8 @@
 					</form>
 					<form id="idFormedit" action="<?=base_url();?>articulo/borrarPost"
 						method="post">
-						<input type="hidden" name="filtroDatosTexto" value="<?= $body['filtroNombre'] ?>">
-						<input type="hidden" name="filtroUsuario" value="<?= $body['filtroImagen'] ?>">
+						<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
+						<input type="hidden" name="filtroImagen" value="<?= $body['filtroImagen'] ?>">
 						<input type="hidden" name="mensajeBanner" value="Borrado el artículo <?= $articulo->nombre ?>">
 						<input type="hidden" name="idArticulos[]" value="<?= $articulo -> id?>">
 						<button
