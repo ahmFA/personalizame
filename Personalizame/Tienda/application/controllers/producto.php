@@ -128,5 +128,22 @@ class Producto extends CI_Controller{
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
 		$this->listarPost();
 	}
+	
+	
+	/*
+	  Apaño para que funcione bien con ajax seguramente haya formas mejores de hacerlo
+	  cada parte a mostrar deberia estar en su correspondiente model y no en el de producto
+	  ya veré cuando todo este mas controlado como colocarlo mejor
+	*/
+	public function mostrarElementosArticulo(){ //AJAX
+		//Dependiendo del Articulo seleccionado se mostrarán tallas y colores concretos
+		$id_articulo = $_POST['id_articulo'];
+		$this->load->model('producto_model');
+		
+		$datos ['body'] ['tallas'] = $this->producto_model->mostrarTallas($id_articulo);
+		$datos ['body'] ['colores'] = $this->producto_model->mostrarColores($id_articulo);
+		
+		$this->load->view('producto/XcrearTallas',$datos);
+	}
 }
 ?>

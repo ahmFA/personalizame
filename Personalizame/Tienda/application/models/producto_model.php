@@ -24,14 +24,14 @@ class Producto_model extends CI_Model{
 		$articulo = R::load('articulo', $id_articulo);
 		$talla = R::load('talla', $id_talla);
 		$colorB = R::load('color', $id_color_base);
-		$colorS = R::load('color', $id_color_secundario);
+		//$colorS = R::load('color', $id_color_secundario);
 		$disenoF = R::load('diseno', $id_diseno_front);
 		$disenoB = R::load('diseno', $id_diseno_back);
 		
 		$articulo -> xownProductolist[] = $producto; 
 		$talla -> xownProductolist[] = $producto;  
 		$colorB -> xownProductolist[] = $producto;
-		$colorS -> xownProductolist[] = $producto;
+		//$colorS -> xownProductolist[] = $producto;
 		$disenoF -> xownProductolist[] = $producto;
 		$disenoB -> xownProductolist[] = $producto;
 		
@@ -90,10 +90,17 @@ class Producto_model extends CI_Model{
 		$producto -> nombre_producto = $nombre_producto;
 		$producto -> imagen_producto = $imagen_producto;
 		
+		$articulo = R::load('articulo', $id_articulo);
+		$talla = R::load('talla', $id_talla);
+		$colorB = R::load('color', $id_color_base);
+		//$colorS = R::load('color', $id_color_secundario);
+		$disenoF = R::load('diseno', $id_diseno_front);
+		$disenoB = R::load('diseno', $id_diseno_back);
+		
 		$articulo -> xownProductolist[] = $producto; 
 		$talla -> xownProductolist[] = $producto;  
 		$colorB -> xownProductolist[] = $producto;
-		$colorS -> xownProductolist[] = $producto;
+		//$colorS -> xownProductolist[] = $producto;
 		$disenoF -> xownProductolist[] = $producto;
 		$disenoB -> xownProductolist[] = $producto;
 		
@@ -103,12 +110,26 @@ class Producto_model extends CI_Model{
 		R::store($articulo);
 		R::store($talla);
 		R::store($colorB);
-		R::store($colorS);
+		//R::store($colorS);
 		R::store($disenoF);
 		R::store($disenoB);
 		R::store($producto);
 		R::close();
 	}
-
+	
+	
+	/* 
+	   estas funciones posiblemente deberian estar en sus respectivos model 
+	   hay que revisarlo cuando todo este mas controlado
+	 */
+	public function mostrarTallas($id_articulo){
+		$tallas = R::findAll('articulo_talla','where articulo_id = ? order by id',[$id_articulo]);
+		return $tallas;
+	}
+	
+	public function mostrarColores($id_articulo){
+		$colores = R::findAll('articulo_color','where articulo_id = ? order by id',[$id_articulo]);
+		return $colores;
+	}
 }
 ?>

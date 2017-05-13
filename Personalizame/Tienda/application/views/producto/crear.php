@@ -2,6 +2,25 @@
 <script type="text/javascript">
 var conexion;
 
+	function crearElementosArticulo(){
+		conexion = new XMLHttpRequest();
+
+		var datos = "id_articulo="+document.getElementById("idArticulo").value;
+		conexion.open('POST', '<?=base_url()?>producto/mostrarElementosArticulo', true);
+		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		conexion.send(datos);
+		conexion.onreadystatechange = function() {
+			if (conexion.readyState==4 && conexion.status==200) {
+				mostrarElementosArticulo();
+			}
+		}
+	}
+
+	function mostrarElementosArticulo(){
+		document.getElementById("idElementosArticulo").innerHTML = conexion.responseText ;
+	}
+
 	function accionAJAX() {
 		document.getElementById("idBanner").innerHTML = conexion.responseText;
 		document.getElementById("idForm1").reset();
@@ -66,7 +85,7 @@ var conexion;
 
 <div class="card">
 	<div class="card-header">
-		<h2>Diseño</h2>
+		<h2>Producto</h2>
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
@@ -87,24 +106,50 @@ var conexion;
 						<label for="idNombreProducto">Nombre del producto </label> 
 						<input class="form-control input-sm" id="idNombreProducto" type="text" name="nombre_producto" maxlength="30" required="required" placeholder="completa este campo" title="El Texto puede contener entre 3 y 30 caracteres">
 					</div>
-	
+	<!-- se guardará la imagen al realizar la composicion. aquí no pinta nada 
+			
 					<div class="form-group fg-line">
 						<label for="idImagenProducto">Imagen producto </label> 
 						<textarea class="form-control" id="idImagenProducto" name="imagen_producto" maxlength="200"></textarea>
 					</div>
+	 -->
  				</div>
- 			<!-- 
+ 		
 				<div class=" m-b-25">
-			   		<p class="f-500 c-black m-b-15" id="select-form">Seleccione Imagen</p>
-					<select class="form-control" id="idImagen" name="id_imagen">         
+			   		<p class="f-500 c-black m-b-15" id="select-form">Seleccione Artículo</p>
+					<select class="form-control" id="idArticulo" name="id_articulo" onchange="crearElementosArticulo()">         
 			 			<option value='0'>Seleccione uno</option>       	
-			 		<?php foreach ($body['imagenes'] as $imagen): ?>
-			 			<option value='<?= $imagen['id']?>'><?= $imagen['nombre_imagen']?></option>
+			 		<?php foreach ($body['articulos'] as $articulo): ?>
+			 			<option value='<?= $articulo['id']?>'><?= $articulo['nombre']?></option>
 					<?php endforeach;?>
 			        </select>
 				</div>
-			-->
-				//Aqui van los select de color, talla, diseños, articulo, etc...//
+				<div id="idElementosArticulo"></div>
+				
+				<div class=" m-b-25">
+			   		<p class="f-500 c-black m-b-15" id="select-form">Seleccione Diseño delantero</p>
+					<select class="form-control" id="idDisenoFront" name="id_diseno_front">         
+			 			<option value='0'>Seleccione uno</option>       	
+			 		<?php foreach ($body['disenos'] as $diseno): ?>
+			 			<?php if($diseno['ubicacion'] == "Frontal"):?>     
+			 			<option value='<?= $diseno['id']?>'><?= $diseno['nombre_diseno']?></option>
+						<?php endif;?> 
+					<?php endforeach;?>
+			        </select>
+				</div>
+		 		
+		 		<div class=" m-b-25">
+			   		<p class="f-500 c-black m-b-15" id="select-form">Seleccione Diseño trasero</p>
+					<select class="form-control" id="idDisenoBack" name="id_diseno_back">         
+			 			<option value='0'>Seleccione uno</option>       	
+			 		<?php foreach ($body['disenos'] as $diseno): ?>
+			 			<?php if($diseno['ubicacion'] == "Trasera"):?>  
+			 			<option value='<?= $diseno['id']?>'><?= $diseno['nombre_diseno']?></option>
+						<?php endif;?> 
+					<?php endforeach;?>
+			        </select>
+				</div>
+				
 			</div>
 		</div>
 		<div class="row">
