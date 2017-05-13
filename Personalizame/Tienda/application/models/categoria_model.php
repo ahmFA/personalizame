@@ -51,11 +51,16 @@ class Categoria_model extends CI_Model{
 	}
 
 	public function editar($id, $nom){
-		$t = R::load('categoria', $id);
-		$t->nombre = $nom;
-
-		R::store($t);
-		R::close();
+		if(!$this->existeCategoria($nom)){
+			$t = R::load('categoria', $id);
+			$t->nombre = $nom;
+	
+			R::store($t);
+			R::close();
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
 
