@@ -64,21 +64,7 @@
 				}
 			}
 		</script>
-		<script type="text/javascript">
-     
-
-			function comprobarCategoria(){
-				var texto = document.getElementById('nombre').value;
-				if(isNaN(texto) && texto != ''){
-					
-					return true;
-				}else{
-					document.getElementById('nombre-form').classList.add('has-error');
-					document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos y que éstos no sean números</div>';
-					return false;
-				}
-			}
-		</script>
+		
 		<script type="text/javascript">
      
 

@@ -10,12 +10,13 @@ class Categoria extends CI_Controller{
 		$nombre = $_POST['nombre'];
 
 		$this->load->model('categoria_model');
-		$status = null;
-		$status = $this->categoria_model->crearCategoria($nombre);
+		
+		//$status = $this->categoria_model->crearCategoria($nombre);
 		/*
 		 * Si no se ha metido en la base de datos (ya sea porque ya existe o por causa ajena)
 		 * se informa del error al administrador.
 		 */
+		/*
 		if($status){
 			$datos['body']['mensajeBanner'] = '<div class="alert alert-success" role="alert">Categoría '.$nombre.' creada con éxito.</div>';
 		}else{
@@ -23,6 +24,15 @@ class Categoria extends CI_Controller{
 		}
 			
 		enmarcar($this, "categoria/crear", $datos);
+		*/
+		
+		/*
+		 * Con AJAX no me funciona
+		*/
+		$datos['body']['status'] = $this->categoria_model->crearCategoria($nombre);
+		
+		$datos['body']['nombre'] = $nombre;	
+		$this->load->view("categoria/XcrearPost", $datos);
 	}
 
 	public function listar(){
