@@ -17,12 +17,12 @@ class Categoria extends CI_Controller{
 		 * se informa del error al administrador.
 		 */
 		if($status){
-			$this->listar();
+			$datos['body']['mensajeBanner'] = '<div class="alert alert-success" role="alert">Categoría '.$nombre.' creada con éxito.</div>';
 		}else{
-			enmarcar($this,'categoria/crearERROR');
+			$datos['body']['mensajeBanner'] = '<div class="alert alert-danger" role="alert">Ya existe la categoría '.$nombre.'</div>';
 		}
 			
-		//}
+		enmarcar($this, "categoria/crear", $datos);
 	}
 
 	public function listar(){

@@ -46,7 +46,7 @@
 	<div id="idBanner" class="p-l-10"></div>
 	</div>
 	</div>
-	<form role="form" method="post" action="<?= base_url() ?>fuente/modificarPost2">
+	<form role="form" name="form1" method="post" action="<?= base_url() ?>fuente/modificarPost2">
 		<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
 		<input type="hidden" name="idFuente" value="<?= $body['fuente']->id ?>">
 		<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">

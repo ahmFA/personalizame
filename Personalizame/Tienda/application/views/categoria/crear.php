@@ -4,7 +4,9 @@
 	</div>
 	<div class="row">
 	<div class="col-sm-5">
-	<div id="idBanner" class="p-l-10"></div>
+	<div id="idBanner" class="p-l-10">
+	<?= isset($body['mensajeBanner']) ? $body['mensajeBanner'] : '' ?>
+	</div>
 	</div>
 	</div>
 	<form role="form" method="post"
