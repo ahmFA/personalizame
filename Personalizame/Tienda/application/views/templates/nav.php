@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="profile-info">
-                            Parrita
+                            <?= $_SESSION['nick'] ?>
 
                             <i class="zmdi zmdi-caret-down"></i>
                         </div>
@@ -52,10 +52,10 @@
 
                     <ul class="main-menu">
                         <li>
-                            <a href="profile-about.html"><i class="zmdi zmdi-account"></i> Ver Perfil</a>
+                            <a href="<?= base_url()?>usuario/perfiladmin"><i class="zmdi zmdi-account"></i> Ver Perfil</a>
                         </li>
                         <li>
-                            <a href=""><i class="zmdi zmdi-time-restore"></i> Logout</a>
+                            <a href="<?= base_url()?>usuario/logout"><i class="zmdi zmdi-time-restore"></i> Logout</a>
                         </li>
                     </ul>
                 </div>

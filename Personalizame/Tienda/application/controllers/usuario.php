@@ -16,6 +16,7 @@ class Usuario extends CI_Controller{
 	 * recoge datos del formulario y los pasa al modelo
 	 */
 	public function crearPost() { //AJAX
+		$imagen = 'user.jpg';
 		$nick = $_POST['nick'];
 		$pwd = $_POST['pwd'];
 		$perfil = $_POST['perfil'];
@@ -39,8 +40,18 @@ class Usuario extends CI_Controller{
 		$fecha_baja = ""; // será vacio al darse de alta
 		$motivo_baja = ""; // será vacio al darse de alta
 		
+		/*
+		 * Creación de carpeta para guardar las fotos de los usuarios
+		 *  en caso de que ésta no existiera ya.
+		 */
+		//if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/imagenes/usuarios/'.$nick.'/')){
+			//mkdir($_SERVER['DOCUMENT_ROOT'].'/img/imagenes/usuarios/'.$nick.'/');
+		//}
+		//$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/imagenes/usuarios/'.$nick.'/';
+		//copy($_SERVER['DOCUMENT_ROOT'].'/img/imagenes/usuarios/user.jpg',$directorio.$imagen);
+		
 		$this->load->model('usuario_model');
-		$datos['body']['status'] = $this->usuario_model->crear($nick,$pwd,$perfil,$estado,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion,$descuento,$fecha_alta,$fecha_baja,$motivo_baja);
+		$datos['body']['status'] = $this->usuario_model->crear($imagen,$nick,$pwd,$perfil,$estado,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion,$descuento,$fecha_alta,$fecha_baja,$motivo_baja);
 		$datos['body']['nick'] = $nick;
 		$this->load->view('usuario/XcrearPost',$datos);
 
@@ -153,7 +164,7 @@ class Usuario extends CI_Controller{
 		$idUsuario = $_POST['idUsuario'];
 		$nick = $_POST['nick'];
 		$pwd = $_POST['pwd'];
-		$perfil = $_POST['perfil'];
+		//$perfil = $_POST['perfil'];
 		$nombre = $_POST['nombre'];
 		$apellido1 = $_POST['apellido1'];
 		$apellido2 = $_POST['apellido2'];
@@ -168,11 +179,43 @@ class Usuario extends CI_Controller{
 		$provincia = $_POST['provincia'];
 		$pais = $_POST['pais'];
 		$comentario_direccion = $_POST['comentario_direccion'];
-	
 		$this->load->model('usuario_model');
-		$this->usuario_model->modificar($idUsuario,$nick,$pwd,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
+		$user = $this->usuario_model->getPorId($idUsuario);
+		
+		$nomImagen = !empty($_FILES['nueva']['name']) ? $nick.'-'.$_FILES['nueva']['name']:$user['imagen'];
+		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
+		$tipoImagen = !empty($_FILES['nueva']['type']) ? $_FILES['nueva']['type']: null;
+		
+		$this->load->model('imagen_model');
+		
+		$imagenValida = true;
+		//if($tamanoImagen != null && $tipoImagen != null){
+		$imagenValida = $this->imagen_model->validarImagen($nomImagen, $tamanoImagen, $tipoImagen);
+		//}
+		
+		//if($imagenValida){
+		$this->usuario_model->modificar($idUsuario,$nomImagen,$nick,$pwd,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
+			
+		if(!empty($_FILES['nueva']['name'])){
+			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/usuarios/';
+			move_uploaded_file($_FILES['nueva']['tmp_name'],$directorio.$nomImagen);
+			/*
+			 * Aquí se borraría la antigua imagen.
+			 */
+			//chmod($directorio.$nomImagen, 666);
+			//unlink($fichero);
+		}
+			
+		
+		//}
+		
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
-		enmarcar($this, 'usuario/borrarPost');
+		if(isset($_POST['perfilAdmin'])){
+			$this->perfilAdmin();
+		}else{
+			enmarcar($this, 'usuario/borrarPost');
+		}
+			
 	}
 	
 	public function login() {
@@ -201,6 +244,12 @@ class Usuario extends CI_Controller{
 	public function logout() {
 		session_destroy();
 		header('Location:'.base_url().'home');
+	}
+	
+	public function perfilAdmin(){
+		$this->load->model('usuario_model');
+		$datos['usuario'] =  $this->usuario_model->getPorId($_SESSION['idUsuario']);
+		enmarcar($this, 'admin/perfil', $datos);
 	}
 }
 ?>

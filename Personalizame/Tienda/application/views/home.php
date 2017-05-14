@@ -1,3 +1,4 @@
+
 	<header id="page-top">
 		<div class="wrap-header">
 			<div class="container">
@@ -5,7 +6,7 @@
 					<div class="col-lg-12">
 						<img src="<?=base_url() ?>assets/images/logo.png" alt="">
 						<div class="intro-text">
-							<div class="intro-lead-in">Welcome To Our Studio!</div>
+							<div class="intro-lead-in">Bienvenido a Personalízame!</div>
 							<div class="intro-heading">It's Nice To Meet You</div>
 						</div>
 					</div>

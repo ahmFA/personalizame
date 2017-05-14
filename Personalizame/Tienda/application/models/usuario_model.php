@@ -14,11 +14,11 @@ class Usuario_model extends CI_Model{
 	/*
 	 * guarda (o No guarda) el usuario en base de datos y devuelve el status 0,-1  al cotroller 
 	 */
-	public function crear($nick,$pwd,$perfil,$estado,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion,$descuento,$fecha_alta,$fecha_baja,$motivo_baja){
+	public function crear($imagen,$nick,$pwd,$perfil,$estado,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion,$descuento,$fecha_alta,$fecha_baja,$motivo_baja){
 		$status = 0;
 		if (!$this->existeNick($nick)) {
 			$usuario = R::dispense('usuario');
-			
+			$usuario -> imagen = $imagen;
 			$usuario -> nick = $nick;
 			$usuario -> pwd = $pwd; // mirar como funciona encriptado md5($pwd);
 			$usuario -> perfil = $perfil;
@@ -105,12 +105,12 @@ class Usuario_model extends CI_Model{
 		R::close();
 	}
 	
-	public function modificar($idUsuario,$nick,$pwd,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion){
+	public function modificar($idUsuario,$nomImagen,$nick,$pwd,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion){
 		$usuario = R::load('usuario',$idUsuario);
-		
+		$usuario ->imagen = $nomImagen;
 		$usuario -> nick = $nick;
 		$usuario -> pwd = $pwd; // mirar como funciona encriptado md5($pwd);
-		$usuario -> perfil = $perfil;
+		//$usuario -> perfil = $perfil;
 		$usuario -> nombre = $nombre;
 		$usuario -> apellido1 = $apellido1;
 		$usuario -> apellido2 = $apellido2;
