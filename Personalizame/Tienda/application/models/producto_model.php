@@ -7,14 +7,15 @@ class Producto_model extends CI_Model{
 	/*
 	 * crear el producto
 	 */
-	public function crear($id_usuario,$id_articulo,$id_talla,$id_color_base,$id_color_secundario,$id_diseno_front,$id_diseno_back,$nombre_producto,$imagen_producto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion){
+	public function crear($id_usuario,$id_articulo,$id_talla,$id_color_base,$id_diseno_front,$id_diseno_back,$nombre_producto,$imagen_producto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion){
 		$producto = R::dispense('producto');
 		
 		$producto -> id_usuario = $id_usuario;
 		$producto -> nombre_producto = $nombre_producto;
 		$producto -> imagen_producto = $imagen_producto;
-		//$producto -> precio = $precio;
-		//$producto -> coste = $coste;
+		$producto -> id_diseno_front = $id_diseno_front;
+		$producto -> id_diseno_back = $id_diseno_back;
+		
 		$producto -> fecha_alta = $fecha_alta;
 		$producto -> fecha_baja = $fecha_baja;
 		$producto -> motivo_baja = $motivo_baja;
@@ -24,16 +25,15 @@ class Producto_model extends CI_Model{
 		$articulo = R::load('articulo', $id_articulo);
 		$talla = R::load('talla', $id_talla);
 		$colorB = R::load('color', $id_color_base);
-		//$colorS = R::load('color', $id_color_secundario);
 		$disenoF = R::load('diseno', $id_diseno_front);
 		$disenoB = R::load('diseno', $id_diseno_back);
 		
 		$articulo -> xownProductolist[] = $producto; 
 		$talla -> xownProductolist[] = $producto;  
 		$colorB -> xownProductolist[] = $producto;
-		//$colorS -> xownProductolist[] = $producto;
-		$disenoF -> xownProductolist[] = $producto;
-		$disenoB -> xownProductolist[] = $producto;
+
+		$producto -> sharedDisenoList[] = $disenoF;
+		$producto -> sharedDisenoList[] = $disenoB;
 		
 		$producto -> precio = $disenoF->precio + $disenoB->precio;
 		$producto -> coste = $disenoF->coste + $disenoB->coste;
@@ -41,9 +41,7 @@ class Producto_model extends CI_Model{
 		R::store($articulo);
 		R::store($talla);
 		R::store($colorB);
-		R::store($colorS);
-		R::store($disenoF);
-		R::store($disenoB);
+
 		R::store($producto);
 		R::close();
 	}
@@ -83,12 +81,15 @@ class Producto_model extends CI_Model{
 		R::store($producto);
 		R::close();
 	}
-
+	
+	/*habilitar para modificar todos los campos
 	public function modificar($id_producto,$id_articulo,$id_talla,$id_color_base,$id_color_secundario,$id_diseno_front,$id_diseno_back,$nombre_producto,$imagen_producto){
 		$producto = R::load('producto',$id_producto);
 
 		$producto -> nombre_producto = $nombre_producto;
 		$producto -> imagen_producto = $imagen_producto;
+		$producto -> id_diseno_front = $id_diseno_front;
+		$producto -> id_diseno_back = $id_diseno_back;
 		
 		$articulo = R::load('articulo', $id_articulo);
 		$talla = R::load('talla', $id_talla);
@@ -97,12 +98,19 @@ class Producto_model extends CI_Model{
 		$disenoF = R::load('diseno', $id_diseno_front);
 		$disenoB = R::load('diseno', $id_diseno_back);
 		
-		$articulo -> xownProductolist[] = $producto; 
-		$talla -> xownProductolist[] = $producto;  
+		$articulo = R::load('articulo', $id_articulo);
+		$talla = R::load('talla', $id_talla);
+		$colorB = R::load('color', $id_color_base);
+		$disenoF = R::load('diseno', $id_diseno_front);
+		$disenoB = R::load('diseno', $id_diseno_back);
+		
+		$articulo -> xownProductolist[] = $producto;
+		$talla -> xownProductolist[] = $producto;
 		$colorB -> xownProductolist[] = $producto;
-		//$colorS -> xownProductolist[] = $producto;
-		$disenoF -> xownProductolist[] = $producto;
-		$disenoB -> xownProductolist[] = $producto;
+		
+		$producto -> sharedDisenoList =[]; //limpiar
+		$producto -> sharedDisenoList[] = $disenoF;
+		$producto -> sharedDisenoList[] = $disenoB;
 		
 		$producto -> precio = $disenoF->precio + $disenoB->precio;
 		$producto -> coste = $disenoF->coste + $disenoB->coste;
@@ -110,13 +118,21 @@ class Producto_model extends CI_Model{
 		R::store($articulo);
 		R::store($talla);
 		R::store($colorB);
-		//R::store($colorS);
-		R::store($disenoF);
-		R::store($disenoB);
+		
 		R::store($producto);
 		R::close();
 	}
+	*/
 	
+	//version reducida
+	public function modificar($id_producto,$nombre_producto){
+		$producto = R::load('producto',$id_producto);
+	
+		$producto -> nombre_producto = $nombre_producto;
+		
+		R::store($producto);
+		R::close();
+	}
 	
 	/* 
 	   estas funciones posiblemente deberian estar en sus respectivos model 

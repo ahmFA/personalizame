@@ -77,7 +77,7 @@ var conexion;
 	<div class="card-body card-padding">
 		<!-- campos ocultos para conocer el autor -->
 		<input type="hidden" name="id_sesion" value="<?= session_id()?>">
-		<input type="hidden" name="id_usuario" value="<?= isset($_SESSION['id_usuario']) ? $_SESSION['id_usuario'] : null ?>">
+		<input type="hidden" name="id_usuario" value="<?= isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : null ?>">
 		
 		<!-- campos ocultos que pasarán los datos del canvas de la imagen -->
 		<input type="hidden" name="tamano_imagen" value="150x200">
