@@ -51,11 +51,19 @@
 		<tr>
 			<td><?= $producto->id_usuario ?></td>
 			<td><?= $producto->nombre_producto ?></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td><?= $producto->articulo->nombre_imagen ?></td>
+			<td><?= $producto->color->nombre ?></td>
+			<td><?= $producto->talla->nombre ?></td>
+			<td>
+			<?php foreach ($producto->sharedDisenoList as $diseno):?>
+				<?php if($diseno['ubicacion']=="Frontal"){echo($diseno['nombre_diseno']);}?>
+			<?php endforeach;?>
+			</td>
+			<td>
+			<?php foreach ($producto->sharedDisenoList as $diseno):?>
+				<?php if($diseno['ubicacion']=="Trasera"){echo($diseno['nombre_diseno']);}?>
+			<?php endforeach;?>
+			</td>
 			<td><?= $producto->imagen_producto ?></td>
 			<td><?= $producto->fecha_alta ?></td>
 			<td>

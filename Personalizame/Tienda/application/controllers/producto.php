@@ -11,12 +11,9 @@ class Producto extends CI_Controller{
 	public function crear(){
 		$this->load->model('diseno_model');
 		$this->load->model('articulo_model');
-		$this->load->model('talla_model');
-		$this->load->model('color_model');
 		$datos ['body'] ['disenos'] = $this->diseno_model->getTodos();
 		$datos ['body'] ['articulos'] = $this->articulo_model->listar();
-		$datos ['body'] ['tallas'] = $this->talla_model->listar();
-		$datos ['body'] ['colores'] = $this->color_model->listar();
+
 		enmarcar($this,'producto/crear',$datos);
 	}
 	
@@ -28,7 +25,7 @@ class Producto extends CI_Controller{
 		$id_articulo = $_POST['id_articulo'];
 		$id_talla = $_POST['id_talla'];
 		$id_color_base = $_POST['id_color_base'];
-		$id_color_secundario = $_POST['id_color_secundario'];
+		//$id_color_secundario = $_POST['id_color_secundario']; //era para camisetas de rayas
 		$id_diseno_front = $_POST['id_diseno_front'];
 		$id_diseno_back = $_POST['id_diseno_back'];
 		$nombre_producto = $_POST['nombre_producto'];
@@ -42,7 +39,7 @@ class Producto extends CI_Controller{
 		$id_sesion = $_POST['id_sesion']; // para tener un id único en caso de que el usuario no se loguee y sea Invitado
 		
 		$this->load->model('producto_model');
-		$this->producto_model->crear($id_usuario,$id_articulo,$id_talla,$id_color_base,$id_color_secundario,$id_diseno_front,$id_diseno_back,$nombre_producto,$imagen_producto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
+		$this->producto_model->crear($id_usuario,$id_articulo,$id_talla,$id_color_base,$id_diseno_front,$id_diseno_back,$nombre_producto,$imagen_producto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
 		$datos['body']['nombre_producto'] = $nombre_producto;
 		$this->load->view('producto/XcrearPost',$datos);
 
@@ -94,12 +91,8 @@ class Producto extends CI_Controller{
 	
 		$this->load->model('diseno_model');
 		$this->load->model('articulo_model');
-		$this->load->model('talla_model');
-		$this->load->model('color_model');
 		$datos ['body'] ['disenos'] = $this->diseno_model->getTodos();
 		$datos ['body'] ['articulos'] = $this->articulo_model->listar();
-		$datos ['body'] ['tallas'] = $this->talla_model->listar();
-		$datos ['body'] ['colores'] = $this->color_model->listar();
 		
 		//los siguientes datos solo van para mantener el filtro y mostrar despues el resultado
 		$datos['body']['filtroNombreProducto'] = $filtroNombreProducto;
@@ -112,10 +105,11 @@ class Producto extends CI_Controller{
 	public function modificarPost2() {
 		$id_producto = $_POST['id_producto'];
 		
+		/* habilitar para modificar todos los campos
 		$id_articulo = $_POST['id_articulo'];
 		$id_talla = $_POST['id_talla'];
 		$id_color_base = $_POST['id_color_base'];
-		$id_color_secundario = $_POST['id_color_secundario'];
+		//$id_color_secundario = $_POST['id_color_secundario'];  //era para camisetas de rayas
 		$id_diseno_front = $_POST['id_diseno_front'];
 		$id_diseno_back = $_POST['id_diseno_back'];
 		$nombre_producto = $_POST['nombre_producto'];
@@ -124,7 +118,14 @@ class Producto extends CI_Controller{
 		//$coste = $_POST['coste']; 	
 		
 		$this->load->model('producto_model');
-		$this->producto_model->modificar($id_producto,$id_articulo,$id_talla,$id_color_base,$id_color_secundario,$id_diseno_front,$id_diseno_back,$nombre_producto,$imagen_producto);
+		$this->producto_model->modificar($id_producto,$id_articulo,$id_talla,$id_color_base,$id_diseno_front,$id_diseno_back,$nombre_producto,$imagen_producto);
+		*/
+		
+		//version reducida
+		$nombre_producto = $_POST['nombre_producto'];
+		$this->load->model('producto_model');
+		$this->producto_model->modificar($id_producto,$nombre_producto);
+		
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
 		$this->listarPost();
 	}
@@ -143,7 +144,7 @@ class Producto extends CI_Controller{
 		$datos ['body'] ['tallas'] = $this->producto_model->mostrarTallas($id_articulo);
 		$datos ['body'] ['colores'] = $this->producto_model->mostrarColores($id_articulo);
 		
-		$this->load->view('producto/XcrearTallas',$datos);
+		$this->load->view('producto/XcrearElementosArticulo',$datos);
 	}
 }
 ?>

@@ -55,10 +55,6 @@
 		<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
 		<input type="hidden" name="id_producto" value="<?= $body['producto']->id ?>">
 		
-		<!-- campos ocultos con el calculo precio y coste de producto-->
-		<input type="hidden" name="precio" value="<?= $body['producto']->precio ?>">
-		<input type="hidden" name="coste" value="<?= $body['producto']->coste ?>">
-		
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="cp-container">
@@ -73,23 +69,8 @@
 						<textarea class="form-control" id="idImagenProducto" name="imagen_producto" maxlength="200"><?= $body['producto']->imagen_producto ?></textarea>
 					</div>
  				</div>
- 			<!-- 
-				<div class=" m-b-25">
-			   		<p class="f-500 c-black m-b-15" id="select-form">Seleccione Texto</p>
-					<select class="form-control" id="idTexto" name="id_texto">         
-			 			<option value='0'>Ninguno</option>       	
-			 		<?php foreach ($body['textos'] as $texto): ?>
-			 			<?php if($body['diseno']->texto == $texto):?>
-			 				<option value='<?= $texto['id']?>' selected="selected"><?= $texto['datos_texto']?></option>
-			 			<?php else:?>
-			 				<option value='<?= $texto['id']?>'><?= $texto['datos_texto']?></option>
-			 			<?php endif;?>
-					<?php endforeach;?>
-			        </select>
-				</div>
 
-			-->
-				//Aqui van los select de color, talla, diseños, articulo, etc...//
+				//Por ahora solo dejar cambiar el nombre y mostrar la imagen //
 			
 			</div>
 		</div>
