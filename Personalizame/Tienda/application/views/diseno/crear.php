@@ -148,3 +148,62 @@ var conexion;
 	</div>
 	</form>
 </div>
+
+<div class="container">
+	<div class="form-group col-xs-12">
+		<h2>Pruebas con el diseño</h2>
+		<input class="btn btn-primary" id="idBotonVer" type="button" value="Ver como queda" onclick="ver();">
+		<canvas id="canvas" width="500" height="500"></canvas>
+	</div>	
+</div>
+
+<script type="text/javascript">
+	//Objeto Canvas.
+	var canvas = document.getElementById('canvas');
+	
+	// Objeto Contexto 2D.
+	var Rxt = canvas.getContext('2d');
+	
+	Rxt.fillStyle = 'green';            // Contexto de color verde.
+	Rxt.fillRect(0, 0, 2000, 2000);     // Se rellena el contexto con el color verde.
+	
+	// Rotar Imagen.
+	//Rxt.rotate(.2);
+	    
+	// Se crea una imagen.
+	var Img = document.createElement('img');
+	Img.src = '<?=base_url() ?>assets/images/25.jpg';
+	Img.onload = function () { 
+	    Rxt.drawImage(Img, 50, 0, 50, 50); 
+	}
+	
+	var down = false;
+	Rxt.canvas.addEventListener('mousedown', function () { 
+	    down = true; 
+	}, false);
+	Rxt.canvas.addEventListener('mouseup', function () { 
+	    down = false; 
+	}, false);
+	Rxt.canvas.addEventListener('mousemove', function (event) {
+	    if (down){
+	        //Rxt.translate(0, -50);
+	        clear();
+	        Rxt.drawImage(Img, event.clientX - this.offsetLeft,
+	        event.clientY - this.offsetTop, 50, 50);
+	        //Rxt.translate(0, 50);
+	    }
+	}, false);
+	
+	// Funcion limpiar image.
+	function clear(){
+	    Rxt.clearRect(0, 0, canvas.width, canvas.height);
+	    Rxt.fillStyle = 'green';            // Contexto de color verde.
+	    Rxt.fillRect(0, 0, 2000, 2000);     // Se rellena el contexto con el color verde.
+	}
+
+	function ver(){
+		var dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
+		window.open(dataUrl, "Ejemplo", "width=400, height=400"); //mostramos en popUp
+	}
+
+</script>

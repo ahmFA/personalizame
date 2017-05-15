@@ -126,7 +126,7 @@ var conexion;
 		<h2>Pruebas con el texto</h2>
 	
 		<input class="btn btn-primary" id="idBotonAplicar" type="button" value="Aplicar" onclick="inicializar();">
-		<input class="btn btn-primary" id="idBotonAplicar" type="button" value="Ver como queda" onclick="ver();">
+		<input class="btn btn-primary" id="idBotonVer" type="button" value="Ver como queda" onclick="ver();">
 		<br/><br/><br/>
 		<div id="kk"></div>
 		<div id="kk2"></div>
