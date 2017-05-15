@@ -7,10 +7,10 @@
 	<div id="idBanner" class="p-l-10"></div>
 	</div>
 	</div>
-	<form role="form" method="post"
-		action="<?= base_url() ?>color/editarPost" onsubmit="return comprobarTalla()">
+<!-- <form role="form" method="post"
+		action="<?= base_url() ?>color/editarPost"> -->
 		<div class="card-body card-padding">
-			<input type="hidden" name="id" value="<?=$color['id'];?>">
+			<input type="hidden" id="id" name="id" value="<?=$color['id'];?>">
 			<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
 			<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
 			<div class="row">
@@ -50,10 +50,10 @@
 			</div>
 
 			<div class="row">
-				<button type="submit" class="btn btn-primary btn-sm m-t-10">Guardar</button>
+				<button onclick="comprobarModColor()" class="btn btn-primary btn-sm m-t-10">Guardar</button>
 			</div>
 		</div>
-	</form>
+<!-- </form> -->
 
 </div>
 

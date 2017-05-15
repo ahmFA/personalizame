@@ -135,9 +135,9 @@ class Categoria extends CI_Controller{
 		$id = $_POST['id'];
 		$nombre = $_POST['nombre'];
 		$this->load->model('categoria_model');
-		$this->categoria_model->editar($id, $nombre);
-			
-		enmarcar($this, 'categoria/borrarPost');
+		$datos['body']['status'] = $this->categoria_model->editar($id, $nombre);
+		$datos['body']['nombre'] = $nombre;
+		$this->load->view("categoria/XmodificarPost", $datos);
 	}
 }
 

@@ -7,8 +7,8 @@
 						<div id="idBanner" class="p-l-10"></div>
 					</div>
 				</div>
-				<form role="form" method="post"
-					action="<?= base_url() ?>color/crearPost" onsubmit="return comprobarColor()">
+				<!-- <form role="form" method="post"
+					action="<?= base_url() ?>color/crearPost"> -->
 					<div class="card-body card-padding">
 			
 						<div class="row">
@@ -45,10 +45,10 @@
 						</div>
 			
 						<div class="row">
-							<button type="submit" class="btn btn-primary btn-sm m-t-10">Guardar</button>
+							<button onclick="comprobarColor()" class="btn btn-primary btn-sm m-t-10">Guardar</button>
 						</div>
 					</div>
-				</form>
+			<!-- 	</form> -->
 			
 			</div>
 

@@ -8,7 +8,7 @@
 					crearCategoria();
 				}else{
 					document.getElementById('nombre-form').classList.add('has-error');
-					document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos y que éstos no sean números</div>';
+					document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Rellena todos los campos y que éstos no sean números</div>';
 					
 				}
 			}
@@ -48,14 +48,14 @@
 		<h2>Crea una nueva categoría</h2>
 	</div>
 	<div class="row">
-	<div class="col-sm-5">
+	<div class="col-sm-7">
 	<div id="idBanner" class="p-l-10">
 	
 	</div>
 	</div>
 	</div>
-	<form role="form" method="post" id="idForm1"
-		action="<?= base_url() ?>categoria/crearPost">
+<!-- <form role="form" method="post" id="idForm1"
+		action="<?= base_url() ?>categoria/crearPost"> -->	
 		<div class="card-body card-padding">
 
 			<div class="row">
@@ -74,7 +74,7 @@
 				<button class="btn btn-primary btn-sm m-t-10" onclick="comprobarCategoria()" id="idBotonEnviar">Guardar</button>
 			</div>
 		</div>
-	</form>
+<!-- </form> -->	
 
 </div>
 

@@ -51,31 +51,124 @@
         </script>
 
         <script type="text/javascript">
-     
+        var conexion;
+
+    	function accionAJAX() {
+    		document.getElementById("idBanner").innerHTML = conexion.responseText;
+
+    		//comprobacion para ver si borro o no los campos tras una insercion
+    		var str = conexion.responseText;
+    		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
+    		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
+    			document.getElementById("idForm1").reset();
+    		}
+    		
+    	}
+
+    	function crearTalla() {
+    		conexion = new XMLHttpRequest();
+
+    		//var datosSerializados = serialize(document.getElementById("idForm1"));
+    		var datos = 'nombre='+document.getElementById('nombre').value;
+    		conexion.open('POST', '<?=base_url() ?>talla/crearPost', true);
+    		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    		conexion.send(datos);
+    		conexion.onreadystatechange = function() {
+    			if (conexion.readyState==4 && conexion.status==200) {
+    				accionAJAX();
+    			}
+    		}
+    	}
+
+    	function modificarTalla() {
+    		conexion = new XMLHttpRequest();
+
+    		//var datosSerializados = serialize(document.getElementById("idForm1"));
+    		var datos = 'nombre='+document.getElementById('nombre').value+'&id='+document.getElementById('id').value;
+    		conexion.open('POST', '<?=base_url() ?>talla/editarPost', true);
+    		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    		conexion.send(datos);
+    		conexion.onreadystatechange = function() {
+    			if (conexion.readyState==4 && conexion.status==200) {
+    				accionAJAX();
+    			}
+    		}
+    	}
 
 			function comprobarTalla(){
 				var texto = document.getElementById('nombre').value;
 				if(isNaN(texto) && texto != ''){
-					return true;
+					crearTalla();
 				}else{
 					document.getElementById('nombre-form').classList.add('has-error');	
-					document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos y que éstos no sean números</div>';	
-					return false;
+					document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos y que éstos no sean números</div>';
+				}
+			}
+
+			function comprobarModTalla(){
+				var texto = document.getElementById('nombre').value;
+				if(isNaN(texto) && texto != ''){
+					modificarTalla();
+				}else{
+					document.getElementById('nombre-form').classList.add('has-error');	
+					document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Rellena todos los campos y que éstos no sean números</div>';
 				}
 			}
 		</script>
 		
 		<script type="text/javascript">
-     
+		function crearColor() {
+    		conexion = new XMLHttpRequest();
+
+    		//var datosSerializados = serialize(document.getElementById("idForm1"));
+    		var datos = 'nombre='+document.getElementById('nombre').value+'&valor='+document.getElementById('valor').value;
+    		conexion.open('POST', '<?=base_url() ?>color/crearPost', true);
+    		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    		conexion.send(datos);
+    		conexion.onreadystatechange = function() {
+    			if (conexion.readyState==4 && conexion.status==200) {
+    				accionAJAX();
+    			}
+    		}
+    	}
+
+		function modificarColor() {
+    		conexion = new XMLHttpRequest();
+
+    		//var datosSerializados = serialize(document.getElementById("idForm1"));
+    		var datos = 'nombre='+document.getElementById('nombre').value+'&valor='+document.getElementById('valor').value+'&id='+document.getElementById('id').value;
+    		conexion.open('POST', '<?=base_url() ?>color/editarPost', true);
+    		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    		conexion.send(datos);
+    		conexion.onreadystatechange = function() {
+    			if (conexion.readyState==4 && conexion.status==200) {
+    				accionAJAX();
+    			}
+    		}
+    	}
+     		
 
 			function comprobarColor(){
 				var texto = document.getElementById('nombre').value;
 				if(isNaN(texto) && texto != ''){
-					return true;
+					crearColor();
 				}else{
 					document.getElementById('nombre-form').classList.add('has-error');
-					document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos y que éstos no sean números</div>';
-					return false;
+					document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Rellena todos los campos y que éstos no sean números</div>';					
+				}
+			}
+
+			function comprobarModColor(){
+				var texto = document.getElementById('nombre').value;
+				if(isNaN(texto) && texto != ''){
+					modificarColor();
+				}else{
+					document.getElementById('nombre-form').classList.add('has-error');
+					document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Rellena todos los campos y que éstos no sean números</div>';					
 				}
 			}
 		</script>

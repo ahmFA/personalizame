@@ -51,11 +51,16 @@ class Talla_model extends CI_Model{
 	}
 
 	public function editar($id, $nom){
-		$t = R::load('talla', $id);
-		$t->nombre = $nom;
-
-		R::store($t);
-		R::close();
+		if(!$this->existeTalla($nom)){
+			$t = R::load('talla', $id);
+			$t->nombre = $nom;
+	
+			R::store($t);
+			R::close();
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
 

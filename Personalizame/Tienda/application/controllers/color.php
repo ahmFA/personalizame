@@ -8,23 +8,16 @@ class Color extends CI_Controller{
 	}
 
 	public function crearPost(){
-		$nombre = $_POST['nombre'];
+		$datos['body']['nombre'] = $_POST['nombre'];
 		$valor = $_POST['valor'];
 		
 		$this->load->model('color_model');
-		$status = null;
-		$status = $this->color_model->crearColor($nombre, $valor);
+		$datos['body']['status'] = $this->color_model->crearColor($_POST['nombre'], $valor);
 		/*
 		 * Si no se ha metido en la base de datos (ya sea porque ya existe o por causa ajena)
 		 * se informa del error al administrador.
 		 */
-		if($status){
-			enmarcar($this,'color/crear');
-		}else{
-			enmarcar($this,'color/crearERROR');
-		}
-			
-		//}
+		$this->load->view('color/XcrearPost',$datos);
 	}
 
 	public function listar(){
@@ -125,12 +118,12 @@ class Color extends CI_Controller{
 
 	public function editarPost(){
 		$id = $_POST['id'];
-		$nombre = $_POST['nombre'];
+		$datos['body']['nombre'] = $_POST['nombre'];
 		$valor = $_POST['valor'];
 		$this->load->model('color_model');
-		$this->color_model->editar($id, $nombre, $valor);
+		$datos['body']['status'] = $this->color_model->editar($id,$_POST['nombre'], $valor);
 			
-		enmarcar($this, 'color/borrarPost');
+		$this->load->view('color/XmodificarPost',$datos);
 	}
 }
 

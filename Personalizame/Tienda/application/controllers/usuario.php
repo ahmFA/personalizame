@@ -69,7 +69,7 @@ class Usuario extends CI_Controller{
 		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
 		
 		$this->load->model('usuario_model');
-		$datos['body']['usuarios'] = $this->usuario_model->getFiltrados($filtroNick,$filtroMail,$filtroEstado);
+		$usuarios = $this->usuario_model->getFiltrados($filtroNick,$filtroMail,$filtroEstado);
 		$datos['body']['filtroNick'] = $filtroNick;
 		$datos['body']['filtroMail'] = $filtroMail;
 		$datos['body']['filtroEstado'] = $filtroEstado;
@@ -79,7 +79,7 @@ class Usuario extends CI_Controller{
 		
 		$tamanio_pagina = 5;
 		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
-		$num_usuarios = count($datos['body']['usuarios']);
+		$num_usuarios = count($usuarios);
 		$total_paginas = ceil($num_usuarios/$tamanio_pagina);
 		$inicio = ($pagina-1)*$tamanio_pagina;
 		$botones = '';
@@ -102,7 +102,7 @@ class Usuario extends CI_Controller{
 		$datos['paginaAnt'] = $pagina-1;
 		$datos['paginaSig'] = $pagina+1;
 		
-		$datos['usuarios'] = $this->usuario_model->getFiltradosConLimite($filtroNick,$filtroMail,$filtroEstado, $inicio);
+		$datos['body']['usuarios'] = $this->usuario_model->getFiltradosConLimite($filtroNick,$filtroMail,$filtroEstado, $inicio);
 	
 		enmarcar($this, 'usuario/listar', $datos);
 	}
@@ -211,7 +211,7 @@ class Usuario extends CI_Controller{
 		
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
 		if(isset($_POST['perfilAdmin'])){
-			$this->perfilAdmin();
+			enmarcar($this, 'usuario/modificarPost');
 		}else{
 			enmarcar($this, 'usuario/borrarPost');
 		}
@@ -233,6 +233,7 @@ class Usuario extends CI_Controller{
 			$_SESSION['idUsuario'] = $usuarioValido->id;
 			$_SESSION['nick'] = $usuarioValido->nick;
 			$_SESSION['perfil'] = $usuarioValido->perfil;
+			$_SESSION['imagen'] = $usuarioValido->imagen;
 			header('Location:'.base_url().'home');
 		}
 		else {

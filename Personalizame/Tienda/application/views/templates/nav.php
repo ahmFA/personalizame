@@ -40,7 +40,7 @@
                 <div class="profile-menu">
                     <a href="">
                         <div class="profile-pic">
-                            <img src="img/profile-pics/parra.jpg" alt="">
+                            <img src="../../../../img/usuarios/<?=$_SESSION['imagen'] ?>" alt="">
                         </div>
 
                         <div class="profile-info">
@@ -62,7 +62,7 @@
 
                 <ul class="main-menu">
                     <li class="active">
-                        <a href="index.html"><i class="zmdi zmdi-home"></i> Inicio</a>
+                        <a href="<?=base_url() ?>home/indexAdmin"><i class="zmdi zmdi-home"></i> Inicio</a>
                     </li>
                       <li class="sub-menu">
                         <a href=""><i class="zmdi zmdi-accounts"></i>Usuarios</a>

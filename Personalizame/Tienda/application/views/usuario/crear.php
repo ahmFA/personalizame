@@ -15,7 +15,7 @@ var conexion;
 		
 	}
 
-	function crear() {
+	function crearUsuario() {
 		conexion = new XMLHttpRequest();
 
 		//var datosSerializados = serialize(document.getElementById("idForm1"));
@@ -277,7 +277,7 @@ var conexion;
 		//Si todo esta a TRUE hace el submit
 		if(valNick && valPassword && valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP){
 			//document.form1.submit();
-			crear();
+			crearUsuario();
 		}	
 		else{
 			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
@@ -296,8 +296,7 @@ var conexion;
 	
 	<div id="idBanner"></div>
 	
-	<form class="row" id="idForm1" role="form"
-			action="<?= base_url() ?>usuario/crearPost" method="post">
+ <form class="row" id="idForm1" role="form" method="post" action="<?=base_url() ?>usuario/crearPost">
 		<div class="bootgrid-header container-fluid">
 		<div class="col-sm-12 m-b-15">
 			<h3>Datos de usuario</h3>
@@ -472,7 +471,7 @@ var conexion;
 			
 			
 		</div>
-	</form>
+</form>
 </div>
 
 <!-- **************************     ANTIGUO      ***************************** -->

@@ -7,23 +7,16 @@ class Talla extends CI_Controller{
 	}
 
 	public function crearPost(){
-		$nombre = $_POST['nombre'];
-
+		$datos['body']['nombre'] = $_POST['nombre'];
 		$this->load->model('talla_model');
-		$status = null;
-		$status = $this->talla_model->crearTalla($nombre);
+		$datos['body']['status'] = $this->talla_model->crearTalla($_POST['nombre']);
+		
 		/*
 		 * Si no se ha metido en la base de datos (ya sea porque ya existe o por causa ajena)
 		 * se informa del error al administrador.
 		 */
-		if($status){
-			$this->listar();
-		}else{
-			$datos['onload']['alert'] = 'mostrarAlert()';
-			enmarcar($this,'talla/crear', $datos);
-		}
-			
-		//}
+		
+		$this->load->view('talla/XcrearPost',$datos);
 	}
 
 	public function listar(){
@@ -128,11 +121,11 @@ class Talla extends CI_Controller{
 
 	public function editarPost(){
 		$id = $_POST['id'];
-		$nombre = $_POST['nombre'];
+		$datos['body']['nombre'] = $_POST['nombre'];
 		$this->load->model('talla_model');
-		$this->talla_model->editar($id, $nombre);
-			
-		enmarcar($this, 'talla/borrarPost');
+		$datos['body']['status'] = $this->talla_model->editar($id, $_POST['nombre']);
+		
+		$this->load->view('talla/XmodificarPost',$datos);
 	}
 }
 

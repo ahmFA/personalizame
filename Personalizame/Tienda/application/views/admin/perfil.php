@@ -1,4 +1,258 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	function validarPassword(){
+		var valido = false;
+		var miPwd = document.getElementById("idPwd").value.length;
+		//longitud entre 5 y 20 caracteres
+		if(miPwd >= 5 && miPwd <= 20){
+			valido = true;
+		}
+		return valido;
+	}
+	
+	function validarNombre(){
+		var valido = false;
+		var miNombre = document.getElementById("idNombre").value;
+		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miNombre) || miNombre == ""){
+			valido = true;
+		}
+		return valido;
+	}
+	
+	function validarApellido1(){
+		var valido = false;
+		var miApellido1 = document.getElementById("idApellido1").value;
+		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido1) || miApellido1 == ""){
+			valido = true;
+		}
+		return valido;
+	}
 
+	function validarApellido2(){
+		var valido = false;
+		var miApellido2 = document.getElementById("idApellido2").value;
+		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido2) || miApellido2 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+		
+	function validarTelefono1(){
+		var valido = false;
+		var miTelefono1 = document.getElementById("idTelefono1").value;
+		//telefono correcto o vacio
+		if(/^[6-9][0-9]{8}$/.test(miTelefono1) || miTelefono1 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarTelefono2(){
+		var valido = false;
+		var miTelefono2 = document.getElementById("idTelefono2").value;
+		//telefono correcto o vacio
+		if(/^[6-9][0-9]{8}$/.test(miTelefono2) || miTelefono2 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+		
+	function validarMail1(){
+		var valido = false;
+		var miMail1 = document.getElementById("idMail1").value;
+		//solo correo que empiece por letra o numero, tras la arroba tener texto+(punto+extension)puede repetirse -> .com.es
+		if(/^[a-zA-Z0-9]+([\.-]?\w+)*@[a-zA-Z0-9]+([\.-]?\w+)*(\.[a-z]{2,3})+$/.test(miMail1)){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarMail2(){
+		var valido = false;
+		var miMail2 = document.getElementById("idMail2").value;
+		//solo correo que empiece por letra o numero, tras la arroba tener texto+(punto+extension)puede repetirse -> .com.es
+		if(/^[a-zA-Z0-9]+([\.-]?\w+)*@[a-zA-Z0-9]+([\.-]?\w+)*(\.[a-z]{2,3})+$/.test(miMail2) || miMail2 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarCP(){
+		var valido = false;
+		var miCP = document.getElementById("idCP").value;
+		//5 digitos
+		if(/^[0-9]{5}$/.test(miCP) || miCP == ""){
+			valido = true;
+		}
+		return valido;
+	}
+
+
+		function validarImagen() {
+			var valido = false;
+		    var fileSize = $('#nueva')[0].files[0].size;
+		    var siezekiloByte = parseInt(fileSize / 1024);
+		    if (siezekiloByte <  $('#nueva').attr('size')) {
+		        
+		        valido true;
+		    }
+		 return valido;   
+		}
+		
+	
+	
+	function validarTodo(){
+		var foco = true;
+		
+		//PASSWORD
+		var valPassword = validarPassword();
+		if (valPassword == false){
+			document.getElementById("idPwd").style.color = "red";
+			if (foco == true){
+				document.getElementById("idPwd").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idPwd").style.color = "black";
+		}
+		
+		//NOMBRE
+		var valNombre = validarNombre();
+		if (valNombre == false){
+			document.getElementById("idNombre").style.color = "red";
+			if (foco == true){
+				document.getElementById("idNombre").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idNombre").style.color = "black";
+		}
+		
+		//APELLIDO1
+		var valApellido1 = validarApellido1();
+		if (valApellido1 == false){
+			document.getElementById("idApellido1").style.color = "red";
+			if (foco == true){
+				document.getElementById("idApellido1").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idApellido1").style.color = "black";
+		}
+
+		//APELLIDO2
+		var valApellido2 = validarApellido2();
+		if (valApellido2 == false){
+			document.getElementById("idApellido2").style.color = "red";
+			if (foco == true){
+				document.getElementById("idApellido2").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idApellido2").style.color = "black";
+		}
+		
+		//TELEFONO1
+		var valTelefono1 = validarTelefono1();
+		if (valTelefono1 == false){
+			document.getElementById("idTelefono1").style.color = "red";
+			if (foco == true){
+				document.getElementById("idTelefono1").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idTelefono1").style.color = "black";
+		}
+
+		//TELEFONO2
+		var valTelefono2 = validarTelefono2();
+		if (valTelefono2 == false){
+			document.getElementById("idTelefono2").style.color = "red";
+			if (foco == true){
+				document.getElementById("idTelefono2").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idTelefono2").style.color = "black";
+		}
+		
+		//MAIL1
+		var valMail1 = validarMail1();
+		if (valMail1 == false){
+			document.getElementById("idMail1").style.color = "red";
+			if (foco == true){
+				document.getElementById("idMail1").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idMail1").style.color = "black";
+		}
+
+		//MAIL2
+		var valMail2 = validarMail2();
+		if (valMail2 == false){
+			document.getElementById("idMail2").style.color = "red";
+			if (foco == true){
+				document.getElementById("idMail2").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idMail2").style.color = "black";
+		}
+
+		//CP
+		var valCP = validarCP();
+		if (valCP == false){
+			document.getElementById("idCP").style.color = "red";
+			if (foco == true){
+				document.getElementById("idCP").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idCP").style.color = "black";
+		}
+
+		
+		var valImagen = validarImagen();
+		if (valImagen == false){
+			document.getElementById("nueva").style.color = "red";
+			if (foco == true){
+				document.getElementById("nueva").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("nueva").style.color = "black";
+		}
+		
+		
+		//Si todo esta a TRUE hace el submit
+		if(valPassword && valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP && valImagen){
+			document.form1.submit();
+			//crear();
+			//return true;
+		}	
+		else{
+			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
+			//return false;
+		}
+
+	}
+});
+</script>
                     <div class="card" id="profile-main">
                         <div class="pm-overview c-overflow">
                             <div class="pmo-pic">
@@ -81,7 +335,7 @@
                                         </dl>
                                         <dl class="dl-horizontal">
                                             <dt>Email 1</dt>
-                                            <dd>@<?= $usuario->mail1 ?></dd>
+                                            <dd><?= $usuario->mail1 ?></dd>
                                         </dl>
                                         <dl class="dl-horizontal">
                                             <dt>Email 2</dt>
@@ -121,8 +375,9 @@
                                     	
                                     <div class="pmbb-edit">
                                     	<h4><i class="zmdi zmdi-account m-r-5"></i> Información básica</h4>
+                                    	 <form role="form" action="<?=base_url() ?>usuario/modificarPost2" method="post" name="form1" enctype="multipart/form-data">
                                         <dl class="dl-horizontal">
-                                       <form role="form" action="<?=base_url() ?>usuario/modificarPost2" method="post">
+                                      
                                         <input type="hidden" name="idUsuario" value="<?=$usuario->id ?>">
                                         <input type="hidden" name="nick" value="<?=$usuario->nick ?>">
                                         <input type="hidden" name="perfilAdmin" value="1">
@@ -148,14 +403,14 @@
                                          <dt class="p-t-10">Contraseña</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="password" class="form-control" name="pwd" value="<?= $usuario->pwd ?>">
+                                                    <input type="password" class="form-control" id="pwd" name="pwd" value="<?= $usuario->pwd ?>">
                                                 </div>
                                                 
                                             </dd>
                                             <dt class="p-t-10">Nombre</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="text" class="form-control" name="nombre" placeholder="ej. Juan Carlos" value="<?= $usuario->nombre ?>">
+                                                    <input type="text" class="form-control" id="idNombre" name="nombre" placeholder="ej. Juan Carlos" value="<?= $usuario->nombre ?>">
                                                 </div>
                                                 
                                             </dd>
@@ -164,7 +419,7 @@
                                             <dt class="p-t-10">Apellido 1</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="text" class="form-control" name="apellido1" placeholder="ej. Pérez" value="<?= $usuario->apellido1 ?>">
+                                                    <input type="text" class="form-control" id="idApellido1" name="apellido1" placeholder="ej. Pérez" value="<?= $usuario->apellido1 ?>">
                                                 </div>
                                                 
                                             </dd>
@@ -173,7 +428,7 @@
                                             <dt class="p-t-10">Apellido 2</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="text" class="form-control" name="apellido2" placeholder="ej. López" value="<?= $usuario->apellido2 ?>">
+                                                    <input type="text" class="form-control" id="idApellido2" name="apellido2" placeholder="ej. López" value="<?= $usuario->apellido2 ?>">
                                                 </div>
                                                 
                                             </dd>
@@ -184,7 +439,7 @@
                                             <dt class="p-t-10">Teléfono 1</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="text" class="form-control" name="telefono1" placeholder="ej. 915550000" value="<?= $usuario->telefono1 ?>">
+                                                    <input type="text" class="form-control" id="idTelefono1" name="telefono1" placeholder="ej. 915550000" value="<?= $usuario->telefono1 ?>">
                                                 </div>
                                             </dd>
                                         </dl>
@@ -192,7 +447,7 @@
                                             <dt class="p-t-10">Teléfono 2</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="text" class="form-control" name="telefono2" placeholder="ej. 915550000" value="<?= $usuario->telefono2 ?>">
+                                                    <input type="text" class="form-control" id="idTelefono2" name="telefono2" placeholder="ej. 915550000" value="<?= $usuario->telefono2 ?>">
                                                 </div>
                                             </dd>
                                         </dl>
@@ -200,7 +455,7 @@
                                             <dt class="p-t-10">Email 1</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="email" class="form-control" name="mail1" placeholder="ej. admin@admin.com" value="<?= $usuario->mail1 ?>">
+                                                    <input type="email" class="form-control" id="idMail1" name="mail1" placeholder="ej. admin@admin.com" value="<?= $usuario->mail1 ?>">
                                                 </div>
                                             </dd>
                                         </dl>
@@ -208,12 +463,12 @@
                                             <dt class="p-t-10">Email 2</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="email" class="form-control" name="mail2" placeholder="ej. admin@admin.com" value="<?= $usuario->mail2 ?>">
+                                                    <input type="email" class="form-control" id="idMail2" name="mail2" placeholder="ej. admin@admin.com" value="<?= $usuario->mail2 ?>">
                                                 </div>
                                             </dd>
                                         </dl>
                                          <div class="fg-line">
-                                            <textarea class="form-control" rows="5" name="comentario_contacto" placeholder="Comentario de contacto..."><?= $usuario->comentario_contacto ?>
+                                            <textarea class="form-control" rows="5" id="idComentarioContacto" name="comentario_contacto" placeholder="Comentario de contacto..."><?= $usuario->comentario_contacto ?>
                                             </textarea>
                                         </div>
 										<br>
@@ -222,7 +477,7 @@
                                             <dt class="p-t-10">Dirección</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="text" class="form-control" name="direccion" placeholder="ej. C/Desengaño, 21" value="<?= $usuario->direccion ?>">
+                                                    <input type="text" class="form-control" id="idDireccion" name="direccion" placeholder="ej. C/Desengaño, 21" value="<?= $usuario->direccion ?>">
                                                 </div>
                                             </dd>
                                         </dl>
@@ -230,7 +485,7 @@
                                             <dt class="p-t-10">Código Postal</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="text" maxlength="5" class="form-control" name="cp" placeholder="ej. 28001" value="<?= $usuario->cp ?>">
+                                                    <input type="text" maxlength="5" class="form-control" id="idCP" name="cp" placeholder="ej. 28001" value="<?= $usuario->cp ?>">
                                                 </div>
                                             </dd>
                                         </dl>
@@ -238,7 +493,7 @@
                                             <dt class="p-t-10">Localidad</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="text" class="form-control" name="localidad" placeholder="ej. Pinto" value="<?= $usuario->localidad ?>">
+                                                    <input type="text" class="form-control" id="idLocalidad" name="localidad" placeholder="ej. Pinto" value="<?= $usuario->localidad ?>">
                                                 </div>
                                             </dd>
                                         </dl>
@@ -246,7 +501,7 @@
                                             <dt class="p-t-10">Provincia</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="text" class="form-control" name="provincia" placeholder="ej. Madrid" value="<?= $usuario->provincia ?>">
+                                                    <input type="text" class="form-control" id="idProvincia" name="provincia" placeholder="ej. Madrid" value="<?= $usuario->provincia ?>">
                                                 </div>
                                             </dd>
                                         </dl>
@@ -254,16 +509,16 @@
                                             <dt class="p-t-10">País</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="text" class="form-control" name="pais" placeholder="ej. España"  value="<?= $usuario->pais ?>">
+                                                    <input type="text" class="form-control" id="idPais" name="pais" placeholder="ej. España"  value="<?= $usuario->pais ?>">
                                                 </div>
                                             </dd>
                                         </dl>
                                          <div class="fg-line">
-                                            <textarea class="form-control" rows="5" name="comentario_direccion" placeholder="Comentario de dirección..."><?= $usuario->comentario_direccion ?>
+                                            <textarea class="form-control" rows="5" id="idComentarioDireccion" name="comentario_direccion" placeholder="Comentario de dirección..."><?= $usuario->comentario_direccion ?>
                                             </textarea>
                                         </div>                          
                                         <div class="m-t-30">
-                                            <button  type="submit" class="btn btn-primary btn-sm">Guardar</button>
+                                            <button onclick="validarTodo()" class="btn btn-primary btn-sm">Guardar</button>
                                          
                                             <button data-pmb-action="reset" class="btn btn-link btn-sm">Cancelar</button>
                                         </div>
