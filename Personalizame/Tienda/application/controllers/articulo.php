@@ -33,7 +33,7 @@ class Articulo extends CI_Controller{
 			/*
 			 * DOCUMENT_ROOT = c:/XAMPP/HTDOCS en mi caso.
 			 */
-			$status = null;
+			
 			/*
 			 * Si no existe la carpeta de art�culos, se crea.
 			 */
@@ -43,18 +43,14 @@ class Articulo extends CI_Controller{
 			
 			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
 			move_uploaded_file($_FILES['imagen']['tmp_name'],$directorio.$nomImagen);
-			$status = $this->articulo_model->crearArticulo($nombre, $nomImagen,$precio, $coste, $descuento, $disponible,$fecha_alta, $id_colores, $id_tallas);
+			$datos['body']['status'] = $this->articulo_model->crearArticulo($nombre, $nomImagen,$precio, $coste, $descuento, $disponible,$fecha_alta, $id_colores, $id_tallas);
 			/*
 			 * Si no se ha metido en la base de datos (ya sea porque ya existe o por causa ajena) 
 			 * se informa del error al administrador.
 			 */
-			if($status){
-				$this->listar();
-			}else{
-				enmarcar($this,'articulo/crearERROR');
-			}
-			
 		}
+		$datos['body']['nombre'] = $nombre;
+		$this->load->view("articulo/XcrearPost", $datos);
 	}
 	
 	public function listar(){
