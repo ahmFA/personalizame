@@ -2,11 +2,26 @@
 	<div class="card-header">
 		<h2>Añade un nuevo artículo</h2>
 	</div>
+	<div class="row">
+		<div class="col-sm-5">
+		<div id="idBanner" class="p-l-10">
+			<?php if (isset($body['status'] ) && $body['status']):?>
+				<div class="container alert alert-success col-xs-5">
+				  Artículo con nombre <strong><?=$body['nombre']?></strong> creado con éxito
+				</div>
+			<?php elseif (isset($body['status'] ) && !$body['status']):?>
+				<div class="container alert alert-danger col-xs-5">
+				  <strong>ERROR</strong> Artículo con nombre <strong><?=$body['nombre']?></strong> ya existe
+				</div>
+			<?php endif;?>
+		</div>
+	</div>
+	</div>
 	<form role="form" method="post" action="<?= base_url() ?>articulo/crearPost" enctype="multipart/form-data" onsubmit="return comprobarArticulo()">
 		<div class="card-body card-padding">
 			<input type="hidden" id="id_usuario" name="id_usuario" value="1">
 			<div class="row">
-				<div class="col-sm-4">
+				<div class="col-sm-10">
 					<div class="cp-container">
 					
 					 <p class="f-500 c-black m-b-20" id="imagen-form">Previsualización de la imagen</p>
@@ -61,28 +76,35 @@
                             </div>
 					</div>
 					<div class=" m-b-25">
+						<div class="row">
                                     <label>Tallas</label><br/>
                                        
 										<?php foreach ($tallas as $talla):?>
+										<div class="col-sm-2">
 											 <label class="checkbox checkbox-inline m-r-20">
 				                                <input type="checkbox" name="idTallas[]" value="<?= $talla->id?>">
 				                                <i class="input-helper"></i>    
 				                                <?= $talla->nombre ?>
 				                            </label>		
+				                         </div>   
 										<?php endforeach;?>
-                                  
+                         </div>         
                   	</div>
+                  	
 					<div class=" m-b-25">
+						<div class="row">
                                     <label>Colores</label><br/>
                                        
 										<?php foreach ($colores as $color):?>
+										<div class="col-sm-2">
 											 <label class="checkbox checkbox-inline m-r-20">
 				                                <input type="checkbox" name="idColores[]" value="<?= $color->id?>">
 				                                <i class="input-helper"></i>    
 				                                <?= $color->nombre ?>
-				                            </label>		
+				                            </label>	
+				                         </div>   	
 										<?php endforeach;?>
-                                  
+                        </div>          
                   </div>                                
 					
 					
