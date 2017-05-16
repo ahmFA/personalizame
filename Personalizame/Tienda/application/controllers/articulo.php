@@ -28,6 +28,7 @@ class Articulo extends CI_Controller{
 		 * Se comprueba que la imagen tenga el tama�o adecuado.
 		 * En ese caso, se guarda en la carpeta alojada en nuestro servidor.
 		 */
+		$datos['body']['status'] = false;
 		$imagenAceptada = $this->articulo_model->validarImagen($nomImagen, $tamanoImagen,$tipoImagen);
 		if($imagenAceptada){
 			/*
@@ -50,7 +51,7 @@ class Articulo extends CI_Controller{
 			 */
 		}
 		$datos['body']['nombre'] = $nombre;
-		$this->load->view("articulo/XcrearPost", $datos);
+		enmarcar($this, 'articulo/crear', $datos);
 	}
 	
 	public function listar(){
@@ -177,8 +178,9 @@ class Articulo extends CI_Controller{
 		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
 		$tipoImagen = !empty($_FILES['nueva']['type']) ? $_FILES['nueva']['type']: null;
 		$disponible = $_POST['disponible'];
-		$ids_colores = $_POST['idColores'];
-		$ids_tallas = $_POST['idTallas'];
+		$ids_colores = isset($_POST['idColores']) ? $_POST['idColores'] : '';
+		$ids_tallas = isset($_POST['idTallas']) ? $_POST['idTallas'] : '';
+		
 		
 		$imagenValida = true;
 		if($tamanoImagen != null && $tipoImagen != null){
@@ -186,7 +188,7 @@ class Articulo extends CI_Controller{
 		}
 		
 		//if($imagenValida){
-			$this->articulo_model->editar($id, $nombre, $nomImagen, $precio, $coste, $descuento,  $disponible, $ids_colores, $ids_tallas);
+		$datos['body']['status'] = $this->articulo_model->editar($id, $nombre, $nomImagen, $precio, $coste, $descuento,  $disponible, $ids_colores, $ids_tallas);
 			if(!empty($_FILES['nueva']['name'])){
 				$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
 				move_uploaded_file($_FILES['nueva']['tmp_name'],$directorio.$nomImagen);
@@ -198,7 +200,7 @@ class Articulo extends CI_Controller{
 			}
 			
 		//}
-			enmarcar($this, 'articulo/borrarPost');
+		enmarcar($this, 'articulo/borrarPost');
 	}
 }
 

@@ -37,11 +37,6 @@
 				[data-identifier="true"] is set on one column header.</small>
 		</h2>
 	</div>
-	<?php if ($body['mensajeBanner'] != ""):?>
-	<div id="idBanner" class="container alert alert-info col-xs-5">
-  		<strong><?= $body['mensajeBanner'] ?></strong>
-	</div>
-	<?php endif;?>
 	<div id="data-table-command-header"
 		class="bootgrid-header container-fluid">
 		<form class="row" id="idFormFiltro" role="form"

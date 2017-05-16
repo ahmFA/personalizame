@@ -30,13 +30,19 @@ class Articulo_model extends CI_Model{
 			$a->descuento = $descuento;
 			$a->disponible = $disponible;
 			$a->fecha_alta = $fecha_alta;
-			foreach ($id_colores as $idcolor){
 			
-				$a-> sharedColorList[] = R::load('color', $idcolor);
+			if($id_colores != ''){
+				foreach ($id_colores as $idcolor){
+				
+					$a-> sharedColorList[] = R::load('color', $idcolor);
+				}
 			}
-			foreach ($id_tallas as $idtalla){
 			
-				$a-> sharedTallaList[] = R::load('talla', $idtalla);
+			if($id_tallas != ''){
+				foreach ($id_tallas as $idtalla){
+				
+					$a-> sharedTallaList[] = R::load('talla', $idtalla);
+				}
 			}
 			R::store($a);
 			R::close();
@@ -88,12 +94,17 @@ class Articulo_model extends CI_Model{
 			$a->descuento = $descuento;
 			$a->disponible = $disponible;
 			$a->sharedColorList = [];
-			foreach ($ids_colores as $idColor){
-				$a->sharedColorList[] = R::load('color', $idColor);
+			if($ids_colores != ''){
+				foreach ($ids_colores as $idColor){
+					$a->sharedColorList[] = R::load('color', $idColor);
+				}
 			}
-			$a->sharedTallaList = [];
-			foreach ($ids_tallas as $idTalla){
-				$a->sharedTallaList[] = R::load('talla', $idTalla);
+			
+				$a->sharedTallaList = [];
+			if($ids_tallas != ''){
+				foreach ($ids_tallas as $idTalla){
+					$a->sharedTallaList[] = R::load('talla', $idTalla);
+				}
 			}
 			
 			R::store($a);

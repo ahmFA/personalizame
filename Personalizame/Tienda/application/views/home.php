@@ -7,7 +7,7 @@
 						<img src="<?=base_url() ?>assets/images/logo.png" alt="">
 						<div class="intro-text">
 							<div class="intro-lead-in">Bienvenido a Personalízame!</div>
-							<div class="intro-heading">It's Nice To Meet You</div>
+							<a href="#" class="btn btn-l"><strong>CREA TU PROPIO DISEÑO</strong></a>
 						</div>
 					</div>
 				</div>
@@ -70,7 +70,7 @@
 						<h3 class="services-heading">Camisetas</h3>
 						<p>Personaliza tu camiseta para ser único, las opciones son 
 						ilimitadas. Te recomendamos que pongas la peor foto de tu pareja y la pasees con orgullo.</p>
-						<button type="submit" class="btn btn-2 ">More</button>
+						<button type="submit" class="btn btn-2 ">Ver más</button>
 					</div>
 					<div class="col-sm-4 services-item">
 						<div class="wrap-img">
@@ -79,16 +79,16 @@
 						<h3 class="services-heading">Tazas</h3>
 						<p>Toma café, té, chocolate caliente o unas lentejas si te apetece,
 						 pero tómatelas en una taza con estilo que tiene algo de tu personalidad.</p>
-						<button type="submit" class="btn btn-2 ">More</button>
+						<button type="submit" class="btn btn-2 ">Ver más</button>
 					</div>
 					<div class="col-sm-4 services-item">
 						<div class="wrap-img">
-							<img src="<?=base_url() ?>assets/images/Setting.png" />
+							<img src="<?=base_url() ?>assets/images/taza.png" />
 						</div>
-						<h3 class="services-heading">Text Heading 3</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-						Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-						<button type="submit" class="btn btn-2 ">More</button>
+						<h3 class="services-heading">Tazas</h3>
+						<p>Toma café, té, chocolate caliente o unas lentejas si te apetece,
+						 pero tómatelas en una taza con estilo que tiene algo de tu personalidad.</p>
+						<button type="submit" class="btn btn-2 ">Ver más</button>
 					</div>
 				</div>
 			</div>
@@ -112,11 +112,11 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/1.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/deportes.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
 							<h4>Deportes</h4>
-							<p class="text-muted">Graphic Design</p>
+							<p class="text-muted"></p>
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
@@ -126,11 +126,11 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/1.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/ciencia-ficcion.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
 							<h4>Ciencia Ficción</h4>
-							<p class="text-muted">Graphic Design</p>
+							<p class="text-muted"></p>
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
@@ -140,11 +140,11 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/3.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/dibujos.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
-							<h4>Round Icons</h4>
-							<p class="text-muted">Graphic Design</p>
+							<h4>Infantil</h4>
+							<p class="text-muted"></p>
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
@@ -154,11 +154,11 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/4.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/mar.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
-							<h4>Round Icons</h4>
-							<p class="text-muted">Graphic Design</p>
+							<h4>Mar</h4>
+							<p class="text-muted"></p>
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
@@ -168,11 +168,11 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/5.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/terror.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
-							<h4>Round Icons</h4>
-							<p class="text-muted">Graphic Design</p>
+							<h4>Terror</h4>
+							<p class="text-muted"></p>
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
@@ -182,11 +182,11 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/6.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/profesiones.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
-							<h4>Round Icons</h4>
-							<p class="text-muted">Graphic Design</p>
+							<h4>Profesiones</h4>
+							<p class="text-muted"></p>
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
@@ -196,11 +196,11 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/7.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/calavera.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
-							<h4>Round Icons</h4>
-							<p class="text-muted">Graphic Design</p>
+							<h4>Calaveras</h4>
+							<p class="text-muted"></p>
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
@@ -210,11 +210,11 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/8.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/cocina.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
-							<h4>Round Icons</h4>
-							<p class="text-muted">Graphic Design</p>
+							<h4>Cocina</h4>
+							<p class="text-muted"></p>
 						</div>
 					</div>
                 </div>
@@ -272,9 +272,9 @@
 							<div class="col-sm-12">
 								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3164.289259162295!2d-120.7989351!3d37.5246781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8091042b3386acd7%3A0x3b4a4cedc60363dd!2sMain+St%2C+Denair%2C+CA+95316%2C+Hoa+K%E1%BB%B3!5e0!3m2!1svi!2s!4v1434016649434" width="95%" frameborder="0" style="border:0"></iframe>
 								<p>JL.Kemacetan timur no.23. block.Q3 Jakarta-Indonesia</p>
-								<p>+6221 888 888 90 <br>
-									+6221 888 88891</p>
-								<p>info@yourdomain.com</p>
+								<p>555 888 888 90 <br>
+									555 888 888 91</p>
+								<p>info@personalizame.com</p>
 							</div>
 						</div>
 					</div>
@@ -314,13 +314,13 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6 sub-text">
-						<h2>Subcribe Form</h2>
-                    	<p>Lorem ipsum dolor sit amet</p>
+						<h2>Suscríbete</h2>
+                    	<p>y no te pierdas nada</p>
 					</div>
 					<div class="col-md-6 sub-form">
 						<form method="get" action="/search" id="subcribe-form">
-						  <input name="q" type="text" size="40" placeholder="Enter your email address...  " />
-						  <input type="submit" name="Submit" value="Submit">
+						  <input name="q" type="text" size="40" placeholder="Introduce tu email...  " />
+						  <input type="submit" name="Submit" value="Enviar">
 						</form>
 					</div>
 				</div>
