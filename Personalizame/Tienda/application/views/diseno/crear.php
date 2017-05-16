@@ -153,7 +153,9 @@ var conexion;
 	<div class="form-group col-xs-12">
 		<h2>Pruebas con el diseño</h2>
 		<input class="btn btn-primary" id="idBotonVer" type="button" value="Ver como queda" onclick="ver();">
-		<canvas id="canvas" width="500" height="500"></canvas>
+		<div id="marco" style="width: 150px; height: 250px; border: 1px solid black">
+			<canvas id="canvas" width="150" height="250"></canvas>
+		</div>
 	</div>	
 </div>
 
@@ -163,18 +165,28 @@ var conexion;
 	
 	// Objeto Contexto 2D.
 	var Rxt = canvas.getContext('2d');
-	
-	Rxt.fillStyle = 'green';            // Contexto de color verde.
-	Rxt.fillRect(0, 0, 2000, 2000);     // Se rellena el contexto con el color verde.
+
+	Rxt.clearRect(0, 0, canvas.width, canvas.height); //limpiar
 	
 	// Rotar Imagen.
 	//Rxt.rotate(.2);
-	    
+
+	//calcular el punto medio
+	var mitadAncho = canvas.width/2;
+	var mitadAlto = canvas.height/2;
+
+	//nos posicionamos en el punto medio
+	//ctx.translate(mitadAncho, mitadAlto);
+
 	// Se crea una imagen.
-	var Img = document.createElement('img');
+	var Img = new Image();//document.createElement('img');
 	Img.src = '<?=base_url() ?>assets/images/25.jpg';
+	var imagenAncho = Img.height/4;
+	var imagenAlto = Img.width/3.4;
+	alert((imagenAncho/2));
+	alert((imagenAlto/2));
 	Img.onload = function () { 
-	    Rxt.drawImage(Img, 50, 0, 50, 50); 
+	    Rxt.drawImage(Img, mitadAncho-(imagenAncho/2), mitadAlto-(imagenAlto/2), imagenAncho, imagenAlto); 
 	}
 	
 	var down = false;
@@ -183,22 +195,22 @@ var conexion;
 	}, false);
 	Rxt.canvas.addEventListener('mouseup', function () { 
 	    down = false; 
+	    document.body.style.cursor = 'default';
 	}, false);
-	Rxt.canvas.addEventListener('mousemove', function (event) {
+	Rxt.canvas.addEventListener('mousemove', function (e) {
 	    if (down){
 	        //Rxt.translate(0, -50);
+	        document.body.style.cursor = 'move';
 	        clear();
-	        Rxt.drawImage(Img, event.clientX - this.offsetLeft,
-	        event.clientY - this.offsetTop, 50, 50);
-	        //Rxt.translate(0, 50);
+	        Rxt.drawImage(Img, e.offsetX,
+	        e.offsetY, imagenAncho, imagenAlto);
+	        //Rxt.translate(0, 0);
 	    }
 	}, false);
 	
 	// Funcion limpiar image.
 	function clear(){
-	    Rxt.clearRect(0, 0, canvas.width, canvas.height);
-	    Rxt.fillStyle = 'green';            // Contexto de color verde.
-	    Rxt.fillRect(0, 0, 2000, 2000);     // Se rellena el contexto con el color verde.
+	    Rxt.clearRect(-1000, -1000, 2000, 2000);
 	}
 
 	function ver(){
