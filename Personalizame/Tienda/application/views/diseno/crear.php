@@ -1,4 +1,24 @@
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
+<script type="text/javascript" src="<?=base_url()?>assets/js/jquery-ui.js"></script>
+<div class="hidden">
+<script type="text/javascript">
+
+//precarga de imagenes para que sean seleccionables directamente desde el select
+//las pongo a pelo para pruebas lo ideal sería cargar las que haya en la carpeta automaticamente
+//o leerlas de alguna forma con ajax segun la que se seleccione
+var images = new Array()
+function preload() {
+	for (i = 0; i < preload.arguments.length; i++) {
+		images[i] = new Image()
+		images[i].src = preload.arguments[i]
+	}
+}
+preload(
+	"../../../../img/imagenes/girar.png",
+	"../../../../img/imagenes/redimensionar.png"
+)
+</script>
+</div>
 <script type="text/javascript">
 var conexion;
 
@@ -132,7 +152,7 @@ var conexion;
 				
 				<div class=" m-b-25">
 			   		<p class="f-500 c-black m-b-15" id="select-form">Seleccione Imagen</p>
-					<select class="form-control" id="idImagen" name="id_imagen">         
+					<select class="form-control" id="idImagen" name="id_imagen" onchange="pintar()">         
 			 			<option value='0'>Seleccione uno</option>       	
 			 		<?php foreach ($body['imagenes'] as $imagen): ?>
 			 			<option value='<?= $imagen['id']?>'><?= $imagen['nombre_imagen']?></option>
@@ -153,6 +173,7 @@ var conexion;
 	<div class="form-group col-xs-12">
 		<h2>Pruebas con el diseño</h2>
 		<input class="btn btn-primary" id="idBotonVer" type="button" value="Ver como queda" onclick="ver();">
+		<input class="btn btn-primary" id="idBotonGirar" type="button" value="Girar" onclick="girar();">
 		<div id="marco" style="width: 150px; height: 250px; border: 1px solid black">
 			<canvas id="canvas" width="150" height="250"></canvas>
 		</div>
@@ -160,12 +181,20 @@ var conexion;
 </div>
 
 <script type="text/javascript">
-	//Objeto Canvas.
-	var canvas = document.getElementById('canvas');
-	
-	// Objeto Contexto 2D.
-	var Rxt = canvas.getContext('2d');
+//guardar como png
+var dataUrl;
 
+//Objetos Canvas.
+var canvas,canvas2;
+
+// Objetos Contexto 2D.
+var Rxt,Rxt2;
+
+function pintar(){
+	canvas = document.getElementById('canvas');
+
+	Rxt = canvas.getContext('2d');
+	
 	Rxt.clearRect(0, 0, canvas.width, canvas.height); //limpiar
 	
 	// Rotar Imagen.
@@ -175,28 +204,34 @@ var conexion;
 	var mitadAncho = canvas.width/2;
 	var mitadAlto = canvas.height/2;
 
-	//nos posicionamos en el punto medio
-	//ctx.translate(mitadAncho, mitadAlto);
-
 	// Se crea una imagen.
-	var Img = new Image();//document.createElement('img');
-	Img.src = '<?=base_url() ?>assets/images/25.jpg';
+	var Img = new Image();	//document.createElement('img');
 
+	//cargar y pintar la imagen en el centro del canvas
+	Img.addEventListener('load', function() {
+		    Rxt.drawImage(Img, mitadAncho-(imagenAncho/2), mitadAlto-(imagenAlto/2), imagenAncho, imagenAlto); 
+		}, false);
+	Img.src = '../../../../img/imagenes/'+$("#idImagen option:selected").text();
+	
 	//calcular tamano imagen en canvas
 	var imagenAncho = Img.width;
 	var imagenAlto = Img.height;
-	var reduccion = 1;
-	while(imagenAncho > canvas.width || imagenAlto > canvas.height){
+	var imagenHipo = Math.sqrt(Math.pow(imagenAncho,2) + Math.pow(imagenAlto,2));
+	var reduccion = 1;  //las veces que se reduce la imagen hasta entrar en el canvas
+	/*
+		He metido la hipotenusa para tenerla en cuenta al girar y no se salga del canvas
+	*/
+	
+	while(imagenAncho > canvas.width || imagenAlto > canvas.height || imagenHipo > canvas.width){
 		imagenAncho = imagenAncho/2;
 		imagenAlto = imagenAlto/2;
+		imagenHipo = Math.sqrt(Math.pow(imagenAncho,2) + Math.pow(imagenAlto,2));
 		reduccion = reduccion * 2;	
 	}
 	//alert(reduccion);
 	
-	Img.onload = function () { 
-	    Rxt.drawImage(Img, mitadAncho-(imagenAncho/2), mitadAlto-(imagenAlto/2), imagenAncho, imagenAlto); 
-	}
-
+	var coorX, coorY;
+		
 	var down = false;
 	Rxt.canvas.addEventListener('mousedown', function () { 
 	    down = true; 
@@ -206,13 +241,36 @@ var conexion;
 	    document.body.style.cursor = 'default';
 	}, false);
 	Rxt.canvas.addEventListener('mousemove', function (e) {
+	
+	    document.body.style.cursor = 'move';
 	    if (down){
-	        //Rxt.translate(0, -50);
-	        document.body.style.cursor = 'move';
-	        clear();
-	        Rxt.drawImage(Img, e.offsetX,
-	        e.offsetY, imagenAncho, imagenAlto);
-	        //Rxt.translate(0, 0);
+		    //imagen no llega al limite derecho ni inferior
+	    	if(e.offsetX + imagenAncho < canvas.width && e.offsetY + imagenAlto < canvas.height){
+	    		coorX = e.offsetX;
+	    		coorY = e.offsetY;
+	    	}
+	    	
+	    	//imagen no llega al limite derecho pero si al inferior
+	    	if(e.offsetX + imagenAncho < canvas.width && e.offsetY + imagenAlto >= canvas.height){
+	    		coorX = e.offsetX;
+	    		coorY = canvas.height - imagenAlto;
+	    	}
+
+	    	//imagen si llega al limite derecho pero no al inferior
+	    	if(e.offsetX + imagenAncho >= canvas.width && e.offsetY + imagenAlto < canvas.height){
+	    		coorX = canvas.width - imagenAncho;
+	    		coorY = e.offsetY;
+	    	}
+
+	    	//imagen si llega al limite derecho y al inferior
+	    	if(e.offsetX + imagenAncho >= canvas.width && e.offsetY + imagenAlto >= canvas.height){
+	    		coorX = canvas.width - imagenAncho;
+	    		coorY = canvas.height - imagenAlto;
+	    	}
+
+		    clear();
+        	Rxt.drawImage(Img, coorX, coorY, imagenAncho, imagenAlto);
+        	dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
 	    }
 	}, false);
 	
@@ -220,10 +278,43 @@ var conexion;
 	function clear(){
 	    Rxt.clearRect(-1000, -1000, 2000, 2000);
 	}
+}
 
-	function ver(){
-		var dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
-		window.open(dataUrl, "Ejemplo", "width=400, height=400"); //mostramos en popUp
+var rotacion=0.2;
+
+function girar(){
+	// canvas auxiliar que será una copia del primero
+	canvas2 = canvas;
+	Rxt2 = canvas2.getContext("2d");
+
+	// indica donde se encuentra la imagen del primer canvas  
+	var img = new Image();
+	img.src = dataUrl; 
+
+	//calcular el punto medio
+	var mitadAncho = canvas.width/2;
+	var mitadAlto = canvas.height/2;
+
+	//limpiamos el primer canvas para que no se vea
+	canvas.width=canvas.width;	
+	
+	//nos posicionamos en el punto medio
+	Rxt2.translate(mitadAncho, mitadAlto);
+
+	//rotamos los grados que pasemos
+	Rxt2.rotate(rotacion); 
+	rotacion = rotacion +0.2;
+
+	//una vez cargada la imagen la dibujamos
+	img.onload = function(){
+		Rxt2.drawImage(img, -mitadAncho, -mitadAlto);
 	}
+	
+}
+
+function ver(){
+	var dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
+	window.open(dataUrl, "Ejemplo", "width=400, height=400"); //mostramos en popUp
+}
 
 </script>
