@@ -181,14 +181,22 @@ var conexion;
 	// Se crea una imagen.
 	var Img = new Image();//document.createElement('img');
 	Img.src = '<?=base_url() ?>assets/images/25.jpg';
-	var imagenAncho = Img.height/4;
-	var imagenAlto = Img.width/3.4;
-	alert((imagenAncho/2));
-	alert((imagenAlto/2));
+
+	//calcular tamano imagen en canvas
+	var imagenAncho = Img.width;
+	var imagenAlto = Img.height;
+	var reduccion = 1;
+	while(imagenAncho > canvas.width || imagenAlto > canvas.height){
+		imagenAncho = imagenAncho/2;
+		imagenAlto = imagenAlto/2;
+		reduccion = reduccion * 2;	
+	}
+	//alert(reduccion);
+	
 	Img.onload = function () { 
 	    Rxt.drawImage(Img, mitadAncho-(imagenAncho/2), mitadAlto-(imagenAlto/2), imagenAncho, imagenAlto); 
 	}
-	
+
 	var down = false;
 	Rxt.canvas.addEventListener('mousedown', function () { 
 	    down = true; 
