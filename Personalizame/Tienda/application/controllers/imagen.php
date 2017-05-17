@@ -37,21 +37,15 @@ class Imagen extends CI_Controller{
 	
 			$this->load->model('imagen_model');
 			$status = null;
-			$status = $this->imagen_model->crearImagen($id_user,$nombre, $nomImagen, $comentario, $descuento, $precio, $coste, $fecha_alta, $fecha_baja, $motivo_baja, $disponible, $categorias);
+			$datos['body']['status'] = $this->imagen_model->crearImagen($id_user,$nombre, $nomImagen, $comentario, $descuento, $precio, $coste, $fecha_alta, $fecha_baja, $motivo_baja, $disponible, $categorias);
 			/*
 			 * Si no se ha metido en la base de datos (ya sea porque ya existe o por causa ajena)
 			 * se informa del error al administrador.
 			 */
-			if($status){
-				//$this->listar();
-				$datos['onload']['alert'] = 'mostrarAlert()';
-				enmarcar($this,'imagen/crear', $datos);
-			}else{
-				$datos['onload']['alert'] = 'mostrarAlert()';
-				enmarcar($this,'imagen/crear', $datos);
-			}
 			
 		//}
+		$datos['body']['nombre'] = $nombre;
+		enmarcar($this, 'articulo/crear', $datos);
 	}
 
 	public function listar(){

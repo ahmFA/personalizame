@@ -273,7 +273,7 @@
 				<div class="form-group fg-line">
 					<label for="idNick">Nick</label>
 					<input type="text" class="search-field form-control"
-						 id="idNick" name="nick" maxlength="20" required="required" readonly="readonly" title="El Nick debe contener 3 caracteres como mínimo" value="<?= $body['usuario']->nick ?>">
+						 id="idNick" name="nick" maxlength="20" required="required" title="El Nick debe contener 3 caracteres como mínimo" value="<?= $body['usuario']->nick ?>">
 					
 				</div>
 			</div>

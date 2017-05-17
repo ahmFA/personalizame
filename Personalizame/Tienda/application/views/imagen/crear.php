@@ -42,9 +42,19 @@
 	<div class="card-header">
 		<h2>Añade una nueva imagen</h2>
 	</div>
-	<div class="row">
-	<div class="col-sm-5">
-	<div id="idBanner" class="p-l-10"></div>
+		<div class="row">
+		<div class="col-sm-5">
+		<div id="idBanner" class="p-l-10">
+			<?php if (isset($body['status'] ) && $body['status']):?>
+				<div class="container alert alert-success col-xs-5">
+				  Imagen con nombre <strong><?=$body['nombre']?></strong> creada con éxito
+				</div>
+			<?php elseif (isset($body['status'] ) && !$body['status']):?>
+				<div class="container alert alert-danger col-xs-5">
+				  <strong>ERROR</strong> Imagen con nombre <strong><?=$body['nombre']?></strong> ya existe
+				</div>
+			<?php endif;?>
+		</div>
 	</div>
 	</div>
 	<form role="form" method="post" action="<?= base_url() ?>imagen/crearPost" enctype="multipart/form-data" onsubmit="return comprobarImagen()">

@@ -196,7 +196,7 @@
 					}else{
 						document.getElementById('imagen-form').classList.remove('c-red');
 					}
-					
+
 					if(descuento == '' || isNaN(descuento)){
 						document.getElementById('descuento-form').classList.add('has-error');
 					}else{
@@ -213,6 +213,46 @@
 					return false;
 				}
 			}
+
+			function comprobarModImagen(){
+				var nombre = document.getElementById('nombre').value;
+				//var imagen = document.getElementById('imagen').value;
+				var descuento = document.getElementById('descuento').value;
+				var seleccionados = document.getElementById('select-cat').value;
+				if(nombre != '' && imagen != '' && !isNaN(descuento) && descuento != '' && seleccionados != ''){
+					return true;;
+				}
+				else{
+					
+					if(nombre == ''){
+						document.getElementById('nombre-form').classList.add('has-error');
+					}else{
+						document.getElementById('nombre-form').classList.remove('has-error');
+					}
+					/*
+					if(imagen == ''){
+						document.getElementById('imagen-form').classList.add('c-red');	
+					}else{
+						document.getElementById('imagen-form').classList.remove('c-red');
+					}
+					*/
+					if(descuento == '' || isNaN(descuento)){
+						document.getElementById('descuento-form').classList.add('has-error');
+					}else{
+						document.getElementById('descuento-form').classList.remove('has-error');
+					}
+					
+					if(seleccionados == ''){
+						document.getElementById('select-form').classList.add('c-red');
+					}else{
+						document.getElementById('select-form').classList.remove('c-red');
+					}
+					
+					document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos obligatorios.</div>';
+					return false;
+				}
+			}
+			
 
 			function comprobarArticulo(){
 				var nombre = document.getElementById('nombre').value;

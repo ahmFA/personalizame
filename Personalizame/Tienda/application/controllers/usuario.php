@@ -211,6 +211,12 @@ class Usuario extends CI_Controller{
 		
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
 		if(isset($_POST['perfilAdmin'])){
+			$usuario = $this->usuario_model->getPorId($idUsuario);
+			$_SESSION['imagen'] = $usuario->imagen;
+			if($_SESSION['idUsuario'] == $idUsuario){
+				$_SESSION['nick'] = $usuario->nick;
+			}
+			
 			enmarcar($this, 'usuario/modificarPost');
 		}else{
 			enmarcar($this, 'usuario/borrarPost');
@@ -251,6 +257,10 @@ class Usuario extends CI_Controller{
 		$this->load->model('usuario_model');
 		$datos['usuario'] =  $this->usuario_model->getPorId($_SESSION['idUsuario']);
 		enmarcar($this, 'admin/perfil', $datos);
+	}
+	
+	public function registro(){
+		
 	}
 }
 ?>

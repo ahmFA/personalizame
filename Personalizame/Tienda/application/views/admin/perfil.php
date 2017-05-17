@@ -91,7 +91,7 @@ $(document).ready(function(){
 		return valido;
 	}
 
-
+/*
 		function validarImagen() {
 			var valido = false;
 		    var fileSize = $('#nueva')[0].files[0].size;
@@ -103,7 +103,7 @@ $(document).ready(function(){
 		 return valido;   
 		}
 		
-	
+	*/
 	
 	function validarTodo(){
 		var foco = true;
@@ -225,7 +225,7 @@ $(document).ready(function(){
 			document.getElementById("idCP").style.color = "black";
 		}
 
-		
+		/*
 		var valImagen = validarImagen();
 		if (valImagen == false){
 			document.getElementById("nueva").style.color = "red";
@@ -237,17 +237,17 @@ $(document).ready(function(){
 		else{
 			document.getElementById("nueva").style.color = "black";
 		}
-		
+		*/
 		
 		//Si todo esta a TRUE hace el submit
-		if(valPassword && valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP && valImagen){
-			document.form1.submit();
+		if(valPassword && valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP){
+			//document.form1.submit();
 			//crear();
-			//return true;
+			return true;
 		}	
 		else{
 			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
-			//return false;
+			return false;
 		}
 
 	}
@@ -375,7 +375,14 @@ $(document).ready(function(){
                                     	
                                     <div class="pmbb-edit">
                                     	<h4><i class="zmdi zmdi-account m-r-5"></i> Información básica</h4>
-                                    	 <form role="form" action="<?=base_url() ?>usuario/modificarPost2" method="post" name="form1" enctype="multipart/form-data">
+                                    	<div class="row">
+                                    		<div class="col-sm-5">
+												<div id="idBanner" class="p-l-10">
+												</div>
+											</div>	
+                                    	</div>
+                                    	 <form role="form" action="<?=base_url() ?>usuario/modificarPost2" method="post" 
+                                    	 name="form1" enctype="multipart/form-data" onsubmit="validarTodo()">
                                         <dl class="dl-horizontal">
                                       
                                         <input type="hidden" name="idUsuario" value="<?=$usuario->id ?>">
@@ -518,7 +525,7 @@ $(document).ready(function(){
                                             </textarea>
                                         </div>                          
                                         <div class="m-t-30">
-                                            <button onclick="validarTodo()" class="btn btn-primary btn-sm">Guardar</button>
+                                            <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
                                          
                                             <button data-pmb-action="reset" class="btn btn-link btn-sm">Cancelar</button>
                                         </div>
@@ -533,7 +540,8 @@ $(document).ready(function(){
                  </div>          
                </div>                     
                                    
-                                    
+           </div>
+           </section>                         
                                     
                                     
                            
