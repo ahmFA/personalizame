@@ -50,6 +50,7 @@
   </div> 
   <script type="text/javascript">
   var conexion;
+  var conectar;
 
 	function accionAJAX() {
 		document.getElementById("idBanner").innerHTML = conexion.responseText;
@@ -58,17 +59,35 @@
 		var str = conexion.responseText;
 		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
 		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
-			document.getElementById("idForm1").reset();
+			//registrar();
+			document.formRegistro.submit();
 		}
 		
 	}
-
-	function crearTalla() {
-		conexion = new XMLHttpRequest();
+	/*
+	function registrar() {
+		conectar = new XMLHttpRequest();
 
 		//var datosSerializados = serialize(document.getElementById("idForm1"));
 		var datos = 'nick='+document.getElementById('idNick').value+'&mail='+document.getElementById('idMail').value+'&pwd='+document.getElementById('idPassword').value;
-		conexion.open('POST', '<?=base_url() ?>usuario/registro', true);
+		conectar.open('POST', '<?=base_url() ?>usuario/registro', true);
+		conectar.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		conectar.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		conectar.send(datos);
+		conectar.onreadystatechange = function() {
+			if (conectar.readyState==4 && conectar.status==200) {
+				accionAJAX2();
+			}
+		}
+	}
+	*/
+
+	function validarRegistro() {
+		conexion = new XMLHttpRequest();
+
+		//var datosSerializados = serialize(document.getElementById("idForm1"));
+		var datos = 'nick='+document.getElementById('idNick').value+'&mail='+document.getElementById('idMail').value;
+		conexion.open('POST', '<?=base_url() ?>usuario/validarRegistro', true);
 		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		conexion.send(datos);
@@ -79,7 +98,7 @@
 		}
 	}
 
-	function validarRegistro(){
+	function validar(){
 		var foco = true;
 		
 		//NICK
@@ -112,9 +131,9 @@
 		//MAIL1
 		var valMail = validarMail();
 		if (valMail == false){
-			document.getElementById("idMail").style.color = "red";
+			document.getElementById("idMai").style.color = "red";
 			if (foco == true){
-				document.getElementById("idMail").focus();
+				document.getElementById("idMai").focus();
 				foco = false;
 			}
 		}
@@ -125,10 +144,10 @@
 		//Si todo esta a TRUE hace el submit
 		if(valNick && valPassword && valMail){
 			//document.form1.submit();
-			registro();
+			validarRegistro();
 		}	
 		else{
-			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
+			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR:</strong> Datos incorrectos</div>";
 		}
 	}
 	
@@ -172,11 +191,12 @@
   
       <div class="modal-content">
         <div class="modal-header">
+        <div id="idBanner"></div>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4><span class="glyphicon glyphicon-lock"></span> Registro de nuevo usuario</h4>
         </div>
         <div class="modal-body">
-          <form role="form" action="<?=base_url()?>usuario/registro" method="post">
+       <form role="form" action="<?=base_url()?>usuario/registro" method="post" name="formRegistro"> 
             <div class="form-group">
               <label for="idMail"><span class="glyphicon glyphicon-user"></span> Usuario</label>
               <input type="text" class="form-control" id="idNick" name="nick" placeholder="Introduce un nick">
@@ -190,8 +210,8 @@
               <input type="password" class="form-control" id="idPassword" name="pwd" placeholder="Introduce password">
             </div>
 
-            <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-check"></span> Registrarse</button>
-          </form>
+            <button onclick="validar()" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-check"></span> Registrarse</button>
+    	 </form>    
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-default btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
@@ -199,4 +219,4 @@
       </div>
     </div>
   </div> 
-</div>
+

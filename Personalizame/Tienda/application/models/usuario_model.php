@@ -11,6 +11,10 @@ class Usuario_model extends CI_Model{
 		return  R::findOne('usuario','nick = ?',[$nick]) != null ? true : false;
 	}
 	
+	private function validarRegistro($nick, $mail) {
+		return  R::findOne('usuario','where nick like ? and (mail1 like ? or mail2 like ?)',[$nick, $mail, $mail]) != null ? false : true;
+	}
+	
 	/*
 	 * guarda (o No guarda) el usuario en base de datos y devuelve el status 0,-1  al cotroller 
 	 */
@@ -50,6 +54,21 @@ class Usuario_model extends CI_Model{
 		}
 		return $status;
 	}
+	
+	public function registrar($imagen,$nick,$pwd, $mail){
+		
+			$usuario = R::dispense('usuario');
+			$usuario -> imagen = $imagen;
+			$usuario -> nick = $nick;
+			$usuario -> pwd = $pwd; // mirar como funciona encriptado md5($pwd);
+			$usuario -> mail1 = $mail;
+			$usuario->estado = 'Alta';
+			$usuario->perfil = 'Usuario';
+				
+			R::store($usuario);
+			R::close();
+	}
+	
 	
 	/*
 	 * recuperar todos los usuarios

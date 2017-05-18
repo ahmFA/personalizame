@@ -259,8 +259,31 @@ class Usuario extends CI_Controller{
 		enmarcar($this, 'admin/perfil', $datos);
 	}
 	
-	public function registro(){
+	public function validarRegistro(){
+		$nick = $_POST['nick'];
+		$mail = $_POST['mail'];
 		
+		$this->load->model('usuario_model');
+		$datos['body']['status'] = $this->usuario_model->validarRegistro($nick, $mail);
+		
+		$this->load->view('usuario, registroPost', $datos);
 	}
+	
+	public function registro(){
+		$imagen = 'user.jpg';
+		$nick = $_POST['nick'];
+		$mail = $_POST['mail'];
+		$pwd = $_POST['pwd'];
+		$this->load->model('usuario_model');
+		$this->usuario_model->registrar($imagen,$nick, $pwd, $mail);
+	
+		enmarcar2($this, 'usuario/registroPost2');
+	}
+	
+	public function perfil(){
+		enmarcar2($this, 'usuario/perfil');
+	}
+	
+	
 }
 ?>
