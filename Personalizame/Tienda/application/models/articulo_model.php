@@ -85,34 +85,36 @@ class Articulo_model extends CI_Model{
 	}
 	
 	public function editar($id, $nombre, $nomImagen, $precio, $coste, $descuento,  $disponible, $ids_colores, $ids_tallas){
-		if(!$this->existeArticulo($nombre)){
+		
 			$a = R::load('articulo', $id);
-			$a->nombre = $nombre;
-			$a->nombre_imagen = $nomImagen;
-			$a->precio = $precio;
-			$a->coste = $coste;
-			$a->descuento = $descuento;
-			$a->disponible = $disponible;
-			$a->sharedColorList = [];
-			if($ids_colores != ''){
-				foreach ($ids_colores as $idColor){
-					$a->sharedColorList[] = R::load('color', $idColor);
+			if($nombre == $a->nombre || !$this->existeArticulo($nombre)){
+				$a->nombre = $nombre;
+				$a->nombre_imagen = $nomImagen;
+				$a->precio = $precio;
+				$a->coste = $coste;
+				$a->descuento = $descuento;
+				$a->disponible = $disponible;
+				$a->sharedColorList = [];
+				if($ids_colores != ''){
+					foreach ($ids_colores as $idColor){
+						$a->sharedColorList[] = R::load('color', $idColor);
+					}
 				}
-			}
-			
+					
 				$a->sharedTallaList = [];
-			if($ids_tallas != ''){
-				foreach ($ids_tallas as $idTalla){
-					$a->sharedTallaList[] = R::load('talla', $idTalla);
+				if($ids_tallas != ''){
+					foreach ($ids_tallas as $idTalla){
+						$a->sharedTallaList[] = R::load('talla', $idTalla);
+					}
 				}
-			}
-			
-			R::store($a);
-			R::close();
-			return true;
-		}else{
-			return false;
-		}
+					
+				R::store($a);
+				R::close();
+				return true;
+			}else{
+				return false;
+			}	
+				
 	}
 }
 

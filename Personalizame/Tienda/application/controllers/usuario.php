@@ -182,6 +182,7 @@ class Usuario extends CI_Controller{
 		$this->load->model('usuario_model');
 		$user = $this->usuario_model->getPorId($idUsuario);
 		$perfil = isset($_POST['perfil']) ? $_POST['perfil'] : $user->perfil;
+		$antiguaImagen = $user->imagen;
 		
 		$nomImagen = !empty($_FILES['nueva']['name']) ? $nick.'-'.$_FILES['nueva']['name']:$user['imagen'];
 		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
@@ -203,8 +204,11 @@ class Usuario extends CI_Controller{
 			/*
 			 * Aquí se borraría la antigua imagen.
 			 */
-			//chmod($directorio.$nomImagen, 666);
-			//unlink($fichero);
+			$fichero = $directorio.$antiguaImagen;
+			chmod($directorio, 0777);
+			chmod($fichero, 0777);
+				
+			unlink($fichero);
 		}
 			
 		
@@ -321,6 +325,7 @@ class Usuario extends CI_Controller{
 		$user = $this->usuario_model->getPorId($_SESSION['idUsuario']);
 		$perfil = isset($_POST['perfil']) ? $_POST['perfil'] : $user->perfil;
 		$nick = $user->nick;
+		$antiguaImagen = $user->imagen;
 		
 		$nomImagen = !empty($_FILES['files']['name']) ? $nick.'-'.$_FILES['files']['name']:$user['imagen'];
 		$tamanoImagen = !empty($_FILES['files']['size']) ? $_FILES['files']['size']: null;
@@ -342,8 +347,11 @@ class Usuario extends CI_Controller{
 			/*
 			 * Aquí se borraría la antigua imagen.
 			 */
-			//chmod($directorio.$nomImagen, 666);
-			//unlink($fichero);
+			$fichero = $directorio.$antiguaImagen;
+			chmod($directorio, 0777);
+			chmod($fichero, 0777);
+			
+			unlink($fichero);
 		}
 			
 		

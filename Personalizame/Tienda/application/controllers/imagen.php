@@ -11,7 +11,7 @@ class Imagen extends CI_Controller{
 	public function crearPost(){
 		$id_user = $_POST['id_usuario'];
 		$nombre = $_POST['nombre'];
-		$nomImagen = $_FILES['imagen']['name'];
+		$nomImagen = 'img_'.$_FILES['imagen']['name'];
 		$tamanoImagen = $_FILES['imagen']['size'];
 		$tipoImagen = $_FILES['imagen']['type'];
 		$comentario = $_POST['comentario'];
@@ -173,7 +173,8 @@ class Imagen extends CI_Controller{
 		$id = $_POST['id_imagen'];
 		$this->load->model('imagen_model');
 		$img = $this->imagen_model->getImagenById($id);
-		$nomImagen = !empty($_FILES['nueva']['name']) ? $_FILES['nueva']['name']:$img['nombreImagen'];
+		$antiguaImagen = $img->nombre_imagen;
+		$nomImagen = !empty($_FILES['nueva']['name']) ? 'img_'.$_FILES['nueva']['name']:$img['nombreImagen'];
 		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
 		$tipoImagen = !empty($_FILES['nueva']['type']) ? $_FILES['nueva']['type']: null;
 		$nombre = $_POST['nombre'];
@@ -198,8 +199,11 @@ class Imagen extends CI_Controller{
 				/*
 				 * Aquí se borraría la antigua imagen.
 				 */
-				//chmod($directorio.$nomImagen, 666);
-				//unlink($fichero);
+				$fichero = $directorio.$antiguaImagen;
+				chmod($directorio, 0777);
+				chmod($fichero, 0777);
+				
+				unlink($fichero);
 			}
 			
 				

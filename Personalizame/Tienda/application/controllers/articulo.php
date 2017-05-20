@@ -17,7 +17,7 @@ class Articulo extends CI_Controller{
 		$descuento = $_POST['descuento'];
 		$disponible = $_POST['disponible'];
 		$fecha_alta = strftime("%Y/%m/%d");
-		$nomImagen = $_FILES['imagen']['name'];
+		$nomImagen = 'art_'.$_FILES['imagen']['name'];
 		$tamanoImagen = $_FILES['imagen']['size'];
 		$tipoImagen = $_FILES['imagen']['type'];
 		
@@ -170,11 +170,12 @@ class Articulo extends CI_Controller{
 		$id= $_POST['id'];
 		$this->load->model('articulo_model');
 		$art = $this->articulo_model->getArticuloById($id);
+		$antiguaImagen = $art->nombre_imagen;
 		$nombre = $_POST['nombre'];
 		$precio = $_POST['precio'];
 		$coste = $_POST['coste'];
 		$descuento = $_POST['descuento'];
-		$nomImagen = !empty($_FILES['nueva']['name']) ? $_FILES['nueva']['name']:$art['imagen'];
+		$nomImagen = !empty($_FILES['nueva']['name']) ? 'art_'.$_FILES['nueva']['name']:$art['imagen'];
 		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
 		$tipoImagen = !empty($_FILES['nueva']['type']) ? $_FILES['nueva']['type']: null;
 		$disponible = $_POST['disponible'];
@@ -195,8 +196,11 @@ class Articulo extends CI_Controller{
 				/*
 				 * Aquí se borraría la antigua imagen.
 				 */
-				//chmod($directorio.$nomImagen, 666);
-				//unlink($fichero);
+				$fichero = $directorio.$antiguaImagen;
+				chmod($directorio, 0777);
+				chmod($fichero, 0777);
+				
+				unlink($fichero);
 			}
 			
 		//}

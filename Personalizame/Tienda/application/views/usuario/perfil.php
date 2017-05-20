@@ -31,7 +31,7 @@
 		<!-- 	<h2>Perfil de Usuario</h2>   -->
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<h3 class="panel-title"><?= $_SESSION['nick'] ?>a</h3>
+					<h3 class="panel-title"><?= $_SESSION['nick'] ?></h3>
 				</div>
 				<div class="panel-body">
 					<div class="row">

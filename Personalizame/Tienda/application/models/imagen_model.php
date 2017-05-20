@@ -82,28 +82,29 @@ class Imagen_model extends CI_Model{
 	}
 
 	public function editar($id,$nombre, $nomImagen, $comentario, $descuento,$precio,$coste, $disponible, $ids_categorias){
-		if(!$this->existeImagen($nomImagen)){
+		
 			$i = R::load('imagen', $id);
-			$i->nombre = $nombre;
-			$i->nombre_imagen = $nomImagen;
-			$i->comentario = $comentario;
-			$i->descuento = $descuento;
-			$i->precio = $precio;
-			$i->coste = $coste;
-			$i->disponible = $disponible;
-			$i->sharedCategoriaList = [];
-			
-			$i->sharedCategoriaList = [];
-			foreach ($ids_categorias as $idcat){
-				$i->sharedCategoriaList[] = R::load('categoria', $idcat);
+			if($nomImagen == $i->nombre_imagen || !$this->existeImagen($nomImagen)){
+				$i->nombre = $nombre;
+				$i->nombre_imagen = $nomImagen;
+				$i->comentario = $comentario;
+				$i->descuento = $descuento;
+				$i->precio = $precio;
+				$i->coste = $coste;
+				$i->disponible = $disponible;
+				$i->sharedCategoriaList = [];
+				
+				$i->sharedCategoriaList = [];
+				foreach ($ids_categorias as $idcat){
+					$i->sharedCategoriaList[] = R::load('categoria', $idcat);
+				}
+		
+				R::store($i);
+				R::close();
+				return true;
+			}else{
+				return false;
 			}
-	
-			R::store($i);
-			R::close();
-			return true;
-		}else{
-			return false;
-		}
 	}
 }
 
