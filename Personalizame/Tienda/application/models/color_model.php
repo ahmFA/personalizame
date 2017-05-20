@@ -52,17 +52,18 @@ class Color_model extends CI_Model{
 	}
 
 	public function editar($id, $nom, $valor){
-		if(!$this->existeColor($nom)){
+		
 			$c = R::load('color', $id);
-			$c->nombre = $nom;
-			$c->valor = $valor;
-	
-			R::store($c);
-			R::close();
-			return true;
-		}else{
-			return false;
-		}
+			if($nom == $c->nombre || !$this->existeColor($nom)){
+				$c->nombre = $nom;
+				$c->valor = $valor;
+		
+				R::store($c);
+				R::close();
+				return true;
+			}else{
+				return false;
+			}
 	}
 	
 	/*
