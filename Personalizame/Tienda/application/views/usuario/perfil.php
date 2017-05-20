@@ -14,7 +14,7 @@
     </header>
 
 <!-- <div class="container-fluid" style="background-color: #E7E7E7;">  -->
-<section class="box-content box-style" id="portfolio">
+<section class="box-content box-style">
 			<div class="container-fluid">
 				<div class="row heading">
 					 <div class="col-lg-12">
@@ -31,79 +31,94 @@
 		<!-- 	<h2>Perfil de Usuario</h2>   -->
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<h3 class="panel-title">Sheena Shrestha</h3>
+					<h3 class="panel-title"><?= $_SESSION['nick'] ?>a</h3>
 				</div>
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-md-3 col-lg-3 " align="center">
 							<img alt="User Pic"
-								src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png"
+								src="../../../../img/usuarios/<?= $_SESSION['imagen'] ?>"
 								class="img-circle img-responsive">
 						</div>
 
-						<!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
-<dl>
-<dt>DEPARTMENT:</dt>
-<dd>Administrator</dd>
-<dt>HIRE DATE</dt>
-<dd>11/12/2013</dd>
-<dt>DATE OF BIRTH</dt>
-<dd>11/12/2013</dd>
-<dt>GENDER</dt>
-<dd>Male</dd>
-</dl>
-</div>-->
 						<div class=" col-md-9 col-lg-9 ">
 							<table class="table table-user-information">
 								<tbody>
-									<tr>
-										<td>Department:</td>
-										<td>Programming</td>
-									</tr>
-									<tr>
-										<td>Hire date:</td>
-										<td>06/23/2013</td>
-									</tr>
-									<tr>
-										<td>Date of Birth</td>
-										<td>01/24/1988</td>
-									</tr>
-
-									<tr>
-									
 									
 									<tr>
-										<td>Gender</td>
-										<td>Female</td>
+										<td>Nombre:</td>
+										<td><?= $usuario->nombre ?></td>
 									</tr>
 									<tr>
-										<td>Home Address</td>
-										<td>Kathmandu,Nepal</td>
+										<td>Apellido 1:</td>
+										<td><?= $usuario->apellido1 ?></td>
 									</tr>
 									<tr>
-										<td>Email</td>
-										<td><a href="mailto:info@support.com">info@support.com</a></td>
-									</tr>
-									<td>Phone Number</td>
-									<td>123-4567-890(Landline)<br>
-									<br>555-4567-890(Mobile)
-									</td>
-
+										<td>Apellido2:</td>
+										<td><?= $usuario->apellido2 ?></td>
 									</tr>
 
+									<tr>
+										<td>Teléfonos:</td>
+										<td><?= $usuario->telefono1 ?><br>
+										<br><?= $usuario->telefono2 ?></td>
+									</tr>
+									<tr>
+										<td>Emails:</td>
+										<td><?= $usuario->mail1 ?><br>
+										<br><?= $usuario->mail2 ?>
+									</tr>
+									<tr>
+										<td>Comentario de contacto:</td>
+										<td><?= $usuario->comentario_contacto ?></td>
+									</tr>
+									<tr>
+										<td>Dirección:</td>
+										<td><?= $usuario->direccion ?><br>
+										<?= $usuario->cp ?><br>
+										<?= $usuario->localidad ?><br>
+										<?= $usuario->provincia ?><br>
+										<?= $usuario->pais ?></td>
+									</tr>
+									<tr>
+										<td>Comentario de dirección:</td>
+										<td><?= $usuario->comentario_direccion ?></td>
+									</tr>
+									<!-- 
+									<tr>
+										<td>Código Postal:</td>
+										<td><?= $usuario->cp ?></td>
+									</tr>
+									<tr>
+										<td>Localidad:</td>
+										<td><?= $usuario->localidad ?></td>
+									</tr>
+									<tr>
+										<td>Provincia:</td>
+										<td><?= $usuario->provincia ?></td>
+									</tr>
+									<tr>
+										<td>País:</td>
+										<td><?= $usuario->pais ?></td>
+									</tr>
+									 -->
 								</tbody>
 							</table>
-
-							<a href="#" class="btn btn-primary">My Sales Performance</a> <a
-								href="#" class="btn btn-primary">Team Sales Performance</a>
+							
 						</div>
 					</div>
 				</div>
 				<div class="panel-footer">
+				
+					<a href="#" class="btn btn-info">Ver mis pedidos</a>  
+					<a	href="<?=base_url() ?>usuario/editarPerfil" class="btn btn-warning">Editar <i class="glyphicon glyphicon-edit"></i></a>
+				
+				
+				<!-- 
 					<a data-original-title="Broadcast Message" data-toggle="tooltip"
 						type="button" class="btn btn-sm btn-primary"><i
 						class="glyphicon glyphicon-envelope"></i></a> <span
-						class="pull-right"> <a href="edit.html"
+						class="pull-right"> <a href="<?=base_url() ?>usuario/editarPerfil"
 						data-original-title="Edit this user" data-toggle="tooltip"
 						type="button" class="btn btn-sm btn-warning"><i
 							class="glyphicon glyphicon-edit"></i></a> <a
@@ -111,6 +126,8 @@
 						type="button" class="btn btn-sm btn-danger"><i
 							class="glyphicon glyphicon-remove"></i></a>
 					</span>
+					
+				 -->	
 				</div>
 
 			</div>

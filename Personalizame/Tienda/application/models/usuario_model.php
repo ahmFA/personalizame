@@ -55,7 +55,7 @@ class Usuario_model extends CI_Model{
 		return $status;
 	}
 	
-	public function registrar($imagen,$nick,$pwd, $mail){
+	public function registrar($imagen,$nick,$pwd, $mail,$descuento,$fecha_alta,$fecha_baja,$motivo_baja){
 		
 			$usuario = R::dispense('usuario');
 			$usuario -> imagen = $imagen;
@@ -64,7 +64,11 @@ class Usuario_model extends CI_Model{
 			$usuario -> mail1 = $mail;
 			$usuario->estado = 'Alta';
 			$usuario->perfil = 'Usuario';
-				
+			$usuario -> descuento = $descuento;
+			$usuario -> fecha_alta = $fecha_alta;
+			$usuario -> fecha_baja = $fecha_baja;
+			$usuario -> motivo_baja = $motivo_baja;
+			
 			R::store($usuario);
 			R::close();
 	}
@@ -124,12 +128,12 @@ class Usuario_model extends CI_Model{
 		R::close();
 	}
 	
-	public function modificar($idUsuario,$nomImagen,$nick,$pwd,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion){
+	public function modificar($idUsuario,$nomImagen,$nick,$pwd,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion){
 		$usuario = R::load('usuario',$idUsuario);
 		$usuario ->imagen = $nomImagen;
 		$usuario -> nick = $nick;
 		$usuario -> pwd = $pwd; // mirar como funciona encriptado md5($pwd);
-		//$usuario -> perfil = $perfil;
+		$usuario -> perfil = $perfil;
 		$usuario -> nombre = $nombre;
 		$usuario -> apellido1 = $apellido1;
 		$usuario -> apellido2 = $apellido2;

@@ -181,6 +181,7 @@ class Usuario extends CI_Controller{
 		$comentario_direccion = $_POST['comentario_direccion'];
 		$this->load->model('usuario_model');
 		$user = $this->usuario_model->getPorId($idUsuario);
+		$perfil = isset($_POST['perfil']) ? $_POST['perfil'] : $user->perfil;
 		
 		$nomImagen = !empty($_FILES['nueva']['name']) ? $nick.'-'.$_FILES['nueva']['name']:$user['imagen'];
 		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
@@ -194,7 +195,7 @@ class Usuario extends CI_Controller{
 		//}
 		
 		//if($imagenValida){
-		$this->usuario_model->modificar($idUsuario,$nomImagen,$nick,$pwd,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
+		$this->usuario_model->modificar($idUsuario,$nomImagen,$nick,$pwd,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
 			
 		if(!empty($_FILES['nueva']['name'])){
 			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/usuarios/';
@@ -218,7 +219,10 @@ class Usuario extends CI_Controller{
 			}
 			
 			enmarcar($this, 'usuario/modificarPost');
-		}else{
+			
+		}
+		
+		else{
 			enmarcar($this, 'usuario/borrarPost');
 		}
 			
@@ -274,14 +278,88 @@ class Usuario extends CI_Controller{
 		$nick = $_POST['nick'];
 		$mail = $_POST['mail'];
 		$pwd = $_POST['pwd'];
+		$descuento = 0; //valor cero por defecto al darse el alta
+		$fecha_alta = strftime("%Y/%m/%d");  //fecha actual en Formato(YYYY/MM/DD)
+		$fecha_baja = ""; // será vacio al darse de alta
+		$motivo_baja = ""; // será vacio al darse de alt
 		$this->load->model('usuario_model');
-		$this->usuario_model->registrar($imagen,$nick, $pwd, $mail);
+		$this->usuario_model->registrar($imagen,$nick, $pwd, $mail, $descuento, $fecha_alta, $fecha_baja, $motivo_baja);
 	
 		enmarcar2($this, 'usuario/registroPost2');
 	}
 	
 	public function perfil(){
-		enmarcar2($this, 'usuario/perfil');
+		$this->load->model('usuario_model');
+		$datos['usuario'] =  $this->usuario_model->getPorId($_SESSION['idUsuario']);
+		enmarcar2($this, 'usuario/perfil', $datos);
+	}
+	
+	public function editarPerfil(){
+		$this->load->model('usuario_model');
+		$datos['usuario'] =  $this->usuario_model->getPorId($_SESSION['idUsuario']);
+		enmarcar2($this, 'usuario/editarPerfil', $datos);
+	}
+	
+	public function editarPerfil2(){
+		$idUsuario = $_SESSION['idUsuario'];
+		$pwd = $_POST['pwd'];
+		$nombre = $_POST['nombre'];
+		$apellido1 = $_POST['apellido1'];
+		$apellido2 = $_POST['apellido2'];
+		$telefono1 = $_POST['telefono1'];
+		$telefono2 = $_POST['telefono2'];
+		$mail1 = $_POST['mail1'];
+		$mail2 = $_POST['mail2'];
+		$comentario_contacto = $_POST['comentario_contacto'];
+		$direccion = $_POST['direccion'];
+		$cp = $_POST['cp'];
+		$localidad = $_POST['localidad'];
+		$provincia = $_POST['provincia'];
+		$pais = $_POST['pais'];
+		$comentario_direccion = $_POST['comentario_direccion'];
+		$this->load->model('usuario_model');
+		$user = $this->usuario_model->getPorId($_SESSION['idUsuario']);
+		$perfil = isset($_POST['perfil']) ? $_POST['perfil'] : $user->perfil;
+		$nick = $user->nick;
+		
+		$nomImagen = !empty($_FILES['files']['name']) ? $nick.'-'.$_FILES['files']['name']:$user['imagen'];
+		$tamanoImagen = !empty($_FILES['files']['size']) ? $_FILES['files']['size']: null;
+		$tipoImagen = !empty($_FILES['files']['type']) ? $_FILES['files']['type']: null;
+		
+		$this->load->model('imagen_model');
+		
+		$imagenValida = true;
+		//if($tamanoImagen != null && $tipoImagen != null){
+		$imagenValida = $this->imagen_model->validarImagen($nomImagen, $tamanoImagen, $tipoImagen);
+		//}
+		
+		//if($imagenValida){
+		$this->usuario_model->modificar($idUsuario,$nomImagen,$nick,$pwd,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
+			
+		if(!empty($_FILES['files']['name'])){
+			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/usuarios/';
+			move_uploaded_file($_FILES['files']['tmp_name'],$directorio.$nomImagen);
+			/*
+			 * Aquí se borraría la antigua imagen.
+			 */
+			//chmod($directorio.$nomImagen, 666);
+			//unlink($fichero);
+		}
+			
+		
+		//}
+		
+		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
+		
+			$usuario = $this->usuario_model->getPorId($_SESSION['idUsuario']);
+			$_SESSION['imagen'] = $usuario->imagen;
+			$datos['usuario'] = $usuario;
+			enmarcar2($this, 'usuario/perfil', $datos);
+
+	}
+	
+	public function cesta(){
+		enmarcar2($this,'usuario/cesta');
 	}
 	
 	

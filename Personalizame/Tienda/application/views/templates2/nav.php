@@ -32,6 +32,8 @@
 					<?php endif;?>
 					
 					<li><a href="<?=base_url()?>usuario/logout">LOGOUT</a></li>
+					<li><a href="<?=base_url()?>usuario/cesta"><img alt="" src="<?= base_url() ?>assets/images/cesta.png">
+                                <i>0</i></a></li>
 					
 				<?php endif;?>
 				

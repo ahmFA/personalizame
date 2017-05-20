@@ -23,12 +23,19 @@
 	<!-- circle Menu -->
 	<link rel="stylesheet" href="<?=base_url() ?>assets/css/circle-menu.min.css">
 	
-	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
     <![endif]-->
+     <style>
+          .prev-image {
+            height: 150px;
+            width: 15opx;
+            border: 1px solid #000;
+            margin: 10px 5px 0 0;
+          }
+        </style>
 </head>
 <body>
