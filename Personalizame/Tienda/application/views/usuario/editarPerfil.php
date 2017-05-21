@@ -30,7 +30,7 @@
 		<!-- 	<h2>Perfil de Usuario</h2>   -->
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<h3 class="panel-title"><?= $_SESSION['nick'] ?>a</h3>
+					<h3 class="panel-title"><?= $_SESSION['nick'] ?></h3>
 				</div>
 				<div class="panel-body">
 					<div class="row">
@@ -54,7 +54,10 @@
 										</td>
 									<tr>
 										<td>Contraseña:</td>
-										<td><input class="form-control" type="password" id="idPwd" name="pwd" value="<?= $usuario->pwd ?>"></td>
+										<td>
+											<label>Contraseña antigua: </label><input class="form-control" type="password" name="pwdAntigua">
+											<label>Contraseña nueva: </label><input class="form-control" type="password" id="idPwd" name="pwdNueva">
+										</td>
 									</tr>
 									<tr>
 										<td>Nombre:</td>
@@ -231,7 +234,7 @@ $(document).ready(function() {
 		var valido = false;
 		var miPwd = document.getElementById("idPwd").value.length;
 		//longitud entre 5 y 20 caracteres
-		if(miPwd >= 5 && miPwd <= 20){
+		if(miPwd >= 5 && miPwd <= 20 || miPwd == ''){
 			valido = true;
 		}
 		return valido;

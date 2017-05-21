@@ -35,6 +35,11 @@
 				</div>
 				<div class="panel-body">
 					<div class="row">
+						<div class="col-xs-12">
+							<?php if(isset($banner)): ?>
+							<?= $banner ?>
+							<?php endif;?>
+						</div>
 						<div class="col-md-3 col-lg-3 " align="center">
 							<img alt="User Pic"
 								src="../../../../img/usuarios/<?= $_SESSION['imagen'] ?>"

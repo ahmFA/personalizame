@@ -48,7 +48,46 @@
       </div>
     </div>
   </div> 
-  <script type="text/javascript">
+ 
+  <!-- Modal de registro -->
+  <div class="modal fade" id="registro" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+  
+      <div class="modal-content">
+        <div class="modal-header">
+        <div id="idBanner"></div>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> Registro de nuevo usuario</h4>
+        </div>
+        <div class="modal-body">
+       <form role="form" action="<?=base_url()?>usuario/registro" method="post" name="formRegistro"> 
+            <div class="form-group">
+              <label for="idMail"><span class="glyphicon glyphicon-user"></span> Usuario</label>
+              <input type="text" class="form-control" id="idNick" name="nick" placeholder="Introduce un nick">
+            </div>
+             <div class="form-group">
+              <label for="idMail"><span class="glyphicon glyphicon-user"></span> Email</label>
+              <input type="text" class="form-control" id="idMail" name="mail" placeholder="Introduce tu email">
+            </div>
+            <div class="form-group">
+              <label for="idPassword"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="password" class="form-control" id="idPassword" name="pwd" placeholder="Introduce password">
+            </div>
+
+            <button onclick="validar()" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-check"></span> Registrarse</button>
+    	 </form>    
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+
+ <script type="text/javascript">
   var conexion;
   var conectar;
 
@@ -183,40 +222,3 @@
 	}
 	
   </script>
-  <!-- Modal de registro -->
-  <div class="modal fade" id="registro" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-  
-      <div class="modal-content">
-        <div class="modal-header">
-        <div id="idBanner"></div>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4><span class="glyphicon glyphicon-lock"></span> Registro de nuevo usuario</h4>
-        </div>
-        <div class="modal-body">
-       <form role="form" action="<?=base_url()?>usuario/registro" method="post" name="formRegistro"> 
-            <div class="form-group">
-              <label for="idMail"><span class="glyphicon glyphicon-user"></span> Usuario</label>
-              <input type="text" class="form-control" id="idNick" name="nick" placeholder="Introduce un nick">
-            </div>
-             <div class="form-group">
-              <label for="idMail"><span class="glyphicon glyphicon-user"></span> Email</label>
-              <input type="text" class="form-control" id="idMail" name="mail" placeholder="Introduce tu email">
-            </div>
-            <div class="form-group">
-              <label for="idPassword"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="password" class="form-control" id="idPassword" name="pwd" placeholder="Introduce password">
-            </div>
-
-            <button onclick="validar()" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-check"></span> Registrarse</button>
-    	 </form>    
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-default btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
-        </div>
-      </div>
-    </div>
-  </div> 
-

@@ -47,8 +47,296 @@
         <script src="<?=base_url()?>assets/js/charts.js"></script>
         <script src="<?=base_url()?>assets/js/functions.js"></script>
         <script src="<?=base_url()?>assets/js/demo.js"></script>
-        <script src="<?=base_url()?>assets/js/personalizame.js">
-        </script>
+        <script src="<?=base_url()?>assets/js/personalizame.js"> </script>
+
+<script type="text/javascript">
+		
+	function validarNick(){
+		var valido = false;
+		var miNick = document.getElementById("idNick").value;
+		//entre 3 y 20 caracteres
+		if(/^\w{3,20}$/.test(miNick)){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarPassword(){
+		var valido = false;
+		var miPwd = document.getElementById("idPwd").value.length;
+		//longitud entre 5 y 20 caracteres
+		if(miPwd >= 5 && miPwd <= 20){
+			valido = true;
+		}
+		return valido;
+	}
+	
+	function validarNombre(){
+		var valido = false;
+		var miNombre = document.getElementById("idNombre").value;
+		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miNombre) || miNombre == ""){
+			valido = true;
+		}
+		return valido;
+	}
+	
+	function validarApellido1(){
+		var valido = false;
+		var miApellido1 = document.getElementById("idApellido1").value;
+		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido1) || miApellido1 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarApellido2(){
+		var valido = false;
+		var miApellido2 = document.getElementById("idApellido2").value;
+		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido2) || miApellido2 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+		
+	function validarTelefono1(){
+		var valido = false;
+		var miTelefono1 = document.getElementById("idTelefono1").value;
+		//telefono correcto o vacio
+		if(/^[6-9][0-9]{8}$/.test(miTelefono1) || miTelefono1 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarTelefono2(){
+		var valido = false;
+		var miTelefono2 = document.getElementById("idTelefono2").value;
+		//telefono correcto o vacio
+		if(/^[6-9][0-9]{8}$/.test(miTelefono2) || miTelefono2 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+		
+	function validarMail1(){
+		var valido = false;
+		var miMail1 = document.getElementById("idMail1").value;
+		//solo correo que empiece por letra o numero, tras la arroba tener texto+(punto+extension)puede repetirse -> .com.es
+		if(/^[a-zA-Z0-9]+([\.-]?\w+)*@[a-zA-Z0-9]+([\.-]?\w+)*(\.[a-z]{2,3})+$/.test(miMail1)){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarMail2(){
+		var valido = false;
+		var miMail2 = document.getElementById("idMail2").value;
+		//solo correo que empiece por letra o numero, tras la arroba tener texto+(punto+extension)puede repetirse -> .com.es
+		if(/^[a-zA-Z0-9]+([\.-]?\w+)*@[a-zA-Z0-9]+([\.-]?\w+)*(\.[a-z]{2,3})+$/.test(miMail2) || miMail2 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarCP(){
+		var valido = false;
+		var miCP = document.getElementById("idCP").value;
+		//5 digitos
+		if(/^[0-9]{5}$/.test(miCP) || miCP == ""){
+			valido = true;
+		}
+		return valido;
+	}
+	
+	function validarUser(){
+		var foco = true;
+		
+		//NICK
+		var valNick = validarNick();
+		if (valNick == false){
+			document.getElementById("idNick").style.color = "red";
+			//document.getElementByid("idNick").setAttribute("title","El Nick debe contener 3 caracteres como mínimo");
+			if (foco == true){
+				document.getElementById("idNick").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idNick").style.color = "black";
+		}
+
+		//PASSWORD
+		var valPassword = validarPassword();
+		if (valPassword == false){
+			document.getElementById("idPwd").style.color = "red";
+			if (foco == true){
+				document.getElementById("idPwd").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idPwd").style.color = "black";
+		}
+		
+		//NOMBRE
+		var valNombre = validarNombre();
+		if (valNombre == false){
+			document.getElementById("idNombre").style.color = "red";
+			if (foco == true){
+				document.getElementById("idNombre").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idNombre").style.color = "black";
+		}
+		
+		//APELLIDO1
+		var valApellido1 = validarApellido1();
+		if (valApellido1 == false){
+			document.getElementById("idApellido1").style.color = "red";
+			if (foco == true){
+				document.getElementById("idApellido1").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idApellido1").style.color = "black";
+		}
+
+		//APELLIDO2
+		var valApellido2 = validarApellido2();
+		if (valApellido2 == false){
+			document.getElementById("idApellido2").style.color = "red";
+			if (foco == true){
+				document.getElementById("idApellido2").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idApellido2").style.color = "black";
+		}
+		
+		//TELEFONO1
+		var valTelefono1 = validarTelefono1();
+		if (valTelefono1 == false){
+			document.getElementById("idTelefono1").style.color = "red";
+			if (foco == true){
+				document.getElementById("idTelefono1").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idTelefono1").style.color = "black";
+		}
+
+		//TELEFONO2
+		var valTelefono2 = validarTelefono2();
+		if (valTelefono2 == false){
+			document.getElementById("idTelefono2").style.color = "red";
+			if (foco == true){
+				document.getElementById("idTelefono2").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idTelefono2").style.color = "black";
+		}
+		
+		//MAIL1
+		var valMail1 = validarMail1();
+		if (valMail1 == false){
+			document.getElementById("idMail1").style.color = "red";
+			if (foco == true){
+				document.getElementById("idMail1").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idMail1").style.color = "black";
+		}
+
+		//MAIL2
+		var valMail2 = validarMail2();
+		if (valMail2 == false){
+			document.getElementById("idMail2").style.color = "red";
+			if (foco == true){
+				document.getElementById("idMail2").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idMail2").style.color = "black";
+		}
+
+		//CP
+		var valCP = validarCP();
+		if (valCP == false){
+			document.getElementById("idCP").style.color = "red";
+			if (foco == true){
+				document.getElementById("idCP").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idCP").style.color = "black";
+		}
+		
+		//Si todo esta a TRUE hace el submit
+		if(valNick && valPassword && valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP){
+			//document.form1.submit();
+			crearUsuario();
+		}	
+		else{
+			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
+		}
+
+	}
+
+
+	var conect;
+
+	function crearUsuarioPost() {
+		document.getElementById("idBanner").innerHTML = conect.responseText;
+
+		//comprobacion para ver si borro o no los campos tras una insercion
+		var str = conect.responseText;
+		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
+		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
+			document.getElementById("idForm1").reset();
+		}
+		
+	}
+
+	function crearUsuario() {
+		conect = new XMLHttpRequest();
+
+		//var datosSerializados = serialize(document.getElementById("idForm1"));
+		var datosUser = 'nick='+document.getElementById('idNick').value+'&pwd='+document.getElementById('idPwd').value+'&perfil='+document.getElementById('idPerfil').value+
+		'&nombre='+document.getElementById('idNombre').value+'&apellido1='+document.getElementById('idApellido1').value
+		+'&apellido2='+document.getElementById('idApellido2').value+'&telefono1='+document.getElementById('idTelefono1').value
+		+'&telefono2='+document.getElementById('idTelefono2').value+'&mail1='++document.getElementById('idMail1').value+'&mail2='+document.getElementById('idMail2').value
+		+'&comentario_contacto='+document.getElementById('idComentarioContacto').value+'&direccion='+document.getElementById('idDireccion').value
+		+'&cp='+document.getElementById('idCP').value+'&localidad='+document.getElementById('idLocalidad').value
+		+'&provincia='+document.getElementById('idProvincia').value+'&pais='+document.getElementById('idPais').value+'&comentario_direccion='+document.getElementById('idComentarioDireccion').value;
+		conect.open('POST', '<?=base_url() ?>usuario/crearPost', true);
+		conect.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		conect.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		conect.send(datosUser);
+		conect.onreadystatechange = function() {
+			if (conect.readyState==4 && conect.status==200) {
+				crearUsuarioPost();
+			}else{
+				alert('Algo ha fallado');
+			}	
+		}
+	}
+	
+
+</script>
 
         <script type="text/javascript">
         var conexion;

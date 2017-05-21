@@ -153,8 +153,28 @@ class Usuario_model extends CI_Model{
 		R::close();
 	}
 	
+	public function comprobarCredenciales($mail, $pwd){
+		$usuario = R::findOne('usuario','mail1 = ? and estado = "Alta"',[$mail]);
+		if(password_verify($pwd, $usuario->pwd)){
+			return $usuario;
+		}else{
+			return null;
+		}
+	}
+	
+	public function cambiarPassword($id, $pwdAntigua){
+		$usuario = R::load('usuario', $id);
+		if(password_verify($pwdAntigua, $usuario->pwd)){
+			return true;
+		}else{
+			return false;	
+		}
+	}
+	
+	/*
 	public function comprobarCredenciales($mail,$pwd){
 		return R::findOne('usuario','mail1 = ? and pwd = ? and estado = "Alta"',[$mail,$pwd]);
 	}
+	*/
 }
 ?>

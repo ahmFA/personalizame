@@ -18,7 +18,7 @@ class Usuario extends CI_Controller{
 	public function crearPost() { //AJAX
 		$imagen = 'user.jpg';
 		$nick = $_POST['nick'];
-		$pwd = $_POST['pwd'];
+		$pwd = password_hash($_POST['pwd'], PASSWORD_DEFAULT);
 		$perfil = $_POST['perfil'];
 		$estado = "Alta"; //se cambiará a Baja cuando se quiera eliminar el usuario
 		$nombre = isset($_POST['nombre'])? $_POST['nombre'] : '';
@@ -118,6 +118,16 @@ class Usuario extends CI_Controller{
 		
 		foreach ($idUsuarios as $idUsuario){
 			$this->usuario_model->estadoBaja($idUsuario);
+			$user = $this->usuario_model->getPorId($idUsuario);
+			$antiguaImgen = $user->imagen;
+			if($antiguaImagen != 'user.jpg'){
+				$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/usuarios/';
+				$fichero = $directorio.$antiguaImagen;
+				chmod($directorio, 0777);
+				chmod($fichero, 0777);
+					
+				unlink($fichero);
+			}
 		}
 		
 		//llamo a listarPost para que mantenga el mismo filtro y se vea la modificacion
@@ -204,11 +214,14 @@ class Usuario extends CI_Controller{
 			/*
 			 * Aquí se borraría la antigua imagen.
 			 */
-			$fichero = $directorio.$antiguaImagen;
-			chmod($directorio, 0777);
-			chmod($fichero, 0777);
+			if($antiguaImagen != 'user.jpg'){
+				$fichero = $directorio.$antiguaImagen;
+				chmod($directorio, 0777);
+				chmod($fichero, 0777);
 				
-			unlink($fichero);
+				unlink($fichero);
+			}
+			
 		}
 			
 		
@@ -243,7 +256,7 @@ class Usuario extends CI_Controller{
 		$this->load->model('usuario_model');
 		$usuarioValido = $this->usuario_model->comprobarCredenciales($mail,$pwd);
 
-		if ($usuarioValido) {
+		if ($usuarioValido != null) {
 			$_SESSION['idUsuario'] = $usuarioValido->id;
 			$_SESSION['nick'] = $usuarioValido->nick;
 			$_SESSION['perfil'] = $usuarioValido->perfil;
@@ -274,21 +287,21 @@ class Usuario extends CI_Controller{
 		$this->load->model('usuario_model');
 		$datos['body']['status'] = $this->usuario_model->validarRegistro($nick, $mail);
 		
-		$this->load->view('usuario, registroPost', $datos);
+		$this->load->view('usuario/registroPost', $datos);
 	}
 	
 	public function registro(){
 		$imagen = 'user.jpg';
 		$nick = $_POST['nick'];
 		$mail = $_POST['mail'];
-		$pwd = $_POST['pwd'];
+		$pwd = password_hash($_POST['pwd'], PASSWORD_DEFAULT);
 		$descuento = 0; //valor cero por defecto al darse el alta
 		$fecha_alta = strftime("%Y/%m/%d");  //fecha actual en Formato(YYYY/MM/DD)
 		$fecha_baja = ""; // será vacio al darse de alta
 		$motivo_baja = ""; // será vacio al darse de alt
 		$this->load->model('usuario_model');
 		$this->usuario_model->registrar($imagen,$nick, $pwd, $mail, $descuento, $fecha_alta, $fecha_baja, $motivo_baja);
-	
+		
 		enmarcar2($this, 'usuario/registroPost2');
 	}
 	
@@ -306,7 +319,8 @@ class Usuario extends CI_Controller{
 	
 	public function editarPerfil2(){
 		$idUsuario = $_SESSION['idUsuario'];
-		$pwd = $_POST['pwd'];
+		$pwdAntigua = $_POST['pwdAntigua'];
+		$pwdNueva = $_POST['pwdNueva'];
 		$nombre = $_POST['nombre'];
 		$apellido1 = $_POST['apellido1'];
 		$apellido2 = $_POST['apellido2'];
@@ -322,7 +336,24 @@ class Usuario extends CI_Controller{
 		$pais = $_POST['pais'];
 		$comentario_direccion = $_POST['comentario_direccion'];
 		$this->load->model('usuario_model');
+		
 		$user = $this->usuario_model->getPorId($_SESSION['idUsuario']);
+		$pwd = $user->pwd;
+		if($_POST['pwdAntigua'] != ''){
+			$statusPwd = $this->usuario_model->cambiarPassword($_SESSION['idUsuario'], $pwdAntigua, $pwdNueva);
+			$datos['banner'] = '';
+			if($statusPwd){
+				$pwd = password_hash($pwdNueva, PASSWORD_DEFAULT);
+				$datos['banner'] = '<div class="container alert alert-success col-xs-12">Datos modificados con éxito, incluida la contraseña</div>';
+			}else{
+				$datos['banner'] = '<div class="container alert alert-success col-xs-6">Datos modificados con éxito.</div>
+						<div class="container alert alert-danger col-xs-6">La contraseña no ha podido ser modificada</div>';
+			}
+		}
+		else{
+			$datos['banner'] = '<div class="container alert alert-success col-xs-12">Datos modificados con éxito';
+		}
+			
 		$perfil = isset($_POST['perfil']) ? $_POST['perfil'] : $user->perfil;
 		$nick = $user->nick;
 		$antiguaImagen = $user->imagen;
@@ -347,18 +378,20 @@ class Usuario extends CI_Controller{
 			/*
 			 * Aquí se borraría la antigua imagen.
 			 */
-			$fichero = $directorio.$antiguaImagen;
-			chmod($directorio, 0777);
-			chmod($fichero, 0777);
-			
-			unlink($fichero);
+			if($antiguaImagen != 'user.jpg'){
+				$fichero = $directorio.$antiguaImagen;
+				chmod($directorio, 0777);
+				chmod($fichero, 0777);
+				
+				unlink($fichero);
+			}
 		}
 			
 		
 		//}
 		
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
-		
+			
 			$usuario = $this->usuario_model->getPorId($_SESSION['idUsuario']);
 			$_SESSION['imagen'] = $usuario->imagen;
 			$datos['usuario'] = $usuario;

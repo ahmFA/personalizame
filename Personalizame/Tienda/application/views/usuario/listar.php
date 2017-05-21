@@ -97,7 +97,7 @@
 							<span class="zmdi zmdi-edit"></span>
 						</button>
 					</form>
-					<form id="idFormedit" action="<?=base_url();?>texto/borrarPost"
+					<form id="idFormDelete" action="<?=base_url();?>usuario/bajaPost"
 						method="post">
 						<input type="hidden" name="idUsuarios[]" value="<?= $usuario->id?>">
 						<input type="hidden" name="filtroNick" value="<?= $body['filtroNick'] ?>">
@@ -106,7 +106,7 @@
 						<input type="hidden" name="mensajeBanner" value="Dado de Baja el usuario <?= $usuario->nick ?>">
 						<button
 							class="btn btn-icon command-delete waves-effect waves-circle"
-							data-row-id="<?= $usuario['id'] ?>">
+							onclick="function f() {document.getElementById('idFormDelete').submit();}">
 							<span class="zmdi zmdi-delete"></span>
 						</button>
 					</form>
