@@ -1,17 +1,55 @@
 <?php include_once 'desplegables.php';?>
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
+<script type="text/javascript">
+var conexion;
 
-<form class="row" id="idForm1" action="<?=base_url()?>usuario/crearPost" method="post"> 
+	function accionAJAX() {
+		document.getElementById("idBanner").innerHTML = conexion.responseText;
+		document.getElementById("idForm1").reset();
+	}
+
+	function crear() {
+		conexion = new XMLHttpRequest();
+
+		var datosSerializados = serialize(document.getElementById("idForm1"));
+		conexion.open('POST', '<?=base_url() ?>usuario/crearPost', true);
+		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		conexion.send(datosSerializados);
+		conexion.onreadystatechange = function() {
+			if (conexion.readyState==4 && conexion.status==200) {
+				accionAJAX();
+			}
+		}
+	}
+</script>
+<script type="text/javascript">
+
+	function validarTodo(){
+		
+		//Si todo esta a TRUE hace el submit
+		if(true){
+			//document.form1.submit();
+			crear();
+		}	
+		else{
+			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
+		}
+
+	}
+
+</script>
+<form class="row" id="idForm1" >
 <div class="card">
 	<div class="card-header">
 		<h2>
-			Crea un nuevo usuario<small>Introduce el filtro que desees.</small>
+			Crea un nuevo usuario
 		</h2>
 	</div>
 	
 	<div id="idBanner"></div>
 	
-	
+
 		<div class="bootgrid-header container-fluid">
 			<div class="col-sm-12 m-b-15">
 				<h3>Datos de usuario</h3>
@@ -178,7 +216,7 @@
 			</div>
 
 				<div class="col-sm-3">
-					<button type="submit" class="btn btn-primary btn-sm m-t-10">Guardar</button>
+					<input class="btn btn-primary" id="idBotonEnviar" type="button" value="Enviar" onclick="validarTodo()">
 				</div>
 			
 		</div>
@@ -188,7 +226,6 @@
 
 </div>
 </section>
-
 
 <!-- **************************     ANTIGUO      ***************************** -->
 <!-- 
