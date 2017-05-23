@@ -31,15 +31,10 @@ class Articulo extends CI_Controller{
 		$datos['body']['status'] = false;
 		$imagenAceptada = $this->articulo_model->validarImagen($nomImagen, $tamanoImagen,$tipoImagen);
 		if($imagenAceptada){
-			/*
-			 * DOCUMENT_ROOT = c:/XAMPP/HTDOCS en mi caso.
-			 */
 			
-			/*
-			 * Si no existe la carpeta de art�culos, se crea.
-			 */
+			// Si no existe la carpeta de art�culos, se crea.
 			if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/articulos/')){
-				mkdir($_SERVER['DOCUMENT_ROOT'].'/img/articulos/');
+				mkdir($_SERVER['DOCUMENT_ROOT'].'/img/articulos/'); // DOCUMENT_ROOT = c:/XAMPP/HTDOCS en mi caso.
 			}
 			
 			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
@@ -51,6 +46,10 @@ class Articulo extends CI_Controller{
 			 */
 		}
 		$datos['body']['nombre'] = $nombre;
+		$this->load->model('color_model');
+		$this->load->model('talla_model');
+		$datos['colores'] = $this->color_model->listar();
+		$datos['tallas'] = $this->talla_model->listar();
 		enmarcar($this, 'articulo/crear', $datos);
 	}
 	
@@ -187,8 +186,8 @@ class Articulo extends CI_Controller{
 		if($tamanoImagen != null && $tipoImagen != null){
 			$imagenValida = $this->articulo_model->validarImagen($nomImagen, $tamanoImagen, $tipoImagen);
 		}
-		
-		//if($imagenValida){
+		$datos['body']['status'] = false;
+		if($imagenValida){
 		$datos['body']['status'] = $this->articulo_model->editar($id, $nombre, $nomImagen, $precio, $coste, $descuento,  $disponible, $ids_colores, $ids_tallas);
 			if(!empty($_FILES['nueva']['name'])){
 				$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
@@ -203,7 +202,7 @@ class Articulo extends CI_Controller{
 				unlink($fichero);
 			}
 			
-		//}
+		}
 		enmarcar($this, 'articulo/borrarPost');
 	}
 }

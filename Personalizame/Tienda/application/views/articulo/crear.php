@@ -3,15 +3,15 @@
 		<h2>Añade un nuevo artículo</h2>
 	</div>
 	<div class="row">
-		<div class="col-sm-5">
+		<div class="col-sm-11">
 		<div id="idBanner" class="p-l-10">
 			<?php if (isset($body['status'] ) && $body['status']):?>
-				<div class="container alert alert-success col-xs-5">
+				<div class="container alert alert-success col-xs-7">
 				  Artículo con nombre <strong><?=$body['nombre']?></strong> creado con éxito
 				</div>
 			<?php elseif (isset($body['status'] ) && !$body['status']):?>
-				<div class="container alert alert-danger col-xs-5">
-				  <strong>ERROR</strong> Artículo con nombre <strong><?=$body['nombre']?></strong> ya existe
+				<div class="container alert alert-danger col-xs-8">
+				  <strong>ERROR</strong> Compruebe el <strong>TAMAÑO DE LA IMAGEN</strong> y si el artículo con nombre:  <strong><?=$body['nombre']?></strong> ya existe
 				</div>
 			<?php endif;?>
 		</div>
