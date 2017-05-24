@@ -22,10 +22,10 @@ class Imagen extends CI_Controller{
 		$fecha_baja = "";
 		$motivo_baja = "";
 		$disponible = $_POST['disponible'];
-		$categorias = $_POST['id_categorias'];
+		$categorias = explode(',',$_POST['id_categorias']);
 		
-		$this->load->model('imagen_model');
-		$imagenAceptada = $this->imagen_model->validarImagen($nomImagen, $tamanoImagen,$tipoImagen);
+		//$this->load->model('imagen_model');
+		//$imagenAceptada = $this->imagen_model->validarImagen($nomImagen, $tamanoImagen,$tipoImagen);
 		//if($imagenAceptada){
 		
 			if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/imagenes/')){
@@ -38,14 +38,11 @@ class Imagen extends CI_Controller{
 			$this->load->model('imagen_model');
 			$status = null;
 			$datos['body']['status'] = $this->imagen_model->crearImagen($id_user,$nombre, $nomImagen, $comentario, $descuento, $precio, $coste, $fecha_alta, $fecha_baja, $motivo_baja, $disponible, $categorias);
-			/*
-			 * Si no se ha metido en la base de datos (ya sea porque ya existe o por causa ajena)
-			 * se informa del error al administrador.
-			 */
 			
 		//}
+		
 		$datos['body']['nombre'] = $nombre;
-		enmarcar($this, 'articulo/crear', $datos);
+		$this->load->view('imagen/XcrearPost',$datos);
 	}
 
 	public function listar(){

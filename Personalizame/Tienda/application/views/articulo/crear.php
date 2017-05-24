@@ -20,6 +20,7 @@
 	<form role="form" method="post" action="<?= base_url() ?>articulo/crearPost" enctype="multipart/form-data" onsubmit="return comprobarArticulo()">
 		<div class="card-body card-padding">
 			<input type="hidden" id="id_usuario" name="id_usuario" value="1">
+			<input type="hidden" id="valida" name="valida" value="">
 			<div class="row">
 				<div class="col-sm-10">
 					<div class="cp-container">
@@ -34,7 +35,7 @@
                                         <span class="fileinput-exists">Cambiar</span>
                                         <input type="file" name="imagen" id="imagen">
                                     </span>
-                                    <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Quitar</a>
+                                    <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput" id="quitar">Quitar</a>
                                 </div>
                             </div>
                             <br/>
@@ -112,7 +113,7 @@
 			</div>
 
 			<div class="row">
-				<button type="submit" class="btn btn-primary btn-sm m-t-10">Guardar</button>
+				<input class="btn btn-primary btn-sm m-t-10" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
 			</div>
 		</div>
 	</form>
