@@ -166,7 +166,8 @@ function comprobarImagen(){
 
 			//var file = inputFileImage.files[0];
 
-			var imagenP = new FormData($('#form1')[2]);
+			var datos = new FormData($('#form1'));
+			//imagenP.append('imagen', $('#imagen').val());
 
 			var nombreP = $('#nombre').val();
 			var idP = $('#id_usuario').val();
@@ -174,11 +175,12 @@ function comprobarImagen(){
 			var descuentoP = $('#descuento').val();
 			var comentarioP = $('#comentario').val();
 			var seleccionadosP = $('#select-cat').val();
-			
+			//var datos = $('#form1').serialize();
 			$.ajax({
 			   
 			    url : '<?=base_url() ?>imagen/crearPost',
-			    data : {id_usuario: idP, nombre : nombreP, disponible: disponibleP, descuento: descuentoP, comentario : comentarioP , id_categorias : seleccionadosP, imagen : imagenP},
+			   // data : {id_usuario: idP, nombre : nombreP, disponible: disponibleP, descuento: descuentoP, comentario : comentarioP , id_categorias : seleccionadosP, imagen : imagenP},
+			    data : datos,
 			    type : 'POST',
 			    dataType : 'html',
 			    success : function(response) {

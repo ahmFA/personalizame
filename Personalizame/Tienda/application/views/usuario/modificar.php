@@ -236,10 +236,31 @@
 		
 		//Si todo esta a TRUE hace el submit
 		if(valNick && valPassword && valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP){
-			document.form1.submit();
+			//document.form1.submit();
+			editarUsuario();
 		}	
 		else{
 			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
+		}
+	}
+
+	function accionAJAX() {
+		document.getElementById("idBanner").innerHTML = conexion.responseText;
+		document.getElementById("idForm1").reset();
+	}
+
+	function editarUsuario() {
+		conexion = new XMLHttpRequest();
+
+		var datosSerializados = serialize(document.getElementById("idForm1"));
+		conexion.open('POST', '<?=base_url() ?>usuario/modificarPost2', true);
+		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		conexion.send(datosSerializados);
+		conexion.onreadystatechange = function() {
+			if (conexion.readyState==4 && conexion.status==200) {
+				accionAJAX();
+			}
 		}
 	}
 
@@ -442,8 +463,7 @@
 			</div>
 
 				<div class="col-sm-3">
-					<button class="btn btn-primary btn-sm m-t-10"
-						onclick="validarTodo()" id="idBotonEnviar">Guardar</button>
+					<input id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
 				</div>
 			
 			
