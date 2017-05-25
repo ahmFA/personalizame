@@ -1,9 +1,9 @@
-<?php if ($body['status']==0):?>
+<?php if ($body['status']):?>
 <div class="container alert alert-success col-xs-5">
-  Imagen con nombre <strong><?=$body['nick']?></strong> creada con éxito
+  Imagen con nombre <strong><?=$body['nombre']?></strong> creada con éxito
 </div>
-<?php elseif ($body['status']==-1):?>
+<?php elseif (!$body['status']):?>
 <div class="container alert alert-danger col-xs-5">
-  <strong>ERROR</strong> Imagen con nombre <strong><?=$body['nick']?></strong> ya existente.
+  <strong>ERROR</strong> Cambia el nombre de la imagen, <strong><?=$body['nombre_imagen']?></strong> ya existente.
 </div>
 <?php endif;?>

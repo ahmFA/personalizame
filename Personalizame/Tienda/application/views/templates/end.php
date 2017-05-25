@@ -8,8 +8,8 @@
                 <p>Please wait...</p>
             </div>
         </div>
-        
-      <script src="<?=base_url()?>assets/vendors/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.0.min.js" integrity="sha256-8oQ1OnzE2X9v4gpRVRMb1DWHoPHJilbur1LP9ykQ9H0=" crossorigin="anonymous"></script>
+      <!-- <script src="<?=base_url()?>assets/vendors/bower_components/jquery/dist/jquery.min.js"></script>  -->
      <script src="<?=base_url()?>assets/vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="<?=base_url()?>assets/vendors/bower_components/flot/jquery.flot.js"></script>
         <script src="<?=base_url()?>assets/vendors/bower_components/flot/jquery.flot.resize.js"></script>
