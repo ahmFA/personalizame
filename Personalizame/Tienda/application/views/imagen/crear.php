@@ -133,7 +133,15 @@ $(document).ready(function(){
 	            for (var i = 0; i < (d.find('input').not('input[type=file]').not('input[type=submit]').length); i++) { 
 	                // buscará todos los input menos el valor "file" y "sumbit . Serán diferenciados en el PHP gracias al "name" de cada uno.
 	                formdata.append( (d.find('input').not('input[type=file]').not('input[type=submit]').eq(i).attr("name")),(d.find('input').not('input[type=file]').not('input[type=submit]').eq(i).val()) );            
-	                } 
+	                }
+
+	            var selected = '';
+	            $('select option:checked').each(function(){
+	            selected += $(this).val() + ','; 
+	            });
+	            fin = selected.length - 1; // calculo cantidad de caracteres menos 1 para eliminar la coma final
+	            selected = selected.substr( 0, fin ); // elimino la coma final
+	            formdata.append('id_categorias', selected); 
 
 	            // Arrancamos el ajax     
 	            $.ajax({ 
@@ -167,117 +175,121 @@ $(document).ready(function(){
 	      } 
 	    }); // formajax 
 	 
+
+	    
+	 function comprobarImagen(){
+			var nombre = document.getElementById('nombre').value;
+			var valida = document.getElementById('valida').value;
+			var descuento = document.getElementById('descuento').value;
+			var seleccionados = document.getElementById('select-cat').value;
+
+			var valNombre = validarNombre();
+			var valImagen = validarImagen();
+			var valDesc = validarDescuento();
+			var valSelect = validarSelect();
+			
+				function validarNombre(){
+					if(nombre == ''){
+						document.getElementById('nombre-form').classList.add('has-error');
+						return false;
+					}else{
+						document.getElementById('nombre-form').classList.remove('has-error');
+						return true;
+					}
+				}
+
+				function validarImagen(){
+					if(valida == '' || valida == 1){
+						document.getElementById('imagen-form').classList.add('c-red');
+						return false;	
+					}else{
+						document.getElementById('imagen-form').classList.remove('c-red');
+						return true;
+					}
+				}
+
+				function validarDescuento(){
+					if(descuento == '' || isNaN(descuento)){
+						document.getElementById('descuento-form').classList.add('has-error');
+						return false;
+					}else{
+						document.getElementById('descuento-form').classList.remove('has-error');
+						return true;
+					}
+				}
+
+				function validarSelect(){
+					if(seleccionados == ''){
+						document.getElementById('select-form').classList.add('c-red');
+						return false;
+					}else{
+						document.getElementById('select-form').classList.remove('c-red');
+						return true;
+					}
+				}
+
+				if(valNombre && valImagen && valDesc && valSelect){
+
+					$('#idBotonEnviar').attr('type', 'submit');
+					$('#idBotonEnviar').trigger('click');
+					
+					//var nombreP = $('#nombre').val();
+					//var idP = $('#id_usuario').val();
+					//var disponibleP = $('#disponible').val();
+					//var descuentoP = $('#descuento').val();
+					//var comentarioP = $('#comentario').val();
+					//var seleccionadosP = $('#select-cat').val();
+					//var inputFileImage = document.getElementById('imagen');
+
+					//var file = inputFileImage.files[0];
+
+					//var datos = new FormData();
+					//imagenP.append('imagen', $('#imagen').val());
+					/*
+					datos.append('imagen', $('#imagen').files[0]);
+					datos.append('nombre', nombreP);
+					datos.append('id_usuario', idP);
+					datos.append('disponible', disponibleP);
+					datos.append('descuento', descuentoP);
+					datos.append('comentario', comentarioP);
+					datos.append('id_categorias', seleccionadosP);
+					*/
+					//var datos = $('#form1').serialize();
+					/*
+					$.ajax({
+					   
+					    url : '<?=base_url() ?>imagen/crearPost',
+					   data : {id_usuario: idP, nombre : nombreP, disponible: disponibleP, descuento: descuentoP, comentario : comentarioP , id_categorias : seleccionadosP, imagen : imagenP},
+					    data : datos,
+					    type : 'POST',
+					    dataType : 'html',
+					    success : function(response) {
+					    	document.getElementById("idBanner").innerHTML = response;
+
+				    		//comprobacion para ver si borro o no los campos tras una insercion
+				    		var str = response;
+				    		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
+				    		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
+				    			document.getElementById("idForm1").reset();
+				    		}
+				    		
+					    }  
+					});
+					*/
+				}
+				else{
+					document.getElementById('idBanner').innerHTML +='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos obligatorios.</div>';
+				}
+				
+				
+			
+		}
+
 	 
 });
 
 
-function comprobarImagen(){
-	var nombre = document.getElementById('nombre').value;
-	var valida = document.getElementById('valida').value;
-	var descuento = document.getElementById('descuento').value;
-	var seleccionados = document.getElementById('select-cat').value;
 
-	var valNombre = validarNombre();
-	var valImagen = validarImagen();
-	var valDesc = validarDescuento();
-	var valSelect = validarSelect();
-	
-		function validarNombre(){
-			if(nombre == ''){
-				document.getElementById('nombre-form').classList.add('has-error');
-				return false;
-			}else{
-				document.getElementById('nombre-form').classList.remove('has-error');
-				return true;
-			}
-		}
-
-		function validarImagen(){
-			if(valida == '' || valida == 1){
-				document.getElementById('imagen-form').classList.add('c-red');
-				return false;	
-			}else{
-				document.getElementById('imagen-form').classList.remove('c-red');
-				return true;
-			}
-		}
-
-		function validarDescuento(){
-			if(descuento == '' || isNaN(descuento)){
-				document.getElementById('descuento-form').classList.add('has-error');
-				return false;
-			}else{
-				document.getElementById('descuento-form').classList.remove('has-error');
-				return true;
-			}
-		}
-
-		function validarSelect(){
-			if(seleccionados == ''){
-				document.getElementById('select-form').classList.add('c-red');
-				return false;
-			}else{
-				document.getElementById('select-form').classList.remove('c-red');
-				return true;
-			}
-		}
-
-		if(valNombre && valImagen && valDesc && valSelect){
-
-			$('#idBotonEnviar').attr('type', 'submit');
-			$('#idBotonEnviar').trigger('click');
-			
-			//var nombreP = $('#nombre').val();
-			//var idP = $('#id_usuario').val();
-			//var disponibleP = $('#disponible').val();
-			//var descuentoP = $('#descuento').val();
-			//var comentarioP = $('#comentario').val();
-			//var seleccionadosP = $('#select-cat').val();
-			//var inputFileImage = document.getElementById('imagen');
-
-			//var file = inputFileImage.files[0];
-
-			//var datos = new FormData();
-			//imagenP.append('imagen', $('#imagen').val());
-			/*
-			datos.append('imagen', $('#imagen').files[0]);
-			datos.append('nombre', nombreP);
-			datos.append('id_usuario', idP);
-			datos.append('disponible', disponibleP);
-			datos.append('descuento', descuentoP);
-			datos.append('comentario', comentarioP);
-			datos.append('id_categorias', seleccionadosP);
-			*/
-			//var datos = $('#form1').serialize();
-			/*
-			$.ajax({
-			   
-			    url : '<?=base_url() ?>imagen/crearPost',
-			   data : {id_usuario: idP, nombre : nombreP, disponible: disponibleP, descuento: descuentoP, comentario : comentarioP , id_categorias : seleccionadosP, imagen : imagenP},
-			    data : datos,
-			    type : 'POST',
-			    dataType : 'html',
-			    success : function(response) {
-			    	document.getElementById("idBanner").innerHTML = response;
-
-		    		//comprobacion para ver si borro o no los campos tras una insercion
-		    		var str = response;
-		    		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
-		    		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
-		    			document.getElementById("idForm1").reset();
-		    		}
-		    		
-			    }  
-			});
-			*/
-		}
-		else{
-			document.getElementById('idBanner').innerHTML +='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos obligatorios.</div>';
-		}
-		
-		
-	
-}
 
 
 /*
