@@ -7,9 +7,11 @@ $(document).ready(function(){
 		if(this.files[0].size < 150000){
 			$('#idBanner').html('');
 			$('#valida').val('0');
+			
 		}else{
 			$('#idBanner').html('<div class="alert alert-danger" role="alert">ERROR: El tamaño de la imagen es demasiado grande. Máximo 150kb.</div>');
 			$('#valida').val('1');
+			
 		}	
 	}else{
 	// IE
@@ -29,53 +31,98 @@ $(document).ready(function(){
 	});
 
 	$('#quitar').on('click', function(){
-		$('#valida').val('');
+		$('#valida').val('2');
+		$('#idBanner').html('');
+		
 	});
 
-	
-	/*	
-	function crearImagen(){
-		
-		var inputFileImage = document.getElementById('imagen');
+	$.fn.formajax = function(i){
+	    // this formulario 
+	    var a = $(this); 
+	    // url 
+	    var b = i.url; 
+	    // success 
+	    var c = i.success; 
 
-		var file = inputFileImage.files[0];
+	    
 
-		var imagenP = new FormData();
+				 a.each(function(){ 
+				        // this formulario específico 
+				        var d = $(this); 
+				        // Encontramos el botón Enviar del formulario al que le hicimos click 
+				        d.find('input[type="submit"]').click(function(e){ 
+				            // Prevenimos que recargue la página 
+				            e.preventDefault();
+				        if(comprobarArticulo()){     
+				        // Creamos un formdata                 
+				        formdata = new FormData(); 
+				            // En el formdata colocamos todos los archivos que vamos a subir 
+				            for (var i = 0; i < (d.find('input[type=file]').length); i++) {  
+				                // buscará todos los input con el valor "file" y subirá cada archivo. Serán diferenciados en el PHP gracias al "name" de cada uno.
+				                formdata.append((d.find('input[type="file"]').eq(i).attr("name")),((d.find('input[type="file"]:eq('+i+')')[0]).files[0]));             
+				                } 
+				                 
+				            for (var i = 0; i < (d.find('input').not('input[type=file]').not('input[type=submit]').length); i++) { 
+				                // buscará todos los input menos el valor "file" y "sumbit . Serán diferenciados en el PHP gracias al "name" de cada uno.
+				                formdata.append( (d.find('input').not('input[type=file]').not('input[type=submit]').not('input[type=radio]').not('input[type=checkbox]').eq(i).attr("name")),(d.find('input').not('input[type=file]').not('input[type=submit]').eq(i).val()) );            
+				                }
 
-		imagenP.append('imagen',file);
-		var nombreP = $('#idNombre').val();
-		var idP = $('#id_usuario').val();
-		var disponibleP = $('#idDisponible').val();
-		var descuentoP = $('#idDescuento').val();
-		var comentarioP = $('#idComentario').val();
-		var seleccionadosP = $('#select-cat').val();
-		
-		$.ajax({
-		   
-		    url : '<?=base_url() ?>imagen/crearPost',
-		    data : {id_usuario: idP, nombre : nombreP, disponible: disponibleP, descuento: descuentoP, comentario : comentarioP , id_categorias : seleccionadosP},
-		    type : 'POST',
-		    dataType : 'html',
-		    success : function(response) {
+				            var tallas = '';
+				            $('input[name="idTallas[]"]:checked').each(function(){
+				            tallas += $(this).val() + ','; 
+				            });
+				            fin = tallas.length - 1; // calculo cantidad de caracteres menos 1 para eliminar la coma final
+				            tallas = tallas.substr( 0, fin ); // elimino la coma final
+				            formdata.append('idTallas', tallas);
+				            var colores = '';
+				            $('input[name="idColores[]"]:checked').each(function(){
+				            colores += $(this).val() + ','; 
+				            });
+				            fin = colores.length - 1; // calculo cantidad de caracteres menos 1 para eliminar la coma final
+				            colores = colores.substr( 0, fin ); // elimino la coma final
+				            formdata.append('idColores', colores);
+				            formdata.append('disponible', $('input[type=radio]:checked').val());
+
+				            // Arrancamos el ajax     
+				            $.ajax({ 
+				                url: b, 
+				                type: "POST", 
+				                contentType: false, 
+				                data:formdata, 
+				                processData:false, 
+				                success: c  
+				            });// fin de ajax
+				        } // fin del if   
+				        else{
+						   	document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Rellena todos los campos obligatorios.</div>';
+				  		 }        
+				        }) ; // fin de click  
+				       
+				     //   
+				    }); //fin del each 
+				}; // fin de la función 
+
+	 $("#form1").formajax({
+		    url:"<?= base_url()?>articulo/crearPost", 
+		    success:function(response){ 
 		    	document.getElementById("idBanner").innerHTML = response;
 
 	    		//comprobacion para ver si borro o no los campos tras una insercion
 	    		var str = response;
 	    		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
 	    		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
-	    			document.getElementById("idForm1").reset();
+	    			$("form1").reset();
 	    		}
 	    		
-		    }  
-		});
-
-	 }
-	 */
+		      }
+		    }); // formajax
+	
+	
 });			
 
 	function comprobarArticulo(){
 		var nombre = document.getElementById('nombre').value;
-		var imagen = document.getElementById('valida').value;
+		var valida = document.getElementById('valida').value;
 		var precio = document.getElementById('precio').value;
 		var coste = document.getElementById('coste').value;
 		var descuento = document.getElementById('descuento').value;
@@ -97,7 +144,7 @@ $(document).ready(function(){
 			}
 
 			function validarImagen(){
-				if(valida == '' || valida == 1){
+				if(valida != 0){
 					document.getElementById('imagen-form').classList.add('c-red');
 					return false;	
 				}else{
@@ -117,115 +164,35 @@ $(document).ready(function(){
 			}
 
 			function validarPrecio(){
-				if(isNaN(precio)){
-					document.getElementById('precio-form').classList.add('c-red');
+				if(isNaN(precio) || precio == ''){
+					document.getElementById('precio-form').classList.add('has-error');
 					return false;
 				}else{
-					document.getElementById('precio-form').classList.remove('c-red');
+					document.getElementById('precio-form').classList.remove('has-error');
 					return true;
 				}
 			}
 
 			function validarCoste(){
-				if(isNaN(coste)){
-					document.getElementById('coste-form').classList.add('c-red');
+				if(isNaN(coste) || precio == ''){
+					document.getElementById('coste-form').classList.add('has-error');
 					return false;
 				}else{
-					document.getElementById('coste-form').classList.remove('c-red');
+					document.getElementById('coste-form').classList.remove('has-error');
 					return true;
 				}
 			}
 
 			if(valNombre && valImagen && valDesc && valPrecio && valCoste){
-				//var inputFileImage = document.getElementById('imagen');
-
-				//var file = inputFileImage.files[0];
-
-				var imagenP = new FormData($('#form1')[2]);
-
-				var nombreP = nombre;
-				var idP = $('#id_usuario').val();
-				var disponibleP = disponible;
-				var descuentoP = descuento;
-				var comentarioP = comentario;
-				var precioP = precio;
-				var costeP = coste;
-				var tallasP = $('#tallas').val();
-				var coloresP = $('#colores').val();
-				
-				$.ajax({
-				   
-				    url : '<?=base_url() ?>imagen/crearPost',
-				    data : {id_usuario: idP, nombre : nombreP, disponible: disponibleP, 
-					    descuento: descuentoP, comentario : comentarioP , precio : precioP, 
-					    coste : costeP, idTallas: tallasP, idColores : coloresP, imagen : imagenP},
-				    type : 'POST',
-				    dataType : 'html',
-				    success : function(response) {
-				    	document.getElementById("idBanner").innerHTML = response;
-
-			    		//comprobacion para ver si borro o no los campos tras una insercion
-			    		var str = response;
-			    		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
-			    		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
-			    			document.getElementById("idForm1").reset();
-			    		}
-			    		
-				    }  
-				});
+				return true;
 			}
 			else{
-				document.getElementById('idBanner').innerHTML +='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos obligatorios.</div>';
+				//document.getElementById('idBanner').innerHTML +='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos obligatorios.</div>';
+				return false;
 			}
 		}
-
-			function comprobarModArticulo(){
-				var nombre = document.getElementById('nombre').value;
-				var imagen = document.getElementById('imagen').value;
-				var precio = document.getElementById('precio').value;
-				var coste = document.getElementById('coste').value;
-				var descuento = document.getElementById('descuento').value;
-				
-				if(nombre != '' && imagen != '' && !isNaN(descuento) && descuento != '' && precio != '' && coste != ''){
-					return true;;
-				}
-				else{
-					
-					if(nombre == ''){
-						document.getElementById('nombre-form').classList.add('has-error');
-					}else{
-						document.getElementById('nombre-form').classList.remove('has-error');
-					}
-						
-					if(imagen == ''){
-						document.getElementById('imagen-form').classList.add('c-red');	
-					}else{
-						document.getElementById('imagen-form').classList.remove('c-red');
-					}
-						
-					if(descuento == '' || isNaN(descuento)){
-						document.getElementById('descuento-form').classList.add('has-error');
-					}else{
-						document.getElementById('descuento-form').classList.remove('has-error');
-					}
-					
-					if(precio == ''){
-						document.getElementById('precio-form').classList.add('has-error');
-					}else{
-						document.getElementById('precio-form').classList.remove('has-error');
-					}
 	
-					if(coste == ''){
-						document.getElementById('coste-form').classList.add('has-error');
-					}else{
-						document.getElementById('coste-form').classList.remove('has-error');
-					}
-						
-					document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Rellena todos los campos obligatorios.</div>';
-					return false;
-				}
-			}
-		</script>	
+</script>
 
 
 <div class="card">
@@ -234,110 +201,120 @@ $(document).ready(function(){
 	</div>
 	<div class="row">
 		<div class="col-sm-11">
-		<div id="idBanner" class="p-l-10">
-			
+			<div id="idBanner" class="p-l-10"></div>
 		</div>
 	</div>
-	</div>
-	<form role="form" id="form1" method="post" action="<?= base_url() ?>articulo/crearPost" enctype="multipart/form-data">
+	<form role="form" id="form1" method="post"
+		action="<?= base_url() ?>articulo/crearPost"
+		enctype="multipart/form-data">
 		<div class="card-body card-padding">
-			<input type="hidden" id="id_usuario" name="id_usuario" value="1">
-			<input type="hidden" id="valida" name="valida" value="">
+			<input type="hidden" id="id_usuario" name="id_usuario" value="1"> <input
+				type="hidden" id="valida" name="valida" value="2">
 			<div class="row">
-				<div class="col-sm-10">
+				<div class="col-sm-12">
 					<div class="cp-container">
-					
-					 <p class="f-500 c-black m-b-20" id="imagen-form">Previsualización de la imagen</p>
-                            
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
-                                <div>
-                                    <span class="btn btn-info btn-file">
-                                        <span class="fileinput-new">Seleccionar imagen</span>
-                                        <span class="fileinput-exists">Cambiar</span>
-                                        <input type="file" name="imagen" id="imagen-form">
-                                    </span>
-                                    <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput" id="quitar">Quitar</a>
-                                </div>
-                            </div>
-                            <br/>
-                        
-						<div class="form-group fg-line" id="nombre-form">
-							<label for="nombre">Nombre</label> <input type="text"
-								class="form-control input-sm" id="nombre" name="nombre"
-								placeholder="Introduce el nombre del articulo">
+						<div class="col-sm-4">
+							<p class="f-500 c-black m-b-20" id="imagen-form">Previsualización
+								de la imagen</p>
+
+							<div class="fileinput fileinput-new" data-provides="fileinput">
+								<div class="fileinput-preview thumbnail"
+									data-trigger="fileinput"></div>
+							<div>
+									<span class="btn btn-info btn-file"> <span
+										class="fileinput-new">Seleccionar imagen</span> <span
+										class="fileinput-exists">Cambiar</span> <input type="file"
+										name="imagen" id="imagen">
+									</span> <a href="#" class="btn btn-danger fileinput-exists"
+										data-dismiss="fileinput" id="quitar">Quitar</a>
+								</div>
+							</div>
 						</div>
-						<div class="form-group fg-line" id="precio-form">
-							<label for="comentario">Precio</label> <input type="text"
-								class="form-control input-sm" id="precio" name="precio"
-								placeholder="Introduce un precio">
+						<div class="col-sm-4">
+							<div class="form-group fg-line" id="nombre-form">
+								<label for="nombre">Nombre</label> <input type="text"
+									class="form-control input-sm" id="nombre" name="nombre"
+									placeholder="Introduce el nombre del articulo">
+							</div>
+							<div class="form-group fg-line" id="precio-form">
+								<label for="precio">Precio</label> <input type="text"
+									class="form-control input-sm" id="precio" name="precio"
+									placeholder="Introduce un precio">
+							</div>
+							<div class="form-group fg-line" id="coste-form">
+								<label for="coste">Coste</label> <input type="text"
+									class="form-control input-sm" id="coste" name="coste"
+									placeholder="Introduce el coste">
+							</div>
 						</div>
-						<div class="form-group fg-line" id="coste-form">
-							<label for="comentario">Coste</label> <input type="text"
-								class="form-control input-sm" id="coste" name="coste"
-								placeholder="Introduce el coste">
+						<div class="col-sm-4">
+							<div class="form-group fg-line" id="descuento-form">
+								<label for="descuento">Descuento</label> <input type="text"
+									class="form-control input-sm" id="descuento" name="descuento"
+									placeholder="Indica el descuento que tiene la articulo">
+							</div>
+							<label>Disponible</label>
+							<div class="radio m-b-15">
+								<label> <input type="radio" name="disponible" value="1"
+									checked="checked"> <i class="input-helper"></i> Sí
+								</label>
+							</div>
+							<div class="radio m-b-15">
+								<label> <input type="radio" name="disponible" value="0"> <i
+									class="input-helper"></i> No
+								</label>
+							</div>
 						</div>
-						<div class="form-group fg-line" id="descuento-form">
-							<label for="descuento">Descuento</label> <input type="text"
-								class="form-control input-sm" id="descuento" name="descuento"
-								placeholder="Indica el descuento que tiene la articulo">
-						</div>
-						<label>Disponible</label>
-						<div class="radio m-b-15">
-                                <label>
-                                    <input type="radio" name="disponible" value="1" checked="checked">
-                                    <i class="input-helper"></i>
-                                   Sí
-                                </label>
-                            </div>
-                            <div class="radio m-b-15">
-                                <label>
-                                    <input type="radio" name="disponible" value="0">
-                                    <i class="input-helper"></i>
-                                    No
-                                </label>
-                            </div>
 					</div>
-					<div class=" m-b-25">
-						<div class="row">
-                                    <label>Tallas</label><br/>
+					<!-- fin div container -->
+				</div>
+				</div><!-- fin del row -->
+				<div class=" m-b-25">
+					<div class="row">
+						<div class="cp-container">
+							<label>Tallas</label><br />
                                        
 										<?php foreach ($tallas as $talla):?>
 										<div class="col-sm-2">
-											 <label class="checkbox checkbox-inline m-r-20">
-				                                <input type="checkbox" name="idTallas[]" id="tallas" value="<?= $talla->id?>">
-				                                <i class="input-helper"></i>    
-				                                <?= $talla->nombre ?>
-				                            </label>		
-				                         </div>   
+											<label class="checkbox checkbox-inline m-r-20"> <input
+												type="checkbox" name="idTallas[]" id="tallas"
+												value="<?= $talla->id?>"> <i class="input-helper"></i>    
+							                                <?= $talla->nombre?>
+				                            </label>
+										</div>   
 										<?php endforeach;?>
-                         </div>         
-                  	</div>
-                  	
-					<div class=" m-b-25">
-						<div class="row">
-                                    <label>Colores</label><br/>
+							</div>
+					</div>
+				</div>
+
+				<div class=" m-b-25">
+					<div class="row">
+						<div class="cp-container">
+							<label>Colores</label><br />
                                        
 										<?php foreach ($colores as $color):?>
 										<div class="col-sm-2">
-											 <label class="checkbox checkbox-inline m-r-20">
-				                                <input type="checkbox" name="idColores[]" id="colores" value="<?= $color->id?>">
-				                                <i class="input-helper"></i>    
-				                                <?= $color->nombre ?>
-				                            </label>	
-				                         </div>   	
+											<label class="checkbox checkbox-inline m-r-20"> <input
+												type="checkbox" name="idColores[]" id="colores"
+												value="<?= $color->id?>"> <i class="input-helper"></i>    
+							                                <?= $color->nombre?>
+				                            </label>
+										</div>   	
 										<?php endforeach;?>
-                        </div>          
-                  </div>                                
-					
-					
+							</div>
+					</div>
 				</div>
-			</div>
 
-			<div class="row">
-				<input id="idBotonEnviar" type="button" value="Guardar" onclick="comprobarArticulo()">
+
+				<div class="row">
+					<div class="col-sm-offset-5 col-sm-2 p-t-25">
+						<!-- 	<input id="idBotonEnviar" type="button" value="Guardar" onclick="comprobarImagen()">   -->
+						<input id="idBotonEnviar" class="btn-block" type="submit" value="GUARDAR" style="background-color: #2196f3; color: #fff; text-size:14px;">
+					</div>	
+				</div>
+
 			</div>
-		</div>
+	
 	</form>
 
 </div>

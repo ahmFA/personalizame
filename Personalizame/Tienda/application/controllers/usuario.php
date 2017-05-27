@@ -119,7 +119,7 @@ class Usuario extends CI_Controller{
 		foreach ($idUsuarios as $idUsuario){
 			$this->usuario_model->estadoBaja($idUsuario);
 			$user = $this->usuario_model->getPorId($idUsuario);
-			$antiguaImgen = $user->imagen;
+			$antiguaImagen = $user->imagen;
 			if($antiguaImagen != 'user.jpg'){
 				$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/usuarios/';
 				$fichero = $directorio.$antiguaImagen;
@@ -173,7 +173,7 @@ class Usuario extends CI_Controller{
 	public function modificarPost2() {
 		$idUsuario = $_POST['idUsuario'];
 		$nick = $_POST['nick'];
-		$pwd = $_POST['pwd'];
+		//$pwd = $_POST['pwd'];
 		//$perfil = $_POST['perfil'];
 		$nombre = $_POST['nombre'];
 		$apellido1 = $_POST['apellido1'];
@@ -193,17 +193,11 @@ class Usuario extends CI_Controller{
 		$user = $this->usuario_model->getPorId($idUsuario);
 		$perfil = isset($_POST['perfil']) ? $_POST['perfil'] : $user->perfil;
 		$antiguaImagen = $user->imagen;
-		
+		$pwd = $user->pwd;
 		$nomImagen = !empty($_FILES['nueva']['name']) ? $nick.'-'.$_FILES['nueva']['name']:$user['imagen'];
 		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
 		$tipoImagen = !empty($_FILES['nueva']['type']) ? $_FILES['nueva']['type']: null;
 		
-		$this->load->model('imagen_model');
-		
-		$imagenValida = true;
-		//if($tamanoImagen != null && $tipoImagen != null){
-		$imagenValida = $this->imagen_model->validarImagen($nomImagen, $tamanoImagen, $tipoImagen);
-		//}
 		
 		//if($imagenValida){
 		$this->usuario_model->modificar($idUsuario,$nomImagen,$nick,$pwd,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
@@ -228,19 +222,22 @@ class Usuario extends CI_Controller{
 		//}
 		
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
+		$usuario = $this->usuario_model->getPorId($idUsuario);
+		$datos['body']['nick'] = $usuario->nick;
+		
 		if(isset($_POST['perfilAdmin'])){
-			$usuario = $this->usuario_model->getPorId($idUsuario);
+			
 			$_SESSION['imagen'] = $usuario->imagen;
 			if($_SESSION['idUsuario'] == $idUsuario){
 				$_SESSION['nick'] = $usuario->nick;
 			}
 			
-			enmarcar($this, 'usuario/modificarPost');
+			$this->perfilAdmin();
 			
 		}
 		
 		else{
-			enmarcar($this, 'usuario/borrarPost');
+			$this->load->view('usuario/XmodificarPost', $datos);
 		}
 			
 	}
@@ -339,7 +336,7 @@ class Usuario extends CI_Controller{
 		
 		$user = $this->usuario_model->getPorId($_SESSION['idUsuario']);
 		$pwd = $user->pwd;
-		if($_POST['pwdAntigua'] != ''){
+		if($_POST['pwdAntigua'] != '' && $_POST['pwdNueva'] != ''){
 			$statusPwd = $this->usuario_model->cambiarPassword($_SESSION['idUsuario'], $pwdAntigua, $pwdNueva);
 			$datos['banner'] = '';
 			if($statusPwd){
@@ -399,8 +396,88 @@ class Usuario extends CI_Controller{
 
 	}
 	
+	public function editarPerfilAdmin(){
+		$idUsuario = $_SESSION['idUsuario'];
+		$pwdAntigua = $_POST['pwdAntigua'];
+		$pwdNueva = $_POST['pwdNueva'];
+		$nombre = $_POST['nombre'];
+		$apellido1 = $_POST['apellido1'];
+		$apellido2 = $_POST['apellido2'];
+		$telefono1 = $_POST['telefono1'];
+		$telefono2 = $_POST['telefono2'];
+		$mail1 = $_POST['mail1'];
+		$mail2 = $_POST['mail2'];
+		$comentario_contacto = $_POST['comentario_contacto'];
+		$direccion = $_POST['direccion'];
+		$cp = $_POST['cp'];
+		$localidad = $_POST['localidad'];
+		$provincia = $_POST['provincia'];
+		$pais = $_POST['pais'];
+		$comentario_direccion = $_POST['comentario_direccion'];
+		$this->load->model('usuario_model');
+	
+		$user = $this->usuario_model->getPorId($_SESSION['idUsuario']);
+		$pwd = $user->pwd;
+		
+		/*
+		 * Cambio de password siempre que se haya introducido la contraseña antigua
+		 * y una nueva que sea válida.
+		 */
+		if($_POST['pwdAntigua'] != '' && $_POST['pwdNueva'] != ''){
+			$statusPwd = $this->usuario_model->cambiarPassword($_SESSION['idUsuario'], $pwdAntigua);
+			$datos['banner'] = '';
+			if($statusPwd){
+				$pwd = password_hash($pwdNueva, PASSWORD_DEFAULT);
+				$datos['banner'] = '<div class="container alert alert-success col-xs-12">Datos modificados con éxito, incluida la contraseña</div>';
+			}else{
+				$datos['banner'] = '<div class="container alert alert-success col-xs-6">Datos modificados con éxito.</div>
+						<div class="container alert alert-danger col-xs-6">La contraseña no ha podido ser modificada</div>';
+			}
+		}
+		else{
+			$datos['banner'] = '<div class="container alert alert-success col-xs-12">Datos modificados con éxito</div>';
+		}
+			
+		$perfil = $user->perfil;
+		$nick = $user->nick;
+		$antiguaImagen = $user->imagen;
+	
+		$nomImagen = !empty($_FILES['nueva']['name']) ? $nick.'-'.$_FILES['nueva']['name']:$user['imagen'];
+		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
+		$tipoImagen = !empty($_FILES['nueva']['type']) ? $_FILES['nueva']['type']: null;
+	
+		$this->usuario_model->modificar($idUsuario,$nomImagen,$nick,$pwd,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
+			
+		if(!empty($_FILES['nueva']['name'])){
+			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/usuarios/';
+			move_uploaded_file($_FILES['nueva']['tmp_name'],$directorio.$nomImagen);
+			/*
+			 * Aquí se borraría la antigua imagen.
+			 */
+			if($antiguaImagen != 'user.jpg'){
+				$fichero = $directorio.$antiguaImagen;
+				chmod($directorio, 0777);
+				chmod($fichero, 0777);
+	
+				unlink($fichero);
+			}
+		}
+
+		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
+			
+		$usuario = $this->usuario_model->getPorId($_SESSION['idUsuario']);
+		$_SESSION['imagen'] = $usuario->imagen;
+		$datos['usuario'] = $usuario;
+		enmarcar($this, 'admin/perfil', $datos);
+	
+	}
+	
 	public function cesta(){
 		enmarcar2($this,'usuario/cesta');
+	}
+	
+	public function misPedidos(){
+		enmarcar2($this,'usuario/misPedidos');
 	}
 	
 	

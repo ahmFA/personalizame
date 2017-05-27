@@ -21,36 +21,35 @@ class Articulo extends CI_Controller{
 		$tamanoImagen = $_FILES['imagen']['size'];
 		$tipoImagen = $_FILES['imagen']['type'];
 		
-		$id_colores = isset($_POST['idColores']) ? $_POST['idColores'] : '';
-		$id_tallas = isset($_POST['idTallas']) ? $_POST['idTallas'] : '';
+		$id_colores = isset($_POST['idColores']) ? explode(',',$_POST['idColores']) : '';
+		$id_tallas = isset($_POST['idTallas']) ? explode(',',$_POST['idTallas']) : '';
 		$this->load->model('articulo_model');
 		/*
 		 * Se comprueba que la imagen tenga el tama�o adecuado.
 		 * En ese caso, se guarda en la carpeta alojada en nuestro servidor.
 		 */
 		$datos['body']['status'] = false;
-		$imagenAceptada = $this->articulo_model->validarImagen($nomImagen, $tamanoImagen,$tipoImagen);
-		if($imagenAceptada){
+		
 			
 			// Si no existe la carpeta de art�culos, se crea.
-			if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/articulos/')){
-				mkdir($_SERVER['DOCUMENT_ROOT'].'/img/articulos/'); // DOCUMENT_ROOT = c:/XAMPP/HTDOCS en mi caso.
-			}
+		if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/articulos/')){
+			mkdir($_SERVER['DOCUMENT_ROOT'].'/img/articulos/'); // DOCUMENT_ROOT = c:/XAMPP/HTDOCS en mi caso.
+		}
 			
-			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
-			move_uploaded_file($_FILES['imagen']['tmp_name'],$directorio.$nomImagen);
-			$datos['body']['status'] = $this->articulo_model->crearArticulo($nombre, $nomImagen,$precio, $coste, $descuento, $disponible,$fecha_alta, $id_colores, $id_tallas);
+		$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
+		move_uploaded_file($_FILES['imagen']['tmp_name'],$directorio.$nomImagen);
+		$datos['body']['status'] = $this->articulo_model->crearArticulo($nombre, $nomImagen,$precio, $coste, $descuento, $disponible,$fecha_alta, $id_colores, $id_tallas);
 			/*
 			 * Si no se ha metido en la base de datos (ya sea porque ya existe o por causa ajena) 
 			 * se informa del error al administrador.
 			 */
-		}
+		
 		$datos['body']['nombre'] = $nombre;
-		$this->load->model('color_model');
-		$this->load->model('talla_model');
-		$datos['colores'] = $this->color_model->listar();
-		$datos['tallas'] = $this->talla_model->listar();
-		enmarcar($this, 'articulo/crear', $datos);
+		//$this->load->model('color_model');
+		//$this->load->model('talla_model');
+		//$datos['colores'] = $this->color_model->listar();
+		//$datos['tallas'] = $this->talla_model->listar();
+		$this->load->view('articulo/XcrearPost', $datos);
 	}
 	
 	public function listar(){
@@ -179,17 +178,11 @@ class Articulo extends CI_Controller{
 		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
 		$tipoImagen = !empty($_FILES['nueva']['type']) ? $_FILES['nueva']['type']: null;
 		$disponible = $_POST['disponible'];
-		$ids_colores = isset($_POST['idColores']) ? $_POST['idColores'] : '';
-		$ids_tallas = isset($_POST['idTallas']) ? $_POST['idTallas'] : '';
+		$ids_colores = isset($_POST['idColores']) ? explode(',',$_POST['idColores']) : '';
+		$ids_tallas = isset($_POST['idTallas']) ? explode(',',$_POST['idTallas']) : '';
 		
-		
-		$imagenValida = true;
-		if($tamanoImagen != null && $tipoImagen != null){
-			$imagenValida = $this->articulo_model->validarImagen($nomImagen, $tamanoImagen, $tipoImagen);
-		}
-		$datos['body']['status'] = false;
-		if($imagenValida){
 		$datos['body']['status'] = $this->articulo_model->editar($id, $nombre, $nomImagen, $precio, $coste, $descuento,  $disponible, $ids_colores, $ids_tallas);
+			
 			if(!empty($_FILES['nueva']['name'])){
 				$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/';
 				move_uploaded_file($_FILES['nueva']['tmp_name'],$directorio.$nomImagen);
@@ -202,9 +195,10 @@ class Articulo extends CI_Controller{
 				
 				unlink($fichero);
 			}
-			
-		}
-		enmarcar($this, 'articulo/borrarPost');
+		$articulo = $this->articulo_model->getArticuloById($id);
+		$datos['body']['nombre'] = $articulo->nombre;
+		
+		$this->load->view('articulo/XmodificarPost', $datos);
 	}
 }
 

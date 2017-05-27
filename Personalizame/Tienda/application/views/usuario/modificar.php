@@ -1,6 +1,242 @@
 <?php include_once 'desplegables.php';?>
-<script type="text/javascript">
+<script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
+
+<div class="card">
+	<div class="card-header">
+		<h2>
+			Modificar datos de usuario<small>Introduce el filtro que desees.</small>
+		</h2>
+	</div>
 	
+	<div id="idBanner" class="p-l-10"></div>
+	
+	<form class="row" id="idForm1" role="form" name="form1"
+			action="<?= base_url() ?>usuario/modificarPost2" method="post">
+			<!-- campos ocultos para volver al filtro en la misma posicion y ver los resultados del cambio -->
+			<input type="hidden" name="filtroNick" value="<?= $body['filtroNick'] ?>">
+			<input type="hidden" name="filtroMail" value="<?= $body['filtroMail'] ?>">
+			<input type="hidden" name="filtroEstado" value="<?= $body['filtroEstado'] ?>">
+			<input type="hidden" name="idUsuario" value="<?= $body['usuario']->id ?>">
+			<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
+		<div class="bootgrid-header container-fluid">
+		<div class="col-sm-12 m-b-15">
+			<h3>Datos de usuario</h3>
+			</div>
+			<br/>
+			<div class="col-sm-6">
+				<div class="form-group fg-line">
+					<label for="idNick">Nick</label>
+					<input type="text" class="search-field form-control"
+						 id="idNick" name="nick" readonly="readonly" required="required" title="El Nick debe contener 3 caracteres como mínimo" value="<?= $body['usuario']->nick ?>">
+					
+				</div>
+			</div>
+		<!-- <div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idPwd">Contraseña </label> 	 
+					<input type="password" class="search-field form-control"
+						 id="idPwd" name="pwd" maxlength="20" required="required" placeholder="completa este campo" title="La Password debe contener 5 caracteres como mínimo" value="<?= $body['usuario']->pwd ?>">
+				</div>
+			</div>
+			 -->				 
+			<div class="col-sm-6">
+				<div class="form-group fg-line">
+					<label for="idPerfil">Perfil </label>
+					<div class="select"> 	 
+					<select class="form-control" id="idPerfil" name="perfil">
+						<?php foreach ($perfiles as $perfil): ?>
+		 					<?php if($body['usuario']->perfil == $perfil):?>
+				 				<option value='<?= $perfil?>' selected="selected"><?= $perfil?></option>
+				 			<?php else:?>
+				 				<option value='<?= $perfil?>'><?= $perfil?></option>
+				 			<?php endif;?>
+						<?php endforeach;?>
+					</select>
+					</div>
+				</div>
+				
+			</div>
+		
+		
+		
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idNombre">Nombre </label>
+					<input type="text" class="search-field form-control"
+						 id="idNombre"  name="nombre" maxlength="35" title="El Nombre debe contener entre 2 y 35 letras" value="<?= $body['usuario']->nombre ?>">
+					
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idApellido1">Apellido 1 </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idApellido1"  name="apellido1" maxlength="35" title="El Apellido debe contener entre 2 y 35 letras" value="<?= $body['usuario']->apellido1 ?>">
+				</div>
+			</div>			 
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idApellido2">Apellido 2 </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idApellido2"  name="apellido2" maxlength="35" title="El Apellido debe contener entre 2 y 35 letras" value="<?= $body['usuario']->apellido2 ?>">
+				</div>
+				
+			</div>
+			<br/><br/>
+			<div class="col-sm-12 m-b-15">
+			<h3>Datos de contacto</h3>
+			</div>
+			<br/>
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idTelefono1">Telefono </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idTelefono1" name="telefono1" maxlength="9" title="El Teléfono debe contener 9 dígitos y empezar por 6-9" value="<?= $body['usuario']->telefono1 ?>">
+				</div>
+				
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idTelefono2">Telefono alternativo </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idTelefono2" name="telefono2" maxlength="9" title="El Teléfono debe contener 9 dígitos y empezar por 6-9" value="<?= $body['usuario']->telefono2 ?>">
+					
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-group fg-line">
+					<label for="idMail1">Mail </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idMail1" name="mail1" maxlength="40" required="required" placeholder="completa este campo" title="El Correo debe contener @ y . dominio" value="<?= $body['usuario']->mail1 ?>">
+				</div>
+			</div>			 
+			<div class="col-sm-6">
+				<div class="form-group fg-line">
+					<label for="idMail2">Mail alternativo </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idMail2" name="mail2" maxlength="40" required="required" placeholder="completa este campo" title="El Correo debe contener @ y . dominio" value="<?= $body['usuario']->mail2 ?>">
+				</div>
+				
+			</div>
+			<div class="col-sm-12">
+				<div class="form-group fg-line">
+					<label for="idComentarioContacto">Comentario de contacto </label>
+					<textarea class="form-control" id="idComentarioContacto" rows="3" name="comentario_contacto" maxlength="200"><?= $body['usuario']->comentario_contacto ?></textarea>
+				</div>	
+			</div>
+			<br/><br/>
+			<div class="col-sm-12 m-b-15">
+			<h3>Datos de dirección</h3>
+			</div>
+			<br/>
+			<div class="col-sm-8">
+				<div class="form-group fg-line">
+					<label for="idDireccion">Dirección </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idDireccion" name="direccion" maxlength="60" value="<?= $body['usuario']->direccion ?>">
+				</div>
+				
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group fg-line">
+					<label for="idCP">Código Postal </label>
+					<input type="text" class="search-field form-control"
+						 id="idCP" name="cp" maxlength="5" title="El C.P. debe contener 5 dígitos" value="<?= $body['usuario']->cp ?>">
+					
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-group fg-line">
+					<label for="idLocalidad">Localidad </label> 	 
+					<input type="text" class="search-field form-control"
+						 id="idLocalidad" id="idLocalidad" name="localidad" maxlength="35" value="<?= $body['usuario']->localidad ?>">
+				</div>
+			</div>			 
+			<div class="col-sm-3">
+				<div class="form-group fg-line">
+					<label for="idProvincia">Provincia </label>
+					<div class="select"> 
+					<select class="form-control"  id="idProvincia" name="provincia">
+						<option value=' '>Seleccione una</option>       	
+					 		<?php foreach ($provincias as $provincia): ?>
+					 			<?php if($body['usuario']->provincia == $provincia):?>
+					 				<option value='<?= $provincia?>' selected="selected"><?= $provincia?></option>
+					 			<?php else:?>
+					 				<option value='<?= $provincia?>'><?= $provincia?></option>
+					 			<?php endif;?>
+							<?php endforeach;?>
+					</select>
+					</div>
+				</div>
+				
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group fg-line">
+					<label for="idPais">Pais </label>
+					<div class="select">	 
+					<select class="form-control"  id="idPais" name="pais">
+						<?php foreach ($paises as $pais): ?>
+			 				<?php if($body['usuario']->pais == $pais):?>
+				 				<option value='<?= $pais?>' selected="selected"><?= $pais?></option>
+				 			<?php else:?>
+				 				<option value='<?= $pais?>'><?= $pais?></option>
+				 			<?php endif;?>
+						<?php endforeach;?>
+					</select>
+					</div>
+				</div>
+				
+			</div>
+			<div class="col-sm-12">
+				<div class="form-group fg-line">
+					<label for="idComentarioDireccion">Comentario Dirección </label>
+					<textarea class="form-control" id="idComentarioDireccion" rows="3" name="comentario_direccion" maxlength="200"><?= $body['usuario']->comentario_direccion ?></textarea>
+				</div>	
+			</div>
+
+				<div class="col-sm-3">
+					<input id="idBotonEnviar" type="button" value="GUARDAR" onclick="validarTodo()" style="background-color: #2196f3; color: #fff; text-size:14px;">
+				</div>
+			
+			
+			
+			
+		</div>
+	</form>
+</div>
+</div>
+</section>
+
+<script type="text/javascript">
+var conexion;
+function accionAJAX() {
+	document.getElementById("idBanner").innerHTML = conexion.responseText;
+	//document.getElementById("idForm1").reset();
+}
+
+
+
+function editarUsuario() {
+	conexion = new XMLHttpRequest();
+
+	var datosSerializados = serialize(document.getElementById("idForm1"));
+	conexion.open('POST', '<?=base_url() ?>usuario/modificarPost2', true);
+	conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+	conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	conexion.send(datosSerializados);
+	conexion.onreadystatechange = function() {
+		if (conexion.readyState==4 && conexion.status==200) {
+			accionAJAX();
+		}
+	}
+}
+
+</script>
+
+
+
+<script type="text/javascript">
+	/*
 	function validarNick(){
 		var valido = false;
 		var miNick = document.getElementById("idNick").value;
@@ -20,7 +256,7 @@
 		}
 		return valido;
 	}
-	
+	*/
 	function validarNombre(){
 		var valido = false;
 		var miNombre = document.getElementById("idNombre").value;
@@ -105,6 +341,7 @@
 		var foco = true;
 		
 		//NICK
+		/*
 		var valNick = validarNick();
 		if (valNick == false){
 			document.getElementById("idNick").style.color = "red";
@@ -116,8 +353,9 @@
 		else{
 			document.getElementById("idNick").style.color = "black";
 		}
-
+		*/
 		//PASSWORD
+		/*
 		var valPassword = validarPassword();
 		if (valPassword == false){
 			document.getElementById("idPwd").style.color = "red";
@@ -129,7 +367,7 @@
 		else{
 			document.getElementById("idPwd").style.color = "black";
 		}
-		
+		*/
 		//NOMBRE
 		var valNombre = validarNombre();
 		if (valNombre == false){
@@ -235,7 +473,7 @@
 		}
 		
 		//Si todo esta a TRUE hace el submit
-		if(valNick && valPassword && valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP){
+		if(valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP){
 			//document.form1.submit();
 			editarUsuario();
 		}	
@@ -244,234 +482,10 @@
 		}
 	}
 
-	function accionAJAX() {
-		document.getElementById("idBanner").innerHTML = conexion.responseText;
-		document.getElementById("idForm1").reset();
-	}
-
-	function editarUsuario() {
-		conexion = new XMLHttpRequest();
-
-		var datosSerializados = serialize(document.getElementById("idForm1"));
-		conexion.open('POST', '<?=base_url() ?>usuario/modificarPost2', true);
-		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		conexion.send(datosSerializados);
-		conexion.onreadystatechange = function() {
-			if (conexion.readyState==4 && conexion.status==200) {
-				accionAJAX();
-			}
-		}
-	}
+	
 
 </script>
 
-
-
-<div class="card">
-	<div class="card-header">
-		<h2>
-			Modificar datos de usuario<small>Introduce el filtro que desees.</small>
-		</h2>
-	</div>
-	
-	<div id="idBanner"></div>
-	
-	<form class="row" id="idForm1" role="form" name="form1"
-			action="<?= base_url() ?>usuario/modificarPost2" method="post">
-			<!-- campos ocultos para volver al filtro en la misma posicion y ver los resultados del cambio -->
-			<input type="hidden" name="filtroNick" value="<?= $body['filtroNick'] ?>">
-			<input type="hidden" name="filtroMail" value="<?= $body['filtroMail'] ?>">
-			<input type="hidden" name="filtroEstado" value="<?= $body['filtroEstado'] ?>">
-			<input type="hidden" name="idUsuario" value="<?= $body['usuario']->id ?>">
-			<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
-		<div class="bootgrid-header container-fluid">
-		<div class="col-sm-12 m-b-15">
-			<h3>Datos de usuario</h3>
-			</div>
-			<br/>
-			<div class="col-sm-4">
-				<div class="form-group fg-line">
-					<label for="idNick">Nick</label>
-					<input type="text" class="search-field form-control"
-						 id="idNick" name="nick" maxlength="20" required="required" title="El Nick debe contener 3 caracteres como mínimo" value="<?= $body['usuario']->nick ?>">
-					
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="form-group fg-line">
-					<label for="idPwd">Contraseña </label> 	 
-					<input type="password" class="search-field form-control"
-						 id="idPwd" name="pwd" maxlength="20" required="required" placeholder="completa este campo" title="La Password debe contener 5 caracteres como mínimo" value="<?= $body['usuario']->pwd ?>">
-				</div>
-			</div>			 
-			<div class="col-sm-4">
-				<div class="form-group fg-line">
-					<label for="idPerfil">Perfil </label>
-					<div class="select"> 	 
-					<select class="form-control" id="idPerfil" name="perfil">
-						<?php foreach ($perfiles as $perfil): ?>
-		 					<?php if($body['usuario']->perfil == $perfil):?>
-				 				<option value='<?= $perfil?>' selected="selected"><?= $perfil?></option>
-				 			<?php else:?>
-				 				<option value='<?= $perfil?>'><?= $perfil?></option>
-				 			<?php endif;?>
-						<?php endforeach;?>
-					</select>
-					</div>
-				</div>
-				
-			</div>
-		
-		
-		
-			<div class="col-sm-4">
-				<div class="form-group fg-line">
-					<label for="idNombre">Nombre </label>
-					<input type="text" class="search-field form-control"
-						 id="idNombre"  name="nombre" maxlength="35" title="El Nombre debe contener entre 2 y 35 letras" value="<?= $body['usuario']->nombre ?>">
-					
-				</div>
-			</div>
-			<div class="col-sm-4">
-				<div class="form-group fg-line">
-					<label for="idApellido1">Apellido 1 </label> 	 
-					<input type="text" class="search-field form-control"
-						 id="idApellido1"  name="apellido1" maxlength="35" title="El Apellido debe contener entre 2 y 35 letras" value="<?= $body['usuario']->apellido1 ?>">
-				</div>
-			</div>			 
-			<div class="col-sm-4">
-				<div class="form-group fg-line">
-					<label for="idApellido2">Apellido 2 </label> 	 
-					<input type="text" class="search-field form-control"
-						 id="idApellido2"  name="apellido2" maxlength="35" title="El Apellido debe contener entre 2 y 35 letras" value="<?= $body['usuario']->apellido2 ?>">
-				</div>
-				
-			</div>
-			<br/><br/>
-			<div class="col-sm-12 m-b-15">
-			<h3>Datos de contacto</h3>
-			</div>
-			<br/>
-			<div class="col-sm-4">
-				<div class="form-group fg-line">
-					<label for="idTelefono1">Telefono </label> 	 
-					<input type="text" class="search-field form-control"
-						 id="idTelefono1" name="telefono1" maxlength="9" title="El Teléfono debe contener 9 dígitos y empezar por 6-9" value="<?= $body['usuario']->telefono1 ?>">
-				</div>
-				
-			</div>
-			<div class="col-sm-4">
-				<div class="form-group fg-line">
-					<label for="idTelefono2">Telefono alternativo </label> 	 
-					<input type="text" class="search-field form-control"
-						 id="idTelefono2" name="telefono2" maxlength="9" title="El Teléfono debe contener 9 dígitos y empezar por 6-9" value="<?= $body['usuario']->telefono2 ?>">
-					
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="form-group fg-line">
-					<label for="idMail1">Mail </label> 	 
-					<input type="text" class="search-field form-control"
-						 id="idMail1" name="mail1" maxlength="40" required="required" placeholder="completa este campo" title="El Correo debe contener @ y . dominio" value="<?= $body['usuario']->mail1 ?>">
-				</div>
-			</div>			 
-			<div class="col-sm-6">
-				<div class="form-group fg-line">
-					<label for="idMail2">Mail alternativo </label> 	 
-					<input type="text" class="search-field form-control"
-						 id="idMail2" name="mail2" maxlength="40" required="required" placeholder="completa este campo" title="El Correo debe contener @ y . dominio" value="<?= $body['usuario']->mail2 ?>">
-				</div>
-				
-			</div>
-			<div class="col-sm-12">
-				<div class="form-group fg-line">
-					<label for="idComentarioContacto">Comentario de contacto </label>
-					<textarea class="form-control" id="idComentarioContacto" rows="3" name="comentario_contacto" maxlength="200" value="<?= $body['usuario']->comentario_contacto ?>">
-					</textarea>
-				</div>	
-			</div>
-			<br/><br/>
-			<div class="col-sm-12 m-b-15">
-			<h3>Datos de dirección</h3>
-			</div>
-			<br/>
-			<div class="col-sm-8">
-				<div class="form-group fg-line">
-					<label for="idDireccion">Dirección </label> 	 
-					<input type="text" class="search-field form-control"
-						 id="idDireccion" name="direccion" maxlength="60" value="<?= $body['usuario']->direccion ?>">
-				</div>
-				
-			</div>
-			<div class="col-sm-4">
-				<div class="form-group fg-line">
-					<label for="idCP">Código Postal </label>
-					<input type="text" class="search-field form-control"
-						 id="idCP" name="cp" maxlength="5" title="El C.P. debe contener 5 dígitos" value="<?= $body['usuario']->cp ?>">
-					
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="form-group fg-line">
-					<label for="idLocalidad">Localidad </label> 	 
-					<input type="text" class="search-field form-control"
-						 id="idLocalidad" id="idLocalidad" name="localidad" maxlength="35" value="<?= $body['usuario']->localidad ?>">
-				</div>
-			</div>			 
-			<div class="col-sm-3">
-				<div class="form-group fg-line">
-					<label for="idProvincia">Provincia </label>
-					<div class="select"> 
-					<select class="form-control"  id="idProvincia" name="provincia">
-						<option value=' '>Seleccione una</option>       	
-					 		<?php foreach ($provincias as $provincia): ?>
-					 			<?php if($body['usuario']->provincia == $provincia):?>
-					 				<option value='<?= $provincia?>' selected="selected"><?= $provincia?></option>
-					 			<?php else:?>
-					 				<option value='<?= $provincia?>'><?= $provincia?></option>
-					 			<?php endif;?>
-							<?php endforeach;?>
-					</select>
-					</div>
-				</div>
-				
-			</div>
-			<div class="col-sm-3">
-				<div class="form-group fg-line">
-					<label for="idPais">Pais </label>
-					<div class="select">	 
-					<select class="form-control"  id="idPais" name="pais">
-						<?php foreach ($paises as $pais): ?>
-			 				<?php if($body['usuario']->pais == $pais):?>
-				 				<option value='<?= $pais?>' selected="selected"><?= $pais?></option>
-				 			<?php else:?>
-				 				<option value='<?= $pais?>'><?= $pais?></option>
-				 			<?php endif;?>
-						<?php endforeach;?>
-					</select>
-					</div>
-				</div>
-				
-			</div>
-			<div class="col-sm-12">
-				<div class="form-group fg-line">
-					<label for="idComentarioDireccion">Comentario Dirección </label>
-					<textarea class="form-control" id="idComentarioDireccion" rows="3" name="comentario_direccion" maxlength="200" value="<?= $body['usuario']->comentario_direccion ?>">
-					</textarea>
-				</div>	
-			</div>
-
-				<div class="col-sm-3">
-					<input id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
-				</div>
-			
-			
-			
-			
-		</div>
-	</form>
-</div>
 
 
 

@@ -1,258 +1,5 @@
-<script type="text/javascript">
-$(document).ready(function(){
-	
-	function validarPassword(){
-		var valido = false;
-		var miPwd = document.getElementById("idPwd").value.length;
-		//longitud entre 5 y 20 caracteres
-		if(miPwd >= 5 && miPwd <= 20){
-			valido = true;
-		}
-		return valido;
-	}
-	
-	function validarNombre(){
-		var valido = false;
-		var miNombre = document.getElementById("idNombre").value;
-		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
-		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miNombre) || miNombre == ""){
-			valido = true;
-		}
-		return valido;
-	}
-	
-	function validarApellido1(){
-		var valido = false;
-		var miApellido1 = document.getElementById("idApellido1").value;
-		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
-		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido1) || miApellido1 == ""){
-			valido = true;
-		}
-		return valido;
-	}
-
-	function validarApellido2(){
-		var valido = false;
-		var miApellido2 = document.getElementById("idApellido2").value;
-		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
-		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido2) || miApellido2 == ""){
-			valido = true;
-		}
-		return valido;
-	}
-		
-	function validarTelefono1(){
-		var valido = false;
-		var miTelefono1 = document.getElementById("idTelefono1").value;
-		//telefono correcto o vacio
-		if(/^[6-9][0-9]{8}$/.test(miTelefono1) || miTelefono1 == ""){
-			valido = true;
-		}
-		return valido;
-	}
-
-	function validarTelefono2(){
-		var valido = false;
-		var miTelefono2 = document.getElementById("idTelefono2").value;
-		//telefono correcto o vacio
-		if(/^[6-9][0-9]{8}$/.test(miTelefono2) || miTelefono2 == ""){
-			valido = true;
-		}
-		return valido;
-	}
-		
-	function validarMail1(){
-		var valido = false;
-		var miMail1 = document.getElementById("idMail1").value;
-		//solo correo que empiece por letra o numero, tras la arroba tener texto+(punto+extension)puede repetirse -> .com.es
-		if(/^[a-zA-Z0-9]+([\.-]?\w+)*@[a-zA-Z0-9]+([\.-]?\w+)*(\.[a-z]{2,3})+$/.test(miMail1)){
-			valido = true;
-		}
-		return valido;
-	}
-
-	function validarMail2(){
-		var valido = false;
-		var miMail2 = document.getElementById("idMail2").value;
-		//solo correo que empiece por letra o numero, tras la arroba tener texto+(punto+extension)puede repetirse -> .com.es
-		if(/^[a-zA-Z0-9]+([\.-]?\w+)*@[a-zA-Z0-9]+([\.-]?\w+)*(\.[a-z]{2,3})+$/.test(miMail2) || miMail2 == ""){
-			valido = true;
-		}
-		return valido;
-	}
-
-	function validarCP(){
-		var valido = false;
-		var miCP = document.getElementById("idCP").value;
-		//5 digitos
-		if(/^[0-9]{5}$/.test(miCP) || miCP == ""){
-			valido = true;
-		}
-		return valido;
-	}
-
-/*
-		function validarImagen() {
-			var valido = false;
-		    var fileSize = $('#nueva')[0].files[0].size;
-		    var siezekiloByte = parseInt(fileSize / 1024);
-		    if (siezekiloByte <  $('#nueva').attr('size')) {
-		        
-		        valido true;
-		    }
-		 return valido;   
-		}
-		
-	*/
-	
-	function validarTodo(){
-		var foco = true;
-		
-		//PASSWORD
-		var valPassword = validarPassword();
-		if (valPassword == false){
-			document.getElementById("idPwd").style.color = "red";
-			if (foco == true){
-				document.getElementById("idPwd").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("idPwd").style.color = "black";
-		}
-		
-		//NOMBRE
-		var valNombre = validarNombre();
-		if (valNombre == false){
-			document.getElementById("idNombre").style.color = "red";
-			if (foco == true){
-				document.getElementById("idNombre").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("idNombre").style.color = "black";
-		}
-		
-		//APELLIDO1
-		var valApellido1 = validarApellido1();
-		if (valApellido1 == false){
-			document.getElementById("idApellido1").style.color = "red";
-			if (foco == true){
-				document.getElementById("idApellido1").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("idApellido1").style.color = "black";
-		}
-
-		//APELLIDO2
-		var valApellido2 = validarApellido2();
-		if (valApellido2 == false){
-			document.getElementById("idApellido2").style.color = "red";
-			if (foco == true){
-				document.getElementById("idApellido2").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("idApellido2").style.color = "black";
-		}
-		
-		//TELEFONO1
-		var valTelefono1 = validarTelefono1();
-		if (valTelefono1 == false){
-			document.getElementById("idTelefono1").style.color = "red";
-			if (foco == true){
-				document.getElementById("idTelefono1").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("idTelefono1").style.color = "black";
-		}
-
-		//TELEFONO2
-		var valTelefono2 = validarTelefono2();
-		if (valTelefono2 == false){
-			document.getElementById("idTelefono2").style.color = "red";
-			if (foco == true){
-				document.getElementById("idTelefono2").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("idTelefono2").style.color = "black";
-		}
-		
-		//MAIL1
-		var valMail1 = validarMail1();
-		if (valMail1 == false){
-			document.getElementById("idMail1").style.color = "red";
-			if (foco == true){
-				document.getElementById("idMail1").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("idMail1").style.color = "black";
-		}
-
-		//MAIL2
-		var valMail2 = validarMail2();
-		if (valMail2 == false){
-			document.getElementById("idMail2").style.color = "red";
-			if (foco == true){
-				document.getElementById("idMail2").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("idMail2").style.color = "black";
-		}
-
-		//CP
-		var valCP = validarCP();
-		if (valCP == false){
-			document.getElementById("idCP").style.color = "red";
-			if (foco == true){
-				document.getElementById("idCP").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("idCP").style.color = "black";
-		}
-
-		/*
-		var valImagen = validarImagen();
-		if (valImagen == false){
-			document.getElementById("nueva").style.color = "red";
-			if (foco == true){
-				document.getElementById("nueva").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("nueva").style.color = "black";
-		}
-		*/
-		
-		//Si todo esta a TRUE hace el submit
-		if(valPassword && valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP){
-			//document.form1.submit();
-			//crear();
-			return true;
-		}	
-		else{
-			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
-			return false;
-		}
-
-	}
-});
-</script>
+                           
+    
                     <div class="card" id="profile-main">
                         <div class="pm-overview c-overflow">
                             <div class="pmo-pic">
@@ -290,6 +37,7 @@ $(document).ready(function(){
                         <div class="pm-body clearfix">
                         
                         <div class="pmb-block">
+                        	
                                 <div class="pmbb-header">
                                    <h3>Perfil de Administrador</h3>
                                     
@@ -307,7 +55,14 @@ $(document).ready(function(){
                                         </li>
                                     </ul>
                                 </div>
-                             
+                                            <div class="col-sm-12">
+												<div id="idBanner" class="p-l-10">
+												<?php if(isset($banner)): ?>
+													<?= $banner ?>
+												<?php endif;?>
+												</div>
+											</div>	
+							
                         		 <div class="pmbb-body p-l-30">
                                     <div class="pmbb-view">
                                      <h4><i class="zmdi zmdi-account m-r-5"></i> Información básica</h4>
@@ -372,22 +127,18 @@ $(document).ready(function(){
                                             <dd><?= $usuario->comentario_direccion ?></dd>
                                         </dl> 
                                     </div>
-                                    	
+                             	</div>
                                     <div class="pmbb-edit">
                                     	<h4><i class="zmdi zmdi-account m-r-5"></i> Información básica</h4>
-                                    	<div class="row">
-                                    		<div class="col-sm-5">
-												<div id="idBanner" class="p-l-10">
-												</div>
-											</div>	
-                                    	</div>
-                                    	 <form role="form" action="<?=base_url() ?>usuario/modificarPost2" method="post" 
-                                    	 name="form1" enctype="multipart/form-data" onsubmit="validarTodo()">
+                                    	
+                                    	 <form role="form" id="form1" action="<?=base_url() ?>usuario/editarPerfilAdmin" method="post" 
+                                    	 name="form1" enctype="multipart/form-data" onsubmit="return validarTodo()">
                                         <dl class="dl-horizontal">
                                       
                                         <input type="hidden" name="idUsuario" value="<?=$usuario->id ?>">
                                         <input type="hidden" name="nick" value="<?=$usuario->nick ?>">
                                         <input type="hidden" name="perfilAdmin" value="1">
+                                        <input type="hidden" name="valida" id="valida" value="0">
                                         <dt class="p-t-10">Imagen</dt>
                                         	<dd>
                                         	 	<div class="fg-line">
@@ -402,15 +153,22 @@ $(document).ready(function(){
 						                                        <span class="fileinput-exists">Cambiar</span>
 						                                        <input type="file" name="nueva" id="nueva">
 						                                    </span>
-						                                    <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Quitar</a>
+						                                    <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput" id="quitar">Quitar</a>
 						                                </div>
 						                         </div>
 						                    	</div>
                                         	</dd>
-                                         <dt class="p-t-10">Contraseña</dt>
+                                         <dt class="p-t-10">Contraseña Actual</dt>
                                             <dd>
                                                 <div class="fg-line">
-                                                    <input type="password" class="form-control" id="pwd" name="pwd" value="<?= $usuario->pwd ?>">
+                                                    <input type="password" class="form-control" id="pwdAntigua" name="pwdAntigua">
+                                                </div>
+                                                
+                                            </dd>
+                                            <dt class="p-t-10">Contraseña Nueva</dt>
+                                            <dd>
+                                                <div class="fg-line">
+                                                    <input type="password" class="form-control" id="pwdNueva" name="pwdNueva">
                                                 </div>
                                                 
                                             </dd>
@@ -525,7 +283,7 @@ $(document).ready(function(){
                                             </textarea>
                                         </div>                          
                                         <div class="m-t-30">
-                                            <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+                                            <input type="submit" value="GUARDAR" style="background-color: #2196f3; color: #fff; text-size:14px;">
                                          
                                             <button data-pmb-action="reset" class="btn btn-link btn-sm">Cancelar</button>
                                         </div>
@@ -534,17 +292,330 @@ $(document).ready(function(){
                                     
                                     
                                     
-                                </div>
+                                </div> <!-- fin del block -->
               	
-                    </div>           
-                 </div>          
-               </div>                     
+                    </div>   <!-- fin del clearfix -->
+                 </div>  <!-- fin del card -->        
+                
                                    
            </div>
+     
            </section>                         
                                     
-                                    
-                           
+  <script type="text/javascript">
+$(document).ready(function(){
+
+	
+		$('#nueva').bind('change', function() {
+		    
+		if(window.File && window.FileReader && window.FileList && window.Blob){
+			if(this.files[0].size < 150000){
+				$('#idBanner').html('');
+				$('#valida').val('0');
+			}else{
+				$('#idBanner').html('<div class="alert alert-danger" role="alert">ERROR: El tamaño de la imagen es demasiado grande. Máximo 150kb.</div>');
+				$('#valida').val('1');
+			}	
+		}else{
+		// IE
+		    var Fs = new ActiveXObject("Scripting.FileSystemObject");
+		    var ruta = document.upload.file.value;
+		    var archivo = Fs.getFile(ruta);
+		    var size = archivo.size;
+		    if(size < 150000){
+		    	$('#idBanner').html('');
+				$('#valida').val('0');
+			}else{
+				$('#idBanner').html('<div class="alert alert-danger" role="alert">ERROR: El tamaño de la imagen es demasiado grande. Máximo 150kb.</div>');
+				$('#valida').val('1');
+			}	
+		}
+		 
+		});
+
+		$('#quitar').on('click', function(){
+			$('#valida').val('0');
+			$('#idBanner').html('');
+			
+		});
+		
+});
+</script>
+
+<script type="text/javascript">
+	function validarPasswordAntigua(){
+		var valido = false;
+		var miPwd = document.getElementById("pwdAntigua").value.length;
+		//longitud entre 5 y 20 caracteres
+		if((miPwd >= 5 && miPwd <= 20) || miPwd == ''){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarPasswordNueva(){
+		var valido = false;
+		var miPwd = document.getElementById("pwdNueva").value.length;
+		//longitud entre 5 y 20 caracteres
+		if((miPwd >= 5 && miPwd <= 20) || miPwd == ''){
+			valido = true;
+		}
+		return valido;
+	}
+	
+	function validarNombre(){
+		var valido = false;
+		var miNombre = document.getElementById("idNombre").value;
+		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miNombre) || miNombre == ""){
+			valido = true;
+		}
+		return valido;
+	}
+	
+	function validarApellido1(){
+		var valido = false;
+		var miApellido1 = document.getElementById("idApellido1").value;
+		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido1) || miApellido1 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarApellido2(){
+		var valido = false;
+		var miApellido2 = document.getElementById("idApellido2").value;
+		//longitud entre 2 y 35  permitiendo solo ciertos caracteres
+		if(/^[A-Za-zÑñ áéíóúÁÉÍÓÚç]{2,35}$/.test(miApellido2) || miApellido2 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+		
+	function validarTelefono1(){
+		var valido = false;
+		var miTelefono1 = document.getElementById("idTelefono1").value;
+		//telefono correcto o vacio
+		if(/^[6-9][0-9]{8}$/.test(miTelefono1) || miTelefono1 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarTelefono2(){
+		var valido = false;
+		var miTelefono2 = document.getElementById("idTelefono2").value;
+		//telefono correcto o vacio
+		if(/^[6-9][0-9]{8}$/.test(miTelefono2) || miTelefono2 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+		
+	function validarMail1(){
+		var valido = false;
+		var miMail1 = document.getElementById("idMail1").value;
+		//solo correo que empiece por letra o numero, tras la arroba tener texto+(punto+extension)puede repetirse -> .com.es
+		if(/^[a-zA-Z0-9]+([\.-]?\w+)*@[a-zA-Z0-9]+([\.-]?\w+)*(\.[a-z]{2,3})+$/.test(miMail1)){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarMail2(){
+		var valido = false;
+		var miMail2 = document.getElementById("idMail2").value;
+		//solo correo que empiece por letra o numero, tras la arroba tener texto+(punto+extension)puede repetirse -> .com.es
+		if(/^[a-zA-Z0-9]+([\.-]?\w+)*@[a-zA-Z0-9]+([\.-]?\w+)*(\.[a-z]{2,3})+$/.test(miMail2) || miMail2 == ""){
+			valido = true;
+		}
+		return valido;
+	}
+
+	function validarCP(){
+		var valido = false;
+		var miCP = document.getElementById("idCP").value;
+		//5 digitos
+		if(/^[0-9]{5}$/.test(miCP) || miCP == ""){
+			valido = true;
+		}
+		return valido;
+	}
+
+
+		function validarImagen() {
+			var valido = false;
+			var imagen = document.getElementById('valida').value;
+		    if (imagen == 0) {
+		        
+		        valido true;
+		    }
+		 return valido;   
+		}
+		
+
+	
+	function validarTodo(){
+		var foco = true;
+		
+		//PASSWORD
+		var valPasswordAntigua = validarPasswordAntigua();
+		if (valPassword == false){
+			document.getElementById("pwdAntigua").style.color = "red";
+			if (foco == true){
+				document.getElementById("pwdAntigua").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("pwdAntigua").style.color = "black";
+		}
+
+		var valPasswordNueva = validarPasswordNueva();
+		if (valPassword == false){
+			document.getElementById("pwdNueva").style.color = "red";
+			if (foco == true){
+				document.getElementById("pwdNueva").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("pwdNueva").style.color = "black";
+		}
+		
+		//NOMBRE
+		var valNombre = validarNombre();
+		if (valNombre == false){
+			document.getElementById("idNombre").style.color = "red";
+			if (foco == true){
+				document.getElementById("idNombre").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idNombre").style.color = "black";
+		}
+		
+		//APELLIDO1
+		var valApellido1 = validarApellido1();
+		if (valApellido1 == false){
+			document.getElementById("idApellido1").style.color = "red";
+			if (foco == true){
+				document.getElementById("idApellido1").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idApellido1").style.color = "black";
+		}
+
+		//APELLIDO2
+		var valApellido2 = validarApellido2();
+		if (valApellido2 == false){
+			document.getElementById("idApellido2").style.color = "red";
+			if (foco == true){
+				document.getElementById("idApellido2").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idApellido2").style.color = "black";
+		}
+		
+		//TELEFONO1
+		var valTelefono1 = validarTelefono1();
+		if (valTelefono1 == false){
+			document.getElementById("idTelefono1").style.color = "red";
+			if (foco == true){
+				document.getElementById("idTelefono1").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idTelefono1").style.color = "black";
+		}
+
+		//TELEFONO2
+		var valTelefono2 = validarTelefono2();
+		if (valTelefono2 == false){
+			document.getElementById("idTelefono2").style.color = "red";
+			if (foco == true){
+				document.getElementById("idTelefono2").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idTelefono2").style.color = "black";
+		}
+		
+		//MAIL1
+		var valMail1 = validarMail1();
+		if (valMail1 == false){
+			document.getElementById("idMail1").style.color = "red";
+			if (foco == true){
+				document.getElementById("idMail1").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idMail1").style.color = "black";
+		}
+
+		//MAIL2
+		var valMail2 = validarMail2();
+		if (valMail2 == false){
+			document.getElementById("idMail2").style.color = "red";
+			if (foco == true){
+				document.getElementById("idMail2").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idMail2").style.color = "black";
+		}
+
+		//CP
+		var valCP = validarCP();
+		if (valCP == false){
+			document.getElementById("idCP").style.color = "red";
+			if (foco == true){
+				document.getElementById("idCP").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("idCP").style.color = "black";
+		}
+
+		
+		var valImagen = validarImagen();
+		if (valImagen == false){
+			document.getElementById("nueva").style.color = "red";
+			if (foco == true){
+				document.getElementById("nueva").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("nueva").style.color = "black";
+		}
+		
+		
+		//Si todo esta a TRUE hace el submit
+		if(valPasswordAntigua && valPasswordNueva && valNombre && valApellido1 && valApellido2 && valTelefono1 && valTelefono2 && valMail1 && valMail2 && valCP && valImagen){
+			//document.form1.submit();
+			//crear();
+			return true;
+		}	
+		else{
+			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
+			return false;
+		}
+
+	}
+
+</script>                              
                             <!-- 
                             <div class="pmb-block">
                                 <div class="pmbb-header">

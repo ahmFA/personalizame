@@ -189,7 +189,7 @@ class Imagen extends CI_Controller{
 		//if($imagenValida){
 			$datos['body']['status'] = $this->imagen_model->editar($id, $nombre, $nomImagen, $comentario, $descuento,$precio,$coste, $disponible, $idCategorias);
 			
-			if(!empty($_FILES['nueva']['name'])){
+			if(!empty($_FILES['nueva']['name']) && $datos['body']['status']){
 				$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/imagenes/';
 				move_uploaded_file($_FILES['nueva']['tmp_name'],$directorio.$nomImagen);
 				/*

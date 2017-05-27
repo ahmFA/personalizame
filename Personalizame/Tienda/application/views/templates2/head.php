@@ -36,6 +36,50 @@
             border: 1px solid #000;
             margin: 10px 5px 0 0;
           }
-        </style>
+          
+          /*By DjelalEddine@gmail.com*/
+#user .avatar {
+    width:60px;
+	}
+#user .avatar > img{
+	width:50px;
+	height:50px;
+	border-radius:10%;
+	}
+/*Card*/
+#user .panel-thumb{
+margin:5px auto;
+text-align:center;	
+	}
+#user .panel-thumb .avatar-card {
+text-align:center;
+height:200px;
+margin:auto;
+overflow:hidden;
+}	
+#user .panel-thumb .avatar-card > img{
+	max-width:200px;
+	max-height:200px;
+	}
+
+/* table*/
+#user .panel-table{
+  animation-duration:3s;
+}
+
+#user .panel-table .panel-body .table{
+  margin:0px;
+}
+#user .panel-table .panel-body {
+  padding:0px;
+}
+#user .panel-table .panel-body .table-bordered > thead > tr > th{
+  text-align:center;
+}
+#user .panel-table .panel-footer {
+  height:60px;
+  padding:0px;
+}
+     </style>
 </head>
 <body>

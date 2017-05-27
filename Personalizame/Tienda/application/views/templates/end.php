@@ -174,12 +174,6 @@
 			}
 		</script>
 		
-		<script type="text/javascript">
-			function mostrarAlert(){
-				//return '<div><div class="sweet-overlay" tabindex="-1" style="opacity: 1.03; display: block;"></div><div class="sweet-alert showSweetAlert visible" tabindex="-1" data-has-cancel-button="false" data-has-confirm-button="true" data-allow-ouside-click="false" data-has-done-function="false" data-timer="null" style="display: block; margin-top: -145px;"><div class="icon error" style="display: none;"><span class="x-mark"><span class="line left"></span><span class="line right"></span></span></div><div class="icon warning" style="display: none;"> <span class="body"></span> <span class="dot"></span> </div> <div class="icon info" style="display: none;"></div> <div class="icon success" style="display: none;"> <span class="line tip"></span> <span class="line long"></span> <div class="placeholder"></div> <div class="fix"></div> </div> <div class="icon custom" style="display: block; background-image: url(&quot;img/thumbs-up.png&quot;); width: 80px; height: 80px;width:80px; height:80px"></div> <h2>Sweet!</h2><p class="lead text-muted" style="display: block;">Heres a custom image.</p><p><button class="cancel btn btn-lg btn-default" tabindex="2" style="display: none;">Cancel</button> <button class="confirm btn btn-lg btn-primary" tabindex="1" style="display: inline-block;">OK</button></p></div></div>';
-				alert('He llegado');
-			}	
-		</script>
 		 <script type="text/javascript">
             /*
              * Notifications

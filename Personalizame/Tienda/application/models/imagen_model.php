@@ -80,11 +80,19 @@ class Imagen_model extends CI_Model{
 	public function getImagenById($id){
 		return R::load('imagen', $id);
 	}
+	
+	public function existeNombreImagen($nombreImagen){
+		return R::findOne('imagen', 'where nombre_imagen = ?', [$nombreImagen]) ? true : false;
+	}
+	
+	public function existeNombre($nombre){
+		return R::findOne('imagen', 'where nombre = ?', [$nombre]) ? true : false;
+	}
 
 	public function editar($id,$nombre, $nomImagen, $comentario, $descuento,$precio,$coste, $disponible, $ids_categorias){
 		
 			$i = R::load('imagen', $id);
-			if($nomImagen == $i->nombre_imagen || !$this->existeImagen($nomImagen)){
+			if(($nomImagen == $i->nombre_imagen || !$this->existeNombreImagen($nomImagen)) && ($nombre == $i->nombre || !$this->existeNombre($nombre))){
 				$i->nombre = $nombre;
 				$i->nombre_imagen = $nomImagen;
 				$i->comentario = $comentario;

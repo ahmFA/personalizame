@@ -30,7 +30,8 @@ $(document).ready(function(){
 	});
 
 	$('#quitar').on('click', function(){
-		$('#valida').val('');
+		$('#valida').val('2');
+		$('#idBanner').html('');
 	});
 
 	
@@ -175,7 +176,7 @@ function comprobarImagen(){
 		}
 
 		function validarImagen(){
-			if(valida == '' || valida == 1){
+			if(valida != 0){
 				document.getElementById('imagen-form').classList.add('c-red');
 				return false;	
 			}else{
@@ -261,66 +262,9 @@ function comprobarImagen(){
 			//document.getElementById('idBanner').innerHTML +='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos obligatorios.</div>';
 			return false;
 		}
-		
-		
 	
 }
 
-
-function modificarImagen() {
-	conexion = new XMLHttpRequest();
-
-	//var datosSerializados = serialize(document.getElementById("idForm1"));
-	var datos = 'nombre='+document.getElementById('nombre').value+'&valor='+document.getElementById('valor').value+'&id='+document.getElementById('id').value;
-	conexion.open('POST', '<?=base_url() ?>color/editarPost', true);
-	conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-	conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	conexion.send(datos);
-	conexion.onreadystatechange = function() {
-		if (conexion.readyState==4 && conexion.status==200) {
-			accionAJAX();
-		}
-	}
-}
-
-function comprobarModImagen(){
-	var nombre = document.getElementById('nombre').value;
-	//var imagen = document.getElementById('imagen').value;
-	var descuento = document.getElementById('descuento').value;
-	var seleccionados = document.getElementById('select-cat').value;
-	if(nombre != '' && imagen != '' && !isNaN(descuento) && descuento != '' && seleccionados != ''){
-		return true;;
-	}
-	else{
-		
-		if(nombre == ''){
-			document.getElementById('nombre-form').classList.add('has-error');
-		}else{
-			document.getElementById('nombre-form').classList.remove('has-error');
-		}
-		/*
-		if(imagen == ''){
-			document.getElementById('imagen-form').classList.add('c-red');	
-		}else{
-			document.getElementById('imagen-form').classList.remove('c-red');
-		}
-		*/
-		if(descuento == '' || isNaN(descuento)){
-			document.getElementById('descuento-form').classList.add('has-error');
-		}else{
-			document.getElementById('descuento-form').classList.remove('has-error');
-		}
-		
-		if(seleccionados == ''){
-			document.getElementById('select-form').classList.add('c-red');
-		}else{
-			document.getElementById('select-form').classList.remove('c-red');
-		}
-		
-		document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos obligatorios.</div>';
-		return false;
-	}
-}
 </script>
 
 
@@ -338,7 +282,7 @@ function comprobarModImagen(){
 	<form role="form" id="form1" method="post" enctype="multipart/form-data">
 		<div class="card-body card-padding">
 			<input type="hidden" id="id_usuario" name="id_usuario" value="<?= $_SESSION['idUsuario'] ?>">
-			<input type="hidden" id="valida" name="valida" value="">
+			<input type="hidden" id="valida" name="valida" value="2">
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="cp-container">
@@ -415,9 +359,9 @@ function comprobarModImagen(){
 			</div>
 			</div>
 			<div class="row">
-			<div class="col-sm-2 col-offset-5">
+			<div class="col-sm-offset-5 col-sm-2 p-t-25">
 			<!-- 	<input id="idBotonEnviar" type="button" value="Guardar" onclick="comprobarImagen()">   -->
-				<input id="idBotonEnviar" type="submit" value="Guardar">
+				<input id="idBotonEnviar" class="btn-block" type="submit" value="GUARDAR" style="background-color: #2196f3; color: #fff; text-size:14px;">
 			</div>	
 			</div>
 		

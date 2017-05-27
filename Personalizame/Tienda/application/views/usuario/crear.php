@@ -278,7 +278,7 @@ var conexion;
 		</h2>
 	</div>
 	
-	<div id="idBanner"></div>
+	<div id="idBanner" class="p-l-10"></div>
 	
 
 		<div class="bootgrid-header container-fluid">
@@ -448,7 +448,7 @@ var conexion;
 
 				<div class="col-sm-3">
 					<!-- <button type="submit" class="btn btn-primary btn-sm m-t-10">Guardar</button> -->
-					<input class="btn btn-primary btn-sm m-t-10" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
+					<input id="idBotonEnviar" type="button" value="GUARDAR" onclick="validarTodo()" style="background-color: #2196f3; color: #fff; text-size:14px;">
 				</div>
 			
 		</div>

@@ -115,7 +115,7 @@
 				</div>
 				<div class="panel-footer">
 				
-					<a href="#" class="btn btn-info">Ver mis pedidos</a>  
+					<a href="<?=base_url() ?>usuario/misPedidos" class="btn btn-info">Ver mis pedidos</a>  
 					<a	href="<?=base_url() ?>usuario/editarPerfil" class="btn btn-warning">Editar <i class="glyphicon glyphicon-edit"></i></a>
 				
 				

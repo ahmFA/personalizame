@@ -54,6 +54,9 @@
                         <li>
                             <a href="<?= base_url()?>usuario/perfiladmin"><i class="zmdi zmdi-account"></i> Ver Perfil</a>
                         </li>
+                         <li>
+                            <a href="<?= base_url()?>home/index"><i class="zmdi zmdi-arrow-left"></i> Ir a página web</a>
+                        </li>
                         <li>
                             <a href="<?= base_url()?>usuario/logout"><i class="zmdi zmdi-time-restore"></i> Logout</a>
                         </li>

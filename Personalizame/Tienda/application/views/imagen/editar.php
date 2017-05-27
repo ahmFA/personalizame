@@ -18,7 +18,8 @@
 			<input type="hidden" name="mensajeBanner" value="<?= $body['mensajeBanner'] ?>">
 			
 			<div class="row">
-				<div class="col-sm-4">
+				<div class="col-sm-12">
+					<div class="col-sm-4">
 					<div class="cp-container">
 					 <p class="f-500 c-black m-b-20" id="imagen-form">Imagen</p>
                             
@@ -35,11 +36,14 @@
                                     <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput" id="quitar">Quitar</a>
                                 </div>
                             </div>
-                           </div>
-                          </div>
-                       </div>
-            
-			<div class="row">
+                           
+                   
+			
+				
+					
+				</div>
+				</div>
+		
 				<div class="col-sm-4">
 					<div class="cp-container">
 						<div class="form-group fg-line" id="nombre-form">
@@ -48,21 +52,6 @@
 								value="<?=$imagen['nombre']; ?>">
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="cp-container">
-						<div class="form-group fg-line">
-							<label for="nombre">Comentario</label> <input type="text"
-								class="form-control input-sm" id="comentario" name="comentario"
-								value="<?=$imagen['comentario']; ?>">
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-4">
 					<div class="cp-container">
 						<div class="form-group fg-line" id="descuento-form">
 							<label for="nombre">Descuento</label> <input type="text"
@@ -70,10 +59,8 @@
 								value="<?=$imagen['descuento']; ?>">
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-4">
+			
+			
 					<div class="cp-container">
 						<div class="form-group fg-line" id="precio-form">
 							<label for="nombre">Precio</label> <input type="text"
@@ -81,10 +68,8 @@
 								value="<?=$imagen['precio']; ?>">
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-4">
+		
+			
 					<div class="cp-container">
 						<div class="form-group fg-line" id="coste-form">
 							<label for="nombre">Coste</label> <input type="text"
@@ -92,9 +77,8 @@
 								value="<?=$imagen['coste']; ?>">
 						</div>
 					</div>
+			
 				</div>
-			</div>
-			<div class="row">
 				<div class="col-sm-4">
 					<div class="cp-container">
 						<div class="form-group fg-line">
@@ -132,11 +116,10 @@
 				                       <?php endif;?>     
 									</div>
 								</div>
-							</div>
-						</div>
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="cp-container">
+			
+						
+			
+					
 						<div class="form-group fg-line">
 							<label>Categorías asociadas</label>
 								 <p class="f-500 c-black m-b-15" id="select-form">Elige un máximo de 3 categorías</p>
@@ -159,17 +142,27 @@
 										<?php endforeach;?>
                                     </select>
 						</div>
+						<br>
+						<div class="cp-container">
+						<div class="form-group fg-line">
+							<label for="nombre">Comentario</label> <input type="text"
+								class="form-control input-sm" id="comentario" name="comentario"
+								value="<?=$imagen['comentario']; ?>">
+						</div>
 					</div>
+					
 				</div>
-			</div>		
-						
+			   </div>		
+			</div>
 
 			<div class="row">
-				<input id="idBotonEnviar" type="submit" value="Guardar">
+				<div class="col-sm-offset-5 col-sm-2 p-t-25">
+				<input id="idBotonEnviar" class="btn-block" type="submit" value="GUARDAR" style="background-color: #2196f3; color: #fff; text-size:14px;">
+				</div>
 			</div>
 		</div>
 	</form>
-
+	
 </div>
 
 </div>
@@ -207,48 +200,10 @@ $(document).ready(function(){
 	});
 
 	$('#quitar').on('click', function(){
-		$('#valida').val('');
+		$('#valida').val('0');
+		$('#idBanner').html('');
 	});
 
-	
-	/*	
-	function crearImagen(){
-		
-		var inputFileImage = document.getElementById('imagen');
-
-		var file = inputFileImage.files[0];
-
-		var imagenP = new FormData();
-
-		imagenP.append('imagen',file);
-		var nombreP = $('#idNombre').val();
-		var idP = $('#id_usuario').val();
-		var disponibleP = $('#idDisponible').val();
-		var descuentoP = $('#idDescuento').val();
-		var comentarioP = $('#idComentario').val();
-		var seleccionadosP = $('#select-cat').val();
-		
-		$.ajax({
-		   
-		    url : '<?=base_url() ?>imagen/crearPost',
-		    data : {id_usuario: idP, nombre : nombreP, disponible: disponibleP, descuento: descuentoP, comentario : comentarioP , id_categorias : seleccionadosP},
-		    type : 'POST',
-		    dataType : 'html',
-		    success : function(response) {
-		    	document.getElementById("idBanner").innerHTML = response;
-
-	    		//comprobacion para ver si borro o no los campos tras una insercion
-	    		var str = response;
-	    		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
-	    		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
-	    			document.getElementById("idForm1").reset();
-	    		}
-	    		
-		    }  
-		});
-
-	 }
-	 */
 	
 	$.fn.formajax = function(i){
 	    // this formulario 
@@ -356,7 +311,7 @@ function comprobarImagen(){
 		}
 
 		function validarImagen(){
-			if(valida == '' || valida == 1){
+			if(valida != 0){
 				document.getElementById('imagen-form').classList.add('c-red');
 				return false;	
 			}else{
@@ -407,82 +362,15 @@ function comprobarImagen(){
 
 		if(valNombre && valImagen && valDesc && valSelect && valPrecio && valCoste){
 			return true;
-			//document.getElementById('idBotonEnviar').type = 'submit';
-			//document.getElementById('idBotonEnviar').click();
-			//$('#idBotonEnviar').attr('type', 'submit');
 			
-			//$('#idBotonEnviar').trigger('click');
-			
-			
-			//var nombreP = $('#nombre').val();
-			//var idP = $('#id_usuario').val();
-			//var disponibleP = $('#disponible').val();
-			//var descuentoP = $('#descuento').val();
-			//var comentarioP = $('#comentario').val();
-			//var seleccionadosP = $('#select-cat').val();
-			//var inputFileImage = document.getElementById('imagen');
-
-			//var file = inputFileImage.files[0];
-
-			//var datos = new FormData();
-			//imagenP.append('imagen', $('#imagen').val());
-			/*
-			datos.append('imagen', $('#imagen').files[0]);
-			datos.append('nombre', nombreP);
-			datos.append('id_usuario', idP);
-			datos.append('disponible', disponibleP);
-			datos.append('descuento', descuentoP);
-			datos.append('comentario', comentarioP);
-			datos.append('id_categorias', seleccionadosP);
-			*/
-			//var datos = $('#form1').serialize();
-			/*
-			$.ajax({
-			   
-			    url : '<?=base_url() ?>imagen/crearPost',
-			   data : {id_usuario: idP, nombre : nombreP, disponible: disponibleP, descuento: descuentoP, comentario : comentarioP , id_categorias : seleccionadosP, imagen : imagenP},
-			    data : datos,
-			    type : 'POST',
-			    dataType : 'html',
-			    success : function(response) {
-			    	document.getElementById("idBanner").innerHTML = response;
-
-		    		//comprobacion para ver si borro o no los campos tras una insercion
-		    		var str = response;
-		    		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
-		    		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
-		    			document.getElementById("idForm1").reset();
-		    		}
-		    		
-			    }  
-			});
-			*/
 		}
 		else{
 			//document.getElementById('idBanner').innerHTML +='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos obligatorios.</div>';
 			return false;
 		}
-		
-		
 	
 }
 
-
-function modificarImagen() {
-	conexion = new XMLHttpRequest();
-
-	//var datosSerializados = serialize(document.getElementById("idForm1"));
-	var datos = 'nombre='+document.getElementById('nombre').value+'&valor='+document.getElementById('valor').value+'&id='+document.getElementById('id').value;
-	conexion.open('POST', '<?=base_url() ?>color/editarPost', true);
-	conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-	conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	conexion.send(datos);
-	conexion.onreadystatechange = function() {
-		if (conexion.readyState==4 && conexion.status==200) {
-			accionAJAX();
-		}
-	}
-}
 
 </script>
 
