@@ -117,15 +117,20 @@
 							<span class="zmdi zmdi-edit"></span>
 						</button>
 					</form>
-					<form id="idFormedit" action="<?=base_url();?>articulo/borrarPost"
+					<form id="idFormdelete" action="<?=base_url();?>articulo/borrarPost"
 						method="post">
 						<input type="hidden" name="filtroNombre" value="<?= $body['filtroNombre'] ?>">
 						<input type="hidden" name="filtroImagen" value="<?= $body['filtroImagen'] ?>">
 						<input type="hidden" name="mensajeBanner" value="Borrado el artículo <?= $articulo->nombre ?>">
 						<input type="hidden" name="idArticulos[]" value="<?= $articulo -> id?>">
-						<button
+				<!--		<button
 							class="btn btn-icon command-delete waves-effect waves-circle"
 							data-row-id="<?= $articulo['id'] ?>">
+							<span class="zmdi zmdi-delete"></span>
+						</button>   -->
+						<button
+							class="btn btn-icon command-delete waves-effect waves-circle"
+							onclick="function f() {document.getElementById('idFormdelete').submit();}">
 							<span class="zmdi zmdi-delete"></span>
 						</button>
 					</form>

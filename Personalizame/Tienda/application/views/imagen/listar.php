@@ -84,12 +84,15 @@
 							<span class="zmdi zmdi-edit"></span>
 						</button>
 					</form>
-					<form id="idFormedit" action="<?=base_url();?>imagen/borrarPost"
+					<form id="idFormdelete" action="<?=base_url();?>imagen/borrarPost"
 						method="post">
 						<input type="hidden" name="idImagenes[]" value="<?= $imagen -> id?>">
-						<button title="Borrar"
-							class="btn btn-icon command-delete waves-effect waves-circle"
+					<!--<button title="Borrar" class="btn btn-icon command-delete waves-effect waves-circle"
 							data-row-id="<?= $categoria['id'] ?>">
+							<span class="zmdi zmdi-delete"></span>
+						</button>   -->
+						<button title="Borrar" class="btn btn-icon command-delete waves-effect waves-circle"
+							onclick="function f() {document.getElementById('idFormdelete').submit();}">
 							<span class="zmdi zmdi-delete"></span>
 						</button>
 					</form>

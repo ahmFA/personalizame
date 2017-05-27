@@ -17,10 +17,10 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li class="hidden"><a href="#page-top"></a></li>
 
-				<li><a class="page-scroll" href="#services">Productos</a></li>
-				<li><a class="page-scroll" href="#portfolio">Portfolio</a></li>
-				<li><a class="page-scroll" href="#about">Nosotros</a></li>
-				<li><a class="page-scroll" href="#contact">Contacto</a></li>
+				<li><a class="page-scroll" href="<?=base_url()?>home/index#services">Productos</a></li>
+				<li><a class="page-scroll" href="<?=base_url()?>home/index#portfolio">Portfolio</a></li>
+				<li><a class="page-scroll" href="<?=base_url()?>home/index#about">Nosotros</a></li>
+				<li><a class="page-scroll" href="<?=base_url()?>home/index#contact">Contacto</a></li>
 				<?php if(!isset($_SESSION['nick']) && !isset($_SESSION['perfil'])):?>
 					<li><a data-toggle="modal" href="#myModal">Login</a></li>
 					

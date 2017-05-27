@@ -136,17 +136,18 @@ class Articulo extends CI_Controller{
 		$idArticulos = $_POST['idArticulos'];
 		foreach ($idArticulos as $idArt){
 			$articulo = $this->articulo_model->getArticuloById($idArt);
-			$fichero = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/'.$articulo['imagen'];
+			$fichero = $_SERVER['DOCUMENT_ROOT'].'/img/articulos/'.$articulo['nombre_imagen'];
 			/*
 			 * No me da permisos para borrar la carpeta.
 			 * Lo he intentado de diversas formas pero no nada.
 			 * Tengo que preguntar a Alberto.
 			 */
 			if(file_exists($fichero)){
-				chmod($fichero, 777);
+				chmod($_SERVER['DOCUMENT_ROOT'].'/img/articulos/', 0777);
+				chmod($fichero, 0777);
 				unlink($fichero);
-				$this->articulo_model->borrar($idArt);
 			}
+			$this->articulo_model->borrar($idArt);
 		}
 		enmarcar($this, 'articulo/borrarPost');
 	}

@@ -132,14 +132,15 @@ class Imagen extends CI_Controller{
 		$idImagenes = $_POST['idImagenes'];
 		foreach ($idImagenes as $idimagen){
 			$imagen = $this->imagen_model->getImagenById($idimagen);
-			$fichero = $_SERVER['DOCUMENT_ROOT'].'/img/imagenes/'.$imagen['nombre'];
+			$fichero = $_SERVER['DOCUMENT_ROOT'].'/img/imagenes/'.$imagen['nombre_imagen'];
 			/*
 			 * No me da permisos para borrar la carpeta.
 			 * Lo he intentado de diversas formas pero no nada.
 			 * Tengo que preguntar a Alberto.
 			 */
 			if(file_exists($fichero)){
-				chmod($_SERVER['DOCUMENT_ROOT'].'/img/imagenes/', 777);
+				chmod($_SERVER['DOCUMENT_ROOT'].'/img/imagenes/', 0777);
+				chmod($fichero, 0777);
 				unlink($fichero);
 			}
 			$this->imagen_model->borrar($idimagen);
@@ -150,7 +151,7 @@ class Imagen extends CI_Controller{
 		//$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/imagenes/';
 		//chmod($directorio.$nomImagen, 666);
 		//unlink($fichero);
-
+		
 		enmarcar($this, 'imagen/borrarPost');
 	}
 
@@ -180,15 +181,13 @@ class Imagen extends CI_Controller{
 		$precio = $_POST['precio'];
 		$coste = $_POST['coste'];
 		$disponible = $_POST['disponible'];
-		$idCategorias = $_POST['id_categorias'];
-		
-		$imagenValida = true;
+		$idCategorias = explode(',',$_POST['id_categorias']);
+		//$imagenValida = true;
 		//if($tamanoImagen != null && $tipoImagen != null){
-			$imagenValida = $this->imagen_model->validarImagen($nomImagen, $tamanoImagen, $tipoImagen);
+			//$imagenValida = $this->imagen_model->validarImagen($nomImagen, $tamanoImagen, $tipoImagen);
 		//}
-		
 		//if($imagenValida){
-			$this->imagen_model->editar($id, $nombre, $nomImagen, $comentario, $descuento,$precio,$coste, $disponible, $idCategorias);
+			$datos['body']['status'] = $this->imagen_model->editar($id, $nombre, $nomImagen, $comentario, $descuento,$precio,$coste, $disponible, $idCategorias);
 			
 			if(!empty($_FILES['nueva']['name'])){
 				$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/imagenes/';
@@ -202,11 +201,10 @@ class Imagen extends CI_Controller{
 				
 				unlink($fichero);
 			}
-			
-				
 		//}
 		
-			enmarcar($this, 'imagen/borrarPost');
+		$datos['body']['nombre'] = $nombre;
+		$this->load->view('imagen/XmodificarPost',$datos);
 	}
 }
 

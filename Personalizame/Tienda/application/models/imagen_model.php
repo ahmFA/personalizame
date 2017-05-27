@@ -16,12 +16,12 @@ class Imagen_model extends CI_Model{
 		}
 	}
 
-	public function existeImagen($nombre){
-		return R::findOne('imagen', 'where nombre_imagen = ?', [$nombre]) ? true : false;
+	public function existeImagen($nombreImagen, $nombre){
+		return R::findOne('imagen', 'where nombre_imagen = ? or nombre = ?', [$nombreImagen, $nombre]) ? true : false;
 	}
 
 	public function crearImagen($id_user,$nombre, $nomImagen, $comentario, $descuento, $precio, $coste, $fecha_alta, $fecha_baja, $motivo_baja, $disponible, $id_categorias){
-		if(!$this->existeImagen($nomImagen)){
+		if(!$this->existeImagen($nomImagen, $nombre)){
 			$i = R::dispense('imagen');
 			$usuario = R::load('usuario', $id_user);
 			$usuario->ownImagenList[] = $i;

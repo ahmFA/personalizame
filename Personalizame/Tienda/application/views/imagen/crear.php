@@ -1,39 +1,3 @@
-<!-- 
-<div class="container">
-	<form action="<?=base_url() ?>imagen/crearPost" enctype="multipart/form-data" method="post">
-	<input type="hidden" id="id_usuario" name="id_usuario" value="1"><br>
-		<label>Foto: </label>
-		<input type="file" name="imagen"><br>
-		<label>Nombre: </label>
-		<input type="text" id="nombre" name="nombre"><br>
-		<label>Comentario: </label>
-		<input type="text" id="comentario" name="comentario"><br>
-		<label>Descuento: </label>
-		<input type="text" id="descuento" name="descuento"><br>
-		<label>Disponible: </label>
-		<input type="radio" name="disponible" value="si" checked="checked">Sí<br>
-		<input type="radio" name="disponible" value="no">No<br>
-		
-		<div class="form-group">
-			<fieldset>
-			<legend>Categorías disponibles</legend> 
-				<?php $contador = 0;?>
-				<?php foreach ($categorias as $categoria):?>
-					<?php if($contador == 0):?>
-						<input type="checkbox" name="id_categorias[]" checked="checked" value="<?=$categoria['id'] ?>"> <?=$categoria['nombre'] ?>
-					<?php else:?>
-						<input type="checkbox" name="id_categorias[]" value="<?=$categoria['id'] ?>"> <?=$categoria['nombre'] ?>
-					<?php endif;?>	
-					<?php $contador++;?>
-				<?php endforeach;?>
-			</fieldset>
-		</div>
-		
-		<input type="submit"><br>
-	</form>
-</div>
-
--->
 
 <script type="text/javascript">
 
@@ -108,6 +72,7 @@ $(document).ready(function(){
 
 	 }
 	 */
+	 //function crearImagen(){
 	$.fn.formajax = function(i){
 	    // this formulario 
 	    var a = $(this); 
@@ -125,7 +90,7 @@ $(document).ready(function(){
 				        d.find('input[type="submit"]').click(function(e){ 
 				            // Prevenimos que recargue la página 
 				            e.preventDefault();
-				      //  if(comprobarImagen()){     
+				        if(comprobarImagen()){     
 				        // Creamos un formdata                 
 				        formdata = new FormData(); 
 				            // En el formdata colocamos todos los archivos que vamos a subir 
@@ -136,7 +101,7 @@ $(document).ready(function(){
 				                 
 				            for (var i = 0; i < (d.find('input').not('input[type=file]').not('input[type=submit]').length); i++) { 
 				                // buscará todos los input menos el valor "file" y "sumbit . Serán diferenciados en el PHP gracias al "name" de cada uno.
-				                formdata.append( (d.find('input').not('input[type=file]').not('input[type=submit]').eq(i).attr("name")),(d.find('input').not('input[type=file]').not('input[type=submit]').eq(i).val()) );            
+				                formdata.append( (d.find('input').not('input[type=file]').not('input[type=submit]').not('input[type=radio]').eq(i).attr("name")),(d.find('input').not('input[type=file]').not('input[type=submit]').eq(i).val()) );            
 				                }
 
 				            var selected = '';
@@ -146,6 +111,7 @@ $(document).ready(function(){
 				            fin = selected.length - 1; // calculo cantidad de caracteres menos 1 para eliminar la coma final
 				            selected = selected.substr( 0, fin ); // elimino la coma final
 				            formdata.append('id_categorias', selected); 
+				            formdata.append('disponible', $('input[type=radio]:checked').val());
 
 				            // Arrancamos el ajax     
 				            $.ajax({ 
@@ -155,16 +121,18 @@ $(document).ready(function(){
 				                data:formdata, 
 				                processData:false, 
 				                success: c  
-				            });// fin de ajax     
+				            });// fin de ajax
+				        } // fin del if   
+				        else{
+						   	document.getElementById('idBanner').innerHTML ='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos obligatorios.</div>';
+				  		 }        
 				        }) ; // fin de click  
-				        } // fin del if
-				     //   else{
-				       // 	document.getElementById('idBanner').innerHTML +='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos obligatorios.</div>';
-				      //  }    
+				       
+				     //   
 				    }); //fin del each 
 				}; // fin de la función 
 
-	 $("#form1").formajax({ 
+	 $("#form1").formajax({
 		    url:"<?= base_url()?>imagen/crearPost", 
 		    success:function(response){ 
 		    	document.getElementById("idBanner").innerHTML = response;
@@ -173,12 +141,15 @@ $(document).ready(function(){
 	    		var str = response;
 	    		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
 	    		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
-	    			document.getElementById("idForm1").reset();
+	    			$("form1").reset();
 	    		}
 	    		
 		      }
 		    }); // formajax
 
+
+	
+			    
 	 
 });
 
@@ -235,7 +206,10 @@ function comprobarImagen(){
 
 		if(valNombre && valImagen && valDesc && valSelect){
 			return true;
+			//document.getElementById('idBotonEnviar').type = 'submit';
+			//document.getElementById('idBotonEnviar').click();
 			//$('#idBotonEnviar').attr('type', 'submit');
+			
 			//$('#idBotonEnviar').trigger('click');
 			
 			
@@ -293,28 +267,6 @@ function comprobarImagen(){
 }
 
 
-
-
-/*
-function crearImagen() {
-	conexion = new XMLHttpRequest();
-
-	//var datosSerializados = serialize(document.getElementById("idForm1"));
-	var datos = 'nombre='+document.getElementById('nombre').value+'&valor='+document.getElementById('valor').value;
-	conexion.open('POST', '<?=base_url() ?>imagen/crearPost', true);
-	//conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-	conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-	conexion.send(datos);
-	conexion.onreadystatechange = function() {
-		if (conexion.readyState==4 && conexion.status==200) {
-			accionAJAX();
-		}
-	}
-}
-*/
-
- 
-
 function modificarImagen() {
 	conexion = new XMLHttpRequest();
 
@@ -330,69 +282,7 @@ function modificarImagen() {
 		}
 	}
 }
-/*
-function comprobarImagen(){
-	var nombre = document.getElementById('nombre').value;
-	var valida = document.getElementById('valida').value;
-	var descuento = document.getElementById('descuento').value;
-	var seleccionados = document.getElementById('select-cat').value;
 
-	var valNombre = validarNombre();
-	var valImagen = validarImagen();
-	var valDesc = validarDescuento();
-	var valSelect = validarSelect();
-	
-		function validarNombre(){
-			if(nombre == ''){
-				document.getElementById('nombre-form').classList.add('has-error');
-				return false;
-			}else{
-				document.getElementById('nombre-form').classList.remove('has-error');
-				return true;
-			}
-		}
-
-		function validarImagen(){
-			if(valida == '' || valida == 1){
-				document.getElementById('imagen-form').classList.add('c-red');
-				return false;	
-			}else{
-				document.getElementById('imagen-form').classList.remove('c-red');
-				return true;
-			}
-		}
-
-		function validarDescuento(){
-			if(descuento == '' || isNaN(descuento)){
-				document.getElementById('descuento-form').classList.add('has-error');
-				return false;
-			}else{
-				document.getElementById('descuento-form').classList.remove('has-error');
-				return true;
-			}
-		}
-
-		function validarSelect(){
-			if(seleccionados == ''){
-				document.getElementById('select-form').classList.add('c-red');
-				return false;
-			}else{
-				document.getElementById('select-form').classList.remove('c-red');
-				return true;
-			}
-		}
-
-		if(valNombre && valImagen && valDesc && valSelect){
-			crearImagen();
-		}
-		else{
-			document.getElementById('idBanner').innerHTML +='<div class="alert alert-danger" role="alert">ERROR: Recuerda rellenar todo los campos obligatorios.</div>';
-		}
-		
-		
-	
-}
-*/
 function comprobarModImagen(){
 	var nombre = document.getElementById('nombre').value;
 	//var imagen = document.getElementById('imagen').value;
@@ -450,8 +340,10 @@ function comprobarModImagen(){
 			<input type="hidden" id="id_usuario" name="id_usuario" value="<?= $_SESSION['idUsuario'] ?>">
 			<input type="hidden" id="valida" name="valida" value="">
 			<div class="row">
-				<div class="col-sm-4">
+				<div class="col-sm-12">
 					<div class="cp-container">
+					<div class="col-sm-4">
+					
 					 <p class="f-500 c-black m-b-20" id="imagen-form">Previsualización de la imagen</p>
                             
                             <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -465,6 +357,8 @@ function comprobarModImagen(){
                                     <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput" id="quitar">Quitar</a>
                                 </div>
                             </div>
+                      </div>     
+                      <div class="col-sm-4"> 
                             <br/>
 						<div class="form-group fg-line" id="nombre-form">
 							<label for="nombre">Nombre</label> <input type="text"
@@ -481,6 +375,8 @@ function comprobarModImagen(){
 								class="form-control input-sm" id="descuento" name="descuento"
 								placeholder="Indica el descuento que tiene la imagen">
 						</div>
+						</div>
+						<div class="col-sm-4">
 						<label>Disponible</label>
 						<div class="radio m-b-15">
                                 <label>
@@ -496,7 +392,7 @@ function comprobarModImagen(){
                                     No
                                 </label>
                             </div>
-					</div>
+					
 					<div class=" m-b-25">
                                     <p class="f-500 c-black m-b-15" id="select-form">Elige hasta 3 categorías</p>
                                     
@@ -513,15 +409,18 @@ function comprobarModImagen(){
                                     </select>
                   </div>
                                 
-					
+				</div>
 					
 				</div>
 			</div>
-
-			<div class="row">
-				<input id="idBotonEnviar" type="submit" value="Guardar">
 			</div>
-		</div>
+			<div class="row">
+			<div class="col-sm-2 col-offset-5">
+			<!-- 	<input id="idBotonEnviar" type="button" value="Guardar" onclick="comprobarImagen()">   -->
+				<input id="idBotonEnviar" type="submit" value="Guardar">
+			</div>	
+			</div>
+		
 	</form>
 
 </div>
