@@ -1,5 +1,7 @@
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
+<script type="text/javascript" src="<?=base_url()?>assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/jquery-ui.js"></script>
+<script type="text/javascript" src="<?=base_url()?>assets/js/fabric.js"></script>
 <script type="text/javascript">
 var conexion;
 
@@ -125,6 +127,81 @@ var conexion;
 	<div class="form-group col-xs-12">
 		<h2>Pruebas con el texto</h2>
 	
+		<input class="btn btn-primary" id="idBotonAplicar" type="button" value="Aplicar">
+		<input class="btn btn-primary" id="idBotonVer" type="button" value="Ver como queda" onclick="ver();">
+		<br/><br/><br/>
+		<div id="kk"></div>
+		<div id="kk2"></div>
+		<div id="pruebasContainer" style="position: relative;width: 150px; height: 250px; border: 1px solid black; padding:10px 10px 10px 10px; text-align: center; display:table; background-color: aqua;">
+			<div id="marco" style="border: 1px solid green;">
+			<canvas id="canvas" width="150" height="250" style="border:1px solid #d3d3d3;display: inline-block">
+			Your browser does not support the HTML5 canvas tag.</canvas>
+			</div>
+		</div> 
+	</div>
+</div>
+
+<script>
+var canvas = new fabric.Canvas('canvas');
+var lastAdded = [];
+
+$("#idBotonAplicar").on({
+	'click':function(){
+	
+	pintar();
+	//limpiar();
+	}
+})
+
+function pintar(){
+	//limpiar lo anterior
+	canvas.clear();
+
+	//pintar      
+	var text = new fabric.Text($("#idDatosTexto").val(), { 
+		left: 20, 
+		top: 20,
+		fontFamily: $("#idFuente option:selected").text(),
+		fontSize: $("#idTamano option:selected").text(),
+		fill: $("#idColor option:selected").text()
+	});
+
+	canvas.add(text);  
+}
+
+canvas.on('object:added', function(e) {
+	 lastAdded.push(e.target);
+});
+
+function limpiar(){
+    var lastObject = lastAdded[lastAdded.length - 1];
+    if (!lastObject) return;
+
+    if (canvas.getObjects().indexOf(lastObject) > -1) {
+     lastAdded.pop();
+     canvas.remove(lastObject);
+     canvas.renderAll();
+    }
+}
+
+function ver(){
+var dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
+window.open(dataUrl, "Ejemplo", "width=400, height=400"); //mostramos en popUp
+}
+
+$('.upper-canvas ').draggable({
+containment: $('#marco')
+});
+</script>
+
+
+
+
+<!-- 
+<div class="container">
+	<div class="form-group col-xs-12">
+		<h2>Pruebas con el texto</h2>
+	
 		<input class="btn btn-primary" id="idBotonAplicar" type="button" value="Aplicar" onclick="inicializar();">
 		<input class="btn btn-primary" id="idBotonVer" type="button" value="Ver como queda" onclick="ver();">
 		<br/><br/><br/>
@@ -145,7 +222,9 @@ var conexion;
 		
 	</div>
 </div>
+-->
 <script>
+/*
 $(document).ready(function(){
 	$('#pruebasTexto').on({
 		'mousedown' : function (e) { 
@@ -167,8 +246,10 @@ $(document).ready(function(){
 	}
 	});
 });
+*/
 </script>
 <script type="text/javascript">
+/*
 	var canvas,ctx,texto,fuente,tamano,rotacion,hipo,dataUrl;
 	var anchoTexto,altoTexto,anchoCanvas,altoCanvas,Y_txt_centrado,X_txt_centrado;
 	
@@ -269,4 +350,6 @@ $(document).ready(function(){
 
 	//el canvas es dragable y no puede salir del contenedor
 	//$("#marcoCanvas").draggable({ containment: "#pruebasContainer" });
+	
+	*/
 </script>
