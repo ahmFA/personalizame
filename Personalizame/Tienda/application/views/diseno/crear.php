@@ -1,11 +1,33 @@
+<style>
+.hidden{
+	visible: none;
+	z-index: -100;
+}
+#objeto{
+	background-image: url("<?=base_url()?>assets/images/PruebaCamiseta.png");
+}
+#marco{
+	position: absolute;
+	border: 1px solid blue;
+	margin-left: 98px;    
+    margin-top: 60px;
+}
+#canvas{
+	position: absolute;
+	border: 1px solid blue;
+}
+</style>
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
+<script type="text/javascript" src="<?=base_url()?>assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/jquery-ui.js"></script>
-<div class="hidden">
+<script type="text/javascript" src="<?=base_url()?>assets/js/fabric.js"></script>
+
 <script type="text/javascript">
 
 //precarga de imagenes para que sean seleccionables directamente desde el select
 //las pongo a pelo para pruebas lo ideal sería cargar las que haya en la carpeta automaticamente
 //o leerlas de alguna forma con ajax segun la que se seleccione
+
 var images = new Array()
 function preload() {
 	for (i = 0; i < preload.arguments.length; i++) {
@@ -15,10 +37,12 @@ function preload() {
 }
 preload(
 	"../../../../img/imagenes/girar.png",
-	"../../../../img/imagenes/redimensionar.png"
+	"../../../../img/imagenes/redimensionar.png",
+	"../../../../img/imagenes/img_perrito.png"
+	
 )
 </script>
-</div>
+
 <script type="text/javascript">
 var conexion;
 
@@ -152,7 +176,7 @@ var conexion;
 				
 				<div class=" m-b-25">
 			   		<p class="f-500 c-black m-b-15" id="select-form">Seleccione Imagen</p>
-					<select class="form-control" id="idImagen" name="id_imagen" onchange="pintar()">         
+					<select class="form-control" id="idImagen" name="id_imagen">         
 			 			<option value='0'>Seleccione uno</option>       	
 			 		<?php foreach ($body['imagenes'] as $imagen): ?>
 			 			<option value='<?= $imagen['id']?>'><?= $imagen['nombre_imagen']?></option>
@@ -168,153 +192,339 @@ var conexion;
 	</div>
 	</form>
 </div>
-
+<div id="kk"></div>
+<div id="posx"></div>
+<div id="posy"></div>
 <div class="container">
 	<div class="form-group col-xs-12">
 		<h2>Pruebas con el diseño</h2>
 		<input class="btn btn-primary" id="idBotonVer" type="button" value="Ver como queda" onclick="ver();">
-		<input class="btn btn-primary" id="idBotonGirar" type="button" value="Girar" onclick="girar();">
-		<div id="marco" style="width: 150px; height: 250px; border: 1px solid black">
-			<canvas id="canvas" width="150" height="250"></canvas>
+		<div id="objeto" style="width: 350px; height: 350px">
+			<div id="marco" style="width: 150px; height: 250px; border: 1px solid black">
+				<canvas id="canvas" width="150" height="250"></canvas>
+			</div>
 		</div>
 	</div>	
 </div>
+<img id="my-image" class="hidden"/>
+<script>
+/*
+var canvas = window._canvas = new fabric.Canvas('c'),
+    lastAdded = window._lastAdded = [];
 
-<script type="text/javascript">
-//guardar como png
-var dataUrl;
+//Random color generater
+function random_color(){
+    return '#'+Math.floor(Math.random()*16777215).toString(16);
+}
 
-//Objetos Canvas.
-var canvas,canvas2;
+$(document).on('click', '#add', function(){
+    canvas.add(new fabric.Rect({
+        left: 200,
+        top: 200,
+        height: 50,
+        width: 50,
+        fill: random_color()
+    }));
+});
 
-// Objetos Contexto 2D.
-var Rxt,Rxt2;
+canvas.on('object:added', function(e) {
+ lastAdded.push(e.target);
+});
 
-function pintar(){
-	canvas = document.getElementById('canvas');
 
-	Rxt = canvas.getContext('2d');
-	
-	Rxt.clearRect(0, 0, canvas.width, canvas.height); //limpiar
-	
-	// Rotar Imagen.
-	//Rxt.rotate(.2);
+$(document).on('click', '#test' , function(){
+    var lastObject = lastAdded[lastAdded.length - 1];
+    if (!lastObject) return;
 
-	//calcular el punto medio
-	var mitadAncho = canvas.width/2;
-	var mitadAlto = canvas.height/2;
+    if (canvas.getObjects().indexOf(lastObject) > -1) {
+     lastAdded.pop();
+     canvas.remove(lastObject);
+     canvas.renderAll();
+    }
+});
+*/
+</script>
 
-	// Se crea una imagen.
-	var Img = new Image();	//document.createElement('img');
+<script>
+	var canvas = new fabric.Canvas('canvas');
+	var lastAdded = [];
+    var imgElement;
+    var imgInstance;
 
-	//cargar y pintar la imagen en el centro del canvas
-	Img.addEventListener('load', function() {
-		    Rxt.drawImage(Img, mitadAncho-(imagenAncho/2), mitadAlto-(imagenAlto/2), imagenAncho, imagenAlto); 
-		}, false);
-	Img.src = '../../../../img/imagenes/'+$("#idImagen option:selected").text();
-	
-	//calcular tamano imagen en canvas
-	var imagenAncho = Img.width;
-	var imagenAlto = Img.height;
-	var imagenHipo = Math.sqrt(Math.pow(imagenAncho,2) + Math.pow(imagenAlto,2));
-	var reduccion = 1;  //las veces que se reduce la imagen hasta entrar en el canvas
-	/*
-		He metido la hipotenusa para tenerla en cuenta al girar y no se salga del canvas
-	*/
-	
-	while(imagenAncho > canvas.width || imagenAlto > canvas.height || imagenHipo > canvas.width){
-		imagenAncho = imagenAncho/2;
-		imagenAlto = imagenAlto/2;
-		imagenHipo = Math.sqrt(Math.pow(imagenAncho,2) + Math.pow(imagenAlto,2));
-		reduccion = reduccion * 2;	
-	}
-	//alert(reduccion);
-	
-	var coorX, coorY;
+	$("#idImagen").on({
+		'change':function(){
 		
-	var down = false;
-	Rxt.canvas.addEventListener('mousedown', function () { 
-	    down = true; 
-	}, false);
-	Rxt.canvas.addEventListener('mouseup', function () { 
-	    down = false; 
-	    document.body.style.cursor = 'default';
-	}, false);
-	Rxt.canvas.addEventListener('mousemove', function (e) {
+		selectImagen();
+		//limpiar();
+		}
+	})
 	
-	    document.body.style.cursor = 'move';
-	    if (down){
-		    //imagen no llega al limite derecho ni inferior
-	    	if(e.offsetX + imagenAncho < canvas.width && e.offsetY + imagenAlto < canvas.height){
-	    		coorX = e.offsetX;
-	    		coorY = e.offsetY;
-	    	}
-	    	
-	    	//imagen no llega al limite derecho pero si al inferior
-	    	if(e.offsetX + imagenAncho < canvas.width && e.offsetY + imagenAlto >= canvas.height){
-	    		coorX = e.offsetX;
-	    		coorY = canvas.height - imagenAlto;
-	    	}
+	function selectImagen(){
+		//borrar imagen anterior
+		var imagen = document.getElementById('my-image');
+		imagen.parentNode.removeChild(imagen);
 
-	    	//imagen si llega al limite derecho pero no al inferior
-	    	if(e.offsetX + imagenAncho >= canvas.width && e.offsetY + imagenAlto < canvas.height){
-	    		coorX = canvas.width - imagenAncho;
-	    		coorY = e.offsetY;
-	    	}
+		//crear imagen nueva
+		imagen = document.createElement("img"); 
+        imagen.setAttribute("src", '../../../../img/imagenes/'+$("#idImagen option:selected").text()); 
+        imagen.setAttribute("id","my-image");
+		imagen.setAttribute("class","hidden");	
 
-	    	//imagen si llega al limite derecho y al inferior
-	    	if(e.offsetX + imagenAncho >= canvas.width && e.offsetY + imagenAlto >= canvas.height){
-	    		coorX = canvas.width - imagenAncho;
-	    		coorY = canvas.height - imagenAlto;
-	    	}
+		//aplicar la reduccion necesaria para que entre en el canvas sin salirse
+		var reduce = calcularTamanoImagen(imagen);
 
-		    clear();
-        	Rxt.drawImage(Img, coorX, coorY, imagenAncho, imagenAlto);
-        	dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
+		imagen.setAttribute("width", imagen.width*reduce);
+		imagen.setAttribute("height",imagen.height*reduce);
+		
+        var div = document.getElementById("marco"); 
+        div.appendChild(imagen);     
+
+		pintar();    
+	}
+	
+	function calcularTamanoImagen(imagen){
+		//calcular tamano imagen para que entre en el canvas
+		imagenAncho = imagen.width;
+		imagenAlto = imagen.height;
+		imagenHipo = Math.sqrt(Math.pow(imagenAncho,2) + Math.pow(imagenAlto,2));
+		reduccion = 1;  //las veces que se reduce la imagen hasta entrar en el canvas
+
+		while(imagenAncho > $("#canvas").width() || imagenAlto > $("#canvas").height() || imagenHipo > $("#canvas").width()){
+			imagenAncho = imagenAncho*0.8;
+			imagenAlto = imagenAlto*0.8;
+			imagenHipo = Math.sqrt(Math.pow(imagenAncho,2) + Math.pow(imagenAlto,2));
+			reduccion = reduccion * 0.8;//1.25	
+		}
+		return reduccion;
+	}
+	
+	function pintar(){
+		//limpiar la imagen anterior
+		canvas.clear();
+
+		//pintar        
+        imgElement = document.getElementById('my-image');
+        imgInstance = new fabric.Image(imgElement, {
+          left: 50,
+          top: 50,
+          angle: 0,
+          opacity: 1
+        });
+        
+        canvas.add(imgInstance);
+	}
+
+	canvas.on('object:added', function(e) {
+		 lastAdded.push(e.target);
+	});
+
+	function limpiar(){
+	    var lastObject = lastAdded[lastAdded.length - 1];
+	    if (!lastObject) return;
+
+	    if (canvas.getObjects().indexOf(lastObject) > -1) {
+	     lastAdded.pop();
+	     canvas.remove(lastObject);
+	     canvas.renderAll();
 	    }
-	}, false);
-	
-	// Funcion limpiar image.
-	function clear(){
-	    Rxt.clearRect(-1000, -1000, 2000, 2000);
-	}
-}
-
-var rotacion=0.2;
-
-function girar(){
-	// canvas auxiliar que será una copia del primero
-	canvas2 = canvas;
-	Rxt2 = canvas2.getContext("2d");
-
-	// indica donde se encuentra la imagen del primer canvas  
-	var img = new Image();
-	img.src = dataUrl; 
-
-	//calcular el punto medio
-	var mitadAncho = canvas.width/2;
-	var mitadAlto = canvas.height/2;
-
-	//limpiamos el primer canvas para que no se vea
-	canvas.width=canvas.width;	
-	
-	//nos posicionamos en el punto medio
-	Rxt2.translate(mitadAncho, mitadAlto);
-
-	//rotamos los grados que pasemos
-	Rxt2.rotate(rotacion); 
-	rotacion = rotacion +0.2;
-
-	//una vez cargada la imagen la dibujamos
-	img.onload = function(){
-		Rxt2.drawImage(img, -mitadAncho, -mitadAlto);
 	}
 	
-}
-
 function ver(){
 	var dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
 	window.open(dataUrl, "Ejemplo", "width=400, height=400"); //mostramos en popUp
 }
 
+$('.upper-canvas ').draggable({
+    containment: $('#marco')
+});
 </script>
+
+<!--  
+/*
+$(document).ready(function(){
+	$('#canvas2').on({
+		'mousemove' : function (e) { 
+	   var x = e.offsetX;
+	   var y = e.offsetY;
+	   
+	   var div = document.getElementById("kk");
+	   div.innerHTML = "x: " + x + " y: " + y; 
+
+	}
+	});
+});
+
+//declaracion de variables
+	$("#ImgPrueba").draggable({
+		cursor:"move", 
+		drag: function(event, ui){
+			$("#posx").text(ui.position.left);
+		    $("#posy").text(ui.position.top);
+		    ui.position.left = Math.min( ui.position.left-$("#canvas2").width(), ui.position.left );
+		}	
+	})
+	
+	//alert("left: " + $("#canvas2").position().left+"top: " + $("#canvas2").position().top);
+$(document).ready(function(){
+	var dataUrl, imagen, posicion;
+	var canvas, Rxt, mitadAncho, mitadAlto, Img, imagenAncho, imagenAlto, imagenHipo, reduccion;
+	var rotacion= 0;
+	var TO_RADIANS = Math.PI/180;
+
+	
+	
+	$("#idImagen").on({
+		'change':function(){
+		mitadAncho = $("#canvas2").width()/2;
+		mitadAlto = $("#canvas2").height()/2;
+		rotacion= 0;
+	
+		selectImagen();
+		calcularTamanoImagen(Img);
+		pintarCentro();
+		}
+	})
+	
+	function selectImagen(){
+		Img = new Image();
+		Img.src = '../../../../img/imagenes/'+$("#idImagen option:selected").text();
+	}
+	
+	function calcularTamanoImagen(imagen){
+		//calcular tamano imagen en canvas
+		imagenAncho = imagen.width;
+		imagenAlto = imagen.height;
+		imagenHipo = Math.sqrt(Math.pow(imagenAncho,2) + Math.pow(imagenAlto,2));
+		reduccion = 1;  //las veces que se reduce la imagen hasta entrar en el canvas
+		/*
+			He metido la hipotenusa para tenerla en cuenta al girar y no se salga del canvas
+		/
+		alert(document.getElementById("canvas2").width);
+		while(imagenAncho > $("#canvas2").width() || imagenAlto > $("#canvas2").height() || imagenHipo > $("#canvas2").width()){
+			imagenAncho = imagenAncho*0.8;
+			imagenAlto = imagenAlto*0.8;
+			imagenHipo = Math.sqrt(Math.pow(imagenAncho,2) + Math.pow(imagenAlto,2));
+			reduccion = reduccion * 1.25;	
+			alert("entro");
+		}
+		alert(imagenAncho);
+		alert(imagenAlto);
+	}
+
+	function pintarCentro(){
+		//pintar la imagen en el centro del div
+
+		imagen = document.getElementById("ImgPrueba");
+		imagen.src = '../../../../img/imagenes/'+$("#idImagen option:selected").text();
+		imagen.width = imagenAncho;
+		imagen.height = imagenAlto;	
+		
+	}
+	
+	function rotateImage(degree) {
+		$('#ImgPrueba').animate({  transform: degree }, {
+	    step: function(now,fx) {
+	        $(this).css({
+	            '-webkit-transform':'rotate('+now+'deg)', 
+	            '-moz-transform':'rotate('+now+'deg)',
+	            'transform':'rotate('+now+'deg)'
+	        });
+	    }
+	    });
+	}
+	
+	function pintarCoordenada(x,y){
+		//cargar y pintar la imagen en la coordenada indicada
+		Img.addEventListener('load', function() {
+			    Rxt.drawImage(Img, x, y, imagenAncho, imagenAlto); 
+			}, false);
+	}
+	
+	
+	/*
+	//Mover la imagen por el canvas sin que pueda salirse de los bordes
+		var coorX, coorY;
+	
+		var down = false;
+		Rxt.canvas.addEventListener('mousedown', function () { 
+		    down = true; 
+		}, false);
+		Rxt.canvas.addEventListener('mouseup', function () { 
+		    down = false; 
+		    document.body.style.cursor = 'default';
+		}, false);
+		Rxt.canvas.addEventListener('mousemove', function (e) {
+		    if (down){
+		    	document.body.style.cursor = 'move';
+			    //imagen no llega al limite derecho ni inferior
+		    	if(e.offsetX + imagenAncho < canvas.width && e.offsetY + imagenAlto < canvas.height){
+		    		coorX = e.offsetX;
+		    		coorY = e.offsetY;
+		    	}
+		    	
+		    	//imagen no llega al limite derecho pero si al inferior
+		    	if(e.offsetX + imagenAncho < canvas.width && e.offsetY + imagenAlto >= canvas.height){
+		    		coorX = e.offsetX;
+		    		coorY = canvas.height - imagenAlto;
+		    	}
+	
+		    	//imagen si llega al limite derecho pero no al inferior
+		    	if(e.offsetX + imagenAncho >= canvas.width && e.offsetY + imagenAlto < canvas.height){
+		    		coorX = canvas.width - imagenAncho;
+		    		coorY = e.offsetY;
+		    	}
+	
+		    	//imagen si llega al limite derecho y al inferior
+		    	if(e.offsetX + imagenAncho >= canvas.width && e.offsetY + imagenAlto >= canvas.height){
+		    		coorX = canvas.width - imagenAncho;
+		    		coorY = canvas.height - imagenAlto;
+		    	}
+	
+			    clear();
+	        	Rxt.drawImage(Img, coorX, coorY, imagenAncho, imagenAlto);
+	        	dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
+		    }
+		}, false);
+	
+	// Funcion limpiar imagen
+	function clear(){
+	    Rxt.clearRect(-1000, -1000, 2000, 2000);
+	}
+		
+	function loop(){
+		clear();	
+		selectImagen();
+		calcularTamanoImagen(Img);
+		
+		pintarImgRotada(Img, canvas.width/2, canvas.height/2,imagenAncho,imagenAlto, rotacion);
+		rotacion +=2;
+	}
+	
+	function pintarImgRotada(image, x, y, imgAncho,imgAlto, angle) {  
+		// save the current co-ordinate system 
+		// before we screw with it
+		Rxt.save(); 
+		 
+		// move to the middle of where we want to draw our image
+		Rxt.translate(x, y);
+		 
+		// rotate around that point, converting our 
+		// angle from degrees to radians 
+		Rxt.rotate(angle * TO_RADIANS);
+		 
+		// draw it up and to the left by half the width
+		// and height of the image 
+		Rxt.drawImage(image, -(imgAncho/2), -(imgAlto/2), imgAncho, imgAlto);
+		 
+		// and restore the co-ords to how they were when we began
+		Rxt.restore(); 
+	}	
+	/
+	
+	function ver(){
+		var dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
+		window.open(dataUrl, "Ejemplo", "width=400, height=400"); //mostramos en popUp
+	}
+});
+*/
+-->
