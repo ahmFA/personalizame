@@ -106,8 +106,13 @@ class Talla extends CI_Controller{
 		foreach ($idTallas as $idTalla){
 			$this->talla_model->borrar($idTalla);
 		}
-
-		enmarcar($this, 'talla/borrarPost');
+		if(isset($_POST['vuelveBorrar'])){
+			$datos['vuelveBorrar'] = 'borrar';
+			enmarcar($this, 'talla/borrarPost', $datos);
+		}else{
+			enmarcar($this, 'talla/borrarPost');
+		}
+		
 	}
 
 	public function editar(){

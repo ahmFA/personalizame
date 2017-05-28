@@ -24,7 +24,7 @@
                             
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput">
-                                	<img src="../../../../img/articulos/<?=$articulo['nombreImagen'] ?>">
+                                	<img src="../../../../img/articulos/<?=$articulo['nombre_imagen'] ?>">
                                 </div>
                                 <div>
                                     <span class="btn btn-info btn-file">

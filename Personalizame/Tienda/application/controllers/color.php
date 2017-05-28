@@ -104,7 +104,12 @@ class Color extends CI_Controller{
 			$this->color_model->borrar($idColor);				
 		}
 		
-		enmarcar($this, 'color/borrarPost');
+		if(isset($_POST['vuelveBorrar'])){
+			$datos['vuelveBorrar'] = 'borrar';
+			enmarcar($this, 'color/borrarPost', $datos);
+		}else{
+			enmarcar($this, 'color/borrarPost');
+		}
 	}
 
 	public function editar(){

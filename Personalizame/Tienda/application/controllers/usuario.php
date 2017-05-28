@@ -476,6 +476,11 @@ class Usuario extends CI_Controller{
 		enmarcar2($this,'usuario/cesta');
 	}
 	
+	public function pago(){
+		enmarcar2($this,'usuario/pago');
+	}
+	
+	
 	public function misPedidos(){
 		enmarcar2($this,'usuario/misPedidos');
 	}
