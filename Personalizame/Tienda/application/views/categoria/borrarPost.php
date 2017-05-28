@@ -1,5 +1,5 @@
 <?php
-
-header("Location:".base_url()."categoria/listar");
+$ruta = isset($vuelveBorrar) ? $vuelveBorrar : 'listar';
+header("Location:".base_url()."categoria/".$ruta);
 
 ?>

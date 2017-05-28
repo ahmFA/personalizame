@@ -174,7 +174,7 @@ class Articulo extends CI_Controller{
 		$precio = $_POST['precio'];
 		$coste = $_POST['coste'];
 		$descuento = $_POST['descuento'];
-		$nomImagen = !empty($_FILES['nueva']['name']) ? 'art_'.$_FILES['nueva']['name']:$art['imagen'];
+		$nomImagen = !empty($_FILES['nueva']['name']) ? 'art_'.$_FILES['nueva']['name']:$art['nombre_imagen'];
 		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
 		$tipoImagen = !empty($_FILES['nueva']['type']) ? $_FILES['nueva']['type']: null;
 		$disponible = $_POST['disponible'];

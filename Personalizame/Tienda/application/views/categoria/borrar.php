@@ -31,6 +31,7 @@
 	</div>
 	<form role="form" method="post"
 					action="<?= base_url() ?>categoria/borrarPost">
+					<input type="hidden" name="vuelveBorrar" id="vuelveBorrar" value="1">
 	<table id="data-table-command"
 		class="table table-striped table-vmiddle">
 		<thead>

@@ -119,7 +119,12 @@ class Categoria extends CI_Controller{
 			$this->categoria_model->borrar($idCategoria);
 		}
 
-		enmarcar($this, 'categoria/borrarPost');
+		if(isset($_POST['vuelveBorrar'])){
+			$datos['vuelveBorrar'] = 'borrar';
+			enmarcar($this, 'categoria/borrarPost', $datos);
+		}else{
+			enmarcar($this, 'categoria/borrarPost');
+		}
 	}
 
 	public function editar(){

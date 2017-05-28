@@ -72,9 +72,7 @@
 
                         <ul>
                             <li><a href="<?= base_url()?>usuario/crear">Alta</a></li>
-                            <li><a href="<?= base_url()?>usuario/listar">Listado</a></li>
-                            <li><a href="<?= base_url()?>usuario/modificar">Modificación</a></li>
-                            <li><a href="<?= base_url()?>usuario/baja">Baja</a></li>
+                            <li><a href="<?= base_url()?>usuario/listar">Listado y Gestión</a></li>
                         </ul>
                     </li>
                       <li class="sub-menu">
@@ -82,8 +80,7 @@
 
                         <ul>
                             <li><a href="<?= base_url()?>articulo/crear">Alta</a></li>
-                            <li><a href="<?= base_url()?>articulo/listar">Listado</a></li>
-                            <li><a href="<?= base_url()?>articulo/listar">Modificación</a></li>
+                            <li><a href="<?= base_url()?>articulo/listar">Listado y Gestión</a></li>
                             <li><a href="<?= base_url()?>articulo/borrar">Baja</a></li>
                         </ul>
                     </li>
@@ -92,8 +89,7 @@
 
                         <ul>
                             <li><a href="<?= base_url()?>imagen/crear">Alta</a></li>
-                            <li><a href="<?= base_url()?>imagen/listar">Listado</a></li>
-                            <li><a href="<?= base_url()?>imagen/listar">Modificación</a></li>
+                            <li><a href="<?= base_url()?>imagen/listar">Listado y Gestión</a></li>
                             <li><a href="<?= base_url()?>imagen/borrar">Baja</a></li>
                         </ul>
                     </li>
@@ -102,8 +98,7 @@
 
                         <ul>
                             <li><a href="<?= base_url()?>color/crear">Alta</a></li>
-                            <li><a href="<?= base_url()?>color/listar">Listado</a></li>
-                            <li><a href="<?= base_url()?>color/listar">Modificación</a></li>
+                            <li><a href="<?= base_url()?>color/listar">Listado y Gestión</a></li>
                             <li><a href="<?= base_url()?>color/borrar">Baja</a></li>
                         </ul>
                     </li>
@@ -112,8 +107,7 @@
 
                         <ul>
                             <li><a href="<?= base_url()?>talla/crear">Alta</a></li>
-                            <li><a href="<?= base_url()?>talla/listar">Listado</a></li>
-                            <li><a href="<?= base_url()?>talla/listar">Modificación</a></li>
+                            <li><a href="<?= base_url()?>talla/listar">Listado y Gestión</a></li>
                             <li><a href="<?= base_url()?>talla/borrar">Baja</a></li>
                         </ul>
                     </li>
@@ -122,8 +116,7 @@
 
                         <ul>
                             <li><a href="<?= base_url()?>categoria/crear">Alta</a></li>
-                            <li><a href="<?= base_url()?>categoria/listar">Listado</a></li>
-                            <li><a href="<?= base_url()?>categoria/listar">Modificación</a></li>
+                            <li><a href="<?= base_url()?>categoria/listar">Listado y Gestión</a></li>
                             <li><a href="<?= base_url()?>categoria/borrar">Baja</a></li>
                         </ul>
                     </li>
@@ -142,8 +135,7 @@
 
                         <ul>
                             <li><a href="<?= base_url()?>fuente/crear">Alta</a></li>
-                            <li><a href="<?= base_url()?>fuente/listar">Listado</a></li>
-                            <li><a href="<?= base_url()?>fuente/modificar">Modificación</a></li>
+                            <li><a href="<?= base_url()?>fuente/listar">Listado y Gestión</a></li>
                             <li><a href="<?= base_url()?>fuente/borrar">Baja</a></li>
                         </ul>
                     </li>
@@ -152,8 +144,7 @@
 
                         <ul>
                             <li><a href="<?= base_url()?>tamano/crear">Alta</a></li>
-                            <li><a href="<?= base_url()?>tamano/listar">Listado</a></li>
-                            <li><a href="<?= base_url()?>tamano/modificar">Modificación</a></li>
+                            <li><a href="<?= base_url()?>tamano/listar">Listado y Gestión</a></li>
                             <li><a href="<?= base_url()?>tamano/borrar">Baja</a></li>
                         </ul>
                     </li>
@@ -184,10 +175,7 @@
                         <a href=""><i class="zmdi zmdi-shopping-basket"></i> Pedidos</a>
 
                         <ul>
-                            <li><a href="textual-menu.html">Alta</a></li>
-                            <li><a href="image-logo.html">Listado</a></li>
-                            <li><a href="image-logo.html">Modificación</a></li>
-                            <li><a href="top-mainmenu.html">Baja</a></li>
+                            <li><a href="<?= base_url()?>pedidos/listar">Listado y Gestión</a></li>
                         </ul>
                     </li>
 
