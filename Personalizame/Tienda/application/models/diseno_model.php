@@ -7,7 +7,7 @@ class Diseno_model extends CI_Model{
 	/*
 	 * crear el diseño
 	 */
-	public function crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion){
+	public function crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$img_coordenada_x,$img_coordenada_y,$img_profundidad_z,$id_texto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion){
 		$diseno = R::dispense('diseno');
 		
 		$diseno -> id_usuario = $id_usuario;
@@ -16,9 +16,9 @@ class Diseno_model extends CI_Model{
 		$diseno -> ubicacion = $ubicacion;
 		$diseno -> tamano_imagen = $tamano_imagen;
 		$diseno -> rotacion_imagen = $rotacion_imagen;
-		$diseno -> coordenada_x = $coordenada_x;
-		$diseno -> coordenada_y = $coordenada_y;
-		$diseno -> profundidad_z = $profundidad_z;
+		$diseno -> img_coordenada_x = $img_coordenada_x;
+		$diseno -> img_coordenada_y = $img_coordenada_y;
+		$diseno -> img_profundidad_z = $img_profundidad_z;
 		//$diseno -> precio = $precio;
 		//$diseno -> coste = $coste;
 		$diseno -> fecha_alta = $fecha_alta;
@@ -79,7 +79,7 @@ class Diseno_model extends CI_Model{
 		R::close();
 	}
 
-	public function modificar($id_diseno,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$coordenada_x,$coordenada_y,$profundidad_z,$id_texto){
+	public function modificar($id_diseno,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$img_coordenada_x,$img_coordenada_y,$img_profundidad_z,$id_texto){
 		$diseno = R::load('diseno',$id_diseno);
 
 		$diseno -> nombre_diseno = $nombre_diseno;
@@ -87,9 +87,9 @@ class Diseno_model extends CI_Model{
 		$diseno -> ubicacion = $ubicacion;
 		$diseno -> tamano_imagen = $tamano_imagen;
 		$diseno -> rotacion_imagen = $rotacion_imagen;
-		$diseno -> coordenada_x = $coordenada_x;
-		$diseno -> coordenada_y = $coordenada_y;
-		$diseno -> profundidad_z = $profundidad_z;
+		$diseno -> img_coordenada_x = $img_coordenada_x;
+		$diseno -> img_coordenada_y = $img_coordenada_y;
+		$diseno -> img_profundidad_z = $img_profundidad_z;
 		
 		$imagen = R::load('imagen', $id_imagen);
 		$texto = R::load('texto', $id_texto);

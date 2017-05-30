@@ -7,17 +7,19 @@ class Texto_model extends CI_Model{
 	/*
 	 * crear el texto
 	 */
-	public function crear($idUsuario,$datosTexto,$idTamano,$idFuente,$rotacion,$idColor,$coordenadaX,$coordenadaY,$precio,$coste,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$idSesion){
+	public function crear($idUsuario,$datos_texto,$tamano_fuente,$id_fuente,$rotacion,$texto_alto,$texto_ancho,$id_color,$coordenada_x,$coordenada_y,$precio,$coste,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$idSesion){
 		$texto = R::dispense('texto');
 		
 		$texto -> idUsuario = $idUsuario;
-		$texto -> datosTexto = $datosTexto;
-		//$texto -> idTamano = $idTamano;
+		$texto -> datos_texto = $datos_texto;
+		$texto -> tamano_fuente = $tamano_fuente;
 		//$texto -> idFuente = $idFuente;
 		$texto -> rotacion = $rotacion;
 		//$texto -> idColor = $idColor;
-		$texto -> coordenadaX = $coordenadaX;
-		$texto -> coordenadaY = $coordenadaY;
+		$texto -> coordenada_x = $coordenada_x;
+		$texto -> texto_alto = $texto_alto;
+		$texto -> texto_ancho = $texto_ancho;
+		$texto -> coordenada_y = $coordenada_y;
 		$texto -> precio = $precio;
 		$texto -> coste = $coste;
 		$texto -> fecha_alta = $fecha_alta;
@@ -26,17 +28,17 @@ class Texto_model extends CI_Model{
 		$texto -> disponible = $disponible;
 		$texto -> idSesion = $idSesion;
 		
-		$tamano = R::load('tamano', $idTamano);
-		$fuente = R::load('fuente', $idFuente);
-		$color = R::load('color', $idColor);
+		//$tamano = R::load('tamano', $idTamano);
+		$fuente = R::load('fuente', $id_fuente);
+		$color = R::load('color', $id_color);
 		
-		$tamano -> xownTextolist[] = $texto; 
+		//$tamano -> xownTextolist[] = $texto; 
 		$fuente -> xownTextolist[] = $texto; 
 		$color -> xownTextolist[] = $texto; 
 		
 		R::store($color);
 		R::store($fuente);
-		R::store($tamano);
+		//R::store($tamano);
 		R::store($texto);
 		R::close();
 	}
@@ -75,35 +77,37 @@ class Texto_model extends CI_Model{
 	/*
 	 * Borrar el texto que se indique
 	 */
-	public function borrar($idTexto){
-		$texto = R::load('texto', $idTexto);
+	public function borrar($id_texto){
+		$texto = R::load('texto', $id_texto);
 		R::trash($texto);
 		R::close();
 	}
 
-	public function modificar($idTexto,$datosTexto,$idTamano,$idFuente,$rotacion,$idColor,$coordenadaX,$coordenadaY,$disponible){
-		$texto = R::load('texto',$idTexto);
+	public function modificar($id_texto,$datos_texto,$tamano_fuente,$id_fuente,$rotacion,$texto_alto,$texto_ancho,$id_color,$coordenada_x,$coordenada_y,$disponible){
+		$texto = R::load('texto',$id_texto);
 
-		$texto -> datosTexto = $datosTexto;
-		//$texto -> idTamano = $idTamano;
+		$texto -> datos_texto = $datos_texto;
+		$texto -> tamano_fuente = $tamano_fuente;
 		//$texto -> idFuente = $idFuente;
 		$texto -> rotacion = $rotacion;
 		//$texto -> idColor = $idColor;
-		$texto -> coordenadaX = $coordenadaX;
-		$texto -> coordenadaY = $coordenadaY;
+		$texto -> texto_alto = $texto_alto;
+		$texto -> texto_ancho = $texto_ancho;
+		$texto -> coordenada_x = $coordenada_x;
+		$texto -> coordenada_y = $coordenada_y;
 		$texto -> disponible = $disponible;
 		
-		$tamano = R::load('tamano', $idTamano);
-		$fuente = R::load('fuente', $idFuente);
-		$color = R::load('color', $idColor);
+		//$tamano = R::load('tamano', $idTamano);
+		$fuente = R::load('fuente', $id_fuente);
+		$color = R::load('color', $id_color);
 		
-		$tamano -> xownTextolist[] = $texto;
+		//$tamano -> xownTextolist[] = $texto;
 		$fuente -> xownTextolist[] = $texto;
 		$color -> xownTextolist[] = $texto;
 		
 		R::store($color);
 		R::store($fuente);
-		R::store($tamano);
+		//R::store($tamano);
 		R::store($texto);
 
 		R::close();

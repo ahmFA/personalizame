@@ -23,13 +23,15 @@ class Texto extends CI_Controller{
 	 */
 	public function crearPost() { //AJAX
 		$idUsuario = $_POST['idUsuario'];
-		$datosTexto = $_POST['datosTexto'];
-		$idTamano = $_POST['idTamano'];
-		$idFuente = $_POST['idFuente'];
+		$datos_texto = $_POST['datos_texto'];
+		$tamano_fuente = $_POST['tamano_fuente'];
+		$id_fuente = $_POST['id_fuente'];
 		$rotacion = $_POST['rotacion'];
-		$idColor = $_POST['idColor'];
-		$coordenadaX = $_POST['coordenadaX'];
-		$coordenadaY = $_POST['coordenadaY'];
+		$id_color = $_POST['id_color'];
+		$coordenada_x = $_POST['coordenada_x'];
+		$coordenada_y = $_POST['coordenada_y'];
+		$texto_alto = $_POST['texto_alto'];
+		$texto_ancho = $_POST['texto_ancho'];
 		$precio = 1; //importe que se cobra por incluir un texto al estampado
 		$coste = 0.50; //coste en el negocio por poner estampado un texto
 		$fecha_alta = strftime("%Y/%m/%d");  //fecha actual en Formato(YYYY/MM/DD)
@@ -39,8 +41,8 @@ class Texto extends CI_Controller{
 		$idSesion = $_POST['idSesion']; // para tener un id único en caso de que el usuario no se loguee y sea Invitado
 		
 		$this->load->model('texto_model');
-		$this->texto_model->crear($idUsuario,$datosTexto,$idTamano,$idFuente,$rotacion,$idColor,$coordenadaX,$coordenadaY,$precio,$coste,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$idSesion);
-		$datos['body']['datosTexto'] = $datosTexto;
+		$this->texto_model->crear($idUsuario,$datos_texto,$tamano_fuente,$id_fuente,$rotacion,$texto_alto,$texto_ancho,$id_color,$coordenada_x,$coordenada_y,$precio,$coste,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$idSesion);
+		$datos['body']['datosTexto'] = $datos_texto;
 		$this->load->view('texto/XcrearPost',$datos);
 
 	}
@@ -101,8 +103,8 @@ class Texto extends CI_Controller{
 	
 		$this->load->model('texto_model');
 		
-		foreach ($idTextos as $idTexto){
-			$this->texto_model->borrar($idTexto);
+		foreach ($idTextos as $id_texto){
+			$this->texto_model->borrar($id_texto);
 		}
 		
 		//llamo a listarPost para que mantenga el mismo filtro y se vea la modificacion
@@ -114,7 +116,7 @@ class Texto extends CI_Controller{
 	}
 	
 	public function modificarPost() {
-		$idTexto = $_POST['idTexto'];
+		$id_texto = $_POST['id_texto'];
 		$filtroDatosTexto = isset($_POST['filtroDatosTexto']) ? $_POST['filtroDatosTexto'] : '';
 		$filtroUsuario = isset($_POST['filtroUsuario']) ? $_POST['filtroUsuario'] : '';
 		$mensajeBanner = isset($_POST['mensajeBanner']) ? $_POST['mensajeBanner'] : '';
@@ -138,18 +140,20 @@ class Texto extends CI_Controller{
 	}
 	
 	public function modificarPost2() {
-		$idTexto = $_POST['idTexto'];
-		$datosTexto = $_POST['datosTexto'];
-		$idTamano = $_POST['idTamano'];
-		$idFuente = $_POST['idFuente'];
+		$id_texto = $_POST['id_texto'];
+		$datos_texto = $_POST['datos_texto'];
+		$tamano_fuente = $_POST['tamano_fuente'];
+		$id_fuente = $_POST['id_fuente'];
 		$rotacion = $_POST['rotacion'];
-		$idColor = $_POST['idColor'];
-		$coordenadaX = $_POST['coordenadaX'];
-		$coordenadaY = $_POST['coordenadaY'];
+		$id_color = $_POST['id_color'];
+		$texto_alto = $_POST['texto_alto'];
+		$texto_ancho = $_POST['texto_ancho'];
+		$coordenada_x = $_POST['coordenada_x'];
+		$coordenada_y = $_POST['coordenada_y'];
 		$disponible = $_POST['disponible'];
 	
 		$this->load->model('texto_model');
-		$this->texto_model->modificar($idTexto,$datosTexto,$idTamano,$idFuente,$rotacion,$idColor,$coordenadaX,$coordenadaY,$disponible);
+		$this->texto_model->modificar($id_texto,$datos_texto,$tamano_fuente,$id_fuente,$rotacion,$texto_alto,$texto_ancho,$id_color,$coordenada_x,$coordenada_y,$disponible);
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
 		enmarcar($this, 'texto/borrarPost');
 	}

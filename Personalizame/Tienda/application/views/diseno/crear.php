@@ -124,11 +124,11 @@ var conexion;
 		<input type="hidden" name="id_usuario" value="<?= isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : null ?>">
 		
 		<!-- campos ocultos que pasarán los datos del canvas de la imagen -->
-		<input type="hidden" name="tamano_imagen" value="150x200">
-		<input type="hidden" name="rotacion_imagen" value="30">
-		<input type="hidden" name="coordenada_x" value="10">
-		<input type="hidden" name="coordenada_y" value="15">
-		<input type="hidden" name="profundidad_z" value="-3">
+		<input type="hidden" name="rotacion_imagen" id="rotacion_imagen">
+		<input type="hidden" name="img_coordenada_x" id="img_coordenada_x">
+		<input type="hidden" name="img_coordenada_y" id="img_coordenada_y">
+		<input type="hidden" name="tamano_imagen" id="tamano_imagen">
+		<input type="hidden" name="img_profundidad_z" id="img_profundidad_z">
 		
 		<!-- campos ocultos con el calculo precio y coste de imagen + texto seleccionados-->
 		<input type="hidden" name="precio" value="6">
@@ -169,7 +169,16 @@ var conexion;
 					<select class="form-control" id="idTexto" name="id_texto">         
 			 			<option value='0'>Seleccione uno</option>       	
 			 		<?php foreach ($body['textos'] as $texto): ?>
-			 			<option value='<?= $texto['id']?>'><?= $texto['datos_texto']?></option>
+			 			<option value='<?= $texto['id']?>' 
+			 					data-tamano_fuente="<?= $texto['tamano_fuente']?>"
+			 					data-fuente="<?= $texto['fuente']->nombre?>"
+			 					data-color="<?= $texto['color']->valor?>"
+			 					data-texto_ancho="<?= $texto['texto_ancho']?>"
+			 					data-texto_alto="<?= $texto['texto_alto']?>"
+			 					data-coordenada_x="<?= $texto['coordenada_x']?>"
+			 					data-coordenada_y="<?= $texto['coordenada_y']?>"
+			 					data-rotacion="<?= $texto['rotacion']?>"
+			 					><?= $texto['datos_texto']?></option>
 					<?php endforeach;?>
 			        </select>
 				</div>
@@ -186,27 +195,29 @@ var conexion;
 				
 			</div>
 		</div>
+		
+
+		<div class="container">
+			<div class="form-group col-xs-12">
+			<br/><br/>
+				<h2>Modificalo a tu gusto</h2>
+				<input id="idBotonVer" type="button" value="Vista Previa" onclick="ver();">
+				<div id="objeto" style="width: 350px; height: 350px">
+					<div id="marco" style="width: 150px; height: 250px; border: 1px solid black">
+						<canvas id="canvas" width="150" height="250"></canvas>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<img id="my-image" class="hidden"/>
+
 		<div class="row">
-			<input class="btn btn-primary btn-sm m-t-10" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
+			<input id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
 		</div>
 	</div>
 	</form>
 </div>
-<div id="kk"></div>
-<div id="posx"></div>
-<div id="posy"></div>
-<div class="container">
-	<div class="form-group col-xs-12">
-		<h2>Pruebas con el diseño</h2>
-		<input class="btn btn-primary" id="idBotonVer" type="button" value="Ver como queda" onclick="ver();">
-		<div id="objeto" style="width: 350px; height: 350px">
-			<div id="marco" style="width: 150px; height: 250px; border: 1px solid black">
-				<canvas id="canvas" width="150" height="250"></canvas>
-			</div>
-		</div>
-	</div>	
-</div>
-<img id="my-image" class="hidden"/>
+
 <script>
 /*
 var canvas = window._canvas = new fabric.Canvas('c'),
@@ -247,17 +258,64 @@ $(document).on('click', '#test' , function(){
 
 <script>
 	var canvas = new fabric.Canvas('canvas');
-	var lastAdded = [];
     var imgElement;
     var imgInstance;
-
+    var text;
+	var id,str,n;
+	
 	$("#idImagen").on({
 		'change':function(){
 		
 		selectImagen();
-		//limpiar();
 		}
 	})
+	
+	$("#idTexto").on({
+		'change':function(){
+		
+		pintarTexto();
+		}
+	})
+	
+	function pintarTexto(){
+	//limpiar lo anterior
+	canvas.remove(text);
+
+	//pintar      
+	text = new fabric.Text($("#idTexto option:selected").text(), { 
+		left: $("#idTexto option:selected").data("coordenada_x"), 
+		top: $("#idTexto option:selected").data("coordenada_y"),
+		fontFamily: $("#idTexto option:selected").data("fuente"),
+		fontSize: $("#idTexto option:selected").data("tamano_fuente"),
+		fill: $("#idTexto option:selected").data("color"),
+		angle: $("#idTexto option:selected").data("rotacion")
+	});
+	canvas.add(text);  
+
+	//para controlar el ultimo id y dar formato a los puntos de redimensionar
+	var id = (canvas.size()-1);
+	
+	//deshabilito algunos de los puntos de cambio de tamaño
+	canvas.item(id).setControlVisible('mb',false);
+	canvas.item(id).setControlVisible('ml',false);
+	canvas.item(id).setControlVisible('mr',false);
+	canvas.item(id).setControlVisible('mt',false);
+
+	//quito vordes y coloreo esquinas de redimensionar
+	canvas.item(id).set({
+		hasBorders: false,
+	    cornerColor: 'green',
+	    cornerSize: 6,
+	    transparentCorners: false,
+	    rotatingPointOffset: 5,
+	  });
+
+/* 
+ * ++++++++++++++++++++++ AQUI VAN LOS DATOS DE TEXTO CUANDO LO MUEVA  +++++++++++++
+ * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ */
+	  
+	}
 	
 	function selectImagen(){
 		//borrar imagen anterior
@@ -300,33 +358,47 @@ $(document).on('click', '#test' , function(){
 	
 	function pintar(){
 		//limpiar la imagen anterior
-		canvas.clear();
+		canvas.remove(imgInstance);
 
 		//pintar        
         imgElement = document.getElementById('my-image');
         imgInstance = new fabric.Image(imgElement, {
-          left: 50,
+          left: 10,
           top: 50,
           angle: 0,
           opacity: 1
         });
-        
         canvas.add(imgInstance);
+
+		//para controlar el ultimo id y dar formato a los puntos de redimensionar
+        var id = (canvas.size()-1);
+        
+      	//deshabilito algunos de los puntos de cambio de tamaño
+    	canvas.item(id).setControlVisible('mt',false);
+
+    	//quito vordes y coloreo esquinas de redimensionar
+    	canvas.item(id).set({
+    		hasBorders: false,
+    	    cornerColor: 'green',
+    	    cornerSize: 6,
+    	    transparentCorners: false,
+    	    rotatingPointOffset: 5,
+    	});
+
+    	prepararDatos();
 	}
 
-	canvas.on('object:added', function(e) {
-		 lastAdded.push(e.target);
+	//ver la coordenada, tamaño y angulo
+	canvas.on('mouse:up', function(options) {
+		prepararDatos();
 	});
 
-	function limpiar(){
-	    var lastObject = lastAdded[lastAdded.length - 1];
-	    if (!lastObject) return;
-
-	    if (canvas.getObjects().indexOf(lastObject) > -1) {
-	     lastAdded.pop();
-	     canvas.remove(lastObject);
-	     canvas.renderAll();
-	    }
+	function prepararDatos(){
+		document.getElementById("img_coordenada_x").value = imgInstance.getLeft().toFixed();
+		document.getElementById("img_coordenada_y").value = imgInstance.getTop().toFixed();
+		document.getElementById("rotacion_imagen").value = imgInstance.getAngle().toFixed();
+		document.getElementById("tamano_imagen").value = imgInstance.getWidth().toFixed()+","+imgInstance.getHeight().toFixed();
+		document.getElementById("img_profundidad_z").value = -1; //va a pelo x ahora no se como sacarlo del canvas
 	}
 	
 function ver(){
@@ -334,9 +406,6 @@ function ver(){
 	window.open(dataUrl, "Ejemplo", "width=400, height=400"); //mostramos en popUp
 }
 
-$('.upper-canvas ').draggable({
-    containment: $('#marco')
-});
 </script>
 
 <!--  

@@ -53,8 +53,8 @@
             <?php foreach ($textos as $texto):?>
 										<tr>
 			<td><?= $texto->idUsuario ?></td>
-			<td><?= $texto->datosTexto ?></td>
-			<td><?= $texto->tamano->nombre ?></td>
+			<td><?= $texto->datos_texto ?></td>
+			<td><?= $texto->tamano_fuente ?></td>
 			<td><?= $texto->fuente->nombre ?></td>
 			<td><?= $texto->color->nombre ?> </td>
 
@@ -62,10 +62,10 @@
 				<td class="text-left">
 					<form id="idFormedit" action="<?=base_url();?>texto/modificarPost"
 						method="post">
-						<input type="hidden" name="idTexto" value="<?= $texto->id ?>">
+						<input type="hidden" name="id_texto" value="<?= $texto->id ?>">
 						<input type="hidden" name="filtroDatosTexto" value="<?= $body['filtroDatosTexto'] ?>">
 						<input type="hidden" name="filtroUsuario" value="<?= $body['filtroUsuario'] ?>">
-						<input type="hidden" name="mensajeBanner" value="Modificado el texto <?= $texto->datosTexto ?>">
+						<input type="hidden" name="mensajeBanner" value="Modificado el texto <?= $texto->datos_texto ?>">
 						<button
 							class="btn btn-icon command-edit waves-effect waves-circle"
 							onclick="function f() {document.getElementById('idFormedit').submit();}">
@@ -77,7 +77,7 @@
 						<input type="hidden" name="idTextos[]" value="<?= $texto->id ?>">
 						<input type="hidden" name="filtroDatosTexto" value="<?= $body['filtroDatosTexto'] ?>">
 						<input type="hidden" name="filtroUsuario" value="<?= $body['filtroUsuario'] ?>">
-						<input type="hidden" name="mensajeBanner" value="Borrado el texto <?= $texto->datosTexto ?>">
+						<input type="hidden" name="mensajeBanner" value="Borrado el texto <?= $texto->datos_texto ?>">
 						<button
 							class="btn btn-icon command-delete waves-effect waves-circle"
 							data-row-id="<?= $texto['id'] ?>">

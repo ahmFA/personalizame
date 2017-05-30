@@ -5,9 +5,15 @@
 <script type="text/javascript">
 var conexion;
 
-	function accionAJAX() {
+	function accionAJAX() {		
 		document.getElementById("idBanner").innerHTML = conexion.responseText;
 		document.getElementById("idForm1").reset();
+
+		//limpiar el canvas 
+		//**************** Mirar el xq no limpia el canvas *****************
+		var canvases = document.getElementsByTagName("canvas");
+		var ctx = canvases[1].getContext("2d");
+		ctx.clearRect(0, 0, canvases[1].width, canvas[0].height);
 	}
 
 	function crear() {
@@ -62,9 +68,7 @@ var conexion;
 		else{
 			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
 		}
-
 	}
-
 </script>
 
 <div class="container">
@@ -77,18 +81,21 @@ var conexion;
 	
 	<input type="hidden" name="idSesion" value="<?= session_id()?>">
 	<input type="hidden" name="idUsuario" value="<?= isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : null ?>">
-	<input type="hidden" name="rotacion" id="rotacion" value="-30">
-	<input type="hidden" name="coordenadaX" value="25">
-	<input type="hidden" name="coordenadaY" value="25">
-	
+	<input type="hidden" name="rotacion" id="rotacion">
+	<input type="hidden" name="coordenada_x" id="coordenada_x">
+	<input type="hidden" name="coordenada_y" id="coordenada_y">
+	<input type="hidden" name="texto_ancho" id="texto_ancho">
+	<input type="hidden" name="texto_alto" id="texto_alto">
+	<input type="hidden" name="tamano_fuente" id="tamano_fuente">
+
 	<div class="form-group col-xs-3">
 		<label for="idDatosTexto">Texto </label> 
-		<input class="form-control" id="idDatosTexto" type="text" name="datosTexto" maxlength="20" required="required" placeholder="completa este campo" title="El Texto puede contener entre 1 y 20 caracteres"> <br/>
+		<input class="form-control" id="idDatosTexto" type="text" name="datos_texto" maxlength="20" required="required" placeholder="completa este campo" title="El Texto puede contener entre 1 y 20 caracteres"> <br/>
 	</div>
 	
 	<div class="form-group col-xs-3">	
 		<label for="idTamano">Tamaño </label>
-		<select class="form-control" id="idTamano" name="idTamano">         
+		<select class="form-control" id="idTamano" name="id_tamano">         
  			<option value='1'>Seleccione uno</option>       	
  		<?php foreach ($body['tamanos'] as $tamano): ?>
  			<option value='<?= $tamano['id']?>'><?= $tamano['nombre']?></option>
@@ -98,7 +105,7 @@ var conexion;
 	
 	<div class="form-group col-xs-3">	
 		<label for="idFuente">Fuente </label>
-		<select class="form-control" id="idFuente" name="idFuente">         
+		<select class="form-control" id="idFuente" name="id_fuente">         
  			<option value='1'>Seleccione una</option>       	
  		<?php foreach ($body['fuentes'] as $fuente): ?>
  			<option value='<?= $fuente['id']?>'><?= $fuente['nombre']?></option>
@@ -108,48 +115,46 @@ var conexion;
 	
 	<div class="form-group col-xs-3">	
 		<label for="idColor">Color </label>
-		<select class="form-control" id="idColor" name="idColor">         
+		<select class="form-control" id="idColor" name="id_color">         
  			<option value='1'>Seleccione uno</option>       	
  		<?php foreach ($body['colores'] as $color): ?>
- 			<option value='<?= $color['id']?>'><?= $color['valor']?></option>
+ 			<option value='<?= $color['id']?>' data-valor="<?= $color['valor']?>"><?= $color['nombre']?></option>
 		<?php endforeach;?>
         </select><br/>
 	</div>
 	
+	<div class="container">
+		<div class="form-group col-xs-12">
+		
+			<input class="btn btn-primary" id="idBotonAplicar" type="button" value="Aplicar">
+			<input class="btn btn-primary" id="idBotonVer" type="button" value="Vista Previa" onclick="ver();">
+			<br/><br/>
+			<h2>Modificalo a tu gusto</h2>
+			<br/>
+	
+			<div id="marco" style="position: relative;width: 150px; height: 250px; border: 1px solid black; background-color: aqua;">
+				<canvas id="canvas" width="150" height="250" style="border:1px solid green">
+				Your browser does not support the HTML5 canvas tag.</canvas>
+			</div>
+		</div>
+	</div>
+	
 	<div class="form-group col-xs-4">	
-		<input class="btn btn-primary" id="idBotonEnviar" type="button" value="Enviar" onclick="validarTodo()">
+		<input class="btn btn-primary" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
 	</div>
 	
 	</form>
 </div>
 
-<div class="container">
-	<div class="form-group col-xs-12">
-		<h2>Pruebas con el texto</h2>
-	
-		<input class="btn btn-primary" id="idBotonAplicar" type="button" value="Aplicar">
-		<input class="btn btn-primary" id="idBotonVer" type="button" value="Ver como queda" onclick="ver();">
-		<br/><br/><br/>
-		<div id="kk"></div>
-		<div id="kk2"></div>
-		<div id="pruebasContainer" style="position: relative;width: 150px; height: 250px; border: 1px solid black; padding:10px 10px 10px 10px; text-align: center; display:table; background-color: aqua;">
-			<div id="marco" style="border: 1px solid green;">
-			<canvas id="canvas" width="150" height="250" style="border:1px solid #d3d3d3;display: inline-block">
-			Your browser does not support the HTML5 canvas tag.</canvas>
-			</div>
-		</div> 
-	</div>
-</div>
 
 <script>
 var canvas = new fabric.Canvas('canvas');
-var lastAdded = [];
+var text;
 
 $("#idBotonAplicar").on({
 	'click':function(){
 	
 	pintar();
-	//limpiar();
 	}
 })
 
@@ -158,30 +163,46 @@ function pintar(){
 	canvas.clear();
 
 	//pintar      
-	var text = new fabric.Text($("#idDatosTexto").val(), { 
-		left: 20, 
-		top: 20,
+	text = new fabric.Text($("#idDatosTexto").val(), { 
+		left: 10, 
+		top: 30,
 		fontFamily: $("#idFuente option:selected").text(),
 		fontSize: $("#idTamano option:selected").text(),
-		fill: $("#idColor option:selected").text()
+		fill: $("#idColor option:selected").data("valor")
 	});
-
 	canvas.add(text);  
+
+	//deshabilito algunos de los puntos de cambio de tamaño
+	canvas.item(0).setControlVisible('mb',false);
+	canvas.item(0).setControlVisible('ml',false);
+	canvas.item(0).setControlVisible('mr',false);
+	canvas.item(0).setControlVisible('mt',false);
+
+	//quito vordes y coloreo esquinas de redimensionar
+	canvas.item(0).set({
+		hasBorders: false,
+	    cornerColor: 'green',
+	    cornerSize: 6,
+	    transparentCorners: false,
+	    rotatingPointOffset: 5,
+	  });
+	  
+	prepararDatos();
 }
 
-canvas.on('object:added', function(e) {
-	 lastAdded.push(e.target);
+
+//ver la coordenada, tamaño y angulo
+canvas.on('mouse:up', function(options) {
+	prepararDatos();
 });
 
-function limpiar(){
-    var lastObject = lastAdded[lastAdded.length - 1];
-    if (!lastObject) return;
-
-    if (canvas.getObjects().indexOf(lastObject) > -1) {
-     lastAdded.pop();
-     canvas.remove(lastObject);
-     canvas.renderAll();
-    }
+function prepararDatos(){
+	document.getElementById("coordenada_x").value = text.getLeft().toFixed();
+	document.getElementById("coordenada_y").value = text.getTop().toFixed();
+	document.getElementById("rotacion").value = text.getAngle().toFixed();
+	document.getElementById("texto_ancho").value = text.getWidth().toFixed();
+	document.getElementById("texto_alto").value = text.getHeight().toFixed();
+	document.getElementById("tamano_fuente").value = (text.getHeight()*0.85).toFixed();
 }
 
 function ver(){
@@ -189,9 +210,6 @@ var dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
 window.open(dataUrl, "Ejemplo", "width=400, height=400"); //mostramos en popUp
 }
 
-$('.upper-canvas ').draggable({
-containment: $('#marco')
-});
 </script>
 
 
