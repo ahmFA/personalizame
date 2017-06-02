@@ -272,7 +272,7 @@
 						<img src="<?=base_url() ?>assets/images/logo.png" alt="">
 						<div class="intro-text">
 							<div class="intro-lead-in">Bienvenido a Personalízame!</div>
-							<a href="#" class="btn btn-l"><strong>CREA TU PROPIO DISEÑO</strong></a>
+							<a href="<?=base_url() ?>usuario/crearDiseno" class="btn btn-l"><strong>CREA TU PROPIO DISEÑO</strong></a>
 						</div>
 					</div>
 				</div>
@@ -315,7 +315,7 @@
 					
 					<li><a href="<?=base_url()?>usuario/logout">LOGOUT</a></li>
 					<li><a href="<?=base_url()?>usuario/cesta"><img alt="" src="<?= base_url() ?>assets/images/cesta.png">
-                                <i>0</i></a></li>
+                                <i id="carrito"><?= $_SESSION['carrito'] ?></i></a></li>
 					
 				<?php endif;?>
 				

@@ -258,6 +258,11 @@ class Usuario extends CI_Controller{
 			$_SESSION['nick'] = $usuarioValido->nick;
 			$_SESSION['perfil'] = $usuarioValido->perfil;
 			$_SESSION['imagen'] = $usuarioValido->imagen;
+			$_SESSION['num_producto'] = 0;
+			$_SESSION['carrito'] = 0;
+			$_SESSION['precioTotalPedido']= 0;
+			$_SESSION['total_productos']= 0;
+			
 			header('Location:'.base_url().'home');
 		}
 		else {
@@ -473,7 +478,16 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function cesta(){
-		enmarcar2($this,'usuario/cesta');
+		if($_SESSION['total_productos'] > 0){
+			$contador = 0;
+			foreach($_SESSION['productos'] as $producto){
+				$datos['productosCompra'][$contador] = $producto;
+				$contador++; 
+			}
+			enmarcar2($this,'usuario/cesta', $datos);
+		}else{
+			enmarcar2($this,'usuario/cesta');
+		}
 	}
 	
 	public function pago(){
@@ -483,6 +497,52 @@ class Usuario extends CI_Controller{
 	
 	public function misPedidos(){
 		enmarcar2($this,'usuario/misPedidos');
+	}
+	
+	public function crearDiseno(){
+		$this->load->model('articulo_model');
+		$datos['articulos'] = $this->articulo_model->listar();
+		$this->load->model('talla_model');
+		$datos['tallas'] = $this->talla_model->listar();
+		$this->load->model('color_model');
+		$datos['colores'] = $this->color_model->listar();
+		enmarcar2($this, 'usuario/crearDiseno', $datos);
+	}
+	
+	public function anadirCarrito(){
+		$this->load->model('articulo_model');
+		$articulo = $this->articulo_model->getArticuloById($_POST['id_articulo']);
+		$this->load->model('talla_model');
+		$talla = $this->talla_model->getTallaById($_POST['id_talla']);
+		$this->load->model('color_model');
+		$color = $this->color_model->getColorById($_POST['id_color']);
+		
+		$producto = 'producto-'.$_SESSION['num_producto']; 
+		$_SESSION['productos'][$producto]['articulo']['id'] = $articulo->id;
+		$_SESSION['productos'][$producto]['articulo']['nombre'] = $articulo->nombre;
+		$_SESSION['productos'][$producto]['articulo']['precio'] = $articulo->precio;
+		$_SESSION['productos'][$producto]['talla'] = $talla->nombre;
+		$_SESSION['productos'][$producto]['color'] = $color->nombre;
+		$_SESSION['productos'][$producto]['cantidad'] = $_POST['cantidad'];
+		$_SESSION['productos'][$producto]['precio'] = ($articulo->precio *$_POST['cantidad']);
+		$_SESSION['productos'][$producto]['id'] = $_SESSION['num_producto'];
+		
+		$_SESSION['num_producto']++;
+		$_SESSION['total_productos']++;
+		$_SESSION['carrito']++;
+		$_SESSION['precioTotalPedido'] += ($articulo->precio *$_POST['cantidad']);
+		
+		$datos['carrito'] = $_SESSION['carrito'];
+		$this->load->view('usuario/XactualizaCarrito', $datos);
+	}
+	
+	public function quitarCarrito(){
+		$_SESSION['precioTotalPedido'] -= $_SESSION['productos']['producto-'.$_POST['num_producto']]['precio'];
+		unset($_SESSION['productos']['producto-'.$_POST['num_producto']]);
+		$_SESSION['total_productos']--;
+		$_SESSION['carrito']--;
+		
+		$this->cesta();
 	}
 	
 	
