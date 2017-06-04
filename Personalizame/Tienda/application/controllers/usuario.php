@@ -491,7 +491,16 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function pago(){
-		enmarcar2($this,'usuario/pago');
+		
+		if(isset($_SESSION['idUsuario'])){
+			$this->load->model('usuario_model');
+			$usuario = $this->usuario_model->getPorId($_SESSION['idUsuario']);
+			$datos['usuario'] = $usuario;
+			enmarcar2($this,'usuario/pago', $datos);
+		}else{
+			enmarcar2($this,'usuario/pago');
+		}
+		
 	}
 	
 	
