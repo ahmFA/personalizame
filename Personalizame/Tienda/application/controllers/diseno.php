@@ -39,6 +39,29 @@ class Diseno extends CI_Controller{
 		$disponible = "Si"; // los diseños al crearse estarán disponibles, pasa a NO al darlos de baja
 		$id_sesion = $_POST['id_sesion']; // para tener un id único en caso de que el usuario no se loguee y sea Invitado
 		
+		//++++++++++ para guardar imagen en servidor ++++++++++
+		$canvas_binario = $_POST['canvas_binario'];
+		
+		if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/disenos/')){
+			mkdir($_SERVER['DOCUMENT_ROOT'].'/img/disenos/');
+		}
+			
+		$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/disenos/';
+		//move_uploaded_file($_FILES['diseno']['tmp_name'],$directorio.$nombre_diseno);
+		
+		// Filter out the headers (data:,) part.
+		$filteredData=substr($canvas_binario, strpos($canvas_binario, ",")+1);
+		// Need to decode before saving since the data we received is already base64 encoded
+		$decodedData=base64_decode($filteredData);
+		
+		// store in server
+		$fic_name = $id_usuario.'diseno'.rand(1000,9999).'.png';
+		$fp = fopen($directorio.$fic_name, 'wb');
+		$ok = fwrite( $fp, $decodedData);
+		fclose( $fp );
+		
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++
+		
 		$this->load->model('diseno_model');
 		$this->diseno_model->crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$img_coordenada_x,$img_coordenada_y,$img_profundidad_z,$id_texto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
 		$datos['body']['nombre_diseno'] = $nombre_diseno;
