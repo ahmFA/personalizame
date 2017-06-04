@@ -8,7 +8,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand page-scroll" href="#page-top">Personalízame</a>
+			<a class="navbar-brand page-scroll" href="<?=base_url()?>home/index#page-top">Personalízame</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -33,7 +33,7 @@
 					
 					<li><a href="<?=base_url()?>usuario/logout">LOGOUT</a></li>
 					<li><a href="<?=base_url()?>usuario/cesta"><img alt="" src="<?= base_url() ?>assets/images/cesta.png">
-                                <i>0</i></a></li>
+                                <i id="carrito"><?= $_SESSION['carrito'] ?></i></a></li>
 					
 				<?php endif;?>
 				

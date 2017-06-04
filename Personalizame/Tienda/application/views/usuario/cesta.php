@@ -22,7 +22,7 @@
 				</div>
 	<div class="row m-t-25">
 
-
+	 <?php if(isset($productosCompra)):?>
     <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
             <table class="table table-hover">
@@ -36,66 +36,54 @@
                     </tr>
                 </thead>
                 <tbody>
+               
+                <?php foreach ($productosCompra as $producto):?>
                     <tr>
                         <td class="col-sm-8 col-md-6">
                         <div class="media">
                             <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
                             <div class="media-body">
-                                <h4 class="media-heading"><a href="#">Nombre del producto</a></h4>
+                                <h4 class="media-heading"><a href="#"><?= $producto['id'] ?> - <?= $producto['articulo']['nombre'] ?> - <?= $producto['color'] ?> - <?= $producto['talla'] ?></a></h4>
                              <!--    <h5 class="media-heading"> by <a href="#">Brand name</a></h5>  -->
                                 <span>Status: </span><span class="text-success"><strong>En Stock</strong></span>
                             </div>
                         </div></td>
                         <td class="col-sm-1 col-md-1" style="text-align: center">
-                        <input type="email" class="form-control" id="exampleInputEmail1" value="3">
+                        <input type="text" class="form-control" id="exampleInputEmail1" value="<?= $producto['cantidad'] ?>">
                         </td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>12.95€</strong></td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong>38.85€</strong></td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['articulo']['precio'] ?></strong></td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['precio'] ?>€</strong></td>
                         <td class="col-sm-1 col-md-1">
-                        <button type="button" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-remove"></span> Quitar
-                        </button></td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-6">
-                        <div class="media">
-                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
-                            <div class="media-body">
-                                <h4 class="media-heading"><a href="#">Nombre del producto</a></h4>
-                                <h5 class="media-heading"> by <a href="#">Brand name</a></h5>
-                                <span>Status: </span><span class="text-warning"><strong>En almacén en 2 - 3 semanas</strong></span>
-                            </div>
-                        </div></td>
-                        <td class="col-md-1" style="text-align: center">
-                        <input type="number" class="form-control" id="exampleInputEmail1" value="2">
+                        <form id="idFormdelete" action="<?= base_url() ?>usuario/quitarCarrito" method="post">
+                        	<input type="hidden" name="num_producto" value="<?=$producto['id'] ?>">
+	                        <button class="btn btn-danger" onclick="function f() {document.getElementById('idFormdelete').submit();}">
+	                            <span class="glyphicon glyphicon-remove"></span> Quitar
+	                        </button>
+                        </form>
                         </td>
-                        <td class="col-md-1 text-center"><strong>$4.99</strong></td>
-                        <td class="col-md-1 text-center"><strong>$9.98</strong></td>
-                        <td class="col-md-1">
-                        <button type="button" class="btn btn-danger">
-                            <span class="glyphicon glyphicon-remove"></span> Quitar
-                        </button></td>
                     </tr>
+                <?php endforeach;?>    
+                   
                     <tr>
                         <td>   </td>
                         <td>   </td>
                         <td>   </td>
                         <td><h5>Subtotal</h5></td>
-                        <td class="text-right"><h5><strong>$24.59</strong></h5></td>
+                        <td class="text-right"><h5><strong><?=$_SESSION['precioTotalPedido'] ?>€</strong></h5></td>
                     </tr>
                     <tr>
                         <td>   </td>
                         <td>   </td>
                         <td>   </td>
                         <td><h5>Precio de envío</h5></td>
-                        <td class="text-right"><h5><strong>$6.94</strong></h5></td>
+                        <td class="text-right"><h5><strong>4.95€</strong></h5></td>
                     </tr>
                     <tr>
                         <td>   </td>
                         <td>   </td>
                         <td>   </td>
                         <td><h3>Total</h3></td>
-                        <td class="text-right"><h3><strong>$31.53</strong></h3></td>
+                        <td class="text-right"><h3><strong><?=$_SESSION['precioTotalPedido']+4.95 ?>€</strong></h3></td>
                     </tr>
                     <tr>
                         <td>   </td>
@@ -106,15 +94,19 @@
                             <span class="glyphicon glyphicon-shopping-cart"></span> Continuar Comprando
                         </button></td>
                         <td>
-                        <button type="button" class="btn btn-success">
+                        <a href="<?=base_url() ?>usuario/pago" type="button" class="btn btn-success">
                             Pagar <span class="glyphicon glyphicon-play"></span>
-                        </button></td>
+                        </a></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+<?php else:?>
+No has añadido aún ningún producto.
+
+<?php endif;?>
 
 </div>
 </section>

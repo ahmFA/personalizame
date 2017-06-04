@@ -31,7 +31,7 @@
 
 <!-- Text input-->
 <div class="form-group">
-<label class="col-md-4 control-label" for="Card">Nº de tajeta</label>
+<label class="col-md-4 control-label" for="Card">Nº de tarjeta</label>
 <div class="col-md-5">
 <input id="Card" name="Card" type="text" placeholder="" class="form-control input-md" required="required">
 <span class="help-block">Introduce los 16 dígitos de la tarjeta</span>
