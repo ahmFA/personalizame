@@ -9,11 +9,26 @@ class Producto extends CI_Controller{
 	 * muestra el formulario de crear producto
 	 */
 	public function crear(){
+		/*
 		$this->load->model('diseno_model');
 		$this->load->model('articulo_model');
 		$datos ['body'] ['disenos'] = $this->diseno_model->getTodos();
 		$datos ['body'] ['articulos'] = $this->articulo_model->listar();
-
+		enmarcar($this,'producto/crear',$datos);
+		*/
+		$this->load->model('fuente_model');
+		$this->load->model('tamano_model');
+		$this->load->model('color_model');
+		$this->load->model('articulo_model');
+		$this->load->model('categoria_model');
+		$this->load->model('imagen_model');
+		$datos ['body'] ['colores'] = $this->color_model->getTodos();
+		$datos ['body'] ['fuentes'] = $this->fuente_model->getTodos();
+		$datos ['body'] ['tamanos'] = $this->tamano_model->getTodos();
+		$datos ['body'] ['articulos'] = $this->articulo_model->listar();
+		$datos ['body'] ['imagenes'] = $this->imagen_model->listar();
+		$datos ['body'] ['categorias'] = $this->categoria_model->listar();
+		
 		enmarcar($this,'producto/crear',$datos);
 	}
 	
@@ -143,8 +158,31 @@ class Producto extends CI_Controller{
 		
 		$datos ['body'] ['tallas'] = $this->producto_model->mostrarTallas($id_articulo);
 		$datos ['body'] ['colores'] = $this->producto_model->mostrarColores($id_articulo);
+		$datos ['body'] ['articulo'] = $this->producto_model->getArticulo($id_articulo);
 		
 		$this->load->view('producto/XcrearElementosArticulo',$datos);
+	}
+	
+	public function mostrarFondoArticulo(){ //AJAX
+		//Dependiendo del Articulo seleccionado se mostrará el fondo concreto
+		$id_articulo = $_POST['id_articulo'];
+		$id_color_base = $_POST['id_color_base'];
+		$this->load->model('producto_model');
+		
+		$datos ['body'] ['articulo'] = $this->producto_model->getArticulo($id_articulo);
+		$datos ['body'] ['color'] = $id_color_base;
+		
+		$this->load->view('producto/XfondoArticulo',$datos);
+	}
+	
+	public function mostrarListaImagenes(){ //AJAX
+		//Dependiendo de la Categoria seleccionada se mostrará lista de imagenes
+		$id_categoria = $_POST['id_categoria'];
+		$this->load->model('producto_model');
+	
+		$datos ['body'] ['imagenes'] = $this->producto_model->getImagenesCategoria($id_categoria);
+	
+		$this->load->view('producto/XcrearListaImagenes',$datos);
 	}
 }
 ?>

@@ -147,5 +147,14 @@ class Producto_model extends CI_Model{
 		$colores = R::findAll('articulo_color','where articulo_id = ? order by id',[$id_articulo]);
 		return $colores;
 	}
+	
+	public function getArticulo($id_articulo){
+		return R::load('articulo',$id_articulo);
+	}
+	
+	public function	getImagenesCategoria($id_categoria){
+		$imagenes = R::findAll('categoria_imagen','where categoria_id = ? order by id',[$id_categoria]);
+		return $imagenes;
+	}
 }
 ?>

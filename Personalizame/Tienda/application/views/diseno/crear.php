@@ -129,6 +129,7 @@ var conexion;
 		<input type="hidden" name="img_coordenada_y" id="img_coordenada_y">
 		<input type="hidden" name="tamano_imagen" id="tamano_imagen">
 		<input type="hidden" name="img_profundidad_z" id="img_profundidad_z">
+		<input type="hidden" name="canvas_binario" id="canvas_binario">
 		
 		<!-- campos ocultos con el calculo precio y coste de imagen + texto seleccionados-->
 		<input type="hidden" name="precio" value="6">
@@ -399,13 +400,28 @@ $(document).on('click', '#test' , function(){
 		document.getElementById("rotacion_imagen").value = imgInstance.getAngle().toFixed();
 		document.getElementById("tamano_imagen").value = imgInstance.getWidth().toFixed()+","+imgInstance.getHeight().toFixed();
 		document.getElementById("img_profundidad_z").value = -1; //va a pelo x ahora no se como sacarlo del canvas
+		document.getElementById("canvas_binario").value = canvas.toDataURL('image/png');
 	}
 	
-function ver(){
-	var dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
-	window.open(dataUrl, "Ejemplo", "width=400, height=400"); //mostramos en popUp
-}
+	function ver(){
+		var dataUrl = canvas.toDataURL(); // obtenemos la imagen como png
+		window.open(dataUrl, "Ejemplo", "width=400, height=400"); //mostramos en popUp
+	}
 
+	//funcion para pasar el canvas a php
+	function sendToServer() {
+	    var data = canvas.toDataURL('image/png');
+	    var xhr = new XMLHttpRequest();
+	    xhr.onreadystatechange = function() {
+	      // request complete
+	      if (xhr.readyState == 4) {
+	        window.open('http://www.lostiemposcambian.com/blog/posts/guardando-pngs-html5/snapshots/'+xhr.responseText,'_blank');
+	      }
+	    }
+	    xhr.open('POST','http://www.lostiemposcambian.com/blog/posts/guardando-pngs-html5/snapshot.php',true);
+	    xhr.setRequestHeader('Content-Type', 'application/upload');
+	    xhr.send(data);
+	}
 </script>
 
 <!--  
