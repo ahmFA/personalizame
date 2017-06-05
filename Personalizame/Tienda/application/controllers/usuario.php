@@ -554,6 +554,39 @@ class Usuario extends CI_Controller{
 		$this->cesta();
 	}
 	
+	public function confirmacionPago(){
+		$datos['comprador']['tarjeta'] = '************'.substr($_POST['tarjeta'], 12,4);
+		$datos['comprador']['titular'] = $_POST['nombre'].' '.$_POST['apellidos'];
+		$datos['comprador']['fechaExp'] = $_POST['mes'].'/'.$_POST['anio'];
+		$datos['comprador']['direccion'] = $_POST['direccion'];
+		$datos['comprador']['cp'] = $_POST['cp'];
+		$datos['comprador']['localidad'] = $_POST['localidad'];
+		$datos['comprador']['provincia'] = $_POST['provincia'];
+		$datos['comprador']['pais'] = $_POST['pais'];
+		$datos['comprador']['mail'] = $_POST['mail'];
+		
+			$contador = 0;
+			foreach($_SESSION['productos'] as $producto){
+				$datos['productosCompra'][$contador] = $producto;
+				$contador++;
+			}
+		
+		
+		enmarcar2($this,'usuario/confirmacionPago', $datos);
+	}
+	
+	public function pagoRealizado(){
+		
+		unset($_SESSION['productos']);
+		
+		$_SESSION['num_producto'] = 0;
+		$_SESSION['total_productos'] = 0;
+		$_SESSION['carrito'] = 0;
+		$_SESSION['precioTotalPedido'] = 0;
+		
+		$this->cesta();
+	}
+	
 	
 }
 ?>
