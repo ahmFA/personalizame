@@ -571,7 +571,6 @@ class Usuario extends CI_Controller{
 				$contador++;
 			}
 		
-		
 		enmarcar2($this,'usuario/confirmacionPago', $datos);
 	}
 	
@@ -584,7 +583,7 @@ class Usuario extends CI_Controller{
 		$_SESSION['carrito'] = 0;
 		$_SESSION['precioTotalPedido'] = 0;
 		
-		$this->cesta();
+		enmarcar2($this,'usuario/confirmacionPagoPost');
 	}
 	
 	

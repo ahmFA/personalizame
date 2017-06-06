@@ -17,7 +17,7 @@
 			<div class="container">
 				<div class="row heading">
 					 <div class="col-lg-12">
-	                    <h2>Cesta de la compra</h2>
+	                    <h2>Crear producto</h2>
 	                </div>
 				</div>
 

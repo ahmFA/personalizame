@@ -298,9 +298,9 @@
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="hidden"><a href="#page-top"></a></li>
-
+				
 				<li><a class="page-scroll" href="#services">Productos</a></li>
-				<li><a class="page-scroll" href="#portfolio">Portfolio</a></li>
+				<li><a class="page-scroll" href="#portfolio">categorías</a></li>
 				<li><a class="page-scroll" href="#about">Nosotros</a></li>
 				<li><a class="page-scroll" href="#contact">Contacto</a></li>
 				<?php if(!isset($_SESSION['nick']) && !isset($_SESSION['perfil'])):?>
@@ -310,11 +310,11 @@
 					<?php if($_SESSION['perfil'] == 'Administrador'):?>
 						<li><a href="<?=base_url()?>home/indexAdmin">ADMIN</a></li>
 					<?php else :?>
-						<li><a href="<?=base_url()?>usuario/perfil">Mi perfil</a></li>	
+						<li><a href="<?=base_url()?>usuario/perfil">perfil</a></li>	
 					<?php endif;?>
 					
 					<li><a href="<?=base_url()?>usuario/logout">LOGOUT</a></li>
-					<li><a href="<?=base_url()?>usuario/cesta"><img alt="" src="<?= base_url() ?>assets/images/cesta.png">
+					<li><a href="<?=base_url()?>usuario/cesta"><img alt="" src="<?= base_url() ?>assets/images/carrito.png">
                                 <i id="carrito"><?= $_SESSION['carrito'] ?></i></a></li>
 					
 				<?php endif;?>
@@ -339,22 +339,22 @@
 		  </a>
 		</li>
 		<li class="c-circle-nav__item">
-		  <a href="#" class="c-circle-nav__link">
+		  <a href="http://www.facebook.com" class="c-circle-nav__link">
 			<center><img src="<?=base_url() ?>assets/images/Facebook.png" /></center>
 		  </a>
 		</li>
 		<li class="c-circle-nav__item">
-		  <a href="<?=base_url() ?>home/indexAdmin" class="c-circle-nav__link">
+		  <a href="http://www.pinterest.com" class="c-circle-nav__link">
 			<center><img src="<?=base_url() ?>assets/images/Pinterest.png" /></center>
 		  </a>
 		</li>
 		<li class="c-circle-nav__item">
-		  <a href="#" class="c-circle-nav__link">
+		  <a href="http://www.twitter.com" class="c-circle-nav__link">
 			<center><img src="<?=base_url() ?>assets/images/Twitter.png" /></center>
 		  </a>
 		</li>
 		<li class="c-circle-nav__item">
-		  <a href="#" class="c-circle-nav__link">
+		  <a href="http://www.google.com" class="c-circle-nav__link">
 			<center><img src="<?=base_url() ?>assets/images/Google.png" /></center>
 		  </a>
 		</li>
@@ -383,7 +383,7 @@
 						<h3 class="services-heading">Camisetas</h3>
 						<p>Personaliza tu camiseta para ser único, las opciones son 
 						ilimitadas. Te recomendamos que pongas la peor foto de tu pareja y la pasees con orgullo.</p>
-						<button type="submit" class="btn btn-2 ">Ver más</button>
+						<button type="submit" class="btn btn-2 ">Personaliza</button>
 					</div>
 					<div class="col-sm-4 services-item">
 						<div class="wrap-img">
@@ -392,16 +392,16 @@
 						<h3 class="services-heading">Tazas</h3>
 						<p>Toma café, té, chocolate caliente o unas lentejas si te apetece,
 						 pero tómatelas en una taza con estilo que tiene algo de tu personalidad.</p>
-						<button type="submit" class="btn btn-2 ">Ver más</button>
+						<button type="submit" class="btn btn-2 ">Personaliza</button>
 					</div>
 					<div class="col-sm-4 services-item">
 						<div class="wrap-img">
 							<img src="<?=base_url() ?>assets/images/taza.png" />
 						</div>
-						<h3 class="services-heading">Tazas</h3>
-						<p>Toma café, té, chocolate caliente o unas lentejas si te apetece,
-						 pero tómatelas en una taza con estilo que tiene algo de tu personalidad.</p>
-						<button type="submit" class="btn btn-2 ">Ver más</button>
+						<h3 class="services-heading">Llaveros</h3>
+						<p>Desde el momento en que te compres el llavero, vas a tener más miedo
+						 de que te roben las llaves de casa por lo bonito que es que por que roben en tu hogar.</p>
+						<button type="submit" class="btn btn-2 ">Personaliza</button>
 					</div>
 				</div>
 			</div>
@@ -412,7 +412,7 @@
 			<div class="container">
 				<div class="row heading">
 					 <div class="col-lg-12">
-	                    <h2>Portfolio</h2>
+	                    <h2>Categorías</h2>
 						<hr class="line01">
 	                    <div class="intro">Las imágenes que más gustan</div>
 	                </div>
@@ -543,13 +543,13 @@
 							<img src="<?=base_url() ?>assets/images/nosotros.jpg">
 						</div>
 						<ul class="list-inline social-buttons">
-                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            <li><a href="http://www.twitter.com"><i class="fa fa-twitter"></i></a>
                             </li>
-                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            <li><a href="http://www.facebook.com"><i class="fa fa-facebook"></i></a>
                             </li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                            <li><a href="http://www.linkedin.com"><i class="fa fa-linkedin"></i></a>
                             </li>
-							<li><a href="#"><i class="fa fa-google"></i></a>
+							<li><a href="http://www.google.com"><i class="fa fa-google"></i></a>
                             </li>
                         </ul>
 					</div>
@@ -627,14 +627,11 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6 sub-text">
-						<h2>Suscríbete</h2>
-                    	<p>y no te pierdas nada</p>
+						<h2>Regístrate</h2>
+                    	<p>¿a qué esperas?</p>
 					</div>
-					<div class="col-md-6 sub-form">
-						<form method="get" action="/search" id="subcribe-form">
-						  <input name="q" type="text" size="40" placeholder="Introduce tu email...  " />
-						  <input type="submit" name="Submit" value="Enviar">
-						</form>
+					<div class="col-md-6" style="padding-top: 20px; text-align: center;">
+						<a data-toggle="modal" href="#registro" class="btn btn-l"><strong>REGISTRO</strong></a>
 					</div>
 				</div>
 			</div>
@@ -646,71 +643,38 @@
 	<div class="wrap-footer">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-3 col-footer footer-1">
+				<div class="col-md-4 col-footer footer-1">
 					<div class="content">
 						<a href="#"><img src="<?=base_url() ?>assets/images/logo.png" alt=""></a>
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
-							euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-							Ut wisi enim ad. Lorem ipsum dolor sit amet, consectetuer</p>
+						
 					</div>
 				</div>
-				<div class="col-md-3 col-footer footer-2">
+				<div class="col-md-4 col-footer footer-2">
 					<div class="heading">
-						<h4>Partners</h4>
+						<h4>Sobre Nosotros</h4>
 					</div>
 					<div class="content">
 						<div class="row">
-							<div class="col-md-6">
-								<a href="#"><img src="<?=base_url() ?>assets/images/15.jpg" /></a>
-							</div>
-							<div class="col-md-6">
-								<a href="#"><img src="<?=base_url() ?>assets/images/16.jpg" /></a>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<a href="#"><img src="<?=base_url() ?>assets/images/17.jpg" /></a>
-							</div>
-							<div class="col-md-6">
-								<a href="#"><img src="<?=base_url() ?>assets/images/18.jpg" /></a>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<a href="#"><img src="<?=base_url() ?>assets/images/19.jpg" /></a>
-							</div>
-							<div class="col-md-6">
-								<a href="#"><img src="<?=base_url() ?>assets/images/20.jpg" /></a>
-							</div>
+							<p>Somos un par de chavales en la flor de la vida, aprendiendo de este bonito mundo
+							 que es el desarrollo web, tratando de aprobar el proyecto y así incorporarnos en el
+							  mercado laboral para ser los Fucking Masters of the Universe.</p>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3 col-footer footer-3">
+				<div class="col-md-4 col-footer footer-4">
 					<div class="heading">
-						<h4>About Us</h4>
-					</div>
-					<div class="content">
-						<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
-							euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-							Ut wisi enim ad. Lorem ipsum dolor sit amet, consectetuer
-							adipiscing elit, sed euismod tincidunt ut laoreet dolore magna
-							aliquam erat volutpat. Ut wisi enim ad</p>
-					</div>
-				</div>
-				<div class="col-md-3 col-footer footer-4">
-					<div class="heading">
-						<h4>Tags</h4>
+						<h4>Categorías</h4>
 					</div>
 					<div class="content">
 						<ul>
-							<li><a href="#">Lorem</a></li>
-							<li><a href="#">Ipsum</a></li>
-							<li><a href="#">Euismod</a></li>
-							<li><a href="#">Laoreet</a></li>
-							<li><a href="#">Dolore</a></li>
-							<li><a href="#">Dasdas</a></li>
-							<li><a href="#">Consectetuer</a></li>
-							<li><a href="#">Aasdasls</a></li>
+							<li><a href="#">Deportes</a></li>
+							<li><a href="#">Terror</a></li>
+							<li><a href="#">Infantil</a></li>
+							<li><a href="#">Animales</a></li>
+							<li><a href="#">Ciencia Ficción</a></li>
+							<li><a href="#">Profesiones</a></li>
+							<li><a href="#">Humor</a></li>
+							<li><a href="#">Gaming</a></li>
 						</ul>
 					</div>
 
@@ -729,7 +693,6 @@
 	</div>
 </footer>
 <!-- Footer -->
-
 
 <!-- jQuery -->
 <script src="<?=base_url() ?>assets/js/jquery.min.js"></script>
