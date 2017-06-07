@@ -396,7 +396,7 @@
 					</div>
 					<div class="col-sm-4 services-item">
 						<div class="wrap-img">
-							<img src="<?=base_url() ?>assets/images/taza.png" />
+							<img src="<?=base_url() ?>assets/images/llavero.png" />
 						</div>
 						<h3 class="services-heading">Llaveros</h3>
 						<p>Desde el momento en que te compres el llavero, vas a tener más miedo
@@ -439,7 +439,7 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/ciencia-ficcion.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/ficcion.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
 							<h4>Ciencia Ficción</h4>
@@ -453,7 +453,7 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/dibujos.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/infantil.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
 							<h4>Infantil</h4>
@@ -467,10 +467,10 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/mar.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/humor.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
-							<h4>Mar</h4>
+							<h4>Humor</h4>
 							<p class="text-muted"></p>
 						</div>
 					</div>
@@ -509,10 +509,10 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/calavera.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/gaming.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
-							<h4>Calaveras</h4>
+							<h4>Gaming</h4>
 							<p class="text-muted"></p>
 						</div>
 					</div>
@@ -523,10 +523,10 @@
 									<i class="fa fa-eye fa-3x"></i>
 								</div>
 							</div>
-							<img src="<?=base_url() ?>assets/images/cocina.jpg" class="img-responsive" alt="">
+							<img src="<?=base_url() ?>assets/images/animales.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
-							<h4>Cocina</h4>
+							<h4>Animales</h4>
 							<p class="text-muted"></p>
 						</div>
 					</div>
