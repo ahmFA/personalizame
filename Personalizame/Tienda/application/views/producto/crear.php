@@ -85,6 +85,9 @@ var conexion;
 	function mostrarElementosArticulo(){
 		document.getElementById("idElementosArticulo").innerHTML = conexion.responseText ;
 		crearFondoArticulo();
+
+		//manda datos al canvas oculto que acumula todo
+		componerProductoFinal();
 	}
 
 	function accionAJAX() {
@@ -128,6 +131,9 @@ var conexion;
 	function mostrarFondoArticulo(){
 		document.getElementById("idFondo_articulo").innerHTML = "";
 		document.getElementById("idFondo_articulo").innerHTML = conexion.responseText ;
+
+		//manda datos al canvas oculto que acumula todo
+		componerProductoFinal();
 	}
 
 	//conexion Ajax para traer el listado de imagenes de la categoría seleccionada
@@ -156,34 +162,9 @@ var conexion;
 
 <script type="text/javascript">
 	
-	function validarNombreProducto(){
-		var valido = false;
-		var miProducto = document.getElementById("idNombreProducto").value.length;
-		//longitud entre 3 y 30 caracteres
-		if(miProducto >= 3 && miProducto <= 30){
-			valido = true;
-		}
-		return valido;
-	}
-	
-	function validarTodo(){
-		var foco = true;
-		
-		//NOM PRODUCTO
-		var valProducto = validarNombreProducto();
-		if (valProducto == false){
-			document.getElementById("idNombreProducto").style.color = "red";
-			if (foco == true){
-				document.getElementById("idNombreProducto").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("idNombreProducto").style.color = "black";
-		}
-		
+	function validarTodo(){		
 		//Si todo esta a TRUE hace el submit
-		if(valProducto){
+		if(true){
 			//document.form1.submit();
 			crear();
 		}	
@@ -267,23 +248,23 @@ var conexion;
                                 	<input type="file" name="imagen" id="imagen">
                                 </span>
                                 <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput" id="quitar">Quitar</a>
-                                <span class="btn btn-success fileinput-exists" id="idImagenUser" onclick="selectImagen('user')">OK</span>
+                                <span class="btn btn-success fileinput-exists" id="idImagenUser" onclick="selectImagen('user',0)">OK</span>
                             </div>
                        	</div>
                             
 		 		<!-- fin de imagen  -->
 		 		
 		 		<!-- Zona en la que irá la imagen -->
-		 		<h5>ZONA</h5>
+		 		<h5>UBICACIÓN</h5>
 				<div class="radio m-b-15">
 					<label>
-						<input type="radio" name="zona" value="Delantera" checked="checked">
+						<input type="radio" name="ubicacion" value="Delantera" checked="checked">
 						<i class="input-helper"></i>
 						Delantera
 					</label>
 					
 					<label>
-						<input type="radio" name="zona" value="Trasera">
+						<input type="radio" name="ubicacion" value="Trasera">
 						<i class="input-helper"></i>
 						Trasera
 					</label>
@@ -339,7 +320,7 @@ var conexion;
 			<div class="form-group col-xs-12">
 			<br/><br/>
 				<h2>Delantero - Modificalo a tu gusto</h2>
-				<input id="idBotonVer_front" type="button" value="Vista Previa" onclick="ver();">
+				<input id="idBotonVer_front" type="button" value="Vista Previa" onclick="verFinal();">
 				<input id="idBotonLimpiar_back" type="button" value="Limpiar" onclick="limpiar();"><br/>
 				
 					<div class="objeto" style="width: 350px; height: 350px">
@@ -359,7 +340,7 @@ var conexion;
 			<div class="form-group col-xs-12">
 			<br/><br/>
 				<h2>Trasero - Modificalo a tu gusto</h2>
-				<input id="idBotonVer_back" type="button" value="Vista Previa" onclick="ver();">
+				<input id="idBotonVer_back" type="button" value="Vista Previa" onclick="verFinal();">
 				<input id="idBotonLimpiar_back" type="button" value="Limpiar" onclick="limpiar();"><br/>
 			
 					<div class="objeto" style="width: 350px; height: 350px">
@@ -372,6 +353,7 @@ var conexion;
 	<!-- fin canvas trasero -->		
 						
 		<!-- campos ocultos que pasarán los datos de los canvas de la imagen -->
+		<input type="hidden" name="img_front_id" id="img_front_id">
 		<input type="hidden" name="img_front_rotacion" id="img_front_rotacion">
 		<input type="hidden" name="img_front_coordenada_x" id="img_front_coordenada_x">
 		<input type="hidden" name="img_front_coordenada_y" id="img_front_coordenada_y">
@@ -379,8 +361,8 @@ var conexion;
 		<input type="hidden" name="img_front_tamano_ancho" id="img_front_tamano_ancho">
 		<input type="hidden" name="img_front_tamano_alto" id="img_front_tamano_alto">	
 		<input type="hidden" name="img_front_profundidad_z" id="img_front_profundidad_z">
-		<!-- <input type="hidden" name="canvas_binario" id="canvas_binario"> -->
 		
+		<input type="hidden" name="img_back_id" id="img_back_id">
 		<input type="hidden" name="img_back_rotacion" id="img_back_rotacion">
 		<input type="hidden" name="img_back_coordenada_x" id="img_back_coordenada_x">
 		<input type="hidden" name="img_back_coordenada_y" id="img_back_coordenada_y">
@@ -388,9 +370,10 @@ var conexion;
 		<input type="hidden" name="img_back_tamano_ancho" id="img_back_tamano_ancho">
 		<input type="hidden" name="img_back_tamano_alto" id="img_back_tamano_alto">
 		<input type="hidden" name="img_back_profundidad_z" id="img_back_profundidad_z">
-		<!-- <input type="hidden" name="canvas_binario" id="canvas_binario"> -->
 				
 		<!-- campos ocultos que pasarán los datos de los canvas de los textos -->
+		<input type="hidden" name="txt_front_id_fuente" id="txt_front_id_fuente">
+		<input type="hidden" name="txt_front_id_color" id="txt_front_id_color">
 		<input type="hidden" name="txt_front_rotacion" id="txt_front_rotacion">
 		<input type="hidden" name="txt_front_coordenada_x" id="txt_front_coordenada_x">
 		<input type="hidden" name="txt_front_coordenada_y" id="txt_front_coordenada_y">
@@ -401,6 +384,8 @@ var conexion;
 		<input type="hidden" name="txt_front_datos" id="txt_front_datos">
 		<input type="hidden" name="txt_front_color" id="txt_front_color">
 		
+		<input type="hidden" name="txt_back_id_fuente" id="txt_back_id_fuente">
+		<input type="hidden" name="txt_back_id_color" id="txt_back_id_color">
 		<input type="hidden" name="txt_back_rotacion" id="txt_back_rotacion">
 		<input type="hidden" name="txt_back_coordenada_x" id="txt_back_coordenada_x">
 		<input type="hidden" name="txt_back_coordenada_y" id="txt_back_coordenada_y">
@@ -410,10 +395,13 @@ var conexion;
 		<input type="hidden" name="txt_back_fuente" id="txt_back_fuente">
 		<input type="hidden" name="txt_back_datos" id="txt_back_datos">
 		<input type="hidden" name="txt_back_color" id="txt_back_color">
-				
+		
+		<!-- campos ocultos que pasarán los canvas para guardar diseños y producto -->
+		<input type="hidden" name="canvas_final_binario" id="canvas_final_binario"> 	
+			
 			<div id="img_hidden"><img id="my-image" class="hidden"/></div>
 		
-			<div class="objeto_final" style="width: 700px; height: 350px">
+			<div class="objeto_final hidden" style="width: 700px; height: 350px">
 				<div id="marco_final" style="width: 700px; height: 350px">
 					<canvas id="canvas_final" width="700" height="350"></canvas>
 				</div>
@@ -422,7 +410,6 @@ var conexion;
 		</div>
 		<div class="row">
 			<input id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
-			<input id="idBotonVerResultado" type="button" value="Ver Resultado" onclick="componerProductoFinal()">
 		</div>
 	</div>
 	</form>
@@ -433,7 +420,10 @@ var conexion;
     var imgElement_front, imgElement_back;
     var imgInstance_front, imgInstance_back;
     var text_front, text_back;
-	
+
+  	var canvas = document.getElementById("canvas_final");
+	var ctx = canvas.getContext("2d");
+    
 	$("#idBotonAplicar").on({
 		'click':function(){
 		
@@ -474,7 +464,7 @@ var conexion;
 	function pintarTexto(){
 
 		// delantera-trasera para saber zona donde pintar
-		var img_posicion = $('input[name="zona"]:checked').val();
+		var img_posicion = $('input[name="ubicacion"]:checked').val();
 
 		if(img_posicion == "Delantera"){
 		
@@ -513,10 +503,15 @@ var conexion;
 			document.getElementById("txt_front_fuente").value = text_front.getFontFamily();
 			document.getElementById("txt_front_datos").value = text_front.getText();
 			document.getElementById("txt_front_color").value = text_front.getFill();
+			//guardo los id para usarlos al insertar en la bbdd
+			document.getElementById("txt_front_id_fuente").value = document.getElementById("idFuente").value;
+			document.getElementById("txt_front_id_color").value = document.getElementById("idColor").value;
 
 			console.log("txt_front_fuente: "+ text_front.getFontFamily());
 			console.log("txt_front_datos: "+ text_front.getText());
 			console.log("txt_front_color: "+ text_front.getFill());
+			console.log("txt_front_id_fuente: "+ document.getElementById("idFuente").value);
+			console.log("txt_front_id_color: "+ document.getElementById("idColor").value);
 		}
 		else{
 			//limpiar lo anterior
@@ -554,10 +549,15 @@ var conexion;
 			document.getElementById("txt_back_fuente").value = text_back.getFontFamily();
 			document.getElementById("txt_back_datos").value = text_back.getText();
 			document.getElementById("txt_back_color").value = text_back.getFill();
+			//guardo los id para usarlos al insertar en la bbdd
+			document.getElementById("txt_back_id_fuente").value = document.getElementById("idFuente").value;
+			document.getElementById("txt_back_id_color").value = document.getElementById("idColor").value;
 
 			console.log("txt_back_fuente: "+ text_back.getFontFamily());
 			console.log("txt_back_datos: "+ text_back.getText());
 			console.log("txt_back_color: "+ text_back.getFill());
+			console.log("txt_back_id_fuente: "+ document.getElementById("idFuente").value);
+			console.log("txt_back_id_color: "+ document.getElementById("idColor").value);
 		}
 
 		prepararDatosTxt();
@@ -566,7 +566,7 @@ var conexion;
 	//insertar en campos ocultos los parametros de cada texto para enviarlos a tablas
 	function prepararDatosTxt(){
 		// delantera-trasera para saber zona donde pintar
-		var img_posicion = $('input[name="zona"]:checked').val();
+		var img_posicion = $('input[name="ubicacion"]:checked').val();
 
 		if(img_posicion == "Delantera"){
 			document.getElementById("txt_front_coordenada_x").value = text_front.getLeft().toFixed();
@@ -595,9 +595,12 @@ var conexion;
 			console.log("txt_back_rotacion: "+ text_back.getAngle().toFixed());
 			console.log("txt_back_tamano_fuente: "+ (text_back.getHeight()*0.85).toFixed());
 		}
+
+		//manda datos al canvas oculto que acumula todo
+		componerProductoFinal();
 	}
 	
-	function selectImagen(ruta){
+	function selectImagen(ruta,idImagen){
 		//borrar imagen anterior
 		var imagen = document.getElementById('my-image');
 		imagen.parentNode.removeChild(imagen);
@@ -616,6 +619,7 @@ var conexion;
 		
         imagen.setAttribute("id","my-image");
 		imagen.setAttribute("class","hidden");	
+		imagen.setAttribute("data-idimagen",idImagen);
 
 		//aplicar la reduccion necesaria para que entre en el canvas sin salirse
 		var reduce = calcularTamanoImagen(imagen);
@@ -648,7 +652,7 @@ var conexion;
 	
 	function pintar(){
 		// delantera-trasera para saber zona donde pintar
-		var img_posicion = $('input[name="zona"]:checked').val();
+		var img_posicion = $('input[name="ubicacion"]:checked').val();
 
 		if(img_posicion == "Delantera"){
 		
@@ -679,6 +683,11 @@ var conexion;
 	    	    transparentCorners: false,
 	    	    rotatingPointOffset: 5,
 	    	});
+
+	    	//guardo los id para usarlos al insertar en la bbdd
+			document.getElementById("img_front_id").value = $("#my-image").data("idimagen");
+
+			console.log("ID IMAGEN FRONT: "+ $("#my-image").data("idimagen"));
 		}
 		else{
 			//limpiar la imagen anterior
@@ -709,6 +718,10 @@ var conexion;
 	    	    rotatingPointOffset: 5,
 	    	});
 
+	    	//guardo los id para usarlos al insertar en la bbdd
+			document.getElementById("img_back_id").value = $("#my-image").data("idimagen");
+
+			console.log("ID IMAGEN BACK: "+ $("#my-image").data("idimagen"));
 		}
 
     	prepararDatosImg();
@@ -717,7 +730,7 @@ var conexion;
 	//insertar en campos ocultos los parametros de cada imagen para enviarlos a tablas
 	function prepararDatosImg(){
 		// delantera-trasera para saber zona donde pintar
-		var img_posicion = $('input[name="zona"]:checked').val();
+		var img_posicion = $('input[name="ubicacion"]:checked').val();
 
 		if(img_posicion == "Delantera"){
 			document.getElementById("img_front_coordenada_x").value = imgInstance_front.getLeft().toFixed();
@@ -727,11 +740,12 @@ var conexion;
 			document.getElementById("img_front_tamano_ancho").value = imgInstance_front.getWidth().toFixed();
 			document.getElementById("img_front_tamano_alto").value = imgInstance_front.getHeight().toFixed();
 			document.getElementById("img_front_profundidad_z").value = -1; //va a pelo x ahora no se como sacarlo del canvas
-			//document.getElementById("canvas_binario").value = canvas.toDataURL('image/png'); //imagen final de producto
+			
 			console.log("img_front_coordenada_x: "+ imgInstance_front.getLeft().toFixed());
 			console.log("img_front_coordenada_y: "+ imgInstance_front.getTop().toFixed());
 			console.log("img_front_rotacion: "+ imgInstance_front.getAngle().toFixed());
-			console.log("img_front_tamano: "+ imgInstance_front.getWidth().toFixed()+","+imgInstance_front.getHeight().toFixed());
+			console.log("img_front_tamano_ancho: "+ imgInstance_front.getWidth().toFixed());
+			console.log("img_front_tamano_alto: "+ imgInstance_front.getHeight().toFixed());
 		}
 		else{
 			document.getElementById("img_back_coordenada_x").value = imgInstance_back.getLeft().toFixed();
@@ -745,13 +759,17 @@ var conexion;
 			console.log("img_back_coordenada_x: "+ imgInstance_back.getLeft().toFixed());
 			console.log("img_back_coordenada_y: "+ imgInstance_back.getTop().toFixed());
 			console.log("img_back_rotacion: "+ imgInstance_back.getAngle().toFixed());
-			console.log("img_back_tamano: "+ imgInstance_back.getWidth().toFixed()+","+imgInstance_back.getHeight().toFixed());
+			console.log("img_back_tamano_ancho: "+ imgInstance_back.getWidth().toFixed());
+			console.log("img_back_tamano_alto: "+ imgInstance_back.getHeight().toFixed());
 		}
+
+		//manda datos al canvas oculto que acumula todo
+		componerProductoFinal();
 	}
 	
 	function ver(){
 		// delantera-trasera para saber zona a mostrar
-		var img_posicion = $('input[name="zona"]:checked').val();
+		var img_posicion = $('input[name="ubicacion"]:checked').val();
 		var dataUrl;
 			
 		if(img_posicion == "Delantera"){
@@ -766,7 +784,7 @@ var conexion;
 
 	function limpiar(){
 		// delantera-trasera para saber zona a mostrar
-		var img_posicion = $('input[name="zona"]:checked').val();
+		var img_posicion = $('input[name="ubicacion"]:checked').val();
 		if(img_posicion == "Delantera"){
 			for(i = canvas_front.size()-1; i >= 0; i--){
 				canvas_front.item(i).remove();
@@ -820,94 +838,58 @@ var conexion;
 			document.getElementById("img_back_tamano_alto").value = "";
 			document.getElementById("img_back_profundidad_z").value = "";
 		}
+
+		//limpia datos en el canvas oculto que acumula todo
+		componerProductoFinal();
 	}
 
 		//************************************************************
+		//******* canvas auxiliar oculto donde se acumula todo *******
 		//************************************************************
-	var canvas_final = new fabric.Canvas('canvas_final');
-	var imgElement_front_final, imgElement_back_final;
-	var imgInstance_front_final, imgInstance_back_final;
-	var text_front_final, text_back_final;
-	var dataUrl;
-	
+
 		function componerProductoFinal(){
-			//pinto el color de fondo con el seleccionado en formulario
-			canvas_final.add(new fabric.Rect({ left: 0, top: 0, fill: $('input[name="id_color_base"]:checked').data("valor"), width: 750, height: 350 }));
 
-			//pinto la imagen transparente que será la parte frontal del objeto seleccionado
-			imgInstance_fondo_final = new fabric.Image(document.getElementById('articulo-front'), {
-		          left: 0,
-		          top: 0,
-		          angle: 0,
-		          opacity: 1
-		    });
-			canvas_final.add(imgInstance_fondo_final);
-
-			//pinto la imagen transparente que será la parte trasera del objeto seleccionado
-			imgInstance_fondo_final_b = new fabric.Image(document.getElementById('articulo-front'), {
-		          left: 350,
-		          top: 0,
-		          angle: 0,
-		          opacity: 1
-		    });
-			canvas_final.add(imgInstance_fondo_final_b);
+			var fondo, img, img2;
 			
-			//pinto la imagen seleccionada en el canvas frontal usando los parametros recogidos arriba
-			imgInstance_front_final = new fabric.Image(imgElement_front, {
-	          left: parseInt($("#img_front_coordenada_x").val()),
-	          top: parseInt($("#img_front_coordenada_y").val()),
-	          width: parseInt($("#img_front_tamano_ancho").val()),
-	          heigth: parseInt($("#img_front_tamano_alto").val()),
-	          angle: parseInt($("#img_front_rotacion").val()),
-	          opacity: 1
-	        });
-			canvas_final.add(imgInstance_front_final);
+			ctx.fillStyle= $('input[name="id_color_base"]:checked').data("valor");
+			ctx.fillRect(0,0,700,350);	
 
-	        //pinto el texto seleccionado en el canvas frontal usando los parametros recogidos arriba
-		    text_front_final = new fabric.Text($("#txt_front_datos").val(), { 
-				left: parseInt($("#txt_front_coordenada_x").val()), 
-				top: parseInt($("#txt_front_coordenada_y").val()),
-				fontFamily: $("#txt_front_fuente").val(),
-				fontSize: parseInt($("#txt_front_tamano_fuente").val()),
-				fill: $("#txt_front_color").val(),
-				angle: parseInt($("#txt_front_rotacion").val())
-			});
-			canvas_final.add(text_front_final);
+			//las imagenes se cargan dentro del onload de las otras para que de tiempo a cargar todas sin errores
+			fondo = new Image();
+			fondo.src = document.getElementById('articulo-front').src;
+			fondo.onload = function(){
+				ctx.drawImage(fondo, 0, 0);
+				ctx.drawImage(fondo, 350, 0);
 
-			alert(350 + parseInt($("#img_back_coordenada_x").val()));
-			alert(parseInt($("#img_back_coordenada_y").val()));
-			alert(parseInt($("#img_back_tamano_ancho").val()));
-			alert(parseInt($("#img_back_tamano_alto").val()));
-			alert(parseInt($("#img_back_rotacion").val()));
-			alert(imgElement_back);
-			//pinto la imagen seleccionada en el canvas trasero usando los parametros recogidos arriba
-			imgInstance_back_final = new fabric.Image(imgElement_back, {
-	          left: 350 + parseInt($("#img_back_coordenada_x").val()),
-	          top: parseInt($("#img_back_coordenada_y").val()),
-	          width: parseInt($("#img_back_tamano_ancho").val()),
-	          heigth: parseInt($("#img_back_tamano_alto").val()),
-	          angle: parseInt($("#img_back_rotacion").val()),
-	          opacity: 1
-	        });
-			canvas_final.add(imgInstance_back_final);
+				img = new Image();
+				img.src = document.getElementById('canvas_front').toDataURL("image/png");
+				img.onload = function(){
+					ctx.drawImage(img, 30, 40,parseInt(canvas_front.width), parseInt(canvas_front.height));
 
-			//pinto el texto seleccionado en el canvas trasero usando los parametros recogidos arriba
-		    text_back_final = new fabric.Text($("#txt_back_datos").val(), { 
-				left: 350 + parseInt($("#txt_back_coordenada_x").val()), 
-				top: parseInt($("#txt_back_coordenada_y").val()),
-				fontFamily: $("#txt_back_fuente").val(),
-				fontSize: parseInt($("#txt_back_tamano_fuente").val()),
-				fill: $("#txt_back_color").val(),
-				angle: parseInt($("#txt_back_rotacion").val())
-			});
-			canvas_final.add(text_back_final);
-			
-			dataUrl = canvas_final.toDataURL(); // obtenemos la imagen como png
-			window.open(dataUrl, "Ejemplo", "width=900, height=500"); //mostramos en popUp
+					img2 = new Image();
+					img2.src = document.getElementById('canvas_back').toDataURL("image/png");
+					img2.onload = function(){
+						ctx.drawImage(img2, 380, 40,parseInt(canvas_back.width), parseInt(canvas_back.height));
+
+						//setTimeOut(
+						document.getElementById("canvas_final_binario").value = canvas.toDataURL('image/png') ;
+						//, 500);
+						//guarda la imagen final de producto como codigo para pasarla como otro parametro mas
+						//le pongo un retardo para que tenga tiempo de pintarse el ultimo draw antes de exportar
+						//si da problemas meterle mas tiempo
+					}
+				}
+			}
+
 			
 
 		}
+		
 
+		function verFinal(){
+			var imagPNG = canvas.toDataURL(); // obtenemos la imagen como png
+			window.open(imagPNG, "Ejemplo", "width=900, height=500"); //mostramos en popUp
+		}
 		//************************************************************************
 		//************************************************************************
 </script>

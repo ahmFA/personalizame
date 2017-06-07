@@ -113,5 +113,9 @@ class Texto_model extends CI_Model{
 		R::close();
 	}
 
+	//cuando inserto los datos necesito recuperar el id que le han asignado para pasarlo a otro bean asi lo recupero
+	public function getPorCampos($id_usuario,$id_sesion,$txt_datos){
+		return R::findOne('texto','where datos_texto = ? and (id_usuario = ? or id_sesion = ?)',[$txt_datos,$id_usuario,$id_sesion]);
+	}
 }
 ?>

@@ -9,13 +9,6 @@ class Producto extends CI_Controller{
 	 * muestra el formulario de crear producto
 	 */
 	public function crear(){
-		/*
-		$this->load->model('diseno_model');
-		$this->load->model('articulo_model');
-		$datos ['body'] ['disenos'] = $this->diseno_model->getTodos();
-		$datos ['body'] ['articulos'] = $this->articulo_model->listar();
-		enmarcar($this,'producto/crear',$datos);
-		*/
 		$this->load->model('fuente_model');
 		$this->load->model('tamano_model');
 		$this->load->model('color_model');
@@ -40,18 +33,147 @@ class Producto extends CI_Controller{
 		$id_articulo = $_POST['id_articulo'];
 		$id_talla = $_POST['id_talla'];
 		$id_color_base = $_POST['id_color_base'];
-		//$id_color_secundario = $_POST['id_color_secundario']; //era para camisetas de rayas
-		$id_diseno_front = $_POST['id_diseno_front'];
-		$id_diseno_back = $_POST['id_diseno_back'];
-		$nombre_producto = $_POST['nombre_producto'];
-		$imagen_producto = $_POST['imagen_producto'];  //imagen del producto ya terminado  
-		//$precio = $_POST['precio']; //suma precio de diseños
-		//$coste = $_POST['coste']; //suma costes de diseños 
+		$img_front_id =  $_POST['img_front_id'];
+		$img_front_rotacion = $_POST['img_front_rotacion'];
+		$img_front_coordenada_x = $_POST['img_front_coordenada_x'];
+		$img_front_coordenada_y = $_POST['img_front_coordenada_y'];
+		$img_front_tamano = $_POST['img_front_tamano'];
+		$img_front_tamano_ancho = $_POST['img_front_tamano_ancho'];
+		$img_front_tamano_alto = $_POST['img_front_tamano_alto'];
+		$img_front_profundidad_z = $_POST['img_front_profundidad_z'];
+		$img_back_id =  $_POST['img_back_id'];
+		$img_back_rotacion = $_POST['img_back_rotacion'];
+		$img_back_coordenada_x = $_POST['img_back_coordenada_x'];
+		$img_back_coordenada_y = $_POST['img_back_coordenada_y'];
+		$img_back_tamano = $_POST['img_back_tamano'];
+		$img_back_tamano_ancho = $_POST['img_back_tamano_ancho'];
+		$img_back_tamano_alto = $_POST['img_back_tamano_alto'];
+		$img_back_profundidad_z = $_POST['img_back_profundidad_z'];
+		$txt_front_id_fuente = $_POST['txt_front_id_fuente'];
+		$txt_front_id_color = $_POST['txt_front_id_color'];
+		$txt_front_rotacion = $_POST['txt_front_rotacion'];
+		$txt_front_coordenada_x = $_POST['txt_front_coordenada_x'];
+		$txt_front_coordenada_y = $_POST['txt_front_coordenada_y'];
+		$txt_front_texto_ancho = $_POST['txt_front_texto_ancho'];
+		$txt_front_texto_alto = $_POST['txt_front_texto_alto'];
+		$txt_front_tamano_fuente = $_POST['txt_front_tamano_fuente'];
+		$txt_front_fuente = $_POST['txt_front_fuente'];
+		$txt_front_datos = $_POST['txt_front_datos'];
+		$txt_front_color = $_POST['txt_front_color'];
+		$txt_back_id_fuente = $_POST['txt_back_id_fuente'];
+		$txt_back_id_color = $_POST['txt_back_id_color'];
+		$txt_back_rotacion = $_POST['txt_back_rotacion'];
+		$txt_back_coordenada_x = $_POST['txt_back_coordenada_x'];
+		$txt_back_coordenada_y = $_POST['txt_back_coordenada_y'];
+		$txt_back_texto_ancho = $_POST['txt_back_texto_ancho'];
+		$txt_back_texto_alto = $_POST['txt_back_texto_alto'];
+		$txt_back_tamano_fuente = $_POST['txt_back_tamano_fuente'];
+		$txt_back_fuente = $_POST['txt_back_fuente'];
+		$txt_back_datos = $_POST['txt_back_datos'];
+		$txt_back_color = $_POST['txt_back_color'];
 		$fecha_alta = strftime("%Y/%m/%d");  //fecha actual en Formato(YYYY/MM/DD)
 		$fecha_baja = ""; // será vacio al darse de alta
 		$motivo_baja = ""; // será vacio al darse de alta
 		$disponible = "Si"; // los diseños al crearse estarán disponibles, pasa a NO al darlos de baja
 		$id_sesion = $_POST['id_sesion']; // para tener un id único en caso de que el usuario no se loguee y sea Invitado
+		
+		
+		$var_time = strftime("%Y%m%d%H%M%S"); //se añade al nombre de los diferentes elementos como dato unico para que no se repitan
+		
+		$this->load->model('texto_model');
+		//precio y coste de los textos 
+		$txt_precio = 1;
+		$txt_coste = 0.5;
+		
+		//Los textos son opcionales por lo que podrian venir vacios solo se hace insert si vienen datos
+		if (!empty($txt_front_datos)){
+			$this->texto_model->crear($id_usuario,$txt_front_datos,$txt_front_tamano_fuente,$txt_front_id_fuente,
+					$txt_front_rotacion,$txt_front_texto_alto,$txt_front_texto_ancho,$txt_front_id_color,$txt_front_coordenada_x,
+					$txt_front_coordenada_y,$txt_precio,$txt_coste,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);		
+			
+			//usando usuario o sesion recuperar el id que le ha otorgado al texto para pasarselo al diseño 
+			$datosTextoF = $this->texto_model->getPorCampos($id_usuario,$id_sesion,$txt_front_datos);
+			$id_texto_front = $datosTextoF->id;
+			
+			echo("TEXTO F: ".$id_texto_front);
+		}
+		
+
+		if (!empty($txt_back_datos)){
+			$this->texto_model->crear($id_usuario,$txt_back_datos,$txt_back_tamano_fuente,$txt_back_id_fuente,
+				$txt_back_rotacion,$txt_back_texto_alto,$txt_back_texto_ancho,$txt_back_id_color,$txt_back_coordenada_x,
+				$txt_back_coordenada_y,$txt_precio,$txt_coste,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
+		
+			//usando usuario o sesion recuperar el id que le ha otorgado al texto para pasarselo al diseño
+			$datosTextoB = $this->texto_model->getPorCampos($id_usuario,$id_sesion,$txt_back_datos);
+			$id_texto_back = $datosTextoB->id;
+		
+			echo("TEXTO B: ".$id_texto_back);
+		}
+		
+		
+		$this->load->model('diseno_model');		
+		//$img_front_tamano_ancho
+		//$img_front_tamano_alto //guardo AnchoxAlto si hace falta separarlo coger estas variables y crear los campos
+		
+		
+		//Los disenos son opcionales por lo que podrian venir vacios solo se hace insert si vienen datos
+		if (!empty($txt_front_datos) || !empty($img_front_id)){
+			$nombre_diseno = 'dis_f_'.$id_usuario.'_'.$var_time.'.png';
+			$comentario_diseno ="";
+			$ubicacion = "Delantera";
+			
+			$this->diseno_model->crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,
+					$img_front_id,$img_front_tamano,$img_front_rotacion,$img_front_coordenada_x,$img_front_coordenada_y,
+					$img_front_profundidad_z,$id_texto_front,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
+	
+			//usando nombre,ubicacion, usuario o sesion recuperar el id que le ha otorgado al texto para pasarselo al diseño
+			$datosDisenoF = $this->diseno_model->getPorCampos($id_usuario,$id_sesion,$nombre_diseno,$ubicacion);
+			$id_diseno_front = $datosDisenoF->id;
+			
+			echo("DISENO F: ".$id_diseno_front);
+		}
+		
+		if (!empty($txt_back_datos) || !empty($img_back_id)){
+			$nombre_diseno = 'dis_b_'.$id_usuario.'_'.$var_time.'.png';
+			$comentario_diseno ="";
+			$ubicacion = "Trasera";
+			$this->diseno_model->crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,
+					$img_back_id,$img_back_tamano,$img_back_rotacion,$img_back_coordenada_x,$img_back_coordenada_y,
+					$img_back_profundidad_z,$id_texto_back,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
+			
+			//usando nombre,ubicacion, usuario o sesion recuperar el id que le ha otorgado al texto para pasarselo al diseño
+			$datosDisenoB = $this->diseno_model->getPorCampos($id_usuario,$id_sesion,$nombre_diseno,$ubicacion);
+			$id_diseno_back = $datosDisenoB->id;
+			
+			echo("DISENO B: ".$id_diseno_back);
+		}
+		
+		
+		//nombre del producto e imagen a guardar
+		$nombre_producto = 'prod_'.$id_usuario.'_'.$var_time; 
+		$imagen_producto = $nombre_producto.'.png';  //nombre de imagen al guardarse
+		
+		//++++++++++ para guardar imagen en servidor ++++++++++
+		$canvas_final_binario = $_POST['canvas_final_binario'];
+		
+		if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/productos/')){
+			mkdir($_SERVER['DOCUMENT_ROOT'].'/img/productos/');
+		}
+			
+		$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/productos/';
+		
+		// Filter out the headers (data:,) part.
+		$filteredData=substr($canvas_final_binario, strpos($canvas_final_binario, ",")+1);
+		// Need to decode before saving since the data we received is already base64 encoded
+		$decodedData=base64_decode($filteredData);
+		
+		// store in server
+		$fp = fopen($directorio.$imagen_producto, 'wb');
+		$ok = fwrite( $fp, $decodedData);
+		fclose( $fp );
+		
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++
 		
 		$this->load->model('producto_model');
 		$this->producto_model->crear($id_usuario,$id_articulo,$id_talla,$id_color_base,$id_diseno_front,$id_diseno_back,$nombre_producto,$imagen_producto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);

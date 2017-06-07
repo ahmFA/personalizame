@@ -105,6 +105,10 @@ class Diseno_model extends CI_Model{
 		R::store($diseno);
 		R::close();
 	}
-
+	
+	//cuando inserto los datos necesito recuperar el id que le han asignado para pasarlo a otro bean, asi lo recupero
+	public function getPorCampos($id_usuario,$id_sesion,$nombre_diseno,$ubicacion){
+		return R::findOne('diseno','where nombre_diseno = ? and ubicacion = ? and (id_usuario = ? or id_sesion = ?)',[$nombre_diseno,$ubicacion,$id_usuario,$id_sesion]);
+	}
 }
 ?>
