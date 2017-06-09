@@ -51,3 +51,18 @@
   </div> 
 </div>
  -->
+ <?php 
+ 
+ if($_SESSION['perfil'] != 'Administrador' ){
+ 	header("Location:".base_url()."home");
+ }
+ 	
+ 	
+ 	
+?>
+ 
+ 
+ 
+ 
+ 
+ 

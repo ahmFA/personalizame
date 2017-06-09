@@ -11,8 +11,9 @@ class Usuario_model extends CI_Model{
 		return  R::findOne('usuario','nick = ?',[$nick]) != null ? true : false;
 	}
 	
-	private function validarRegistro($nick, $mail) {
-		return  R::findOne('usuario','where nick like ? and (mail1 like ? or mail2 like ?)',[$nick, $mail, $mail]) != null ? false : true;
+	public function validarRegistro($nick, $mail) {
+		return R::findOne('usuario','where nick like ? or (mail1 like ? or mail2 like ?)',[$nick, $mail, $mail]) != null ? false : true;
+		
 	}
 	
 	/*
@@ -153,8 +154,8 @@ class Usuario_model extends CI_Model{
 		R::close();
 	}
 	
-	public function comprobarCredenciales($mail, $pwd){
-		$usuario = R::findOne('usuario','mail1 = ? and estado = "Alta"',[$mail]);
+	public function comprobarCredenciales($user, $pwd){
+		$usuario = R::findOne('usuario','(mail1 = ? or nick = ?) and estado = "Alta"',[$user, $user]);
 		if(password_verify($pwd, $usuario->pwd)){
 			return $usuario;
 		}else{

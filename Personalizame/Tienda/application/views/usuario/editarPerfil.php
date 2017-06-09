@@ -42,9 +42,9 @@
 								class="img-circle img-responsive">
 						</div>
 			
-						<div class=" col-md-9 col-lg-9 ">
+						<div class=" col-sm-9 col-lg-9 ">
 						<form action="<?= base_url() ?>usuario/editarPerfil2" method="post" name="form1" enctype="multipart/form-data">
-							<table class="table table-user-information">
+							<table class="table table-user-information table-responsive">
 								<tbody>
 									<tr>
 										<td>Imagen</td>
