@@ -56,6 +56,7 @@
 	<?php endif;?>
   </div>
  -->  
+ <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -70,8 +71,8 @@
         <div class="modal-body">
           <form role="form" action="<?=base_url()?>usuario/loginPost" method="post">
             <div class="form-group">
-              <label for="idMail"><span class="glyphicon glyphicon-user"></span> Usuario</label>
-              <input type="text" class="form-control" id="idMail" name="mail" placeholder="Introduce email">
+              <label for="idMail"><span class="glyphicon glyphicon-user"></span> Usuario o email</label>
+              <input type="text" class="form-control" id="idUser" name="user" placeholder="Introduce email">
             </div>
             <div class="form-group">
               <label for="idPassword"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
@@ -98,27 +99,28 @@
   
       <div class="modal-content">
         <div class="modal-header">
-        <div id="idBanner"></div>
+        
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4><span class="glyphicon glyphicon-lock"></span> Registro de nuevo usuario</h4>
+          <div id="idBanner"></div>
         </div>
         <div class="modal-body">
-       <form role="form" action="<?=base_url()?>usuario/registro" method="post" name="formRegistro"> 
+   <!-- <form name="formRegistro" id="formRegistro">   -->      
             <div class="form-group">
               <label for="idMail"><span class="glyphicon glyphicon-user"></span> Usuario</label>
-              <input type="text" class="form-control" id="idNick" name="nick" placeholder="Introduce un nick">
+              <input type="text" class="form-control" id="nickRegistro" name="nick" placeholder="Introduce un nick">
             </div>
              <div class="form-group">
               <label for="idMail"><span class="glyphicon glyphicon-user"></span> Email</label>
-              <input type="text" class="form-control" id="idMail" name="mail" placeholder="Introduce tu email">
+              <input type="text" class="form-control" id="mailRegistro" name="mail" placeholder="Introduce tu email">
             </div>
             <div class="form-group">
               <label for="idPassword"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="password" class="form-control" id="idPassword" name="pwd" placeholder="Introduce password">
+              <input type="password" class="form-control" id="pwdRegistro" name="pwd" placeholder="Introduce password">
             </div>
 
-            <button onclick="validar()" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-check"></span> Registrarse</button>
-    	 </form>    
+            <button onclick="validarReg()" class="btn btn-success btn-block">Registrarse</button> <!--  <span class="glyphicon glyphicon-check"></span></button>-->
+  <!-- </form>  -->     
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-default btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
@@ -129,14 +131,14 @@
 
 
  <script type="text/javascript">
-  var conexion;
+  var con;
   var conectar;
 
-	function accionAJAX() {
-		document.getElementById("idBanner").innerHTML = conexion.responseText;
+	function registroPost() {
+		document.getElementById("idBanner").innerHTML = con.responseText;
 
 		//comprobacion para ver si borro o no los campos tras una insercion
-		var str = conexion.responseText;
+		var str = con.responseText;
 		var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
 		if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
 			//registrar();
@@ -166,75 +168,99 @@
 		conexion = new XMLHttpRequest();
 
 		//var datosSerializados = serialize(document.getElementById("idForm1"));
-		var datos = 'nick='+document.getElementById('idNick').value+'&mail='+document.getElementById('idMail').value;
+		var datos = 'nick='+document.getElementById('nickRegistro').value+'&mail='+document.getElementById('mailRegistro').value;
 		conexion.open('POST', '<?=base_url() ?>usuario/validarRegistro', true);
 		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		conexion.send(datos);
 		conexion.onreadystatechange = function() {
 			if (conexion.readyState==4 && conexion.status==200) {
-				accionAJAX();
+				registroPost();
 			}
 		}
 	}
 
-	function validar(){
+	function validarReg(){
 		var foco = true;
 		
 		//NICK
 		var valNick = validarNick();
 		if (valNick == false){
-			document.getElementById("idNick").style.color = "red";
+			document.getElementById("nickRegistro").style.color = "red";
 			//document.getElementByid("idNick").setAttribute("title","El Nick debe contener 3 caracteres como mínimo");
 			if (foco == true){
-				document.getElementById("idNick").focus();
+				document.getElementById("nickRegistro").focus();
 				foco = false;
 			}
 		}
 		else{
-			document.getElementById("idNick").style.color = "black";
+			document.getElementById("nickRegistro").style.color = "black";
 		}
 
 		//PASSWORD
 		var valPassword = validarPassword();
 		if (valPassword == false){
-			document.getElementById("idPassword").style.color = "red";
+			document.getElementById("pwdRegistro").style.color = "red";
 			if (foco == true){
-				document.getElementById("idPassword").focus();
+				document.getElementById("pwdRegistro").focus();
 				foco = false;
 			}
 		}
 		else{
-			document.getElementById("idPassword").style.color = "black";
+			document.getElementById("pwdRegistro").style.color = "black";
 		}
 
 		//MAIL1
 		var valMail = validarMail();
 		if (valMail == false){
-			document.getElementById("idMai").style.color = "red";
+			document.getElementById("mailRegistro").style.color = "red";
 			if (foco == true){
-				document.getElementById("idMai").focus();
+				document.getElementById("mailRegistro").focus();
 				foco = false;
 			}
 		}
 		else{
-			document.getElementById("idMail1").style.color = "black";
+			document.getElementById("mailRegistro").style.color = "black";
 		}
 
 		//Si todo esta a TRUE hace el submit
 		if(valNick && valPassword && valMail){
 			//document.form1.submit();
-			validarRegistro();
+			//validarRegistro();
+			con = new XMLHttpRequest();
+
+		//var reg = serialize(document.getElementById("formRegistro"));
+		var reg = 'nick='+document.getElementById('nickRegistro').value+'&mail='+document.getElementById('mailRegistro').value+'&pwd='+document.getElementById('pwdRegistro').value;
+		con.open('POST', '<?= base_url() ?>usuario/validarRegistro', true);
+		con.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		con.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		//con.send();
+		con.send(reg);
+		con.onreadystatechange = function() {
+			if (con.readyState==4) {
+				//registroPost();
+				document.getElementById("idBanner").innerHTML = con.responseText;
+
+				//comprobacion para ver si borro o no los campos tras una insercion
+				var str = con.responseText;
+				var n = str.includes("ERROR"); //compruebo si la palabra error va en el mensaje
+				if (!n){ //si el mensaje a mostrar lleva un error no reseteo los campos para poder modificarlos
+					//registrar();
+					//document.formRegistro.reset();
+				}
+			}
+		}
+			//alert('Datos correctos');
 		}	
 		else{
-			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR:</strong> Datos incorrectos</div>";
+			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-12\"> <strong>ERROR:</strong> Datos incorrectos</div>";
 		}
 	}
 	
 
 	function validarNick(){
 		var valido = false;
-		var miNick = document.getElementById("idNick").value;
+		var miNick = document.getElementById("nickRegistro").value;
 		//entre 3 y 20 caracteres
 		if(/^\w{3,20}$/.test(miNick)){
 			valido = true;
@@ -244,7 +270,7 @@
 
 	function validarPassword(){
 		var valido = false;
-		var miPwd = document.getElementById("idPassword").value.length;
+		var miPwd = document.getElementById("pwdRegistro").value.length;
 		//longitud entre 5 y 20 caracteres
 		if(miPwd >= 5 && miPwd <= 20){
 			valido = true;
@@ -254,7 +280,7 @@
 
 	function validarMail(){
 		var valido = false;
-		var miMail = document.getElementById("idMail").value;
+		var miMail = document.getElementById("mailRegistro").value;
 		//solo correo que empiece por letra o numero, tras la arroba tener texto+(punto+extension)puede repetirse -> .com.es
 		if(/^[a-zA-Z0-9]+([\.-]?\w+)*@[a-zA-Z0-9]+([\.-]?\w+)*(\.[a-z]{2,3})+$/.test(miMail)){
 			valido = true;
@@ -272,7 +298,11 @@
 						<img src="<?=base_url() ?>assets/images/logo.png" alt="">
 						<div class="intro-text">
 							<div class="intro-lead-in">Bienvenido a Personalízame!</div>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
 							<a href="<?=base_url() ?>usuario/crearDiseno" class="btn btn-l"><strong>CREA TU PROPIO DISEÑO</strong></a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal" class="btn btn-l"><strong>CREA TU PROPIO DISEÑO</strong></a>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>
@@ -592,7 +622,10 @@
 						</div>
 					</div>
 					<div class="col-md-6 contact-item">
-						<form name="form1" id="ff" method="post" action="contact.php">
+						<form name="form1" id="ff" method="post" action="<?=base_url() ?>contact/formContacto">
+							<div id="mensajeEnviado">
+								<?= isset($mensajeEnviado) ? $mensajeEnviado : ''?>
+							</div>
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">

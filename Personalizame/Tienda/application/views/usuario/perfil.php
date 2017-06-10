@@ -40,7 +40,7 @@
 							<?= $banner ?>
 							<?php endif;?>
 						</div>
-						<div class="col-md-3 col-lg-3 " align="center">
+						<div class="col-sm-3" align="center">
 							<img alt="User Pic"
 								src="../../../../img/usuarios/<?= $_SESSION['imagen'] ?>"
 								class="img-circle img-responsive">
@@ -115,7 +115,8 @@
 				</div>
 				<div class="panel-footer">
 				
-					<a href="<?=base_url() ?>usuario/misPedidos" class="btn btn-info">Ver mis pedidos</a>  
+					<a href="<?=base_url() ?>usuario/misPedidos" class="btn btn-info">Ver mis pedidos</a>
+					<a href="<?=base_url() ?>usuario/misProductos" class="btn btn-success">Ver mis productos</a>
 					<a	href="<?=base_url() ?>usuario/editarPerfil" class="btn btn-warning">Editar <i class="glyphicon glyphicon-edit"></i></a>
 				
 				

@@ -243,15 +243,15 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function login() {
-		enmarcar($this, 'usuario/login');
+		enmarcar($this, 'home');
 	}
 	
 	public function loginPost() {
 		$pwd = $_POST['pwd'];
-		$mail = $_POST['mail'];
+		$user = $_POST['user'];
 		
 		$this->load->model('usuario_model');
-		$usuarioValido = $this->usuario_model->comprobarCredenciales($mail,$pwd);
+		$usuarioValido = $this->usuario_model->comprobarCredenciales($user,$pwd);
 
 		if ($usuarioValido != null) {
 			$_SESSION['idUsuario'] = $usuarioValido->id;
@@ -283,28 +283,37 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function validarRegistro(){
-		$nick = $_POST['nick'];
-		$mail = $_POST['mail'];
+		$nick = $_REQUEST['nick'];
+		$mail = $_REQUEST['mail'];
+		$pwd = $_REQUEST['pwd'];
 		
 		$this->load->model('usuario_model');
-		$datos['body']['status'] = $this->usuario_model->validarRegistro($nick, $mail);
+		$status = $this->usuario_model->validarRegistro($nick, $mail);
 		
-		$this->load->view('usuario/registroPost', $datos);
+		//$this->load->view('usuario/registroPost', $datos);
+		$this->registro($nick, $mail, $pwd, $status);
 	}
 	
-	public function registro(){
+	public function registro($nick, $mail, $pwd, $status){
+		$datos['body']['status'] = $status;
+		if($status){
 		$imagen = 'user.jpg';
-		$nick = $_POST['nick'];
-		$mail = $_POST['mail'];
-		$pwd = password_hash($_POST['pwd'], PASSWORD_DEFAULT);
+		//$nick = $_POST['nick'];
+		//$mail = $_POST['mail'];
+		//$pwd = password_hash($_POST['pwd'], PASSWORD_DEFAULT);
+		$password = password_hash($pwd, PASSWORD_DEFAULT);
 		$descuento = 0; //valor cero por defecto al darse el alta
 		$fecha_alta = strftime("%Y/%m/%d");  //fecha actual en Formato(YYYY/MM/DD)
 		$fecha_baja = ""; // será vacio al darse de alta
 		$motivo_baja = ""; // será vacio al darse de alt
 		$this->load->model('usuario_model');
-		$this->usuario_model->registrar($imagen,$nick, $pwd, $mail, $descuento, $fecha_alta, $fecha_baja, $motivo_baja);
+		$this->usuario_model->registrar($imagen,$nick, $password, $mail, $descuento, $fecha_alta, $fecha_baja, $motivo_baja);
 		
-		enmarcar2($this, 'usuario/registroPost2');
+		//enmarcar2($this, 'usuario/registroPost2');
+		$this->load->view('usuario/registroPost', $datos);
+		}else{
+			$this->load->view('usuario/registroPost', $datos);
+		}
 	}
 	
 	public function perfil(){
@@ -506,6 +515,10 @@ class Usuario extends CI_Controller{
 	
 	public function misPedidos(){
 		enmarcar2($this,'usuario/misPedidos');
+	}
+	
+	public function misProductos(){
+		enmarcar2($this,'usuario/misProductos');
 	}
 	
 	public function crearDiseno(){
