@@ -114,7 +114,7 @@
 <div class="form-group">
 <label class="col-md-4 control-label" for="cp">Código Postal</label>
 <div class="col-md-2">
-<input id="cp" name="cp" type="text" placeholder="" class="form-control input-md" required="required" value="<?=isset($usuario) ? $usuario->cp : '' ?>">
+<input id="cp" name="cp" type="text" placeholder="" class="form-control" required="required" value="<?=isset($usuario) ? $usuario->cp : '' ?>">
 
 </div>
 </div>
@@ -187,33 +187,6 @@ window.onload = function(){
 		return valido;
 	}
 
-	function validarCVV(){
-		var valido = false;
-		var micvv = document.getElementById('cvv').value;
-		if(/^[0-9]{3}$/.test(micvv)){
-			valido = true;
-		}
-		return valido;
-	}
-
-	function validarMesExp(){
-		var valido = false;
-		var mesTarjeta = document.getElementById('mes').options[document.getElementById('mes').selectedIndex].value;
-		if(mesTarjeta != 'mes'){
-			valido = true;
-		}
-		return valido;
-	}	
-
-	function validarAnioExp(){
-		var valido = false;
-		var anioTarjeta = document.getElementById('anio').options[document.getElementById('anio').selectedIndex].value;
-		if(anioTarjeta != 'anio'){
-			valido = true;
-		}
-		return valido;
-	}		
-	
 	function validarNombre(){
 		var valido = false;
 		var miNombre = document.getElementById("nombre").value;
@@ -233,16 +206,43 @@ window.onload = function(){
 		}
 		return valido;
 	}
-		
-	function validarMail(){
+	
+
+	function validarMesExp(){
 		var valido = false;
-		var miMail = document.getElementById("mail").value;
-		//solo correo que empiece por letra o numero, tras la arroba tener texto+(punto+extension)puede repetirse -> .com.es
-		if(/^[a-zA-Z0-9]+([\.-]?\w+)*@[a-zA-Z0-9]+([\.-]?\w+)*(\.[a-z]{2,3})+$/.test(miMail)){
+		var mesTarjeta = document.getElementById('mes').options[document.getElementById('mes').selectedIndex].value;
+		if(mesTarjeta != 'mes'){
+			valido = true;
+		}
+		return valido;
+	}	
+
+	function validarAnioExp(){
+		var valido = false;
+		var anioTarjeta = document.getElementById('anio').options[document.getElementById('anio').selectedIndex].value;
+		if(anioTarjeta != 'anio'){
 			valido = true;
 		}
 		return valido;
 	}
+
+	function validarCVV(){
+		var valido = false;
+		var micvv = document.getElementById('cvv').value;
+		if(/^[0-9]{3}$/.test(micvv)){
+			valido = true;
+		}
+		return valido;
+	}		
+
+	function validarDireccion(){
+		var valido = false;
+		var miDireccion = document.getElementById("direccion").value;
+		if(miDireccion != ''){
+			valido = true;
+		}
+		return valido;
+	}	
 
 	function validarCP(){
 		var valido = false;
@@ -254,14 +254,7 @@ window.onload = function(){
 		return valido;
 	}
 
-	function validarDireccion(){
-		var valido = false;
-		var miDireccion = document.getElementById("direccion").value;
-		if(miDireccion != ''){
-			valido = true;
-		}
-		return valido;
-	}	
+	
 
 	function validarLocalidad(){
 		var valido = false;
@@ -281,6 +274,16 @@ window.onload = function(){
 		return valido;
 	}	
 
+	function validarMail(){
+		var valido = false;
+		var miMail = document.getElementById("mail").value;
+		//solo correo que empiece por letra o numero, tras la arroba tener texto+(punto+extension)puede repetirse -> .com.es
+		if(/^[a-zA-Z0-9]+([\.-]?\w+)*@[a-zA-Z0-9]+([\.-]?\w+)*(\.[a-z]{2,3})+$/.test(miMail)){
+			valido = true;
+		}
+		return valido;
+	}
+
 
 	function validarPago(){
 		console.log('llego a la validación');
@@ -299,17 +302,30 @@ window.onload = function(){
 			document.getElementById("tarjeta").style.color = "black";
 		}
 
-		//CVV
-		var valcvv = validarCVV();
-		if (valcvv == false){
-			document.getElementById("cvv").style.color = "red";
+		//NOMBRE
+		var valNombre = validarNombre();
+		if (valNombre == false){
+			document.getElementById("nombre").style.color = "red";
 			if (foco == true){
-				document.getElementById("cvv").focus();
+				document.getElementById("nombre").focus();
 				foco = false;
 			}
 		}
 		else{
-			document.getElementById("cvv").style.color = "black";
+			document.getElementById("nombre").style.color = "black";
+		}
+		
+		//APELLIDO1
+		var valApellidos = validarApellidos();
+		if (valApellidos == false){
+			document.getElementById("apellidos").style.color = "red";
+			if (foco == true){
+				document.getElementById("apellidos").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("apellidos").style.color = "black";
 		}
 
 		//FECHA EXPIRACIÓN TARJETA
@@ -338,44 +354,31 @@ window.onload = function(){
 			document.getElementById("anio").style.color = "black";
 		}
 		
-		
-		//NOMBRE
-		var valNombre = validarNombre();
-		if (valNombre == false){
-			document.getElementById("nombre").style.color = "red";
+		//CVV
+		var valcvv = validarCVV();
+		if (valcvv == false){
+			document.getElementById("cvv").style.color = "red";
 			if (foco == true){
-				document.getElementById("nombre").focus();
+				document.getElementById("cvv").focus();
 				foco = false;
 			}
 		}
 		else{
-			document.getElementById("nombre").style.color = "black";
-		}
+			document.getElementById("cvv").style.color = "black";
+		}		
+
 		
-		//APELLIDO1
-		var valApellidos = validarApellidos();
-		if (valApellidos == false){
-			document.getElementById("apellidos").style.color = "red";
+		//DIRECCIÓN
+		var valDireccion = validarDireccion();
+		if (valDireccion == false){
+			document.getElementById("direccion").style.color = "red";
 			if (foco == true){
-				document.getElementById("apellidos").focus();
+				document.getElementById("direccion").focus();
 				foco = false;
 			}
 		}
 		else{
-			document.getElementById("apellidos").style.color = "black";
-		}
-		
-		//MAIL1
-		var valMail = validarMail();
-		if (valMail == false){
-			document.getElementById("mail").style.color = "red";
-			if (foco == true){
-				document.getElementById("mail").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("mail").style.color = "black";
+			document.getElementById("direccion").style.color = "black";
 		}
 
 		//CP
@@ -390,19 +393,7 @@ window.onload = function(){
 		else{
 			document.getElementById("cp").style.color = "black";
 		}
-
-		//DIRECCIÓN
-		var valDireccion = validarDireccion();
-		if (valDireccion == false){
-			document.getElementById("direccion").style.color = "red";
-			if (foco == true){
-				document.getElementById("direccion").focus();
-				foco = false;
-			}
-		}
-		else{
-			document.getElementById("direccion").style.color = "black";
-		}
+		
 
 		//LOCALIDAD
 		var valLocalidad = validarLocalidad();
@@ -428,6 +419,19 @@ window.onload = function(){
 		}
 		else{
 			document.getElementById("provincia").style.color = "black";
+		}
+
+		//MAIL1
+		var valMail = validarMail();
+		if (valMail == false){
+			document.getElementById("mail").style.color = "red";
+			if (foco == true){
+				document.getElementById("mail").focus();
+				foco = false;
+			}
+		}
+		else{
+			document.getElementById("mail").style.color = "black";
 		}
 		
 		//Si todo esta a TRUE hace el submit
