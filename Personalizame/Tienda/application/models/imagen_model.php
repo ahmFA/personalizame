@@ -114,6 +114,17 @@ class Imagen_model extends CI_Model{
 				return false;
 			}
 	}
+	
+	//cuando inserto los datos necesito recuperar el id que le han asignado para pasarlo a otro bean, asi lo recupero
+	public function getPorCampos($id_usuario,$img_fichero){
+		return R::findOne('imagen','where nombre_imagen = ? and usuario_id = ? ',[$img_fichero,$id_usuario]);
+	}
+	
+	//devuelve todas las imagenes que pertenecen a una categoria
+	public function	getImagenesCategoria($id_categoria){
+		$imagenes = R::findAll('categoria_imagen','where categoria_id = ? order by id',[$id_categoria]);
+		return $imagenes;
+	}
 }
 
 ?>

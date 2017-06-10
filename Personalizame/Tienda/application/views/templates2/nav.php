@@ -16,7 +16,7 @@
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="hidden"><a href="#page-top"></a></li>
-				<li><a href="<?=base_url() ?>usuario/crearDiseno">Crear</a></li>
+				<li><a href="<?=base_url() ?>producto/crear">Crear</a></li>
 				<li><a class="page-scroll" href="<?=base_url()?>home/index#services">Productos</a></li>
 				<li><a class="page-scroll" href="<?=base_url()?>home/index#portfolio">Portfolio</a></li>
 				<li><a class="page-scroll" href="<?=base_url()?>home/index#about">Nosotros</a></li>

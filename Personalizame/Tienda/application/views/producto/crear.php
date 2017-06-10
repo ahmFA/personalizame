@@ -32,7 +32,27 @@
 	border: 1px solid blue;
 }
 </style>
-
+<header id="page-top">
+		<div class="wrap-header">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						
+						<div class="intro-text">
+							<div class="intro-lead-in">Bienvenido a Personalízame!</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </header>
+        <section class="box-content box-style">
+			<div class="container">
+				<div class="row heading">
+					 <div class="col-lg-12">
+	                    <h2>Crear producto</h2>
+	                </div>
+				</div>
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/jquery-ui.js"></script>
@@ -153,9 +173,6 @@ var conexion;
 </script>
 
 <div class="card">
-	<div class="card-header">
-		<h2>Producto</h2>
-	</div>
 	<div class="row">
 		<div class="col-sm-12">
 			<div id="idBanner"></div>
@@ -220,7 +237,7 @@ var conexion;
                                 	<input type="file" name="imagen" id="imagen">
                                 </span>
                                 <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput" id="quitar">Quitar</a>
-                                <span class="btn btn-success fileinput-exists" id="idImagenUser" onclick="selectImagen('user',0)">OK</span>
+                                <span class="btn btn-success fileinput-exists" id="idImagenUser" onclick="selectImagen('user',-1)">OK</span>
                             </div>
                        	</div>
                             
@@ -386,6 +403,9 @@ var conexion;
 	</div>
 	</form>
 </div>
+
+</div>
+</section>
 <script>
 	var canvas_front = new fabric.Canvas('canvas_front');
 	var canvas_back = new fabric.Canvas('canvas_back');
@@ -541,31 +561,34 @@ var conexion;
 		var img_posicion = $('input[name="ubicacion"]:checked').val();
 
 		if(img_posicion == "Delantera"){
-			document.getElementById("txt_front_coordenada_x").value = text_front.getLeft().toFixed();
-			document.getElementById("txt_front_coordenada_y").value = text_front.getTop().toFixed();
-			document.getElementById("txt_front_rotacion").value = text_front.getAngle().toFixed();
-			document.getElementById("txt_front_texto_ancho").value = text_front.getWidth().toFixed();
-			document.getElementById("txt_front_texto_alto").value = text_front.getHeight().toFixed();
-			document.getElementById("txt_front_tamano_fuente").value = (text_front.getHeight()*0.85).toFixed();	
-			
-			console.log("txt_front_coordenada_x: "+ text_front.getLeft().toFixed());
-			console.log("txt_front_coordenada_y: "+ text_front.getTop().toFixed());
-			console.log("txt_front_rotacion: "+ text_front.getAngle().toFixed());
-			console.log("txt_front_tamano_fuente: "+ (text_front.getHeight()*0.85).toFixed());
-			
+			if($("#txt_front_id_fuente").val().length > 0){
+				document.getElementById("txt_front_coordenada_x").value = text_front.getLeft().toFixed();
+				document.getElementById("txt_front_coordenada_y").value = text_front.getTop().toFixed();
+				document.getElementById("txt_front_rotacion").value = text_front.getAngle().toFixed();
+				document.getElementById("txt_front_texto_ancho").value = text_front.getWidth().toFixed();
+				document.getElementById("txt_front_texto_alto").value = text_front.getHeight().toFixed();
+				document.getElementById("txt_front_tamano_fuente").value = (text_front.getHeight()*0.85).toFixed();	
+				
+				console.log("txt_front_coordenada_x: "+ text_front.getLeft().toFixed());
+				console.log("txt_front_coordenada_y: "+ text_front.getTop().toFixed());
+				console.log("txt_front_rotacion: "+ text_front.getAngle().toFixed());
+				console.log("txt_front_tamano_fuente: "+ (text_front.getHeight()*0.85).toFixed());
+			}
 		}
 		else{
-			document.getElementById("txt_back_coordenada_x").value = text_back.getLeft().toFixed();
-			document.getElementById("txt_back_coordenada_y").value = text_back.getTop().toFixed();
-			document.getElementById("txt_back_rotacion").value = text_back.getAngle().toFixed();
-			document.getElementById("txt_back_texto_ancho").value = text_back.getWidth().toFixed();
-			document.getElementById("txt_back_texto_alto").value = text_back.getHeight().toFixed();
-			document.getElementById("txt_back_tamano_fuente").value = (text_back.getHeight()*0.85).toFixed();
-
-			console.log("txt_back_coordenada_x: "+ text_back.getLeft().toFixed());
-			console.log("txt_back_coordenada_y: "+ text_back.getTop().toFixed());
-			console.log("txt_back_rotacion: "+ text_back.getAngle().toFixed());
-			console.log("txt_back_tamano_fuente: "+ (text_back.getHeight()*0.85).toFixed());
+			if($("#txt_back_id_fuente").val().length > 0){
+				document.getElementById("txt_back_coordenada_x").value = text_back.getLeft().toFixed();
+				document.getElementById("txt_back_coordenada_y").value = text_back.getTop().toFixed();
+				document.getElementById("txt_back_rotacion").value = text_back.getAngle().toFixed();
+				document.getElementById("txt_back_texto_ancho").value = text_back.getWidth().toFixed();
+				document.getElementById("txt_back_texto_alto").value = text_back.getHeight().toFixed();
+				document.getElementById("txt_back_tamano_fuente").value = (text_back.getHeight()*0.85).toFixed();
+	
+				console.log("txt_back_coordenada_x: "+ text_back.getLeft().toFixed());
+				console.log("txt_back_coordenada_y: "+ text_back.getTop().toFixed());
+				console.log("txt_back_rotacion: "+ text_back.getAngle().toFixed());
+				console.log("txt_back_tamano_fuente: "+ (text_back.getHeight()*0.85).toFixed());
+			}
 		}
 
 		//manda datos al canvas oculto que acumula todo
@@ -659,7 +682,8 @@ var conexion;
 	    	//guardo los id para usarlos al insertar en la bbdd
 			document.getElementById("img_front_id").value = $("#my-image").data("idimagen");
 
-			console.log("ID IMAGEN FRONT: "+ $("#my-image").data("idimagen"));
+			console.log("ID IMAGEN BACK: "+	$("#img_front_id").val());
+			//console.log("ID IMAGEN FRONT: "+ $("#my-image").data("idimagen"));
 		}
 		else{
 			//limpiar la imagen anterior
@@ -692,8 +716,9 @@ var conexion;
 
 	    	//guardo los id para usarlos al insertar en la bbdd
 			document.getElementById("img_back_id").value = $("#my-image").data("idimagen");
-
-			console.log("ID IMAGEN BACK: "+ $("#my-image").data("idimagen"));
+		
+			console.log("ID IMAGEN BACK: "+	$("#img_back_id").val());
+			//console.log("ID IMAGEN BACK: "+ $("#my-image").data("idimagen"));
 		}
 
     	prepararDatosImg();
@@ -705,36 +730,40 @@ var conexion;
 		var img_posicion = $('input[name="ubicacion"]:checked').val();
 
 		if(img_posicion == "Delantera"){
-			document.getElementById("img_front_coordenada_x").value = imgInstance_front.getLeft().toFixed();
-			document.getElementById("img_front_coordenada_y").value = imgInstance_front.getTop().toFixed();
-			document.getElementById("img_front_rotacion").value = imgInstance_front.getAngle().toFixed();
-			document.getElementById("img_front_tamano").value = imgInstance_front.getWidth().toFixed()+","+imgInstance_front.getHeight().toFixed();
-			document.getElementById("img_front_tamano_ancho").value = imgInstance_front.getWidth().toFixed();
-			document.getElementById("img_front_tamano_alto").value = imgInstance_front.getHeight().toFixed();
-			document.getElementById("img_front_profundidad_z").value = -1; //va a pelo x ahora no se como sacarlo del canvas
-			
-			console.log("img_front_coordenada_x: "+ imgInstance_front.getLeft().toFixed());
-			console.log("img_front_coordenada_y: "+ imgInstance_front.getTop().toFixed());
-			console.log("img_front_rotacion: "+ imgInstance_front.getAngle().toFixed());
-			console.log("img_front_tamano_ancho: "+ imgInstance_front.getWidth().toFixed());
-			console.log("img_front_tamano_alto: "+ imgInstance_front.getHeight().toFixed());
-			console.log("img_front_tamano: "+ imgInstance_front.getWidth().toFixed()+","+imgInstance_front.getHeight().toFixed());
+			if($("#img_front_id").val().length > 0){
+				document.getElementById("img_front_coordenada_x").value = imgInstance_front.getLeft().toFixed();
+				document.getElementById("img_front_coordenada_y").value = imgInstance_front.getTop().toFixed();
+				document.getElementById("img_front_rotacion").value = imgInstance_front.getAngle().toFixed();
+				document.getElementById("img_front_tamano").value = imgInstance_front.getWidth().toFixed()+","+imgInstance_front.getHeight().toFixed();
+				document.getElementById("img_front_tamano_ancho").value = imgInstance_front.getWidth().toFixed();
+				document.getElementById("img_front_tamano_alto").value = imgInstance_front.getHeight().toFixed();
+				document.getElementById("img_front_profundidad_z").value = -1; //va a pelo x ahora no se como sacarlo del canvas
+				
+				console.log("img_front_coordenada_x: "+ imgInstance_front.getLeft().toFixed());
+				console.log("img_front_coordenada_y: "+ imgInstance_front.getTop().toFixed());
+				console.log("img_front_rotacion: "+ imgInstance_front.getAngle().toFixed());
+				console.log("img_front_tamano_ancho: "+ imgInstance_front.getWidth().toFixed());
+				console.log("img_front_tamano_alto: "+ imgInstance_front.getHeight().toFixed());
+				console.log("img_front_tamano: "+ imgInstance_front.getWidth().toFixed()+","+imgInstance_front.getHeight().toFixed());
+			}
 		}
 		else{
-			document.getElementById("img_back_coordenada_x").value = imgInstance_back.getLeft().toFixed();
-			document.getElementById("img_back_coordenada_y").value = imgInstance_back.getTop().toFixed();
-			document.getElementById("img_back_rotacion").value = imgInstance_back.getAngle().toFixed();
-			document.getElementById("img_back_tamano").value = imgInstance_back.getWidth().toFixed()+","+imgInstance_back.getHeight().toFixed();
-			document.getElementById("img_back_tamano_ancho").value = imgInstance_back.getWidth().toFixed();
-			document.getElementById("img_back_tamano_alto").value = imgInstance_back.getHeight().toFixed();
-			document.getElementById("img_back_profundidad_z").value = -1; //va a pelo x ahora no se como sacarlo del canvas
-
-			console.log("img_back_coordenada_x: "+ imgInstance_back.getLeft().toFixed());
-			console.log("img_back_coordenada_y: "+ imgInstance_back.getTop().toFixed());
-			console.log("img_back_rotacion: "+ imgInstance_back.getAngle().toFixed());
-			console.log("img_back_tamano_ancho: "+ imgInstance_back.getWidth().toFixed());
-			console.log("img_back_tamano_alto: "+ imgInstance_back.getHeight().toFixed());
-			console.log("img_back_tamano: "+ imgInstance_back.getWidth().toFixed()+","+imgInstance_back.getHeight().toFixed());
+			if($("#img_back_id").val().length > 0){
+				document.getElementById("img_back_coordenada_x").value = imgInstance_back.getLeft().toFixed();
+				document.getElementById("img_back_coordenada_y").value = imgInstance_back.getTop().toFixed();
+				document.getElementById("img_back_rotacion").value = imgInstance_back.getAngle().toFixed();
+				document.getElementById("img_back_tamano").value = imgInstance_back.getWidth().toFixed()+","+imgInstance_back.getHeight().toFixed();
+				document.getElementById("img_back_tamano_ancho").value = imgInstance_back.getWidth().toFixed();
+				document.getElementById("img_back_tamano_alto").value = imgInstance_back.getHeight().toFixed();
+				document.getElementById("img_back_profundidad_z").value = -1; //va a pelo x ahora no se como sacarlo del canvas
+	
+				console.log("img_back_coordenada_x: "+ imgInstance_back.getLeft().toFixed());
+				console.log("img_back_coordenada_y: "+ imgInstance_back.getTop().toFixed());
+				console.log("img_back_rotacion: "+ imgInstance_back.getAngle().toFixed());
+				console.log("img_back_tamano_ancho: "+ imgInstance_back.getWidth().toFixed());
+				console.log("img_back_tamano_alto: "+ imgInstance_back.getHeight().toFixed());
+				console.log("img_back_tamano: "+ imgInstance_back.getWidth().toFixed()+","+imgInstance_back.getHeight().toFixed());
+			}
 		}
 
 		//manda datos al canvas oculto que acumula todo
@@ -768,6 +797,8 @@ var conexion;
 			document.getElementById("txt_front_fuente").value = "";
 			document.getElementById("txt_front_datos").value = "";
 			document.getElementById("txt_front_color").value = "";
+			document.getElementById("txt_front_id_fuente").value = "";
+			document.getElementById("txt_front_id_color").value = "";
 
 			document.getElementById("txt_front_coordenada_x").value = "";
 			document.getElementById("txt_front_coordenada_y").value = "";
@@ -777,6 +808,7 @@ var conexion;
 			document.getElementById("txt_front_tamano_fuente").value = "";	
 
 			//limpio valores ocultos residuales de imagen
+			document.getElementById("img_front_id").value = "";
 			document.getElementById("img_front_coordenada_x").value = "";
 			document.getElementById("img_front_coordenada_y").value = "";
 			document.getElementById("img_front_rotacion").value = "";
@@ -795,6 +827,8 @@ var conexion;
 			document.getElementById("txt_back_fuente").value = "";
 			document.getElementById("txt_back_datos").value = "";
 			document.getElementById("txt_back_color").value = "";
+			document.getElementById("txt_back_id_fuente").value = "";
+			document.getElementById("txt_back_id_color").value = "";
 
 			document.getElementById("txt_back_coordenada_x").value = "";
 			document.getElementById("txt_back_coordenada_y").value = "";
@@ -804,6 +838,7 @@ var conexion;
 			document.getElementById("txt_back_tamano_fuente").value = "";	
 
 			//limpio valores ocultos residuales de imagen
+			document.getElementById("img_back_id").value = "";
 			document.getElementById("img_back_coordenada_x").value = "";
 			document.getElementById("img_back_coordenada_y").value = "";
 			document.getElementById("img_back_rotacion").value = "";
@@ -823,7 +858,7 @@ var conexion;
 
 		function componerProductoFinal(){
 
-			var fondo, img, img2;
+			var fondo, fondo2, img, img2;
 			
 			ctx.fillStyle= $('input[name="id_color_base"]:checked').data("valor");
 			ctx.fillRect(0,0,700,350);	
@@ -834,32 +869,36 @@ var conexion;
 			
 			fondo.onload = function(){
 				ctx.drawImage(fondo, 0, 0);
-				ctx.translate(700,0); //posicion extremo contrario para pintar imagen girada y que parezca img trasera
-				ctx.scale(-1,1); //rotación horizontal -1
-				ctx.drawImage(fondo, 0, 0); // ctx.drawImage(fondo, 350, 0);
-					
-				img = new Image();
-				img.src = document.getElementById('canvas_front').toDataURL("image/png");
-				img.onload = function(){
-					ctx.drawImage(img, 100, 50,parseInt(canvas_front.width), parseInt(canvas_front.height));
+				// ctx.drawImage(fondo, 350, 0);
+				
+				fondo2 = new Image();
+				fondo2.src = document.getElementById('articulo-front').src;
+				fondo2.onload = function(){
+					//pinto el fondo invertido para simular parte trasera
+					ctx.save();
+					ctx.translate(700,0); //posicion extremo contrario para pintar imagen girada y que parezca img trasera
+					ctx.scale(-1,1); //rotación horizontal -1
+					ctx.drawImage(fondo2, 0, 0);
+					ctx.restore();
 
-					img2 = new Image();
-					img2.src = document.getElementById('canvas_back').toDataURL("image/png");
-					img2.onload = function(){
-						ctx.drawImage(img2, 450, 50,parseInt(canvas_back.width), parseInt(canvas_back.height));
+					img = new Image();
+					img.src = document.getElementById('canvas_front').toDataURL("image/png");
+					img.onload = function(){
 
-						//setTimeOut(
-						document.getElementById("canvas_final_binario").value = canvas.toDataURL('image/png') ;
-						//, 500);
-						//guarda la imagen final de producto como codigo para pasarla como otro parametro mas
-						//le pongo un retardo para que tenga tiempo de pintarse el ultimo draw antes de exportar
-						//si da problemas meterle mas tiempo
+						ctx.drawImage(img, 100, 50,parseInt(canvas_front.width), parseInt(canvas_front.height));
+	
+						img2 = new Image();
+						img2.src = document.getElementById('canvas_back').toDataURL("image/png");
+						img2.onload = function(){
+							ctx.drawImage(img2, 450, 50,parseInt(canvas_back.width), parseInt(canvas_back.height));
+	
+							document.getElementById("canvas_final_binario").value = canvas.toDataURL('image/png') ;
+							
+							//guarda la imagen final de producto como codigo para pasarla como otro parametro mas
+						}
 					}
 				}
 			}
-
-			
-
 		}
 		
 

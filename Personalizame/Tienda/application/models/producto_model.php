@@ -30,7 +30,7 @@ class Producto_model extends CI_Model{
 		$talla -> xownProductolist[] = $producto;  
 		$colorB -> xownProductolist[] = $producto;
 
-		//el valor cero es el por defecto que le doy en controller
+		//el valor cero es el por defecto que le doy en controller cuando no se necesita ese elemento
 		if($id_diseno_front > 0){ 
 			$disenoF = R::load('diseno', $id_diseno_front);
 			$producto -> sharedDisenoList[] = $disenoF;
@@ -149,28 +149,6 @@ class Producto_model extends CI_Model{
 		R::store($producto);
 		R::close();
 	}
-	
-	/* 
-	   estas funciones posiblemente deberian estar en sus respectivos model 
-	   hay que revisarlo cuando todo este mas controlado
-	 */
-	public function mostrarTallas($id_articulo){
-		$tallas = R::findAll('articulo_talla','where articulo_id = ? order by id',[$id_articulo]);
-		return $tallas;
-	}
-	
-	public function mostrarColores($id_articulo){
-		$colores = R::findAll('articulo_color','where articulo_id = ? order by id',[$id_articulo]);
-		return $colores;
-	}
-	
-	public function getArticulo($id_articulo){
-		return R::load('articulo',$id_articulo);
-	}
-	
-	public function	getImagenesCategoria($id_categoria){
-		$imagenes = R::findAll('categoria_imagen','where categoria_id = ? order by id',[$id_categoria]);
-		return $imagenes;
-	}
+
 }
 ?>

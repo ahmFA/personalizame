@@ -62,6 +62,11 @@ class Categoria_model extends CI_Model{
 			return false;
 		}
 	}
+	
+	//cuando inserto los datos necesito recuperar el id que le han asignado para pasarlo a otro bean, asi lo recupero
+	public function getPorNombre($nombre){
+		return R::findOne('categoria','where nombre = ? ',[$nombre]);
+	}
 }
 
 ?>
