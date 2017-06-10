@@ -7,8 +7,8 @@
 }
 #marco_back,#marco_front{
 	position: absolute;
-	margin-left: 30px;    
-    margin-top: 40px;
+	margin-left: 100px;    
+    margin-top: 50px;
 }
 #canvas_back,#canvas_front{
 	position: absolute;
@@ -32,35 +32,11 @@
 	border: 1px solid blue;
 }
 </style>
-<!--marco para taza margin-left   , margin-top -->
-
 
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/jquery-ui.js"></script>
 <script type="text/javascript" src="<?=base_url()?>assets/js/fabric.js"></script>
-
-<script type="text/javascript">
-
-//precarga de imagenes para que sean seleccionables directamente desde el select
-//las pongo a pelo para pruebas lo ideal sería cargar las que haya en la carpeta automaticamente
-//o leerlas de alguna forma con ajax segun la que se seleccione
-
-/*
-var images = new Array()
-function preload() {
-	for (i = 0; i < preload.arguments.length; i++) {
-		images[i] = new Image()
-		images[i].src = preload.arguments[i]
-	}
-}
-preload(
-	"../../../../img/articulos/art_taza350x350.png",
-	"../../../../img/articulos/art_contorno.png",
-	"../../../../img/articulos/art_cocacola.png"
-)
-*/
-</script>
 
 <script type="text/javascript">
 var conexion;
@@ -193,14 +169,10 @@ var conexion;
 		
 		<div class="row">
 			<div class="col-sm-12">
-				<div class="cp-container">
-	
-					<div class="form-group fg-line">
-						<label for="idNombreProducto">Nombre del producto </label> 
-						<input class="form-control input-sm" id="idNombreProducto" type="text" name="nombre_producto" maxlength="30" required="required" readonly="readonly">
-					</div>
+				
+
 					
- 				</div>
+ 				
  		
 				<div class=" m-b-25">
 			   		<p class="f-500 c-black m-b-15">Seleccione Artículo</p>
@@ -746,6 +718,7 @@ var conexion;
 			console.log("img_front_rotacion: "+ imgInstance_front.getAngle().toFixed());
 			console.log("img_front_tamano_ancho: "+ imgInstance_front.getWidth().toFixed());
 			console.log("img_front_tamano_alto: "+ imgInstance_front.getHeight().toFixed());
+			console.log("img_front_tamano: "+ imgInstance_front.getWidth().toFixed()+","+imgInstance_front.getHeight().toFixed());
 		}
 		else{
 			document.getElementById("img_back_coordenada_x").value = imgInstance_back.getLeft().toFixed();
@@ -761,6 +734,7 @@ var conexion;
 			console.log("img_back_rotacion: "+ imgInstance_back.getAngle().toFixed());
 			console.log("img_back_tamano_ancho: "+ imgInstance_back.getWidth().toFixed());
 			console.log("img_back_tamano_alto: "+ imgInstance_back.getHeight().toFixed());
+			console.log("img_back_tamano: "+ imgInstance_back.getWidth().toFixed()+","+imgInstance_back.getHeight().toFixed());
 		}
 
 		//manda datos al canvas oculto que acumula todo
@@ -857,19 +831,22 @@ var conexion;
 			//las imagenes se cargan dentro del onload de las otras para que de tiempo a cargar todas sin errores
 			fondo = new Image();
 			fondo.src = document.getElementById('articulo-front').src;
+			
 			fondo.onload = function(){
 				ctx.drawImage(fondo, 0, 0);
-				ctx.drawImage(fondo, 350, 0);
-
+				ctx.translate(700,0); //posicion extremo contrario para pintar imagen girada y que parezca img trasera
+				ctx.scale(-1,1); //rotación horizontal -1
+				ctx.drawImage(fondo, 0, 0); // ctx.drawImage(fondo, 350, 0);
+					
 				img = new Image();
 				img.src = document.getElementById('canvas_front').toDataURL("image/png");
 				img.onload = function(){
-					ctx.drawImage(img, 30, 40,parseInt(canvas_front.width), parseInt(canvas_front.height));
+					ctx.drawImage(img, 100, 50,parseInt(canvas_front.width), parseInt(canvas_front.height));
 
 					img2 = new Image();
 					img2.src = document.getElementById('canvas_back').toDataURL("image/png");
 					img2.onload = function(){
-						ctx.drawImage(img2, 380, 40,parseInt(canvas_back.width), parseInt(canvas_back.height));
+						ctx.drawImage(img2, 450, 50,parseInt(canvas_back.width), parseInt(canvas_back.height));
 
 						//setTimeOut(
 						document.getElementById("canvas_final_binario").value = canvas.toDataURL('image/png') ;

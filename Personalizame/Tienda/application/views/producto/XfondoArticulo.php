@@ -11,8 +11,8 @@
 }
 #marco_back,#marco_front{
 	position: absolute;
-	margin-left: 30px;    
-    margin-top: 40px;
+	margin-left: 100px;    
+    margin-top: 50px;
     
 }
 #canvas_back,#canvas_front{

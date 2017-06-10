@@ -25,18 +25,34 @@ class Producto_model extends CI_Model{
 		$articulo = R::load('articulo', $id_articulo);
 		$talla = R::load('talla', $id_talla);
 		$colorB = R::load('color', $id_color_base);
-		$disenoF = R::load('diseno', $id_diseno_front);
-		$disenoB = R::load('diseno', $id_diseno_back);
 		
 		$articulo -> xownProductolist[] = $producto; 
 		$talla -> xownProductolist[] = $producto;  
 		$colorB -> xownProductolist[] = $producto;
 
-		$producto -> sharedDisenoList[] = $disenoF;
-		$producto -> sharedDisenoList[] = $disenoB;
+		//el valor cero es el por defecto que le doy en controller
+		if($id_diseno_front > 0){ 
+			$disenoF = R::load('diseno', $id_diseno_front);
+			$producto -> sharedDisenoList[] = $disenoF;
+			$precioF = $disenoF->precio;
+			$costeF = $disenoF->coste;
+		}else{
+			$precioF = 0;
+			$costeF = 0;
+		}
 		
-		$producto -> precio = $disenoF->precio + $disenoB->precio;
-		$producto -> coste = $disenoF->coste + $disenoB->coste;
+		if($id_diseno_back > 0){
+			$disenoB = R::load('diseno', $id_diseno_back);
+			$producto -> sharedDisenoList[] = $disenoB;
+			$precioB = $disenoB->precio;
+			$costeB = $disenoB->coste;
+		}else{
+			$precioB = 0;
+			$costeB = 0;
+		}
+		
+		$producto -> precio = $articulo->precio + $precioF + $precioB;
+		$producto -> coste = $articulo->coste + $costeF + $costeB;
 		
 		R::store($articulo);
 		R::store($talla);

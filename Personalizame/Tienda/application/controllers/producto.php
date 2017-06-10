@@ -116,7 +116,6 @@ class Producto extends CI_Controller{
 		//$img_front_tamano_ancho
 		//$img_front_tamano_alto //guardo AnchoxAlto si hace falta separarlo coger estas variables y crear los campos
 		
-		
 		//Los disenos son opcionales por lo que podrian venir vacios solo se hace insert si vienen datos
 		if (!empty($txt_front_datos) || !empty($img_front_id)){
 			$nombre_diseno = 'dis_f_'.$id_usuario.'_'.$var_time.'.png';
@@ -127,12 +126,14 @@ class Producto extends CI_Controller{
 					$img_front_id,$img_front_tamano,$img_front_rotacion,$img_front_coordenada_x,$img_front_coordenada_y,
 					$img_front_profundidad_z,$id_texto_front,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
 	
-			//usando nombre,ubicacion, usuario o sesion recuperar el id que le ha otorgado al texto para pasarselo al diseño
+			//usando nombre,ubicacion, usuario o sesion recuperar el id que le ha otorgado al diseño para pasarselo al producto
 			$datosDisenoF = $this->diseno_model->getPorCampos($id_usuario,$id_sesion,$nombre_diseno,$ubicacion);
 			$id_diseno_front = $datosDisenoF->id;
 			
-			echo("DISENO F: ".$id_diseno_front);
+		}else{
+			$id_diseno_front = 0;
 		}
+		echo("DISENO F: ".$id_diseno_front);
 		
 		if (!empty($txt_back_datos) || !empty($img_back_id)){
 			$nombre_diseno = 'dis_b_'.$id_usuario.'_'.$var_time.'.png';
@@ -142,13 +143,15 @@ class Producto extends CI_Controller{
 					$img_back_id,$img_back_tamano,$img_back_rotacion,$img_back_coordenada_x,$img_back_coordenada_y,
 					$img_back_profundidad_z,$id_texto_back,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
 			
-			//usando nombre,ubicacion, usuario o sesion recuperar el id que le ha otorgado al texto para pasarselo al diseño
+			//usando nombre,ubicacion, usuario o sesion recuperar el id que le ha otorgado al diseño para pasarselo al producto
 			$datosDisenoB = $this->diseno_model->getPorCampos($id_usuario,$id_sesion,$nombre_diseno,$ubicacion);
 			$id_diseno_back = $datosDisenoB->id;
-			
-			echo("DISENO B: ".$id_diseno_back);
+
+		}else{
+			$id_diseno_back = 0;
 		}
-		
+
+		echo("DISENO B: ".$id_diseno_back);
 		
 		//nombre del producto e imagen a guardar
 		$nombre_producto = 'prod_'.$id_usuario.'_'.$var_time; 
