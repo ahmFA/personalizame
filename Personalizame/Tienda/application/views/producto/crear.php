@@ -49,7 +49,7 @@
         <section class="box-content box-style">
 			<div class="container">
 				<div class="row heading">
-					 <div class="col-lg-12">
+					 <div class="col-md-12">
 	                    <h2>Crear producto</h2>
 	                </div>
 				</div>
@@ -172,79 +172,29 @@ var conexion;
 
 </script>
 
-<div class="card">
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-md-12">
 			<div id="idBanner"></div>
 		</div>
 	</div>	
 	<form name="form1" class="form" id="idForm1">
-	<div class="card-body card-padding">
+	
 		<!-- campos ocultos para conocer el autor -->
 		<input type="hidden" name="id_sesion" value="<?= session_id()?>">
 		<input type="hidden" name="id_usuario" value="<?= isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : null ?>">
 		
-		<div class="row">
-			<div class="col-sm-12">
-				
-
-					
- 				
- 		
-				<div class=" m-b-25">
-			   		<p class="f-500 c-black m-b-15">Seleccione Artículo</p>
+	<div class="row">
+		<div class="col-md-4">
+					<label>Artículo</label>
 					<select class="form-control" id="idArticulo" name="id_articulo" onchange="crearElementosArticulo()">         
 			 			<option value='0'>Seleccione uno</option>       	
 			 		<?php foreach ($body['articulos'] as $articulo): ?>
 			 			<option value='<?= $articulo['id']?>'><?= $articulo['nombre']?></option>
 					<?php endforeach;?>
 			        </select>
-				</div>
-				<div id="idElementosArticulo"></div>
-				
-				
-				<!-- CAMPOS PARA AÑADIR IMAGEN  
-				lista en bbdd segun categoria elegida
-				cuadro para añadir una desde el pc
-				-->	
 		
-				<h2>SELECCIÓN DE IMAGENES</h2>
-				
-				<div class=" m-b-25">
-			   		<p class="f-500 c-black m-b-15">Categoría</p>
-					<select class="form-control" id="idCategoria" name="id_categoria" onchange="crearListaImagenes()">         
-			 			<option value='*'>Personalizame</option>       	
-			 		<?php foreach ($body['categorias'] as $categoria): ?> 
-			 			<option value='<?= $categoria['id']?>'><?= $categoria['nombre']?></option>
-					<?php endforeach;?>
-			        </select>
-				</div>
-				
-				<!-- AQUI DEBERIA HABER UN CARRUSEL DE FOTOS Y NO UNA LISTA A PELO -->
-				
-				<div id="idListaImagenes">	</div>
-				
-				<!-- fin de listado de fotos -->
-				
-				<h2>Usa tu propia imagen</h2>
-                            
-                   <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
-                        	<div>
-                            	<span class="btn btn-info btn-file">
-                                	<span class="fileinput-new">Seleccionar imagen</span>
-                                	<span class="fileinput-exists">Cambiar</span>
-                                	<input type="file" name="imagen" id="imagen">
-                                </span>
-                                <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput" id="quitar">Quitar</a>
-                                <span class="btn btn-success fileinput-exists" id="idImagenUser" onclick="selectImagen('user',-1)">OK</span>
-                            </div>
-                       	</div>
-                            
-		 		<!-- fin de imagen  -->
-		 		
-		 		<!-- Zona en la que irá la imagen -->
-		 		<h5>UBICACIÓN</h5>
+				<!-- Zona en la que irá la imagen -->
+		 		<br/><label>Ubicación</label>
 				<div class="radio m-b-15">
 					<label>
 						<input type="radio" name="ubicacion" value="Delantera" checked="checked">
@@ -259,88 +209,139 @@ var conexion;
 					</label>
 				</div>
 				<!-- fin zona en la que irá la imagen -->
-		</div>
-		
-	<!-- CAMPOS PARA AÑADIR TEXTO DELANTERO Y TRASERO-->	
-	<br/><br/>
-	<h2>TEXTO</h2>
-	
-	<div class="form-group col-xs-3">
-		<label for="idDatosTexto">Texto </label> 
-		<input class="form-control" id="idDatosTexto" type="text" name="datos_texto" maxlength="20" required="required" placeholder="completa este campo" title="El Texto puede contener entre 1 y 20 caracteres"> <br/>
-	</div>
-
-	<div class="form-group col-xs-3">	
-		<label for="idTamano">Tamaño </label>
-		<select class="form-control" id="idTamano" name="id_tamano">         
- 			<option value='1'>Seleccione uno</option>       	
- 		<?php foreach ($body['tamanos'] as $tamano): ?>
- 			<option value='<?= $tamano['id']?>'><?= $tamano['nombre']?></option>
-		<?php endforeach;?>
-        </select><br/>
-	</div>
-	
-	<div class="form-group col-xs-3">	
-		<label for="idFuente">Fuente </label>
-		<select class="form-control" id="idFuente" name="id_fuente">         
- 			<option value='1'>Seleccione una</option>       	
- 		<?php foreach ($body['fuentes'] as $fuente): ?>
- 			<option value='<?= $fuente['id']?>'><?= $fuente['nombre']?></option>
-		<?php endforeach;?>
-        </select><br/>
-	</div>
-	
-	<div class="form-group col-xs-3">	
-		<label for="idColor">Color </label>
-		<select class="form-control" id="idColor" name="id_color">         
- 			<option value='1'>Seleccione uno</option>       	
- 		<?php foreach ($body['colores'] as $color): ?>
- 			<option value='<?= $color['id']?>' data-valor="<?= $color['valor']?>"><?= $color['nombre']?></option>
-		<?php endforeach;?>
-        </select><br/>
-	</div>
-	
-	<span class="btn btn-success" id="idBotonAplicar">Aplicar</span>
-	<!-- fin datos texto  -->	
-		
-	<!-- CANVAS DELANTERO -->
-		
-		<div class="container">
-			<div class="form-group col-xs-12">
-			<br/><br/>
-				<h2>Delantero - Modificalo a tu gusto</h2>
-				<input id="idBotonVer_front" type="button" value="Vista Previa" onclick="verFinal();">
-				<input id="idBotonLimpiar_back" type="button" value="Limpiar" onclick="limpiar();"><br/>
-				
-					<div class="objeto" style="width: 350px; height: 350px">
-						<div id="marco_front" style="width: 150px; height: 250px">
-							<canvas id="canvas_front" width="150" height="250"></canvas>
-						</div>
-					</div>
-		
-			</div>	
-		</div>
-		
-	<!-- fin canvas delantero -->	
-	
-	<!-- CANVAS TRASERO -->	
-		
-		<div class="container">
-			<div class="form-group col-xs-12">
-			<br/><br/>
-				<h2>Trasero - Modificalo a tu gusto</h2>
-				<input id="idBotonVer_back" type="button" value="Vista Previa" onclick="verFinal();">
-				<input id="idBotonLimpiar_back" type="button" value="Limpiar" onclick="limpiar();"><br/>
 			
-					<div class="objeto" style="width: 350px; height: 350px">
-						<div id="marco_back" style="width: 150px; height: 250px">
-							<canvas id="canvas_back" width="150" height="250"></canvas>
-						</div>
-					</div>
-			</div>	
 		</div>
-	<!-- fin canvas trasero -->		
-						
+		
+		<div class="col-md-4">
+			<div id="idElementosArticulo"></div>
+		</div>
+		
+		<div class="col-md-4">
+			<label>Utiliza tus imágenes</label>
+			 <input type="file" id="files" name="files">
+			 <output id="list"></output>	
+			 <span class="btn btn-danger" id="quitar">Quitar</span>
+			 <span class="btn btn-success" id="idImagenUser" onclick="selectImagen('user',-1)">OK</span>
+                   <!--          
+                   <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
+                        	<div>
+                            	<span class="btn btn-info btn-file">
+                                	<span class="fileinput-new">Seleccionar imagen</span>
+                                	<span class="fileinput-exists">Cambiar</span>
+                                	<input type="file" name="imagen" id="imagen">
+                                </span>
+                                <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput" id="quitar">Quitar</a>
+                                <span class="btn btn-success fileinput-exists" id="idImagenUser" onclick="selectImagen('user',-1)">OK</span>
+                            </div>
+                       	</div>
+                       	--> 
+         </div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-4">
+			<!-- CANVAS DELANTERO -->
+			
+			<div class="container" id="canvasFront">
+				<div class="form-group col-xs-12">
+					<h6>Parte delantera diseñala a tu gusto</h6>
+					<input id="idBotonVer_front" type="button" value="Vista Previa" onclick="verFinal();">
+					<input id="idBotonLimpiar_back" type="button" value="Limpiar" onclick="limpiar();"><br/>
+					
+						<div class="objeto" style="width: 350px; height: 350px">
+							<div id="marco_front" style="width: 150px; height: 250px">
+								<canvas id="canvas_front" width="150" height="250"></canvas>
+							</div>
+						</div>
+			
+				</div>	
+			</div>
+			
+			<!-- fin canvas delantero -->	
+			
+			<!-- CANVAS TRASERO -->	
+				
+				<div class="container" id="canvasBack" style="display:none">
+					<div class="form-group col-xs-12">
+						<h6>Parte trasera diseñala a tu gusto</h6>
+						<input id="idBotonVer_back" type="button" value="Vista Previa" onclick="verFinal();">
+						<input id="idBotonLimpiar_back" type="button" value="Limpiar" onclick="limpiar();"><br/>
+					
+							<div class="objeto" style="width: 350px; height: 350px">
+								<div id="marco_back" style="width: 150px; height: 250px">
+									<canvas id="canvas_back" width="150" height="250"></canvas>
+								</div>
+							</div>
+					</div>	
+				</div>
+			<!-- fin canvas trasero -->
+		</div>
+		
+		<div class="col-md-8">
+			<label>Nuestra selección de imagenes</label>
+				
+				<div class=" m-b-25">
+			   		<p class="f-500 c-black m-b-15">Categoría</p>
+					<select class="form-control" id="idCategoria" name="id_categoria" onchange="crearListaImagenes()">         
+			 			<option value='*'>Personalizame</option>       	
+			 		<?php foreach ($body['categorias'] as $categoria): ?> 
+			 			<option value='<?= $categoria['id']?>'><?= $categoria['nombre']?></option>
+					<?php endforeach;?>
+			        </select>
+				</div>
+				
+				<!-- AQUI DEBERIA HABER UN CARRUSEL DE FOTOS Y NO UNA LISTA A PELO -->
+				
+				<br/><div id="idListaImagenes">	</div>
+				
+				<!-- fin de listado de fotos -->
+		
+			<!-- CAMPOS PARA AÑADIR TEXTO DELANTERO Y TRASERO-->	
+			<br/><br/>
+			<p><label>Agrega un texto a tu diseño</label></p>
+			
+			<div class="form-group col-md-4">
+				<label for="idDatosTexto">Texto </label> 
+				<input class="form-control" id="idDatosTexto" type="text" name="datos_texto" maxlength="20" required="required" placeholder="completa este campo" title="El Texto puede contener entre 1 y 20 caracteres"> <br/>
+			</div>
+		
+			<div class="form-group col-md-4">	
+				<label for="idTamano">Tamaño </label>
+				<select class="form-control" id="idTamano" name="id_tamano">         
+		 			<option value='1'>Seleccione uno</option>       	
+		 		<?php foreach ($body['tamanos'] as $tamano): ?>
+		 			<option value='<?= $tamano['id']?>'><?= $tamano['nombre']?></option>
+				<?php endforeach;?>
+		        </select><br/>
+			</div>
+			
+			<div class="form-group col-md-4">	
+				<label for="idFuente">Fuente </label>
+				<select class="form-control" id="idFuente" name="id_fuente">         
+		 			<option value='1'>Seleccione una</option>       	
+		 		<?php foreach ($body['fuentes'] as $fuente): ?>
+		 			<option value='<?= $fuente['id']?>'><?= $fuente['nombre']?></option>
+				<?php endforeach;?>
+		        </select><br/>
+			</div>
+			
+			<div class="form-group col-md-4">	
+				<label for="idColor">Color </label>
+				<select class="form-control" id="idColor" name="id_color">         
+		 			<option value='1'>Seleccione uno</option>       	
+		 		<?php foreach ($body['colores'] as $color): ?>
+		 			<option value='<?= $color['id']?>' data-valor="<?= $color['valor']?>"><?= $color['nombre']?></option>
+				<?php endforeach;?>
+		        </select><br/>
+			</div>
+			<div class="form-group col-md-4">	
+				<span class="btn btn-success" id="idBotonAplicar">Aplicar texto</span>
+			</div>
+			<!-- fin datos texto  -->	
+		</div>
+	</div>			
+			   			
 		<!-- campos ocultos que pasarán los datos de los canvas de la imagen -->
 		<input type="hidden" name="img_front_id" id="img_front_id">
 		<input type="hidden" name="img_front_rotacion" id="img_front_rotacion">
@@ -396,13 +397,11 @@ var conexion;
 				</div>
 			</div>
 			
-		</div>
 		<div class="row">
 			<input id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
 		</div>
-	</div>
+	
 	</form>
-</div>
 
 </div>
 </section>
@@ -604,8 +603,8 @@ var conexion;
 		imagen = document.createElement("img");
 
 		if(ruta == "user"){
-			//entro en la clase de la vista previa y despues en la etiqueta img para tomar el codigo src
-			var imagenCode = document.getElementsByClassName('fileinput-preview')[0].getElementsByTagName('img')[0].src;
+			//entro en la clase de la vista previa y de la etiqueta img tomo el codigo src
+			var imagenCode = document.getElementsByClassName('prev-image')[0].src;
 			imagen.src = imagenCode;
 		}
 		else{ 
@@ -913,6 +912,7 @@ var conexion;
 
 
 <script>
+/*
 $(document).ready(function(){
 	$('#imagen').bind('change', function() {
 	    
@@ -945,5 +945,41 @@ $(document).ready(function(){
 		$('#valida').val('2');
 		$('#idBanner').html('');
 	});
+});
+*/
+</script>
+<script>
+              function archivo(evt) {
+                  var files = evt.target.files; // FileList object
+             
+                  // Obtenemos la imagen del campo "file".
+                  for (var i = 0, f; f = files[i]; i++) {
+                    //Solo admitimos imágenes.
+                    if (!f.type.match('image.*')) {
+                        continue;
+                    }
+             
+                    var reader = new FileReader();
+             
+                    reader.onload = (function(theFile) {
+                        return function(e) {
+                          // Insertamos la imagen
+                         document.getElementById("list").innerHTML = ['<img class="prev-image" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
+                        };
+                    })(f);
+             
+                    reader.readAsDataURL(f);
+                  }
+              }
+             
+              document.getElementById('files').addEventListener('change', archivo, false);
+      </script>
+      
+<script type="text/javascript">
+$(document).ready(function(){  
+   	$('input[name="ubicacion"]').change(function(){
+        $("#canvasFront").toggle();
+        $("#canvasBack").toggle();
+    });
 });
 </script>
