@@ -26,6 +26,8 @@ class Diseno extends CI_Controller{
 		$ubicacion = $_POST['ubicacion'];
 		$id_imagen = $_POST['id_imagen'];
 		$tamano_imagen = $_POST['tamano_imagen'];
+		$tamano_imagen_ancho = $_POST['tamano_imagen_ancho'];
+		$tamano_imagen_alto = $_POST['tamano_imagen_alto'];
 		$rotacion_imagen = $_POST['rotacion_imagen'];
 		$img_coordenada_x = $_POST['img_coordenada_x'];
 		$img_coordenada_y = $_POST['img_coordenada_y'];
@@ -63,7 +65,7 @@ class Diseno extends CI_Controller{
 		//+++++++++++++++++++++++++++++++++++++++++++++++++++
 		
 		$this->load->model('diseno_model');
-		$this->diseno_model->crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$img_coordenada_x,$img_coordenada_y,$img_profundidad_z,$id_texto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
+		$this->diseno_model->crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$tamano_imagen_ancho,$tamano_imagen_alto,$rotacion_imagen,$img_coordenada_x,$img_coordenada_y,$img_profundidad_z,$id_texto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
 		$datos['body']['nombre_diseno'] = $nombre_diseno;
 		$this->load->view('diseno/XcrearPost',$datos);
 

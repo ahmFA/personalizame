@@ -1,5 +1,5 @@
 <div>
-	<label>Tallas disponibles</label>
+	<label>Tamaños disponibles</label>
 	<div class="radio m-b-15">
 		<?php foreach ($body['tallas'] as $talla): ?>
 		<label>

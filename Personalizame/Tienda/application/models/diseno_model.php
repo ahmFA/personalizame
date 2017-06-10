@@ -7,7 +7,7 @@ class Diseno_model extends CI_Model{
 	/*
 	 * crear el diseño
 	 */
-	public function crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$rotacion_imagen,$img_coordenada_x,$img_coordenada_y,$img_profundidad_z,$id_texto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion){
+	public function crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$tamano_imagen_ancho,$tamano_imagen_alto,$rotacion_imagen,$img_coordenada_x,$img_coordenada_y,$img_profundidad_z,$id_texto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion){
 		$diseno = R::dispense('diseno');
 		
 		$diseno -> id_usuario = $id_usuario;
@@ -15,29 +15,45 @@ class Diseno_model extends CI_Model{
 		$diseno -> comentario_diseno = $comentario_diseno;
 		$diseno -> ubicacion = $ubicacion;
 		$diseno -> tamano_imagen = $tamano_imagen;
+		$diseno -> tamano_imagen_ancho = $tamano_imagen_ancho;
+		$diseno -> tamano_imagen_alto= $tamano_imagen_alto;
 		$diseno -> rotacion_imagen = $rotacion_imagen;
 		$diseno -> img_coordenada_x = $img_coordenada_x;
 		$diseno -> img_coordenada_y = $img_coordenada_y;
 		$diseno -> img_profundidad_z = $img_profundidad_z;
-		//$diseno -> precio = $precio;
-		//$diseno -> coste = $coste;
+
 		$diseno -> fecha_alta = $fecha_alta;
 		$diseno -> fecha_baja = $fecha_baja;
 		$diseno -> motivo_baja = $motivo_baja;
 		$diseno -> disponible = $disponible;
 		$diseno -> id_sesion = $id_sesion;
 		
-		$imagen = R::load('imagen', $id_imagen);
-		$texto = R::load('texto', $id_texto);
+		//el valor cero es el por defecto que le doy en controller cuando no se utiliza ese elemento
+		if($id_imagen > 0){
+			$imagen = R::load('imagen', $id_imagen);
+			$imagen -> xownDisenolist[] = $diseno;
+			R::store($imagen);
+			$precioI = $imagen->precio;
+			$costeI = $imagen->coste;
+		}else{
+			$precioI = 0;
+			$costeI = 0;
+		}
 		
-		$imagen -> xownDisenolist[] = $diseno; 
-		$texto -> xownDisenolist[] = $diseno;  
+		if($id_texto > 0){
+			$texto = R::load('texto', $id_texto);
+			$texto -> xownDisenolist[] = $diseno;  
+			R::store($texto);
+			$precioT = $texto->precio;
+			$costeT = $texto->coste;
+		}else{
+			$precioT = 0;
+			$costeT = 0;
+		}
+
+		$diseno -> precio = $precioI + $precioT;
+		$diseno -> coste = $costeI + $costeT;
 		
-		$diseno -> precio = $imagen->precio + $texto->precio;
-		$diseno -> coste = $imagen->coste + $texto->coste;
-		
-		R::store($imagen);
-		R::store($texto);
 		R::store($diseno);
 		R::close();
 	}

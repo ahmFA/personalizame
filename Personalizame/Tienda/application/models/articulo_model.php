@@ -116,6 +116,16 @@ class Articulo_model extends CI_Model{
 			}	
 				
 	}
+	
+	public function mostrarTallas($id_articulo){
+		$tallas = R::findAll('articulo_talla','where articulo_id = ? order by id',[$id_articulo]);
+		return $tallas;
+	}
+	
+	public function mostrarColores($id_articulo){
+		$colores = R::findAll('articulo_color','where articulo_id = ? order by id',[$id_articulo]);
+		return $colores;
+	}
 }
 
 ?>
