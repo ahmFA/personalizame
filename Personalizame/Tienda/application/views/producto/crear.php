@@ -119,7 +119,7 @@ var conexion;
 	function crearListaImagenes(){
 		conexion = new XMLHttpRequest();
 		
-		var datos = "id_categoria="+document.getElementById("idCategoria").value;
+		var datos = "id_categoria="+document.getElementById("idCategoria").value+"&id_usuario="+document.getElementById("id_usuario").value;
 		conexion.open('POST', '<?=base_url()?>producto/mostrarListaImagenes', true);
 		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -164,7 +164,7 @@ var conexion;
 	
 		<!-- campos ocultos para conocer el autor -->
 		<input type="hidden" name="id_sesion" value="<?= session_id()?>">
-		<input type="hidden" name="id_usuario" value="<?= isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : null ?>">
+		<input type="hidden" id="id_usuario" name="id_usuario" value="<?= isset($_SESSION['idUsuario']) ? $_SESSION['idUsuario'] : null ?>">
 		
 	<div class="row">
 		<div class="col-md-4">
@@ -373,8 +373,10 @@ var conexion;
 		<input type="hidden" name="txt_back_color" id="txt_back_color">
 		
 		<!-- campos ocultos que pasarán los canvas para guardar diseños y producto -->
-		<input type="hidden" name="canvas_final_binario" id="canvas_final_binario"> 	
-			
+		<input type="hidden" name="canvas_final_binario" id="canvas_final_binario"> 
+		<input type="hidden" name="img_front_datos_binarios" id="img_front_datos_binarios">	
+		<input type="hidden" name="img_back_datos_binarios" id="img_back_datos_binarios">
+		
 			<div id="img_hidden"><img id="my-image" class="hidden"/></div>
 		
 			<div class="objeto_final hidden" style="width: 700px; height: 350px">
@@ -623,7 +625,8 @@ var conexion;
 		else{ 
         	imagen.src = ruta; 
 		}
-		
+		//alert(imagen.src);
+		//alert(canvas.toDataURL('image/png'));
         imagen.setAttribute("id","my-image");
 		imagen.setAttribute("class","hidden");	
 		imagen.setAttribute("data-idimagen",idImagen);
@@ -693,8 +696,10 @@ var conexion;
 
 	    	//guardo los id para usarlos al insertar en la bbdd
 			document.getElementById("img_front_id").value = $("#my-image").data("idimagen");
-
-			console.log("ID IMAGEN BACK: "+	$("#img_front_id").val());
+			document.getElementById("img_front_datos_binarios").value = imgElement_front.getAttribute("src");
+		
+			console.log("ID IMAGEN FRONT: "+ $("#img_front_id").val());
+			//console.log("Binario Front: "+ imgElement_front.getAttribute("src"));
 			//console.log("ID IMAGEN FRONT: "+ $("#my-image").data("idimagen"));
 		}
 		else{
@@ -728,8 +733,10 @@ var conexion;
 
 	    	//guardo los id para usarlos al insertar en la bbdd
 			document.getElementById("img_back_id").value = $("#my-image").data("idimagen");
-		
+			document.getElementById("img_back_datos_binarios").value = imgElement_back.getAttribute("src");
+			
 			console.log("ID IMAGEN BACK: "+	$("#img_back_id").val());
+			//console.log("Binario back: "+ imgElement_back.getAttribute("src"));
 			//console.log("ID IMAGEN BACK: "+ $("#my-image").data("idimagen"));
 		}
 
@@ -826,9 +833,9 @@ var conexion;
 			document.getElementById("img_front_rotacion").value = "";
 			document.getElementById("img_front_tamano").value = "";
 			document.getElementById("img_front_tamano_ancho").value = "";
-			document.getElementById("img_front_tamano_alto").value = "";
-			
+			document.getElementById("img_front_tamano_alto").value = "";			
 			document.getElementById("img_front_profundidad_z").value = "";
+			document.getElementById("img_front_datos_binarios").value = "";
 		}
 		else{
 			for(i = canvas_back.size()-1; i >= 0; i--){
@@ -858,6 +865,7 @@ var conexion;
 			document.getElementById("img_back_tamano_ancho").value = "";
 			document.getElementById("img_back_tamano_alto").value = "";
 			document.getElementById("img_back_profundidad_z").value = "";
+			document.getElementById("img_back_datos_binarios").value = "";
 		}
 
 		//limpia datos en el canvas oculto que acumula todo
@@ -1001,4 +1009,3 @@ $(document).ready(function(){
 	//cargar los elementos e imagen de la opción seleccionada por defecto
 	window.onload = crearElementosArticulo();
 </script> 
-<span class="btn" onclick="modificarColorDeFondo();">PRUEBA</span>

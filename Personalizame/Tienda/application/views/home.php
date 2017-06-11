@@ -306,7 +306,7 @@
 						<div class="intro-text">
 							<div class="intro-lead-in">Bienvenido a Personalízame!</div>
 							<?php if(isset($_SESSION['idUsuario'])): ?>
-							<a href="<?=base_url() ?>usuario/crearDiseno" class="btn btn-l"><strong>CREA TU PROPIO DISEÑO</strong></a>
+							<a href="<?=base_url() ?>producto/crear" class="btn btn-l"><strong>DISEÑA TUS PRODUCTOS</strong></a>
 							<?php else:?>
 							<a data-toggle="modal" href="#myModal" class="btn btn-l"><strong>CREA TU PROPIO DISEÑO</strong></a>
 							<?php endif; ?>

@@ -168,6 +168,27 @@ class Producto extends CI_Controller{
 			$this->imagen_model->crearImagen($id_usuario,$img_nombre, $img_fichero, $img_comentario, $img_descuento, $img_precio, $img_coste, $fecha_alta, $fecha_baja, $motivo_baja, $disponible, $id_categorias);
 			$datosImagenF = $this->imagen_model->getPorCampos($id_usuario,$img_fichero);
 			$img_front_id = $datosImagenF->id;
+			
+			//++++++++++ para guardar imagen del usuario en servidor ++++++++++
+			$img_front_datos_binarios = $_POST['img_front_datos_binarios'];
+			
+			if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/imagenes/')){
+				mkdir($_SERVER['DOCUMENT_ROOT'].'/img/imagenes/');
+			}
+				
+			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/imagenes/';
+			
+			// Filter out the headers (data:,) part.
+			$filteredData=substr($img_front_datos_binarios, strpos($img_front_datos_binarios, ",")+1);
+			// Need to decode before saving since the data we received is already base64 encoded
+			$decodedData=base64_decode($filteredData);
+			
+			// store in server
+			$fp = fopen($directorio.$img_fichero, 'wb');
+			$ok = fwrite( $fp, $decodedData);
+			fclose( $fp );
+			
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		}
 		//echo("ID IMG USER F out: ".$img_front_id);
 		
@@ -197,6 +218,27 @@ class Producto extends CI_Controller{
 			$this->imagen_model->crearImagen($id_usuario,$img_nombre, $img_fichero, $img_comentario, $img_descuento, $img_precio, $img_coste, $fecha_alta, $fecha_baja, $motivo_baja, $disponible, $id_categorias);
 			$datosImagenB = $this->imagen_model->getPorCampos($id_usuario,$img_fichero);
 			$img_back_id = $datosImagenB->id;
+			
+			//++++++++++ para guardar imagen del usuario en servidor ++++++++++
+			$img_back_datos_binarios = $_POST['img_back_datos_binarios'];
+				
+			if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/imagenes/')){
+				mkdir($_SERVER['DOCUMENT_ROOT'].'/img/imagenes/');
+			}
+			
+			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/imagenes/';
+				
+			// Filter out the headers (data:,) part.
+			$filteredData=substr($img_back_datos_binarios, strpos($img_back_datos_binarios, ",")+1);
+			// Need to decode before saving since the data we received is already base64 encoded
+			$decodedData=base64_decode($filteredData);
+				
+			// store in server
+			$fp = fopen($directorio.$img_fichero, 'wb');
+			$ok = fwrite( $fp, $decodedData);
+			fclose( $fp );
+				
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		}
 		//echo("ID IMG USER B out: ".$img_back_id);
 		
@@ -241,12 +283,12 @@ class Producto extends CI_Controller{
 			//usando nombre,ubicacion, usuario o sesion recuperar el id que le ha otorgado al diseño para pasarselo al producto
 			$datosDisenoB = $this->diseno_model->getPorCampos($id_usuario,$id_sesion,$nombre_diseno,$ubicacion);
 			$id_diseno_back = $datosDisenoB->id;
-
+			
 		}else{
 			$id_diseno_back = 0;
 		}
 
-		//echo("DISENO B: ".$id_diseno_back);
+		//echo("DISENO B: ".$id_diseno_back);		
 		
 		// ****************** Fin Control Diseños ********************
 		
@@ -260,7 +302,7 @@ class Producto extends CI_Controller{
 		$nombre_producto = 'prod_'.$id_usuario.'_'.$var_time; 
 		$imagen_producto = $nombre_producto.'.png';  //nombre de imagen al guardarse
 		
-		//++++++++++ para guardar imagen en servidor ++++++++++
+		//++++++++++ para guardar imagen de producto en servidor ++++++++++
 		$canvas_final_binario = $_POST['canvas_final_binario'];
 		
 		if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/productos/')){
@@ -279,7 +321,7 @@ class Producto extends CI_Controller{
 		$ok = fwrite( $fp, $decodedData);
 		fclose( $fp );
 		
-		//+++++++++++++++++++++++++++++++++++++++++++++++++++
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		
 		$this->load->model('producto_model');
 		$this->producto_model->crear($id_usuario,$id_articulo,$id_talla,$id_color_base,$id_diseno_front,$id_diseno_back,$nombre_producto,$imagen_producto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
@@ -401,10 +443,24 @@ class Producto extends CI_Controller{
 	public function mostrarListaImagenes(){ //AJAX
 		//Dependiendo de la Categoria seleccionada se mostrará lista de imagenes
 		$id_categoria = $_POST['id_categoria'];
+		$id_usuario = $_POST['id_usuario'];
+
 		$this->load->model('imagen_model');
-	
-		$datos ['body'] ['imagenes'] = $this->imagen_model->getImagenesCategoria($id_categoria);
-	
+		$this->load->model('categoria_model');
+		
+		//compruebo que categoria me piden
+		$categoria_seleccionada = $this->categoria_model->getCategoriaById($id_categoria);
+		
+		if($categoria_seleccionada->nombre != "Mis Imágenes"){
+			//seleccionas todos los que hay en esa categoria
+			$datos ['body'] ['imagenes'] = $this->imagen_model->getImagenesCategoria($id_categoria);
+			$datos ['body'] ['tipo'] = "imagenes_comunes";
+		}else{
+			//seleccionas solo los que tienen tu id_usuario
+			$datos ['body'] ['imagenes'] = $this->imagen_model->getImagenesUsuario($id_usuario);
+			$datos ['body'] ['tipo'] = "imagenes_propias";
+		}
+
 		$this->load->view('producto/XcrearListaImagenes',$datos);
 	}
 }

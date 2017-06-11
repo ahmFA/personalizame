@@ -125,6 +125,12 @@ class Imagen_model extends CI_Model{
 		$imagenes = R::findAll('categoria_imagen','where categoria_id = ? order by id',[$id_categoria]);
 		return $imagenes;
 	}
+	
+	//cuando hay que mostrar las imagenes del usuario concreto
+	public function getImagenesUsuario($id_usuario){
+		$imagenes = R::findAll('imagen','where usuario_id = ? ',[$id_usuario]);
+		return $imagenes;
+	}
 }
 
 ?>
