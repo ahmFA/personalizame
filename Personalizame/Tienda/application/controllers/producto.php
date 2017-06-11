@@ -384,7 +384,8 @@ class Producto extends CI_Controller{
 		
 		$this->load->view('producto/XcrearElementosArticulo',$datos);
 	}
-	
+/*	
+  	//ahora saco estos datos de otra conexion ajax la dejo comentada por si acaso falla algo 
 	public function mostrarFondoArticulo(){ //AJAX
 		//Dependiendo del Articulo seleccionado se mostrará el fondo concreto
 		$id_articulo = $_POST['id_articulo'];
@@ -396,7 +397,7 @@ class Producto extends CI_Controller{
 		
 		$this->load->view('producto/XfondoArticulo',$datos);
 	}
-	
+*/	
 	public function mostrarListaImagenes(){ //AJAX
 		//Dependiendo de la Categoria seleccionada se mostrará lista de imagenes
 		$id_categoria = $_POST['id_categoria'];

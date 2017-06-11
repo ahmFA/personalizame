@@ -1,8 +1,6 @@
 .objeto{
 	z-index: -200; 
-	background-repeat: no-repeat; 
-	background-image: url(../../../../img/articulos/<?=$body['articulo']->nombre_imagen?>);
-	background-color: <?=$body['color']?>; 
+
 }
 .fondo{
 	position: absolute;	

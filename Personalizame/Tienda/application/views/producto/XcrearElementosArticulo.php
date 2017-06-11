@@ -14,7 +14,7 @@
 	<div class="radio m-b-15">
 		<?php foreach ($body['colores'] as $color): ?>
 		<label>
-			<input type="radio" id="id_color_base" name="id_color_base" data-valor="<?= $color->color->valor ?>" value="<?= $color->color_id ?>" checked="checked" onchange="crearFondoArticulo()">
+			<input type="radio" id="id_color_base" name="id_color_base" data-valor="<?= $color->color->valor ?>" value="<?= $color->color_id ?>" checked="checked" onchange="modificarColorDeFondo()">
 			<i class="input-helper"></i>
 			<?= $color->color->nombre ?>&nbsp; &nbsp; 
 		</label>

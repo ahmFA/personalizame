@@ -1,47 +1,3 @@
-<style id="idFondo_articulo">
-.objeto{
-	z-index: -200; 
-	background-repeat: no-repeat; 
-	background-image: url(../../../../img/articulos/default.png);
-	background-color: white; 
-}
-#marco_back,#marco_front{
-	position: absolute;
-	margin-left: 100px;    
-    margin-top: 50px;
-}
-#canvas_back,#canvas_front{
-	position: absolute;
-	border: 1px solid silver;
-}
-.hidden{
-	visible: none;
-	z-index: -300;
-}
-.objeto_final{
-	z-index: -200; 
-	background-color: white; 
-}
-#marco_final{
-	position: absolute;
-	margin-left: 0px;    
-    margin-top: 0px;
-}
-#canvas_final{
-	position: absolute;
-	border: 1px solid blue;
-}
-.fliph-horizontal{
-    -webkit-transform: scaleX(-1);
-    -moz-transform: scaleX(-1);
-    transform: scaleX(-1);
-    filter: FlipH;
-    -ms-filter: "FlipH";
-}
-.fondo{
-	position: absolute;
-}
-</style>
 <header id="page-top">
 		<div class="wrap-header">
 			<div class="container">
@@ -92,8 +48,14 @@ var conexion;
 	//mostrar las opciones del articulo seleccionado y llamada a la img de fondo del articulo
 	function mostrarElementosArticulo(){
 		document.getElementById("idElementosArticulo").innerHTML = conexion.responseText ;
-		crearFondoArticulo();
+		//crearFondoArticulo();
+		
+		//cambiar las imagenes de fondo segun articulo seleccionado
+		modificarImagenesDeFondo();
 
+		//cambiar color de fondo segun color seleccionado
+		modificarColorDeFondo();
+		
 		//manda datos al canvas oculto que acumula todo
 		componerProductoFinal();
 	}
@@ -119,30 +81,39 @@ var conexion;
 		}
 	}
 
+	//******* Ahora aprobecho otra llamada de AJAX para imagenes/color por lo que no necesito esta   
+	//******* y sobraria el fichero XfondoArticulo que modificaba cosas en los estilos
+
 	//conexion Ajax para traer el fondo del articulo seleccionado y el color
-	function crearFondoArticulo(){
-		conexion = new XMLHttpRequest();
-		
-		var datos = "id_articulo="+document.getElementById("idArticulo").value+"&id_color_base="+$('input[name="id_color_base"]:checked').data("valor");
-		conexion.open('POST', '<?=base_url()?>producto/mostrarFondoArticulo', true);
-		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		conexion.send(datos);
-		conexion.onreadystatechange = function() {
-			if (conexion.readyState==4 && conexion.status==200) {
-				mostrarFondoArticulo();
-			}
-		}
-	}
+//	function crearFondoArticulo(){
+//		conexion = new XMLHttpRequest();
+//		
+//		var datos = "id_articulo="+document.getElementById("idArticulo").value+"&id_color_base="+$('input[name="id_color_base"]:checked').data("valor");
+//		conexion.open('POST', '<?=base_url()?>producto/mostrarFondoArticulo', true);
+//		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+//		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+//		conexion.send(datos);
+//		conexion.onreadystatechange = function() {
+//			if (conexion.readyState==4 && conexion.status==200) {
+//				mostrarFondoArticulo();
+//			}
+//		}
+//	} 
 
 	//mostrar el fondo seleccionado en este caso background en estylo css
-	function mostrarFondoArticulo(){
-		document.getElementById("idFondo_articulo").innerHTML = "";
-		document.getElementById("idFondo_articulo").innerHTML = conexion.responseText ;
+//	function mostrarFondoArticulo(){
+//		document.getElementById("idFondo_articulo").innerHTML = "";
+//		document.getElementById("idFondo_articulo").innerHTML = conexion.responseText ;
 
+		//cambiar las imagenes de fondo segun articulo seleccionado
+//		modificarImagenesDeFondo();
+
+		//cambiar color de fondo segun color seleccionado
+//		modificarColorDeFondo();
+		
 		//manda datos al canvas oculto que acumula todo
-		componerProductoFinal();
-	}
+//		componerProductoFinal();
+//	}
 
 	//conexion Ajax para traer el listado de imagenes de la categoría seleccionada
 	function crearListaImagenes(){
@@ -198,8 +169,7 @@ var conexion;
 	<div class="row">
 		<div class="col-md-4">
 					<label>Artículo</label>
-					<select class="form-control" id="idArticulo" name="id_articulo" onchange="crearElementosArticulo()">         
-			 			<option value='0'>Seleccione uno</option>       	
+					<select class="form-control" id="idArticulo" name="id_articulo" onchange="crearElementosArticulo()">              	
 			 		<?php foreach ($body['articulos'] as $articulo): ?>
 			 			<option value='<?= $articulo['id']?>'><?= $articulo['nombre']?></option>
 					<?php endforeach;?>
@@ -263,8 +233,8 @@ var conexion;
 					<span id="idBotonVer_front" class="btn btn-default glyphicon glyphicon-eye-open" data-toggle="modal" data-target="#vista-prev" onclick="verModal()"></span>
 					<span id="idBotonLimpiar_front" onclick="limpiar();" class="btn btn-danger glyphicon glyphicon-trash"></span>
 					
-						<div class="objeto" style="width: 350px; height: 350px">
-						<!-- <img id="img_fondo_marco_front" class="fondo" src="../../../../img/articulos/art_taza350x350.png" /> -->
+						<div id="articulo_select_front" class="objeto" style="width: 350px; height: 350px;">
+						<img id="img_fondo_marco_front" class="fondo" src="../../../../img/articulos/default.png" />
 							<div id="marco_front" style="width: 150px; height: 250px">
 								<canvas id="canvas_front" width="150" height="250"></canvas>
 							</div>
@@ -283,8 +253,8 @@ var conexion;
 						<span id="idBotonVer_back" class="btn btn-default glyphicon glyphicon-eye-open" data-toggle="modal" data-target="#vista-prev" onclick="verModal()"></span>
 						<span id="idBotonLimpiar_back" onclick="limpiar();" class="btn btn-danger glyphicon glyphicon-trash"></span>
 					
-							<div class="objeto" style="width: 350px; height: 350px">
-							<!-- <img id="img_fondo_marco_back" class="fondo fliph-horizontal" src="../../../../img/articulos/art_taza350x350.png" /> -->
+							<div id="articulo_select_back" class="objeto" style="width: 350px; height: 350px">
+							<img id="img_fondo_marco_back" class="fondo fliph-horizontal" src="../../../../img/articulos/art_taza350x350.png" />
 								<div id="marco_back" style="width: 150px; height: 250px">
 									<canvas id="canvas_back" width="150" height="250"></canvas>
 								</div>
@@ -999,4 +969,36 @@ $(document).ready(function(){
     });
 });
 </script>
-    
+
+<script type="text/javascript">
+	function modificarImagenesDeFondo(){
+		var imagenActualizarF = document.getElementById('img_fondo_marco_front');
+		var imagenActualizarB = document.getElementById('img_fondo_marco_back');
+		
+		//src de la imagen que trae la consulta AJAX
+		srcNuevo = document.getElementById('articulo-front').src;
+		
+		//actualizo el fondo de los articulos con la nueva imagen que viene de la consulta AJAX
+		imagenActualizarF.src = srcNuevo;
+		imagenActualizarB.src = srcNuevo;
+	}
+
+	function modificarColorDeFondo(){
+		var imagenActualizarFcolor = document.getElementById('articulo_select_front');
+		var imagenActualizarBcolor = document.getElementById('articulo_select_back');
+		
+		//src de la imagen que trae la consulta AJAX
+		colorNuevo = $('input[name="id_color_base"]:checked').data("valor");
+		
+		//actualizo el color de fondo de los articulos
+		imagenActualizarFcolor.style.backgroundColor = colorNuevo;
+		imagenActualizarBcolor.style.backgroundColor = colorNuevo;
+
+		//manda datos al canvas oculto que acumula todo
+		componerProductoFinal();
+	}
+	
+	//cargar los elementos e imagen de la opción seleccionada por defecto
+	window.onload = crearElementosArticulo();
+</script> 
+<span class="btn" onclick="modificarColorDeFondo();">PRUEBA</span>
