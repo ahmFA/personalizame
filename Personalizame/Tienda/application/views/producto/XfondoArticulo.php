@@ -6,8 +6,6 @@
 }
 .fondo{
 	position: absolute;	
-	z-index: -201; 
-	background-color: blue; 
 }
 #marco_back,#marco_front{
 	position: absolute;
@@ -17,7 +15,7 @@
 }
 #canvas_back,#canvas_front{
 	position: absolute;
-	border: 1px solid blue;
+	border: 1px solid silver;
 }
 .hidden{
 	visible: none;
@@ -36,4 +34,11 @@
 #canvas_final{
 	position: absolute;
 	border: 1px solid blue;
+}
+.fliph-horizontal{
+    -webkit-transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
 }

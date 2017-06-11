@@ -12,7 +12,7 @@
 }
 #canvas_back,#canvas_front{
 	position: absolute;
-	border: 1px solid blue;
+	border: 1px solid silver;
 }
 .hidden{
 	visible: none;
@@ -31,6 +31,16 @@
 	position: absolute;
 	border: 1px solid blue;
 }
+.fliph-horizontal{
+    -webkit-transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+.fondo{
+	position: absolute;
+}
 </style>
 <header id="page-top">
 		<div class="wrap-header">
@@ -46,6 +56,8 @@
 			</div>
 		</div>
     </header>
+
+    
         <section class="box-content box-style">
 			<div class="container">
 				<div class="row heading">
@@ -217,11 +229,13 @@ var conexion;
 		</div>
 		
 		<div class="col-md-4">
-			<label>Utiliza tus imágenes</label>
-			 <input type="file" id="files" name="files">
+			<label>Utiliza tus imágenes</label><br/>
+			<span class="btn btn-info btn-file">
+                                	<span class="fileinput-new">Seleccionar imagen</span>
+			 <input type="file" id="files" name="files"></span>
+			 <span class="btn btn-success" id="idImagenUser" onclick="selectImagen('user',-1)">Aplicar Imagen</span>
 			 <output id="list"></output>	
-			 <span class="btn btn-danger" id="quitar">Quitar</span>
-			 <span class="btn btn-success" id="idImagenUser" onclick="selectImagen('user',-1)">OK</span>
+			 
                    <!--          
                    <div class="fileinput fileinput-new" data-provides="fileinput">
                         <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
@@ -245,11 +259,12 @@ var conexion;
 			
 			<div class="container" id="canvasFront">
 				<div class="form-group col-xs-12">
-					<h6>Parte delantera diseñala a tu gusto</h6>
-					<input id="idBotonVer_front" type="button" value="Vista Previa" onclick="verFinal();">
-					<input id="idBotonLimpiar_back" type="button" value="Limpiar" onclick="limpiar();"><br/>
+					<h6>Parte delantera - diseñala a tu gusto</h6>
+					<span id="idBotonVer_front" class="btn btn-default glyphicon glyphicon-eye-open" data-toggle="modal" data-target="#vista-prev" onclick="verModal()"></span>
+					<span id="idBotonLimpiar_front" onclick="limpiar();" class="btn btn-danger glyphicon glyphicon-trash"></span>
 					
 						<div class="objeto" style="width: 350px; height: 350px">
+						<!-- <img id="img_fondo_marco_front" class="fondo" src="../../../../img/articulos/art_taza350x350.png" /> -->
 							<div id="marco_front" style="width: 150px; height: 250px">
 								<canvas id="canvas_front" width="150" height="250"></canvas>
 							</div>
@@ -264,11 +279,12 @@ var conexion;
 				
 				<div class="container" id="canvasBack" style="display:none">
 					<div class="form-group col-xs-12">
-						<h6>Parte trasera diseñala a tu gusto</h6>
-						<input id="idBotonVer_back" type="button" value="Vista Previa" onclick="verFinal();">
-						<input id="idBotonLimpiar_back" type="button" value="Limpiar" onclick="limpiar();"><br/>
+						<h6>Parte trasera - diseñala a tu gusto</h6>
+						<span id="idBotonVer_back" class="btn btn-default glyphicon glyphicon-eye-open" data-toggle="modal" data-target="#vista-prev" onclick="verModal()"></span>
+						<span id="idBotonLimpiar_back" onclick="limpiar();" class="btn btn-danger glyphicon glyphicon-trash"></span>
 					
 							<div class="objeto" style="width: 350px; height: 350px">
+							<!-- <img id="img_fondo_marco_back" class="fondo fliph-horizontal" src="../../../../img/articulos/art_taza350x350.png" /> -->
 								<div id="marco_back" style="width: 150px; height: 250px">
 									<canvas id="canvas_back" width="150" height="250"></canvas>
 								</div>
@@ -297,13 +313,13 @@ var conexion;
 				
 				<!-- fin de listado de fotos -->
 		
-			<!-- CAMPOS PARA AÑADIR TEXTO DELANTERO Y TRASERO-->	
+			<!-- CAMPOS PARA AÑADIR TEXTO -->	
 			<br/><br/>
 			<p><label>Agrega un texto a tu diseño</label></p>
 			
 			<div class="form-group col-md-4">
 				<label for="idDatosTexto">Texto </label> 
-				<input class="form-control" id="idDatosTexto" type="text" name="datos_texto" maxlength="20" required="required" placeholder="completa este campo" title="El Texto puede contener entre 1 y 20 caracteres"> <br/>
+				<input class="form-control" id="idDatosTexto" type="text" name="datos_texto" maxlength="20" placeholder="escribe aquí" title="El Texto puede contener entre 1 y 20 caracteres"> <br/>
 			</div>
 		
 			<div class="form-group col-md-4">	
@@ -398,13 +414,35 @@ var conexion;
 			</div>
 			
 		<div class="row">
-			<input id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
+			<input class="btn btn-info" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
 		</div>
 	
 	</form>
 
 </div>
 </section>
+
+<!-- Modal -->
+<div id="vista-prev" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h5 class="modal-title">Previsualización del producto</h5>
+      </div>
+      <div class="modal-body" id="modal-body-img-parent">
+      	<img id="modal-body-img" src=""/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <script>
 	var canvas_front = new fabric.Canvas('canvas_front');
 	var canvas_back = new fabric.Canvas('canvas_back');
@@ -595,6 +633,11 @@ var conexion;
 	}
 	
 	function selectImagen(ruta,idImagen){
+		//en caso de que el boton de imagen de usuario se marque sin haber seleccionado una imagen previa no hacer nada
+		if(ruta == "user" && document.getElementsByClassName('prev-image')[0] == null){
+			return; //salir de funcion
+		}
+		
 		//borrar imagen anterior
 		var imagen = document.getElementById('my-image');
 		imagen.parentNode.removeChild(imagen);
@@ -899,54 +942,27 @@ var conexion;
 				}
 			}
 		}
+		//************************************************************************
 		
-
 		function verFinal(){
 			var imagPNG = canvas.toDataURL(); // obtenemos la imagen como png
 			window.open(imagPNG, "Ejemplo", "width=900, height=500"); //mostramos en popUp
 		}
-		//************************************************************************
-		//************************************************************************
-</script>
 
-
-
-<script>
-/*
-$(document).ready(function(){
-	$('#imagen').bind('change', function() {
-	    
-	if(window.File && window.FileReader && window.FileList && window.Blob){
-		if(this.files[0].size < 150000){
-			$('#idBanner').html('');
-			$('#valida').val('0');
-		}else{
-			$('#idBanner').html('<div class="alert alert-danger" role="alert">ERROR: El tamaño de la imagen es demasiado grande. Máximo 150kb.</div>');
-			$('#valida').val('1');
-		}	
-	}else{
-	// IE
-	    var Fs = new ActiveXObject("Scripting.FileSystemObject");
-	    var ruta = document.upload.file.value;
-	    var archivo = Fs.getFile(ruta);
-	    var size = archivo.size;
-	    if(size < 150000){
-	    	$('#idBanner').html('');
-			$('#valida').val('0');
-		}else{
-			$('#idBanner').html('<div class="alert alert-danger" role="alert">ERROR: El tamaño de la imagen es demasiado grande. Máximo 150kb.</div>');
-			$('#valida').val('1');
-		}	
-	}
-	 
-	});
-
-	$('#quitar').on('click', function(){
-		$('#valida').val('2');
-		$('#idBanner').html('');
-	});
-});
-*/
+		function verModal(){
+			var imagenCodigo = canvas.toDataURL(); // obtenemos la imagen como png
+			
+			var elementoPadre = document.getElementById("modal-body-img-parent");
+			
+			var imagenModal = document.getElementById("modal-body-img");
+			imagenModal.parentNode.removeChild(imagenModal);
+			
+			imagenModal = document.createElement("img");
+			imagenModal.src = imagenCodigo;
+			imagenModal.setAttribute("id","modal-body-img");
+			
+	        elementoPadre.appendChild(imagenModal);			
+		}
 </script>
 <script>
               function archivo(evt) {
@@ -983,3 +999,4 @@ $(document).ready(function(){
     });
 });
 </script>
+    
