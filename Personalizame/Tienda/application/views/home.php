@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,18 +11,18 @@
     <title>Personalízame</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="<?=base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?=base_url()?>assets/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="<?=base_url() ?>assets/css/style.css" rel="stylesheet">
+    <link href="<?=base_url()?>assets/css/style.css" rel="stylesheet">
 	
 	 <!-- Custom Fonts -->
-    <link href="<?=base_url() ?>assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<?=base_url()?>assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 	
 	<!-- circle Menu -->
-	<link rel="stylesheet" href="<?=base_url() ?>assets/css/circle-menu.min.css">
+	<link rel="stylesheet" href="<?=base_url()?>assets/css/circle-menu.min.css">
 	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,23 +40,29 @@
         </style>
 </head>
 <body>
-<!-- 
-<header class="container">
-<img src="<?=base_url()?>assets/img/logtn1.jpg" class="img-rounded  center-block" alt="Tienda ejemplo" height="100">
-</header>
-<div class="container">
-<div class="col-xs-12 text-right">
-<?= "Conectado como" //session_id() ?>
-  	<?= isset($_SESSION['perfil']) ? $_SESSION['perfil'] : "Invitado" ?>
-  	<?= isset($_SESSION['nick']) ?": ".$_SESSION['nick'] : null ?>
-  	
-  	<?php if(!isset($_SESSION['nick']) && !isset($_SESSION['perfil'])):?>
-		<a data-toggle="modal" href="#myModal">LOGUÃ‰ATE</a>
-	<?php else:?>
-		<a href="<?=base_url()?>usuario/logout">LOGOUT</a>
-	<?php endif;?>
+
+<!-- Modal -->
+  <div class="modal fade" id="formContact" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Formulario de contacto</h4>
+        </div>
+        <div class="modal-body">
+          <?= $mensajeEnviado ?>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
   </div>
- -->  
+  
+  
  <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -187,7 +194,7 @@
 		var valNick = validarNick();
 		if (valNick == false){
 			document.getElementById("nickRegistro").style.color = "red";
-			//document.getElementByid("idNick").setAttribute("title","El Nick debe contener 3 caracteres como mínimo");
+			//document.getElementByid("idNick").setAttribute("title","El Nick debe contener 3 caracteres como mÃ­nimo");
 			if (foco == true){
 				document.getElementById("nickRegistro").focus();
 				foco = false;
@@ -421,7 +428,7 @@
 						</div>
 						<h3 class="services-heading">Tazas</h3>
 						<p>Toma café, té, chocolate caliente o unas lentejas si te apetece,
-						 pero tómatelas en una taza con estilo que tiene algo de tu personalidad.</p>
+						 pero tomatelas en una taza con estilo que tiene algo de tu personalidad.</p>
 						<button type="submit" class="btn btn-2 ">Personaliza</button>
 					</div>
 					<div class="col-sm-4 services-item">
@@ -472,7 +479,7 @@
 							<img src="<?=base_url() ?>assets/images/ficcion.jpg" class="img-responsive" alt="">
 						</a>
 						<div class="portfolio-caption center">
-							<h4>Ciencia Ficción</h4>
+							<h4>Ficción</h4>
 							<p class="text-muted"></p>
 						</div>
 					</div>
@@ -614,17 +621,17 @@
 						<div class="row">
 							<div class="col-sm-12">
 								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3164.289259162295!2d-120.7989351!3d37.5246781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8091042b3386acd7%3A0x3b4a4cedc60363dd!2sMain+St%2C+Denair%2C+CA+95316%2C+Hoa+K%E1%BB%B3!5e0!3m2!1svi!2s!4v1434016649434" width="95%" frameborder="0" style="border:0"></iframe>
-								<p>JL.Kemacetan timur no.23. block.Q3 Jakarta-Indonesia</p>
-								<p>555 888 888 90 <br>
-									555 888 888 91</p>
+								<p>JL.Kemacetan timur no.23. Jakarta-Indonesia</p>
+								<p>555 888 889 <br>
+									555 888 880</p>
 								<p>info@personalizame.com</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-6 contact-item">
-						<form name="form1" id="ff" method="post" action="<?=base_url() ?>contact/formContacto">
-							<div id="mensajeEnviado">
-								<?= isset($mensajeEnviado) ? $mensajeEnviado : ''?>
+					 <form name="form1" id="ff" method="post" action="<?=base_url() ?>contact/formContacto"> 
+							<div id="mensaje">
+								
 							</div>
 							<div class="row">
 								<div class="col-md-6">
@@ -635,7 +642,7 @@
 										<input type="email" class="form-control" placeholder="Tu Email *" name="email" id="email" required data-validation-required-message="Please enter your email address.">
 									</div>
 									<div class="form-group">
-										<input type="tel" class="form-control" placeholder="Tu Teléfono *" name="phone" id="phone" required data-validation-required-message="Please enter your phone number.">
+										<input type="tel" class="form-control" placeholder="Tu TelÃ©fono *" name="phone" id="phone" required data-validation-required-message="Please enter your phone number.">
 									</div>
 								</div>
 								<div class="col-md-6">
@@ -650,7 +657,7 @@
 									<button type="submit" class="btn btn-l">Enviar Mensaje</button>
 								</div>
 							</div>
-						</form>
+ 						</form> 
 					</div>
 				</div>
 			</div>
@@ -719,7 +726,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					Copyright &copy; Personalízame -  Desarrollado por Alejandro y Luis de 2º de DAW
+					Copyright &copy; PersonalÃ­zame -  Desarrollado por Alejandro y Luis de 2Âº de DAW
 				</div>
 			</div>
 		</div>
@@ -728,19 +735,19 @@
 <!-- Footer -->
 
 <!-- jQuery -->
-<script src="<?=base_url() ?>assets/js/jquery.min.js"></script>
+<script src="<?=base_url()?>assets/js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="<?=base_url() ?>assets/js/bootstrap.min.js"></script>
+<script src="<?=base_url()?>assets/js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="<?=base_url() ?>assets/js/agency.js"></script>
+<script src="<?=base_url()?>assets/js/agency.js"></script>
 
 <!-- Plugin JavaScript -->
-<script src="<?=base_url() ?>assets/js/jquery.easing.min.js"></script>
-<script src="<?=base_url() ?>assets/js/classie.js"></script>
-<script src="<?=base_url() ?>assets/js/cbpAnimatedHeader.js"></script>
-<script src="<?=base_url() ?>assets/js/circleMenu.min.js"></script>
+<script src="<?=base_url()?>assets/js/jquery.easing.min.js"></script>
+<script src="<?=base_url()?>assets/js/classie.js"></script>
+<script src="<?=base_url()?>assets/js/cbpAnimatedHeader.js"></script>
+<script src="<?=base_url()?>assets/js/circleMenu.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	function hash(){
@@ -752,5 +759,16 @@ $(document).ready(function(){
 	hash();
 });
 </script>
+
+<?php if(isset($mensajeEnviado)):?>
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			$('#formContact').modal('show');
+
+		});
+		
+	</script>
+<?php endif; ?>
 </body>
 </html>
