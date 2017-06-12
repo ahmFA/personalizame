@@ -18,7 +18,7 @@
 				<li class="hidden"><a href="#page-top"></a></li>
 				<li><a href="<?=base_url() ?>producto/crear">Crear</a></li>
 				<li><a class="page-scroll" href="<?=base_url()?>home/index#services">Productos</a></li>
-				<li><a class="page-scroll" href="<?=base_url()?>home/index#portfolio">Portfolio</a></li>
+				<li><a class="page-scroll" href="<?=base_url()?>home/index#portfolio">Categorías</a></li>
 				<li><a class="page-scroll" href="<?=base_url()?>home/index#about">Nosotros</a></li>
 				<li><a class="page-scroll" href="<?=base_url()?>home/index#contact">Contacto</a></li>
 				<?php if(!isset($_SESSION['nick']) && !isset($_SESSION['perfil'])):?>

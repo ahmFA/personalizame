@@ -437,7 +437,7 @@
 						</div>
 						<h3 class="services-heading">Llaveros</h3>
 						<p>Desde el momento en que te compres el llavero, vas a tener más miedo
-						 de que te roben las llaves de casa por lo bonito que es que por que roben en tu hogar.</p>
+						 de perder las llaves de casa por lo bonito que es que por que roben en tu hogar.</p>
 						<button type="submit" class="btn btn-2 ">Personaliza</button>
 					</div>
 				</div>
