@@ -27,7 +27,7 @@
 <script type="text/javascript" src="<?=base_url()?>assets/js/fabric.js"></script>
 
 <script type="text/javascript">
-var conexion;
+var conexion, conexion2;
 
 	//conexion Ajax para mostrar las opciones del articulo seleccionado
 	function crearElementosArticulo(){
@@ -117,15 +117,15 @@ var conexion;
 
 	//conexion Ajax para traer el listado de imagenes de la categoría seleccionada
 	function crearListaImagenes(){
-		conexion = new XMLHttpRequest();
+		conexion2 = new XMLHttpRequest();
 		
 		var datos = "id_categoria="+document.getElementById("idCategoria").value+"&id_usuario="+document.getElementById("id_usuario").value;
-		conexion.open('POST', '<?=base_url()?>producto/mostrarListaImagenes', true);
-		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		conexion.send(datos);
-		conexion.onreadystatechange = function() {
-			if (conexion.readyState==4 && conexion.status==200) {
+		conexion2.open('POST', '<?=base_url()?>producto/mostrarListaImagenes', true);
+		conexion2.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		conexion2.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		conexion2.send(datos);
+		conexion2.onreadystatechange = function() {
+			if (conexion2.readyState==4 && conexion2.status==200) {
 				mostrarListaImagenes();
 			}
 		}
@@ -134,7 +134,7 @@ var conexion;
 	//mostrar las imagenes que se corresponden con la categoria marcada
 	function mostrarListaImagenes(){
 		document.getElementById("idListaImagenes").innerHTML = "";
-		document.getElementById("idListaImagenes").innerHTML = conexion.responseText ;
+		document.getElementById("idListaImagenes").innerHTML = conexion2.responseText ;
 	}
 	
 </script>
@@ -171,7 +171,11 @@ var conexion;
 					<label>Artículo</label>
 					<select class="form-control" id="idArticulo" name="id_articulo" onchange="crearElementosArticulo()">              	
 			 		<?php foreach ($body['articulos'] as $articulo): ?>
-			 			<option value='<?= $articulo['id']?>'><?= $articulo['nombre']?></option>
+			 			<?php if ($body['articuloInicial'] == $articulo['nombre']):?>
+			 				<option value='<?= $articulo['id']?>' selected="selected"><?= $articulo['nombre']?></option>
+			 			<?php elseif ($body['articuloInicial'] != $articulo['nombre']):?>
+			 				<option value='<?= $articulo['id']?>'><?= $articulo['nombre']?></option>
+			 			<?php endif;?>
 					<?php endforeach;?>
 			        </select>
 		
@@ -228,7 +232,7 @@ var conexion;
 			<!-- CANVAS DELANTERO -->
 			
 			<div class="container" id="canvasFront">
-				<div class="form-group col-xs-12">
+				
 					<h6>Parte delantera - diseñala a tu gusto</h6>
 					<span id="idBotonVer_front" class="btn btn-default glyphicon glyphicon-eye-open" data-toggle="modal" data-target="#vista-prev" onclick="verModal()"></span>
 					<span id="idBotonLimpiar_front" onclick="limpiar();" class="btn btn-danger glyphicon glyphicon-trash"></span>
@@ -240,7 +244,7 @@ var conexion;
 							</div>
 						</div>
 			
-				</div>	
+					
 			</div>
 			
 			<!-- fin canvas delantero -->	
@@ -248,7 +252,7 @@ var conexion;
 			<!-- CANVAS TRASERO -->	
 				
 				<div class="container" id="canvasBack" style="display:none">
-					<div class="form-group col-xs-12">
+					
 						<h6>Parte trasera - diseñala a tu gusto</h6>
 						<span id="idBotonVer_back" class="btn btn-default glyphicon glyphicon-eye-open" data-toggle="modal" data-target="#vista-prev" onclick="verModal()"></span>
 						<span id="idBotonLimpiar_back" onclick="limpiar();" class="btn btn-danger glyphicon glyphicon-trash"></span>
@@ -259,7 +263,7 @@ var conexion;
 									<canvas id="canvas_back" width="150" height="250"></canvas>
 								</div>
 							</div>
-					</div>	
+						
 				</div>
 			<!-- fin canvas trasero -->
 		</div>
@@ -269,10 +273,13 @@ var conexion;
 				
 				<div class=" m-b-25">
 			   		<p class="f-500 c-black m-b-15">Categoría</p>
-					<select class="form-control" id="idCategoria" name="id_categoria" onchange="crearListaImagenes()">         
-			 			<option value='*'>Personalizame</option>       	
-			 		<?php foreach ($body['categorias'] as $categoria): ?> 
-			 			<option value='<?= $categoria['id']?>'><?= $categoria['nombre']?></option>
+					<select class="form-control" id="idCategoria" name="id_categoria" onchange="crearListaImagenes()">         					
+					<?php foreach ($body['categorias'] as $categoria): ?>
+			 			<?php if ($body['categoriaInicial'] == $categoria['nombre']):?>
+			 				<option value='<?= $categoria['id']?>' selected="selected"><?= $categoria['nombre']?></option>
+			 			<?php elseif ($body['categoriaInicial'] != $categoria['nombre']):?>
+			 				<option value='<?= $categoria['id']?>'><?= $categoria['nombre']?></option>
+			 			<?php endif;?>
 					<?php endforeach;?>
 			        </select>
 				</div>
@@ -384,11 +391,14 @@ var conexion;
 					<canvas id="canvas_final" width="700" height="350"></canvas>
 				</div>
 			</div>
-			
-		<div class="row">
+	<div class="row">
+		<div class="col-md-12 "> </div><br/>
+	</div>		
+	<div class="row">
+		<div class="col-md-4 ">
 			<input class="btn btn-info" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
 		</div>
-	
+	</div>
 	</form>
 
 </div>
@@ -1005,7 +1015,12 @@ $(document).ready(function(){
 		//manda datos al canvas oculto que acumula todo
 		componerProductoFinal();
 	}
-	
-	//cargar los elementos e imagen de la opción seleccionada por defecto
-	window.onload = crearElementosArticulo();
+    
+	window.onload=function(){ 
+		//cargar los elementos e imagen de la opción seleccionada por defecto
+		crearElementosArticulo();
+		//cargar las imagenes de la categoria que viene seleccionada por defecto
+		crearListaImagenes();
+	} 
+
 </script> 

@@ -9,6 +9,11 @@ class Producto extends CI_Controller{
 	 * muestra el formulario de crear producto
 	 */
 	public function crear(){
+		//estos valores pueden llegar desde diferentes paginas siendo necesario que aparezcan  
+		//ya seleccionados al cargar la vista de la pagina crear producto
+		$articuloInicial = isset($_REQUEST['articulo']) ? $_REQUEST['articulo'] : 'Camiseta';
+		$categoriaInicial = isset($_REQUEST['categoria']) ? $_REQUEST['categoria'] : 'Animales';
+		
 		$this->load->model('fuente_model');
 		$this->load->model('tamano_model');
 		$this->load->model('color_model');
@@ -21,6 +26,8 @@ class Producto extends CI_Controller{
 		$datos ['body'] ['articulos'] = $this->articulo_model->listar();
 		$datos ['body'] ['imagenes'] = $this->imagen_model->listar();
 		$datos ['body'] ['categorias'] = $this->categoria_model->listar();
+		$datos ['body'] ['articuloInicial'] = $articuloInicial;
+		$datos ['body'] ['categoriaInicial'] = $categoriaInicial;
 		
 		enmarcar2($this,'producto/crear',$datos);
 	}
@@ -165,7 +172,7 @@ class Producto extends CI_Controller{
 			$img_fichero = $img_nombre.'.png';
 			
 			//echo("Image F User: "." guardarla y recuperar su id para el diseño");
-			$this->imagen_model->crearImagen($id_usuario,$img_nombre, $img_fichero, $img_comentario, $img_descuento, $img_precio, $img_coste, $fecha_alta, $fecha_baja, $motivo_baja, $disponible, $id_categorias);
+			$this->imagen_model->crearImagen($id_usuario,$img_nombre, $img_fichero, $img_comentario, $img_descuento, $img_precio, $img_coste, $fecha_alta, $fecha_baja, $motivo_baja, 1, $id_categorias);
 			$datosImagenF = $this->imagen_model->getPorCampos($id_usuario,$img_fichero);
 			$img_front_id = $datosImagenF->id;
 			
@@ -215,7 +222,7 @@ class Producto extends CI_Controller{
 			$img_fichero = $img_nombre.'.png';
 			
 			//echo("Image B User: "." guardarla y recuperar su id para el diseño");
-			$this->imagen_model->crearImagen($id_usuario,$img_nombre, $img_fichero, $img_comentario, $img_descuento, $img_precio, $img_coste, $fecha_alta, $fecha_baja, $motivo_baja, $disponible, $id_categorias);
+			$this->imagen_model->crearImagen($id_usuario,$img_nombre, $img_fichero, $img_comentario, $img_descuento, $img_precio, $img_coste, $fecha_alta, $fecha_baja, $motivo_baja, 1, $id_categorias);
 			$datosImagenB = $this->imagen_model->getPorCampos($id_usuario,$img_fichero);
 			$img_back_id = $datosImagenB->id;
 			

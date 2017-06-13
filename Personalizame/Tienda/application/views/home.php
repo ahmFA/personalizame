@@ -420,7 +420,10 @@
 						<h3 class="services-heading">Camisetas</h3>
 						<p>Personaliza tu camiseta para ser único, las opciones son 
 						ilimitadas. Te recomendamos que pongas la peor foto de tu pareja y la pasees con orgullo.</p>
-						<button type="submit" class="btn btn-2 ">Personaliza</button>
+						<form name="formCamiseta" id="fCamiseta" method="post" action="<?=base_url() ?>producto/crear"> 	
+ 							<input type="hidden" name="articulo" value="Camiseta">
+							<button type="submit" class="btn btn-2 ">Personaliza</button>
+						</form>
 					</div>
 					<div class="col-sm-4 services-item">
 						<div class="wrap-img">
@@ -429,7 +432,10 @@
 						<h3 class="services-heading">Tazas</h3>
 						<p>Toma café, té, chocolate caliente o unas lentejas si te apetece,
 						 pero tomatelas en una taza con estilo que tiene algo de tu personalidad.</p>
-						<button type="submit" class="btn btn-2 ">Personaliza</button>
+						<form name="formTaza" id="fTaza" method="post" action="<?=base_url() ?>producto/crear"> 	
+ 							<input type="hidden" name="articulo" value="Taza">
+							<button type="submit" class="btn btn-2 ">Personaliza</button>
+						</form>
 					</div>
 					<div class="col-sm-4 services-item">
 						<div class="wrap-img">
@@ -438,7 +444,10 @@
 						<h3 class="services-heading">Llaveros</h3>
 						<p>Desde el momento en que te compres el llavero, vas a tener más miedo
 						 de perder las llaves de casa por lo bonito que es que por que roben en tu hogar.</p>
-						<button type="submit" class="btn btn-2 ">Personaliza</button>
+						<form name="formLlavero" id="fLlavero" method="post" action="<?=base_url() ?>producto/crear"> 	
+ 							<input type="hidden" name="articulo" value="Llavero">
+							<button type="submit" class="btn btn-2 ">Personaliza</button>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -456,7 +465,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3 col-sm-6 portfolio-item">
-						<a href="#" class="portfolio-link" data-toggle="modal">
+						<a href="<?=base_url() ?>producto/crear/?categoria=Deportes" class="portfolio-link" data-toggle="modal">
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -470,7 +479,7 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
-						<a href="#" class="portfolio-link" data-toggle="modal">
+						<a href="<?=base_url() ?>producto/crear/?categoria=Ficción" class="portfolio-link" data-toggle="modal">
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -484,7 +493,7 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
-						<a href="#" class="portfolio-link" data-toggle="modal">
+						<a href="<?=base_url() ?>producto/crear/?categoria=Infantil" class="portfolio-link" data-toggle="modal">
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -498,7 +507,7 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
-						<a href="#" class="portfolio-link" data-toggle="modal">
+						<a href="<?=base_url() ?>producto/crear/?categoria=Humor" class="portfolio-link" data-toggle="modal">
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -512,7 +521,7 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
-						<a href="#" class="portfolio-link" data-toggle="modal">
+						<a href="<?=base_url() ?>producto/crear/?categoria=Terror" class="portfolio-link" data-toggle="modal">
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -526,7 +535,7 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
-						<a href="#" class="portfolio-link" data-toggle="modal">
+						<a href="<?=base_url() ?>producto/crear/?categoria=Profesiones" class="portfolio-link" data-toggle="modal">
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -540,7 +549,7 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
-						<a href="#" class="portfolio-link" data-toggle="modal">
+						<a href="<?=base_url() ?>producto/crear/?categoria=Gaming" class="portfolio-link" data-toggle="modal">
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -554,7 +563,7 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
-						<a href="#" class="portfolio-link" data-toggle="modal">
+						<a href="<?=base_url() ?>producto/crear/?categoria=Animales" class="portfolio-link" data-toggle="modal">
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -726,7 +735,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					Copyright &copy; PersonalÃ­zame -  Desarrollado por Alejandro y Luis de 2Âº de DAW
+					Copyright &copy; Personalízame -  Desarrollado por Alejandro y Luis de 2º de DAW
 				</div>
 			</div>
 		</div>
