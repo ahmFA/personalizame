@@ -88,12 +88,12 @@ class Producto_model extends CI_Model{
 	/*
 	 * Borrar el producto que se indique
 	 */
-	public function borrar($id_producto){
+	public function borrar($id_producto,$perfil_usuario){
 		$producto = R::load('producto', $id_producto);
 		
 		$producto -> disponible = "No";
 		$producto -> fecha_baja = strftime("%Y/%m/%d");
-		$producto -> motivo_baja = "Administrador"; //si fuese el propio usuario se indicaría "Usuario"
+		$producto -> motivo_baja = $perfil_usuario; //si fuese el propio usuario se indicaría "Usuario"
 		R::store($producto);
 		R::close();
 	}
@@ -150,5 +150,11 @@ class Producto_model extends CI_Model{
 		R::close();
 	}
 
+	/*
+	 * recuperar productos que son de un usuario
+	 */
+	public function getPorUsuario($id_usuario){
+		return R::find('producto','where id_usuario like ? and disponible = "Si" order by fecha_alta desc',[$id_usuario]);
+	}
 }
 ?>

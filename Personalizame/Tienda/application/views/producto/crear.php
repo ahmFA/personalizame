@@ -61,9 +61,17 @@ var conexion, conexion2;
 	}
 
 	function accionAJAX() {
-		document.getElementById("idBanner").innerHTML = conexion.responseText;
+		//mostrar mensaje de guardado 
+		document.getElementById("idBanner_productos").innerHTML = conexion.responseText;
+		//limpiar formulario
 		document.getElementById("idForm1").reset();
-		document.getElementById("idElementosArticulo").innerHTML ="";
+		//limpiar los div de las anteriores consultas ajax
+		//document.getElementById("idElementosArticulo").innerHTML ="";
+		//document.getElementById("idListaImagenes").innerHTML ="";
+		//limpiar los canvas
+		limpiarTodo();
+		//actualizar los valores de los select a por defecto para volver a empezar con la creación
+		crearElementosArticulo();
 	}
 
 	function crear() {
@@ -148,7 +156,7 @@ var conexion, conexion2;
 			crear();
 		}	
 		else{
-			document.getElementById("idBanner").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
+			document.getElementById("idBanner_productos").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
 		}
 
 	}
@@ -157,7 +165,7 @@ var conexion, conexion2;
 
 	<div class="row">
 		<div class="col-md-12">
-			<div id="idBanner"></div>
+			<div id="idBanner_productos"></div>
 		</div>
 	</div>	
 	<form name="form1" class="form" id="idForm1">
@@ -258,7 +266,7 @@ var conexion, conexion2;
 						<span id="idBotonLimpiar_back" onclick="limpiar();" class="btn btn-danger glyphicon glyphicon-trash"></span>
 					
 							<div id="articulo_select_back" class="objeto" style="width: 350px; height: 350px">
-							<img id="img_fondo_marco_back" class="fondo fliph-horizontal" src="../../../../img/articulos/art_taza350x350.png" />
+							<img id="img_fondo_marco_back" class="fondo fliph-horizontal" src="" />
 								<div id="marco_back" style="width: 150px; height: 250px">
 									<canvas id="canvas_back" width="150" height="250"></canvas>
 								</div>
@@ -397,6 +405,7 @@ var conexion, conexion2;
 	<div class="row">
 		<div class="col-md-4 ">
 			<input class="btn btn-info" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
+			<input class="btn btn-success" id="idBotonEnviarCarrito" type="button" value="Guardar y Comprar" onclick="validarTodo()">
 		</div>
 	</div>
 	</form>
@@ -882,6 +891,20 @@ var conexion, conexion2;
 		componerProductoFinal();
 	}
 
+	function limpiarTodo(){
+
+			for(i = canvas_front.size()-1; i >= 0; i--){
+				canvas_front.item(i).remove();
+			}
+
+			
+			for(i = canvas_back.size()-1; i >= 0; i--){
+				canvas_back.item(i).remove();
+			}
+
+		//limpia datos en el canvas oculto que acumula todo
+		componerProductoFinal();
+	}
 		//************************************************************
 		//******* canvas auxiliar oculto donde se acumula todo *******
 		//************************************************************

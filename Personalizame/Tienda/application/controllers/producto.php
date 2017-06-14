@@ -361,9 +361,9 @@ class Producto extends CI_Controller{
 	
 	public function borrarPost() {
 		$id_producto = $_POST['id_producto'];
-	
+		
 		$this->load->model('producto_model');
-		$this->producto_model->borrar($id_producto);
+		$this->producto_model->borrar($id_producto,$_SESSION['perfil']);
 		//llamo a listarPost para que mantenga el mismo filtro y se vea la modificacion
 		$this->listarPost();
 	}

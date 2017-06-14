@@ -518,7 +518,19 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function misProductos(){
-		enmarcar2($this,'usuario/misProductos');
+		$this->load->model('producto_model');
+		$datos['body']['productos'] = $this->producto_model->getPorUsuario($_SESSION['idUsuario']);
+		
+		enmarcar2($this,'usuario/misProductos',$datos);
+	}
+	
+	public function borrarProducto(){
+		$id_producto = $_POST['id_producto'];	
+		$this->load->model('producto_model');
+		
+		$this->producto_model->borrar($id_producto,$_SESSION['perfil']);
+		
+		$this->misProductos();
 	}
 	
 	public function crearDiseno(){

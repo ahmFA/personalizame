@@ -21,6 +21,37 @@
 						
 	                </div>
 				</div>
+<script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
+<script type="text/javascript">
+var conexion;
+
+	function accionAJAX() {
+		document.getElementById("idBanner_carrito").innerHTML = conexion.responseText;
+	}
+
+	function envioCarrito() {
+		conexion = new XMLHttpRequest();
+
+		var datosSerializados = serialize(document.getElementById("idFormCarrito"));
+		conexion.open('POST', '<?=base_url() ?>usuario/anadirCarrito', true);
+		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		conexion.send(datosSerializados);
+		conexion.onreadystatechange = function() {
+			if (conexion.readyState==4 && conexion.status==200) {
+				accionAJAX();
+			}
+		}
+	}
+</script>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div id="idBanner_carrito"></div>
+		</div>
+	</div>	
+	
+	
 	<div class="row m-t-25">
 	
 <div id="user" class="col-md-12" >
@@ -29,7 +60,7 @@
         <div class="row">
        
         <div class="col col-xs-4 col-xs-offset-4 text-center">
-            <h1 class="panel-title" style="padding: 10px;">Productos guardados por Parrita</h1>
+            <h1 class="panel-title" style="padding: 10px;">Productos guardados por <?= $_SESSION['nick']?></h1>
         </div>
         </div>
     </div>
@@ -37,76 +68,40 @@
         <div class="row">
         <div class="col-md-12">
         
+        <?php foreach ($body['productos'] as $producto): ?>
+			 		
         <div class="ok">
          <div class="col-md-3">
          <div class="panel panel-default panel-thumb">
   			<div class="panel-heading">
-    			<h3 class="panel-title">Camiseta</h3>
+    			<h3 class="panel-title"><?= $producto['articulo']->nombre?>, <?= $producto['talla']->nombre?>, <?= $producto['color']->nombre?></h3>
   			</div>
   			<div class="panel-body avatar-card">
-   			 <img src="<?=base_url() ?>assets/images/animales.jpg">
+   			 <img src="../../../../img/productos/<?= $producto['imagen_producto']?>">
  			</div>
             <div class="panel-footer">
-               <a href="#" class="btn btn-info" title="Edit"><i class="fa fa-pencil"></i></a>
+               <!-- <a href="#" class="btn btn-info" title="Edit"><i class="fa fa-pencil"></i></a>
                <a href="#" class="btn btn-warning" title="ban"><i class="fa fa-shopping-cart"> Añadir al carrito</i></a>
-               <a href="#" class="btn btn-danger"  title="delete"><i class="fa fa-trash" ></i></a>
+               <a href="#" class="btn btn-danger"  title="delete"><i class="fa fa-trash" ></i></a> -->
+               <form id="idFormCarrito" action="<?=base_url()?>usuario/anadirCarrito" method="post">
+					<input type="hidden" name="id_producto" value="<?= $producto['id']?>">
+					<input type="hidden" name="id_articulo" value="<?= $producto['articulo_id']?>">
+					<input type="hidden" name="id_talla" value="<?= $producto['talla_id']?>">
+					<input type="hidden" name="id_color" value="<?= $producto['color_id']?>">
+					<label>Unid.</label><input type="text" name="cantidad" size="2" value="1">
+					<input class="btn btn-warning" id="idBotonEnviar" type="button" value="Añadir al carrito" onclick="envioCarrito()">
+			   </form>
+               
+               <form id="idFormRemove" action="<?=base_url()?>usuario/borrarProducto" method="post">
+					<input type="hidden" name="id_producto" value="<?= $producto['id']?>">
+					<button class="btn btn-danger" onclick="function f() {document.getElementById('idFormRemove').submit();}"><i class="fa fa-trash" ></i></button>
+				</form>
             </div>
          </div>
 		 </div>
        </div>
-      	
-        <div class="ban">
-         <div class="col-md-3">
-         <div class="panel panel-default panel-thumb">
-  			<div class="panel-heading">
-    			<h3 class="panel-title">Camiseta 3(unidades)</h3>
-  			</div>
-  			<div class="panel-body avatar-card">
-   			 <img src="<?=base_url() ?>assets/images/ficcion.jpg">
- 			</div>
-            <div class="panel-footer">
-               <a href="#" class="btn btn-info" title="Editar"><i class="fa fa-pencil"></i></a>
-               <a href="#" class="btn btn-warning" title="Añadir" ><i class="fa fa-shopping-cart"> Añadir al carrito</i></a>
-               <a href="#" class="btn btn-danger"  title="Borrar"><i class="fa fa-trash" ></i></a>
-            </div>
-         </div>
-		 </div>
-       </div>
-        
-        <div class="new">
-         <div class="col-md-3">
-         <div class="panel panel-default panel-thumb">
-  			<div class="panel-heading">
-    			<h3 class="panel-title">Taza 5(unidades)</h3>
-  			</div>
-  			<div class="panel-body avatar-card">
-   			 <img src="<?=base_url() ?>assets/images/terror.jpg">
- 			</div>
-            <div class="panel-footer">
-              <a href="#" class="btn btn-info" title="Edit" ><i class="fa fa-pencil"></i></a>
-               <a href="#" class="btn btn-warning" title="ban"><i class="fa fa-shopping-cart"> Añadir al carrito</i></a>
-               <a href="#" class="btn btn-danger"  title="delete"><i class="fa fa-trash" ></i></a>
-            </div>
-         </div>
-		 </div>
-       </div>
-       <div class="new">
-         <div class="col-md-3">
-         <div class="panel panel-default panel-thumb">
-  			<div class="panel-heading">
-    			<h3 class="panel-title">Taza</h3>
-  			</div>
-  			<div class="panel-body avatar-card">
-   			 <img src="<?=base_url() ?>assets/images/gaming.jpg">
- 			</div>
-            <div class="panel-footer">
-              <a href="#" class="btn btn-info" title="Edit"><i class="fa fa-pencil"></i></a>
-               <a href="#" class="btn btn-warning" title="ban"><i class="fa fa-shopping-cart"> Añadir al carrito</i></a>
-               <a href="#" class="btn btn-danger"  title="delete"><i class="fa fa-trash" ></i></a>
-            </div>
-         </div>
-		 </div>
-       </div>
+     <?php endforeach;?> 	
+
        
        </div>
       </div>
