@@ -1,8 +1,7 @@
 <div class="card">
 	<div class="card-header">
 		<h2>
-			Listado de tallas<small>Ensure that the data attribute
-				[data-identifier="true"] is set on one column header.</small>
+			Listado de tallas<small>Introduce el filtro que desees para una búsqueda más precisa.</small>
 		</h2>
 	</div>
 		<?php if ($body['mensajeBanner'] != ""):?>

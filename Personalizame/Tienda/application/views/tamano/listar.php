@@ -2,7 +2,7 @@
 <div class="card">
 	<div class="card-header">
 		<h2>
-			Listado de tamaños<small>Introduce el filtro que desees.</small>
+			Listado de tamaños<small>Introduce el filtro que desees para una búsqueda más precisa.</small>
 		</h2>
 	</div>
 	<?php if ($body['mensajeBanner'] != ""):?>

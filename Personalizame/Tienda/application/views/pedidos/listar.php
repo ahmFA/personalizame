@@ -1,11 +1,10 @@
-
 <div class="card">
-	<div class="card-header">
-		<h2>
-			Listado de categorias<small>Introduce el filtro que desees para una búsqueda más precisa.</small>
-		</h2>
-	</div>
-	<?php if ($body['mensajeBanner'] != ""):?>
+<div class="card-header">
+<h2>
+Listado de pedidos<small>Introduce el filtro que desees para una búsqueda más precisa.</small>
+</h2>
+</div>
+<?php if ($body['mensajeBanner'] != ""):?>
 	<div id="idBanner" class="container alert alert-info col-xs-5">
   		<strong><?= $body['mensajeBanner'] ?></strong>
 	</div>
@@ -13,12 +12,19 @@
 	<div id="data-table-command-header"
 		class="bootgrid-header container-fluid">
 		<form class="row" id="idFormFiltro" role="form"
-			action="<?= base_url() ?>categoria/listar" method="post">
+			action="<?= base_url() ?>pedido/listar" method="post">
 			<div class="col-sm-3">
 				<div class="form-group fg-line">
-
+					<label for="idFiltroNick">Usuario </label>
 					<input type="text" class="search-field form-control"
-						 id="idFiltroNombre" name="filtroNombre" value="<?= $body['filtroNombre']?>" placeholder="Buscar">
+						 id="idFiltroNick" name="filtroNick" value="<?= $body['filtroNick']?>" placeholder="Buscar">
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="form-group fg-line">
+					<label for="idFiltroEstado">Estado </label>
+					<input type="text" class="search-field form-control"
+						 id="idFiltroEstado" name="filtroEstado" value="<?= $body['filtroEstado']?>" placeholder="Buscar">
 				</div>
 			</div>
 			
@@ -33,39 +39,37 @@
 		class="table table-striped table-vmiddle">
 		<thead>
 			<tr>
-				<th data-column-id="id" data-type="numeric">ID</th>
-				<th data-column-id="sender">Nombre</th>
+				<th data-column-id="sender">Usuario</th>
+				<th data-column-id="received" data-order="desc">Dirección de entrega</th>
+				<th data-column-id="received" data-order="desc">Fecha</th>
+				<th data-column-id="received" data-order="desc">Importe</th>
+				<th data-column-id="received" data-order="desc">Fecha Entrega</th>
+				<th data-column-id="received" data-order="desc">Estado</th>
 				<th data-column-id="commands" data-formatter="commands"
 					data-sortable="false">Acción</th>
 			</tr>
 		</thead>
 		<tbody>
-                                   <?php foreach ($categorias as $categoria):?>
+                                   <?php foreach ($pedidos as $pedido):?>
 										<tr>
-				<td><?=$categoria['id']?></td>
-				<td><?=$categoria['nombre']?></td>
-				
+				<td><?=$pedido['usuario']->nick?></td>
+				<td><?=$pedido['direccion']?></td>
+				<td><?=$pedido['fecha']?></td>
+				<td><?=$pedido['importe']?></td>
+				<td><?=$pedido['fecha_entrega']?></td>
+				<td><?=$pedido['estado']?></td>
 				<td class="text-left">
-					<form id="idFormedit" action="<?=base_url();?>categoria/editar"
+				<?php if($pedido['estado'] == 'Pendiente' ):?>
+					<form id="idFormedit" action="<?=base_url();?>pedido/editar"
 						method="post">
-						<input type="hidden" name="idCategoria" value="<?= $categoria -> id?>">
+						<input type="hidden" name="idPedido" value="<?= $pedido -> id?>">
 						<button
 							class="btn btn-icon command-edit waves-effect waves-circle"
 							onclick="function f() {document.getElementById('idFormedit').submit();}">
 							<span class="zmdi zmdi-edit"></span>
 						</button>
 					</form>
-					<form id="idFormedit" action="<?=base_url();?>categoria/borrarPost"
-						method="post">
-						<input type="hidden" name="idCategorias[]" value="<?= $categoria -> id?>">
-						<button
-							class="btn btn-icon command-delete waves-effect waves-circle"
-							data-row-id="<?= $categoria['id'] ?>">
-							<span class="zmdi zmdi-delete"></span>
-						</button>
-					</form>
-
-
+				<?php endif; ?>	
 				</td>
 			</tr>	
 									<?php endforeach;?> 
@@ -91,4 +95,3 @@
 	</div>
 
 </div>
- 

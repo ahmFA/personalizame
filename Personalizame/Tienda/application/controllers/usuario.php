@@ -198,8 +198,7 @@ class Usuario extends CI_Controller{
 		$tamanoImagen = !empty($_FILES['nueva']['size']) ? $_FILES['nueva']['size']: null;
 		$tipoImagen = !empty($_FILES['nueva']['type']) ? $_FILES['nueva']['type']: null;
 		
-		
-		//if($imagenValida){
+
 		$this->usuario_model->modificar($idUsuario,$nomImagen,$nick,$pwd,$perfil,$nombre,$apellido1,$apellido2,$telefono1,$telefono2,$mail1,$mail2,$comentario_contacto,$direccion,$cp,$localidad,$provincia,$pais,$comentario_direccion);
 			
 		if(!empty($_FILES['nueva']['name'])){
@@ -217,10 +216,7 @@ class Usuario extends CI_Controller{
 			}
 			
 		}
-			
-		
-		//}
-		
+
 		//llamo a listarPost para que mantenga el mismo filtro y se vea que ha modificado el usuario
 		$usuario = $this->usuario_model->getPorId($idUsuario);
 		$datos['body']['nick'] = $usuario->nick;

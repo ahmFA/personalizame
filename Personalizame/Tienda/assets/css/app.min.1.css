@@ -10716,7 +10716,7 @@ h6 small,
   height: 129px;
   margin-bottom: 5px;
   width: 100%;
-  background: url(../img/fondo-blanco-gris.jpg) no-repeat left top;
+  background: url(../img/headers/sm/2.png) no-repeat left top;
   background-size: 100%;
 }
 
@@ -10733,7 +10733,7 @@ h6 small,
 }
 
 .profile-menu > a .profile-info {
-  background: rgba(0, 0, 0, 0.37);
+  background: rgba(0, 0, 0, 0.8);
   padding: 7px 14px;
   color: #fff;
   margin-top: 20px;

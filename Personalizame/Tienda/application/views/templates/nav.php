@@ -58,7 +58,7 @@
                             <a href="<?= base_url()?>home/index"><i class="zmdi zmdi-arrow-left"></i> Ir a página web</a>
                         </li>
                         <li>
-                            <a href="<?= base_url()?>usuario/logout"><i class="zmdi zmdi-time-restore"></i> Logout</a>
+                            <a href="<?= base_url()?>usuario/logout"><i class="zmdi zmdi-power"></i> Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -120,16 +120,7 @@
                             <li><a href="<?= base_url()?>categoria/borrar">Baja</a></li>
                         </ul>
                     </li>
-                    <li class="sub-menu">
-                        <a href=""><i class="zmdi zmdi-sort-asc"></i> Texto</a>
-
-                        <ul>
-                            <li><a href="<?= base_url()?>texto/crear">Alta</a></li>
-                            <li><a href="<?= base_url()?>texto/listar">Listado</a></li>
-                            <li><a href="<?= base_url()?>texto/modificar">Modificación</a></li>
-                            <li><a href="<?= base_url()?>texto/borrar">Baja</a></li>
-                        </ul>
-                    </li>
+                   
                     <li class="sub-menu">
                         <a href=""><i class="zmdi zmdi-font"></i> Fuente</a>
 
@@ -148,18 +139,7 @@
                             <li><a href="<?= base_url()?>tamano/borrar">Baja</a></li>
                         </ul>
                     </li>
-                    
-                    <li class="sub-menu">
-                        <a href=""><i class="zmdi zmdi-image-alt"></i> Diseño</a>
-
-                        <ul>
-                            <li><a href="<?= base_url()?>diseno/crear">Alta</a></li>
-                            <li><a href="<?= base_url()?>diseno/listar">Listado</a></li>
-                            <li><a href="<?= base_url()?>diseno/modificar">Modificación</a></li>
-                            <li><a href="<?= base_url()?>diseno/borrar">Baja</a></li>
-                        </ul>
-                    </li>
-                    
+                    <!-- 
                     <li class="sub-menu">
                         <a href=""><i class="zmdi zmdi-gradient"></i> Producto</a>
 
@@ -170,12 +150,12 @@
                             <li><a href="<?= base_url()?>producto/borrar">Baja</a></li>
                         </ul>
                     </li>
-                    
+                     -->
                      <li class="sub-menu">
                         <a href=""><i class="zmdi zmdi-shopping-basket"></i> Pedidos</a>
 
                         <ul>
-                            <li><a href="<?= base_url()?>pedidos/listar">Listado y Gestión</a></li>
+                            <li><a href="<?= base_url()?>pedido/listar">Listado y Gestión</a></li>
                         </ul>
                     </li>
 

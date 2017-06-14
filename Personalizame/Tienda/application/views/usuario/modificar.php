@@ -4,7 +4,7 @@
 <div class="card">
 	<div class="card-header">
 		<h2>
-			Modificar datos de usuario<small>Introduce el filtro que desees.</small>
+			Editar datos de usuario
 		</h2>
 	</div>
 	
