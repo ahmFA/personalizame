@@ -29,10 +29,10 @@ var conexion;
 		document.getElementById("idBanner_carrito").innerHTML = conexion.responseText;
 	}
 
-	function envioCarrito() {
+	function envioCarrito(num) {
 		conexion = new XMLHttpRequest();
-
-		var datosSerializados = serialize(document.getElementById("idFormCarrito"));
+		form = 'idFormCarrito'+num;
+		var datosSerializados = serialize(document.getElementById(form));
 		conexion.open('POST', '<?=base_url() ?>usuario/anadirCarrito', true);
 		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -67,7 +67,7 @@ var conexion;
   <div role="tabpanel" class="tab-pane " id="thumb">
         <div class="row">
         <div class="col-md-12">
-        
+        <?php $contador = 1?>
         <?php foreach ($body['productos'] as $producto): ?>
 			 		
         <div class="ok">
@@ -83,13 +83,13 @@ var conexion;
                <!-- <a href="#" class="btn btn-info" title="Edit"><i class="fa fa-pencil"></i></a>
                <a href="#" class="btn btn-warning" title="ban"><i class="fa fa-shopping-cart"> Añadir al carrito</i></a>
                <a href="#" class="btn btn-danger"  title="delete"><i class="fa fa-trash" ></i></a> -->
-               <form id="idFormCarrito" action="<?=base_url()?>usuario/anadirCarrito" method="post">
+               <form id="idFormCarrito<?=$contador?>" action="<?=base_url()?>usuario/anadirCarrito" method="post">
 					<input type="hidden" name="id_producto" value="<?= $producto['id']?>">
 					<input type="hidden" name="id_articulo" value="<?= $producto['articulo_id']?>">
 					<input type="hidden" name="id_talla" value="<?= $producto['talla_id']?>">
 					<input type="hidden" name="id_color" value="<?= $producto['color_id']?>">
 					<label>Unid.</label><input type="text" name="cantidad" size="2" value="1">
-					<input class="btn btn-warning" id="idBotonEnviar" type="button" value="Añadir al carrito" onclick="envioCarrito()">
+					<input class="btn btn-warning" id="idBotonEnviar" type="button" value="Añadir al carrito" onclick="envioCarrito(<?= $contador ?>)">
 			   </form>
                
                <form id="idFormRemove" action="<?=base_url()?>usuario/borrarProducto" method="post">
@@ -100,6 +100,7 @@ var conexion;
          </div>
 		 </div>
        </div>
+       <?php $contador++;?>
      <?php endforeach;?> 	
 
        

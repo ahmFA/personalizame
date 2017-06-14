@@ -8,12 +8,17 @@ class Producto extends CI_Controller{
 	/*
 	 * muestra el formulario de crear producto
 	 */
-	public function crear(){
+	public function crear($modal =false){
 		//estos valores pueden llegar desde diferentes paginas siendo necesario que aparezcan  
 		//ya seleccionados al cargar la vista de la pagina crear producto
 		$articuloInicial = isset($_REQUEST['articulo']) ? $_REQUEST['articulo'] : 'Camiseta';
 		$categoriaInicial = isset($_REQUEST['categoria']) ? $_REQUEST['categoria'] : 'Animales';
-		
+		$mensaje = '';
+		if($modal){
+			$mensaje .= 'Producto creado<br><a href="<?=base_url()?>usuario/misproductos" ></a>';
+		}
+		$datos['modal'] = $modal;
+		$datos['mensajeModal'] = $mensaje;
 		$this->load->model('fuente_model');
 		$this->load->model('tamano_model');
 		$this->load->model('color_model');
@@ -333,7 +338,9 @@ class Producto extends CI_Controller{
 		$this->load->model('producto_model');
 		$this->producto_model->crear($id_usuario,$id_articulo,$id_talla,$id_color_base,$id_diseno_front,$id_diseno_back,$nombre_producto,$imagen_producto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion);
 		$datos['body']['nombre_producto'] = $nombre_producto;
-		$this->load->view('producto/XcrearPost',$datos);
+		//$this->load->view('producto/XcrearPost',$datos);
+		$modal = true;
+		$this->crear($modal);
 
 	}
 		
