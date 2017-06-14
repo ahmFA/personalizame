@@ -152,8 +152,8 @@ var conexion, conexion2;
 	function validarTodo(){		
 		//Si todo esta a TRUE hace el submit
 		if(true){
-			//document.form1.submit();
-			crear();
+			document.form1.submit();
+			//crear();
 		}	
 		else{
 			document.getElementById("idBanner_productos").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Datos incorrectos</div>";
@@ -163,12 +163,46 @@ var conexion, conexion2;
 
 </script>
 
+<!-- Modal -->
+  <div class="modal fade" id="formAvisoGuardado" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+        
+          <h4 class="modal-title"><?= $body['mensajeModal'] ?></h4>
+        </div>
+        <div class="modal-body">
+          <a class="btn btn-info" href="<?= base_url()?>usuario/misproductos">Mis Productos</a>
+          <a class="btn btn-success pull-right" href="<?= base_url()?>producto/crear">Crear Nuevo Producto</a>
+        </div>
+        <div class="modal-footer">
+
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+
+<?php if(!empty($body['modal'])):?>
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			$('#formAvisoGuardado').modal('show');
+
+		});
+		
+	</script>
+<?php endif; ?>
+
 	<div class="row">
 		<div class="col-md-12">
 			<div id="idBanner_productos"></div>
 		</div>
 	</div>	
-	<form name="form1" class="form" id="idForm1">
+	<form name="form1" class="form" id="idForm1" action="<?=base_url() ?>producto/crearPost" method="post">
 	
 		<!-- campos ocultos para conocer el autor -->
 		<input type="hidden" name="id_sesion" value="<?= session_id()?>">
@@ -982,7 +1016,8 @@ var conexion, conexion2;
                   // Obtenemos la imagen del campo "file".
                   for (var i = 0, f; f = files[i]; i++) {
                     //Solo admitimos imágenes.
-                    if (!f.type.match('image.*')) {
+                    if (!f.type.match('image.*') || f.size > 150000) {
+                        alert("Solo se permiten imágenes PNG y JPG de hasta 150Kb");
                         continue;
                     }
              

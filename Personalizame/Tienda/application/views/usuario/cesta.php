@@ -51,8 +51,8 @@
                         <td class="col-sm-1 col-md-1" style="text-align: center">
                         <input type="text" class="form-control" id="exampleInputEmail1" value="<?= $producto['cantidad'] ?>">
                         </td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['articulo']['precio'] ?></strong></td>
                         <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['precio'] ?>€</strong></td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['precio']*$producto['cantidad'] ?>€</strong></td>
                         <td class="col-sm-1 col-md-1">
                         <form id="idFormdelete" action="<?= base_url() ?>usuario/quitarCarrito" method="post">
                         	<input type="hidden" name="num_producto" value="<?=$producto['id'] ?>">
@@ -90,13 +90,13 @@
                         <td>   </td>
                         <td>   </td>
                         <td>
-                        <button type="button" class="btn btn-default">
+                        <a href="<?=base_url() ?>usuario/misProductos" type="button" class="btn btn-default">
                             <span class="glyphicon glyphicon-shopping-cart"></span> Continuar Comprando
-                        </button></td>
+                        </a></td>
                         <td>
                         <a href="<?=base_url() ?>usuario/pago" type="button" class="btn btn-success">
                             Pagar <span class="glyphicon glyphicon-play"></span>
-                        </a></td>
+                        </td>
                     </tr>
                 </tbody>
             </table>
