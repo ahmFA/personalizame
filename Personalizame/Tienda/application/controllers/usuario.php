@@ -517,7 +517,14 @@ class Usuario extends CI_Controller{
 		enmarcar2($this,'usuario/misPedidos');
 	}
 	
-	public function misProductos(){
+	public function misProductos($modal = FALSE){
+		$mensaje = '';
+		if($modal){
+			$mensaje .= '<span class="alert-success">Enviado a cesta correctamente</span><br/>';
+		}
+		$datos ['body']['modal'] = $modal;
+		$datos ['body']['mensajeModal'] = $mensaje;
+		
 		$this->load->model('producto_model');
 		$datos['body']['productos'] = $this->producto_model->getPorUsuario($_SESSION['idUsuario']);
 		
@@ -544,12 +551,15 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function anadirCarrito(){
+		
 		$this->load->model('articulo_model');
 		$articulo = $this->articulo_model->getArticuloById($_POST['id_articulo']);
 		$this->load->model('talla_model');
 		$talla = $this->talla_model->getTallaById($_POST['id_talla']);
 		$this->load->model('color_model');
 		$color = $this->color_model->getColorById($_POST['id_color']);
+		$this->load->model('producto_model');
+		$produc = $this->producto_model->getPorId($_POST['id_producto']);
 		
 		$producto = 'producto-'.$_SESSION['num_producto']; 
 		$_SESSION['productos'][$producto]['articulo']['id'] = $articulo->id;
@@ -558,16 +568,18 @@ class Usuario extends CI_Controller{
 		$_SESSION['productos'][$producto]['talla'] = $talla->nombre;
 		$_SESSION['productos'][$producto]['color'] = $color->nombre;
 		$_SESSION['productos'][$producto]['cantidad'] = $_POST['cantidad'];
-		$_SESSION['productos'][$producto]['precio'] = ($articulo->precio *$_POST['cantidad']);
+		$_SESSION['productos'][$producto]['precio'] = ($produc->precio *$_POST['cantidad']);
 		$_SESSION['productos'][$producto]['id'] = $_SESSION['num_producto'];
 		
 		$_SESSION['num_producto']++;
 		$_SESSION['total_productos']++;
 		$_SESSION['carrito']++;
-		$_SESSION['precioTotalPedido'] += ($articulo->precio *$_POST['cantidad']);
+		$_SESSION['precioTotalPedido'] += ($produc->precio *$_POST['cantidad']);
 		
 		$datos['carrito'] = $_SESSION['carrito'];
-		$this->load->view('usuario/XactualizaCarrito', $datos);
+		
+		$modal = TRUE;
+		$this->misProductos($modal);
 	}
 	
 	public function quitarCarrito(){

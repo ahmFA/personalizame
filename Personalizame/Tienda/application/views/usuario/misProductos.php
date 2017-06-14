@@ -23,6 +23,7 @@
 				</div>
 <script type="text/javascript" src="<?=base_url()?>assets/js/serialize.js" ></script>
 <script type="text/javascript">
+/*
 var conexion;
 
 	function accionAJAX() {
@@ -43,14 +44,47 @@ var conexion;
 			}
 		}
 	}
+	*/
 </script>
 
+<!-- Modal -->
+  <div class="modal fade" id="formAvisoCarrito" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><?= $body['mensajeModal'] ?></h4>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+<?php if(!empty($body['modal'])):?>
+	<script type="text/javascript">
+		$(document).ready(function(){
+
+			$('#formAvisoCarrito').modal('show');
+
+		});
+		
+	</script>
+<?php endif; ?>
+
+<!-- 
 	<div class="row">
 		<div class="col-md-12">
 			<div id="idBanner_carrito"></div>
 		</div>
 	</div>	
-	
+ -->	
 	
 	<div class="row m-t-25">
 	
@@ -67,7 +101,6 @@ var conexion;
   <div role="tabpanel" class="tab-pane " id="thumb">
         <div class="row">
         <div class="col-md-12">
-        <?php $contador = 1?>
         <?php foreach ($body['productos'] as $producto): ?>
 			 		
         <div class="ok">
@@ -83,13 +116,13 @@ var conexion;
                <!-- <a href="#" class="btn btn-info" title="Edit"><i class="fa fa-pencil"></i></a>
                <a href="#" class="btn btn-warning" title="ban"><i class="fa fa-shopping-cart"> Añadir al carrito</i></a>
                <a href="#" class="btn btn-danger"  title="delete"><i class="fa fa-trash" ></i></a> -->
-               <form id="idFormCarrito<?=$contador?>" action="<?=base_url()?>usuario/anadirCarrito" method="post">
+               <form id="idFormCarrito" action="<?=base_url()?>usuario/anadirCarrito" method="post">
 					<input type="hidden" name="id_producto" value="<?= $producto['id']?>">
 					<input type="hidden" name="id_articulo" value="<?= $producto['articulo_id']?>">
 					<input type="hidden" name="id_talla" value="<?= $producto['talla_id']?>">
 					<input type="hidden" name="id_color" value="<?= $producto['color_id']?>">
 					<label>Unid.</label><input type="text" name="cantidad" size="2" value="1">
-					<input class="btn btn-warning" id="idBotonEnviar" type="button" value="Añadir al carrito" onclick="envioCarrito(<?= $contador ?>)">
+					<input class="btn btn-warning" id="idBotonEnviar" type="submit" value="Añadir al carrito">
 			   </form>
                
                <form id="idFormRemove" action="<?=base_url()?>usuario/borrarProducto" method="post">
@@ -100,7 +133,6 @@ var conexion;
          </div>
 		 </div>
        </div>
-       <?php $contador++;?>
      <?php endforeach;?> 	
 
        
