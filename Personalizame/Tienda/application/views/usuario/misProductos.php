@@ -47,6 +47,36 @@ var conexion;
 	*/
 </script>
 
+<script type="text/javascript">
+	
+	function validarCantidad(num){
+		var elemento = 'cantidad'+num;
+		var valido = false;
+		var miCantidad = document.getElementById(elemento).value;
+		//1 o 2 digitos
+		if(/^([1-9])|([0-9][1-9])$/.test(miCantidad)){
+			valido = true;
+		}
+		return valido;
+	}
+	
+	function validarTodo(num){
+		var formulario = 'idFormCarrito'+num;
+		//Cantidad
+		var valCantidad = validarCantidad(num);
+		
+		//Si todo esta a TRUE hace el submit
+		if(valCantidad){
+			document.getElementById(formulario).submit();
+			//envioCarrito();
+		}	
+		else{
+			document.getElementById("idBanner_carrito").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Cantidad incorrecta</div>";
+		}
+	}
+
+</script>
+
 <!-- Modal -->
   <div class="modal fade" id="formAvisoCarrito" role="dialog">
     <div class="modal-dialog">
@@ -66,9 +96,9 @@ var conexion;
       
     </div>
   </div>
-  
+ 
 <?php if(!empty($body['modal'])):?>
-	<script type="text/javascript">
+<script type="text/javascript">
 		$(document).ready(function(){
 
 			$('#formAvisoCarrito').modal('show');
@@ -78,13 +108,13 @@ var conexion;
 	</script>
 <?php endif; ?>
 
-<!-- 
+
 	<div class="row">
 		<div class="col-md-12">
 			<div id="idBanner_carrito"></div>
 		</div>
 	</div>	
- -->	
+ 	
 	
 	<div class="row m-t-25">
 	
@@ -101,6 +131,7 @@ var conexion;
   <div role="tabpanel" class="tab-pane " id="thumb">
         <div class="row">
         <div class="col-md-12">
+        <?php $contador = 1?>
         <?php foreach ($body['productos'] as $producto): ?>
 			 		
         <div class="ok">
@@ -110,22 +141,22 @@ var conexion;
     			<h3 class="panel-title"><?= $producto['articulo']->nombre?>, <?= $producto['talla']->nombre?>, <?= $producto['color']->nombre?></h3>
   			</div>
   			<div class="panel-body avatar-card">
-   			 <img src="../../../../img/productos/<?= $producto['imagen_producto']?>">
+   			 <img style="margin:20px auto;" src="../../../../img/productos/<?= $producto['imagen_producto']?>">
  			</div>
             <div class="panel-footer">
                <!-- <a href="#" class="btn btn-info" title="Edit"><i class="fa fa-pencil"></i></a>
                <a href="#" class="btn btn-warning" title="ban"><i class="fa fa-shopping-cart"> Añadir al carrito</i></a>
                <a href="#" class="btn btn-danger"  title="delete"><i class="fa fa-trash" ></i></a> -->
-               <form id="idFormCarrito" action="<?=base_url()?>usuario/anadirCarrito" method="post">
+               <form id="idFormCarrito<?=$contador?>" action="<?=base_url()?>usuario/anadirCarrito" method="post" style="display: inline-block">
 					<input type="hidden" name="id_producto" value="<?= $producto['id']?>">
 					<input type="hidden" name="id_articulo" value="<?= $producto['articulo_id']?>">
 					<input type="hidden" name="id_talla" value="<?= $producto['talla_id']?>">
 					<input type="hidden" name="id_color" value="<?= $producto['color_id']?>">
-					<label>Unid.</label><input type="text" name="cantidad" size="2" value="1">
-					<input class="btn btn-warning" id="idBotonEnviar" type="submit" value="Añadir al carrito">
+					<label>Unid.</label><input type="text" id="cantidad<?=$contador?>" name="cantidad" size="1" maxlength="2" value="1">
+					<input class="btn btn-warning" id="idBotonEnviar" type="button" value="Añadir al carrito" onclick="validarTodo(<?=$contador?>)">
 			   </form>
                
-               <form id="idFormRemove" action="<?=base_url()?>usuario/borrarProducto" method="post">
+               <form id="idFormRemove" action="<?=base_url()?>usuario/borrarProducto" method="post" style="display: inline-block">
 					<input type="hidden" name="id_producto" value="<?= $producto['id']?>">
 					<button class="btn btn-danger" onclick="function f() {document.getElementById('idFormRemove').submit();}"><i class="fa fa-trash" ></i></button>
 				</form>
@@ -133,6 +164,7 @@ var conexion;
          </div>
 		 </div>
        </div>
+       <?php $contador++;?>
      <?php endforeach;?> 	
 
        
