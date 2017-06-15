@@ -41,9 +41,9 @@
                     <tr>
                         <td class="col-sm-8 col-md-6">
                         <div class="media">
-                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-2/72/product-icon.png" style="width: 72px; height: 72px;"> </a>
+                            <a class="thumbnail pull-left" href="#"> <img class="media-object" src="../../../../img/productos/<?= $producto['imagen_produc'] ?>" style="width: 92px; height: 72px;"> </a>
                             <div class="media-body">
-                                <h4 class="media-heading"><a href="#"><?= $producto['id'] ?> - <?= $producto['articulo']['nombre'] ?> - <?= $producto['color'] ?> - <?= $producto['talla'] ?></a></h4>
+                                <h5 class="media-heading"><a href="#"><?= $producto['id'] ?> - <?= $producto['articulo']['nombre'] ?> - <?= $producto['color'] ?> - <?= $producto['talla'] ?></a></h5>
                              <!--    <h5 class="media-heading"> by <a href="#">Brand name</a></h5>  -->
                                 <span>Status: </span><span class="text-success"><strong>En Stock</strong></span>
                             </div>
@@ -51,9 +51,8 @@
                         <td class="col-sm-1 col-md-1" style="text-align: center">
                         <input type="text" class="form-control" id="exampleInputEmail1" value="<?= $producto['cantidad'] ?>">
                         </td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['precio'] ?>€</strong></td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['precio']*$producto['cantidad'] ?>€</strong></td>
-                        <td class="col-sm-1 col-md-1">
+                        <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['articulo']['precio'] ?></strong></td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['precio'] ?>€</strong></td><td class="col-sm-1 col-md-1">
                         <form id="idFormdelete" action="<?= base_url() ?>usuario/quitarCarrito" method="post">
                         	<input type="hidden" name="num_producto" value="<?=$producto['id'] ?>">
 	                        <button class="btn btn-danger" onclick="function f() {document.getElementById('idFormdelete').submit();}">

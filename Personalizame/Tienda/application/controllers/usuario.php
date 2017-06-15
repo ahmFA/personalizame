@@ -551,6 +551,8 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function anadirCarrito(){
+		$this->load->model('producto_model');
+		$produc = $this->producto_model->getPorId($_POST['id_producto']);
 		
 		$this->load->model('articulo_model');
 		$articulo = $this->articulo_model->getArticuloById($_POST['id_articulo']);
@@ -558,18 +560,18 @@ class Usuario extends CI_Controller{
 		$talla = $this->talla_model->getTallaById($_POST['id_talla']);
 		$this->load->model('color_model');
 		$color = $this->color_model->getColorById($_POST['id_color']);
-		$this->load->model('producto_model');
-		$produc = $this->producto_model->getPorId($_POST['id_producto']);
 		
-		$producto = 'producto-'.$_SESSION['num_producto']; 
+		$producto = 'producto-'.$_SESSION['num_producto'];
 		$_SESSION['productos'][$producto]['articulo']['id'] = $articulo->id;
 		$_SESSION['productos'][$producto]['articulo']['nombre'] = $articulo->nombre;
-		$_SESSION['productos'][$producto]['articulo']['precio'] = $articulo->precio;
+		$_SESSION['productos'][$producto]['articulo']['precio'] = $produc->precio;
 		$_SESSION['productos'][$producto]['talla'] = $talla->nombre;
 		$_SESSION['productos'][$producto]['color'] = $color->nombre;
 		$_SESSION['productos'][$producto]['cantidad'] = $_POST['cantidad'];
 		$_SESSION['productos'][$producto]['precio'] = ($produc->precio *$_POST['cantidad']);
 		$_SESSION['productos'][$producto]['id'] = $_SESSION['num_producto'];
+		$_SESSION['productos'][$producto]['id_produc'] = $produc->id;
+		$_SESSION['productos'][$producto]['imagen_produc'] = $produc->imagen_producto;
 		
 		$_SESSION['num_producto']++;
 		$_SESSION['total_productos']++;
@@ -577,7 +579,7 @@ class Usuario extends CI_Controller{
 		$_SESSION['precioTotalPedido'] += ($produc->precio *$_POST['cantidad']);
 		
 		$datos['carrito'] = $_SESSION['carrito'];
-		
+		//$this->load->view('usuario/XactualizaCarrito', $datos);	
 		$modal = TRUE;
 		$this->misProductos($modal);
 	}
