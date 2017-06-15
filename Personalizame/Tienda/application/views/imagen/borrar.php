@@ -36,12 +36,14 @@
 	</div>
 	<form role="form" method="post"
 					action="<?= base_url() ?>imagen/borrarPost">
+					<input type="hidden" name="vuelveBorrar" id="vuelveBorrar" value="1">
 	<table id="data-table-command"
 		class="table table-striped table-vmiddle">
 		<thead>
 			<tr>
 				<th class="select-cell"><div class="checkbox"><label><input name="select" type="checkbox" class="select-box" value="all" {{ctx.checked}}=""><i class="input-helper"></i></label></div></th>
 				<th data-column-id="id" data-type="numeric">ID</th>
+				<th data-column-id="sender">Imagen</th>
 				<th data-column-id="sender">Nombre</th>
 				<th data-column-id="sender">Nombre Imagen</th>
 				<th data-column-id="sender">Dsiponible</th>
@@ -59,6 +61,7 @@
 					</div>
 				</td>
 				<td><?=$imagen['id']?></td>
+				<td><img class="media-object" src="../../../../img/imagenes/<?=$imagen['nombre_imagen'] ?>" alt="" width="80" height="80"></td>
 				<td><?=$imagen['nombre']?></td>
 				<td><?=$imagen['nombreImagen']?></td>
 				<td>

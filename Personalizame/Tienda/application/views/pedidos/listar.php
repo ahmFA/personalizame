@@ -23,8 +23,23 @@ Listado de pedidos<small>Introduce el filtro que desees para una búsqueda más 
 			<div class="col-sm-3">
 				<div class="form-group fg-line">
 					<label for="idFiltroEstado">Estado </label>
-					<input type="text" class="search-field form-control"
-						 id="idFiltroEstado" name="filtroEstado" value="<?= $body['filtroEstado']?>" placeholder="Buscar">
+					<div class="select">
+					<select class="form-control" id="idFiltroEstado" name="filtroEstado">
+					<?php if(isset($body['filtroEstado'])):?>
+						<?php $estados[0] = 'Pendiente'; $estados[1] = 'Entregado';  ?>
+						<option value=""></option>
+						<?php foreach ($estados as $estado):?>
+							<option value="<?=$estado?>" <?= $body['filtroEstado']== $estado ? 'selected="selected"': '' ?>><?=$estado?></option>
+						<?php endforeach;?>
+					<?php else:?>
+						<option value=""></option>
+						<option value="Pendiente">Pendiente</option>
+						<option value="Entregado">Entregado</option>
+					<?php endif;?>	
+					</select>
+					</div>
+					<!-- <input type="text" class="search-field form-control"
+						 id="idFiltroEstado" name="filtroEstado" value="<?= $body['filtroEstado']?>" placeholder="Buscar">  -->
 				</div>
 			</div>
 			

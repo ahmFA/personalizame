@@ -4,7 +4,7 @@ class Pedido extends CI_Controller{
 	
 	public function listar(){
 		$this->load->model('pedido_model');
-		//$this->pedido_model->crear(39,'C/Murillo', 15);
+		//$this->pedido_model->crear(39,'C/Bravo Murillo', 120);
 		
 		$filtroNick = isset($_REQUEST['filtroNick']) ? $_REQUEST['filtroNick'] : '';
 		$filtroEstado = isset($_REQUEST['filtroEstado']) ? $_REQUEST['filtroEstado'] : '';

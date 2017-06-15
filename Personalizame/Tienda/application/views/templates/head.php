@@ -26,7 +26,12 @@
        <link href="<?=base_url()?>assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="<?=base_url()?>assets/css/app.min.1.css" rel="stylesheet">
         <link href="<?=base_url()?>assets/css/app.min.2.css" rel="stylesheet">
-	
+	<style type="text/css">
+		.color-bean{
+			width:50px; height: 50px;
+			border: 1px solid black;
+		}
+	</style>
 	
 </head>
 <body>

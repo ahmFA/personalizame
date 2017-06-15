@@ -133,11 +133,7 @@ class Imagen extends CI_Controller{
 		foreach ($idImagenes as $idimagen){
 			$imagen = $this->imagen_model->getImagenById($idimagen);
 			$fichero = $_SERVER['DOCUMENT_ROOT'].'/img/imagenes/'.$imagen['nombre_imagen'];
-			/*
-			 * No me da permisos para borrar la carpeta.
-			 * Lo he intentado de diversas formas pero no nada.
-			 * Tengo que preguntar a Alberto.
-			 */
+			
 			if(file_exists($fichero)){
 				chmod($_SERVER['DOCUMENT_ROOT'].'/img/imagenes/', 0777);
 				chmod($fichero, 0777);
@@ -145,14 +141,13 @@ class Imagen extends CI_Controller{
 			}
 			$this->imagen_model->borrar($idimagen);
 		}
-		/*
-		 * Aquí se borraría la antigua imagen.
-		 */
-		//$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/imagenes/';
-		//chmod($directorio.$nomImagen, 666);
-		//unlink($fichero);
-		
-		enmarcar($this, 'imagen/borrarPost');
+		if(isset($_POST['vuelveBorrar'])){
+			$datos['vuelveBorrar'] = 'borrar';
+			enmarcar($this, 'imagen/borrarPost', $datos);
+		}else{
+			enmarcar($this, 'imagen/borrarPost');
+		}
+		//enmarcar($this, 'imagen/borrarPost');
 	}
 
 	public function editar(){

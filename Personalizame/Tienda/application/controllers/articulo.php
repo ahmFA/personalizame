@@ -148,7 +148,12 @@ class Articulo extends CI_Controller{
 			}
 			$this->articulo_model->borrar($idArt);
 		}
-		enmarcar($this, 'articulo/borrarPost');
+		if(isset($_POST['vuelveBorrar'])){
+			$datos['vuelveBorrar'] = 'borrar';
+			enmarcar($this, 'articulo/borrarPost', $datos);
+		}else{
+			enmarcar($this, 'articulo/borrarPost');
+		}
 	}
 	
 	public function editar(){

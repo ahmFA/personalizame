@@ -27,14 +27,14 @@ class Pedido_model extends CI_Model{
 	 * recuperar pedidoes que cumplen el filtro
 	 */
 	public function getFiltrados($filtroNick, $filtroEstado){
-		return R::find('pedido','where nick_user like ? and estado like ? order by fecha',['%'.$filtroNick.'%', '%'.$filtroEstado.'%']);
+		return R::find('pedido','where nick_user like ? and estado like ? order by fecha desc',['%'.$filtroNick.'%', '%'.$filtroEstado.'%']);
 	}
 	
 	/*
 	 * Lista un número determinado de pedidoes
 	 */
 	public function getFiltradosConLimite($filtroNick, $filtroEstado ,$inicio){
-		return R::find('pedido','where nick_user like ? and estado like ? order by fecha LIMIT ?,5',['%'.$filtroNick.'%', '%'.$filtroEstado.'%' ,$inicio]);
+		return R::find('pedido','where nick_user like ? and estado like ? order by fecha desc LIMIT ?,5',['%'.$filtroNick.'%', '%'.$filtroEstado.'%' ,$inicio]);
 	}
 	
 	public function getPedidoById($id){

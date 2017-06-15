@@ -37,6 +37,7 @@
 			<tr>
 				<th class="select-cell"><div class="checkbox"><label><input name="select" type="checkbox" class="select-box" value="all" {{ctx.checked}}=""><i class="input-helper"></i></label></div></th>
 				<th data-column-id="id" data-type="numeric">ID</th>
+				<th data-column-id="sender">Color</th>
 				<th data-column-id="sender">Nombre</th>
 				<th data-column-id="received" data-order="desc">Valor</th>
 			</tr>
@@ -51,6 +52,7 @@
 					</div>
 				</td>
 				<td><?=$color['id']?></td>
+				<td><div class="color-bean" style="background-color: <?=$color['valor']?>"></div></td>
 				<td><?=$color['nombre']?></td>
 				<td><?=$color['valor']?></td>
 				

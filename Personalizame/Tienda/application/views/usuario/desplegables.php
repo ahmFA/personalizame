@@ -1,5 +1,5 @@
 <?php
-$perfiles = ['Usuario','Administrador','Invitado'];
+$perfiles = ['Usuario','Administrador'];
 
 $provincias = [
 		'Álava','Albacete','Alicante','Almería','Asturias','Ávila',

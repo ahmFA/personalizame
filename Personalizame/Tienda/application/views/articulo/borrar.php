@@ -1,29 +1,3 @@
-<!-- 
-<div class="container">
-<div class="row">
-<div class="col-xs-7">
-<h2>Lista de artículos</h2>
-<form action="<?=base_url()?>articulo/borrarPost" method="post">
-<table class="table table-bordered">
-<tr><th></th><th>Nombre</th><th>Precio</th><th>Imagen</th></tr>
-<?php foreach ($articulos as $art):?>
-	<tr>
-	<td><input type="checkbox" name="idArticulos[]" value="<?=$art['id'] ?>"></td>
-	<td><?=$art['nombre'] ?></td>
-	<td><?=$art['precio'] ?></td>
-	<td><?=$art['imagen'] ?></td>
-	</tr>
-	<?php endforeach;?>
-	</table>
-	<input type="submit" value="Borrar">
-</form>
-</div>
-</div>
-</div>
-
--->
-
-
 
 <div class="card">
 	<div class="card-header">
@@ -57,6 +31,9 @@
 			</div>
 		</form>
 	</div>
+	<form role="form" method="post"
+					action="<?= base_url() ?>articulo/borrarPost">
+					<input type="hidden" name="vuelveBorrar" id="vuelveBorrar" value="1">
 	<table id="data-table-command"
 		class="table table-striped table-vmiddle">
 		<thead>
@@ -64,6 +41,7 @@
 				<th class="select-cell"><div class="checkbox"><label><input name="select" type="checkbox" class="select-box" value="all" {{ctx.checked}}=""><i class="input-helper"></i></label></div></th>
 				<th data-column-id="id" data-type="numeric">ID</th>
 				<th data-column-id="sender">Nombre</th>
+				<th data-column-id="sender">Imagen</th>
 				<th data-column-id="sender">Nombre Imagen</th>
 				<th data-column-id="sender">Disponible</th>
 				<th data-column-id="sender">Precio</th>
@@ -82,6 +60,7 @@
 					</div>
 				</td>
 				<td><?=$articulo['id']?></td>
+				<td><img class="media-object" src="../../../../img/articulos/<?=$articulo['nombre_imagen'] ?>" alt="" width="80" height="80"></td>
 				<td><?=$articulo['nombre']?></td>
 				<td><?=$articulo['nombreImagen']?></td>
 				<td>

@@ -33,6 +33,7 @@
 		<thead>
 			<tr>
 				<th data-column-id="id" data-type="numeric">ID</th>
+				<th data-column-id="sender">Color</th>
 				<th data-column-id="sender">Nombre</th>
 				<th data-column-id="received" data-order="desc">Valor</th>
 				<th data-column-id="commands" data-formatter="commands"
@@ -43,6 +44,7 @@
                                    <?php foreach ($colores as $color):?>
 										<tr>
 				<td><?=$color['id']?></td>
+				<td><div class="color-bean" style="background-color: <?=$color['valor']?>"></div></td>
 				<td><?=$color['nombre']?></td>
 				<td><?=$color['valor']?></td>
 				<td class="text-left">
