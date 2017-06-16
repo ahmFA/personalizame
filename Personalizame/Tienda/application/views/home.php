@@ -422,7 +422,11 @@
 						ilimitadas. Te recomendamos que pongas la peor foto de tu pareja y la pasees con orgullo.</p>
 						<form name="formCamiseta" id="fCamiseta" method="post" action="<?=base_url() ?>producto/crear"> 	
  							<input type="hidden" name="articulo" value="Camiseta">
+							<?php if(isset($_SESSION['idUsuario'])): ?>
 							<button type="submit" class="btn btn-2 ">Personaliza</button>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal" class="btn btn-2">Personaliza</a>
+							<?php endif; ?>
 						</form>
 					</div>
 					<div class="col-sm-4 services-item">
@@ -434,7 +438,11 @@
 						 pero tomatelas en una taza con estilo que tiene algo de tu personalidad.</p>
 						<form name="formTaza" id="fTaza" method="post" action="<?=base_url() ?>producto/crear"> 	
  							<input type="hidden" name="articulo" value="Taza">
+ 							<?php if(isset($_SESSION['idUsuario'])): ?>
 							<button type="submit" class="btn btn-2 ">Personaliza</button>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal" class="btn btn-2">Personaliza</a>
+							<?php endif; ?>
 						</form>
 					</div>
 					<div class="col-sm-4 services-item">
@@ -446,7 +454,11 @@
 						 de perder las llaves de casa por lo bonito que es que por que roben en tu hogar.</p>
 						<form name="formLlavero" id="fLlavero" method="post" action="<?=base_url() ?>producto/crear"> 	
  							<input type="hidden" name="articulo" value="Llavero">
+							<?php if(isset($_SESSION['idUsuario'])): ?>
 							<button type="submit" class="btn btn-2 ">Personaliza</button>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal" class="btn btn-2">Personaliza</a>
+							<?php endif; ?>
 						</form>
 					</div>
 				</div>
@@ -465,7 +477,12 @@
 				</div>
 				<div class="row">
 					<div class="col-md-3 col-sm-6 portfolio-item">
+						<?php if(isset($_SESSION['idUsuario'])): ?>
 						<a href="<?=base_url() ?>producto/crear/?categoria=Deportes" class="portfolio-link" data-toggle="modal">
+						<?php else:?>
+						<a data-toggle="modal" href="#myModal" class="portfolio-link" >
+						<?php endif; ?>
+						
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -479,7 +496,11 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
+						<?php if(isset($_SESSION['idUsuario'])): ?>
 						<a href="<?=base_url() ?>producto/crear/?categoria=Ficción" class="portfolio-link" data-toggle="modal">
+						<?php else:?>
+						<a data-toggle="modal" href="#myModal" class="portfolio-link" >
+						<?php endif; ?>
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -493,7 +514,12 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
+						<?php if(isset($_SESSION['idUsuario'])): ?>
 						<a href="<?=base_url() ?>producto/crear/?categoria=Infantil" class="portfolio-link" data-toggle="modal">
+						<?php else:?>
+						<a data-toggle="modal" href="#myModal" class="portfolio-link" >
+						<?php endif; ?>
+						
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -507,7 +533,12 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
+						<?php if(isset($_SESSION['idUsuario'])): ?>
 						<a href="<?=base_url() ?>producto/crear/?categoria=Humor" class="portfolio-link" data-toggle="modal">
+						<?php else:?>
+						<a data-toggle="modal" href="#myModal" class="portfolio-link" >
+						<?php endif; ?>
+						
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -521,7 +552,12 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
+						<?php if(isset($_SESSION['idUsuario'])): ?>
 						<a href="<?=base_url() ?>producto/crear/?categoria=Terror" class="portfolio-link" data-toggle="modal">
+						<?php else:?>
+						<a data-toggle="modal" href="#myModal" class="portfolio-link" >
+						<?php endif; ?>
+						
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -535,7 +571,12 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
+						<?php if(isset($_SESSION['idUsuario'])): ?>
 						<a href="<?=base_url() ?>producto/crear/?categoria=Profesiones" class="portfolio-link" data-toggle="modal">
+						<?php else:?>
+						<a data-toggle="modal" href="#myModal" class="portfolio-link" >
+						<?php endif; ?>
+						
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -549,7 +590,12 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
+						<?php if(isset($_SESSION['idUsuario'])): ?>
 						<a href="<?=base_url() ?>producto/crear/?categoria=Gaming" class="portfolio-link" data-toggle="modal">
+						<?php else:?>
+						<a data-toggle="modal" href="#myModal" class="portfolio-link" >
+						<?php endif; ?>
+						
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -563,7 +609,12 @@
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6 portfolio-item">
+						<?php if(isset($_SESSION['idUsuario'])): ?>
 						<a href="<?=base_url() ?>producto/crear/?categoria=Animales" class="portfolio-link" data-toggle="modal">
+						<?php else:?>
+						<a data-toggle="modal" href="#myModal" class="portfolio-link" >
+						<?php endif; ?>
+						
 							<div class="portfolio-hover">
 								<div class="portfolio-hover-content">
 									<i class="fa fa-eye fa-3x"></i>
@@ -716,14 +767,62 @@
 					</div>
 					<div class="content">
 						<ul>
-							<li><a href="#">Deportes</a></li>
-							<li><a href="#">Terror</a></li>
-							<li><a href="#">Infantil</a></li>
-							<li><a href="#">Animales</a></li>
-							<li><a href="#">Ciencia Ficción</a></li>
-							<li><a href="#">Profesiones</a></li>
-							<li><a href="#">Humor</a></li>
-							<li><a href="#">Gaming</a></li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Deportes">Deportes</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Deportes</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Terror">Terror</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Terror</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Infantil">Infantil</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Infantil</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Animales">Animales</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Animales</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Ficción">Ciencia Ficción</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Ciencia Ficción</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Profesiones">Profesiones</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Profesiones</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Humor">Humor</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Humor</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Gaming">Gaming</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Gaming</a>
+							<?php endif; ?>
+							</li>
 						</ul>
 					</div>
 
