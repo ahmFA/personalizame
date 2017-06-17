@@ -21,23 +21,66 @@
 						
 	                </div>
 				</div>
+				
+<script type="text/javascript">
+var conexion;
+
+function accionConAJAX() { 
+	document.getElementById("idBanner_lineas").innerHTML = conexion.responseText;
+}
+
+function crearLineas($id_pedido) {
+	conexion = new XMLHttpRequest();
+
+	var datos = "id_pedido="+$id_pedido;
+	
+	conexion.open('POST', '<?=base_url() ?>usuario/misPedidosPost', true);
+	conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+	conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	conexion.send(datos);
+	conexion.onreadystatechange = function() {
+		if (conexion.readyState==4 && conexion.status==200) {
+			accionConAJAX();
+		}
+	}
+	
+}
+</script>	
+
+<!-- Modal -->
+  <div class="modal fade" id="formLineasPedido" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Desglose del Pedido</h4>
+        </div>
+        <div class="modal-body">
+		               <div id="idBanner_lineas"></div>
+        </div>
+        <div class="modal-footer">
+		<button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+	
+	
+			
 	<div class="row m-t-25">
+
 
 <div id="user" class="col-md-12" >
   <div class="panel panel-primary panel-table animated slideInDown">
    <div class="panel-heading " style="padding:5px;">
         <div class="row">
-       
         <div class="col col-xs-4 col-xs-offset-4 text-center">
-            <h1 class="panel-title">Pedidos realizados por Parrita</h1>
+            <h1 class="panel-title">Pedidos realizados por <?= $_SESSION['nick']?></h1>
         </div>
-        <div class="col col-xs-2 well text-center" style="padding:1px;">    
-            <span class="label label-danger">Filtro:</span>
-            <button id="ok"  class="btn btn-primary" data-class="btn btn-primary" onclick="filter('ok')"><i class="fa fa-user" aria-hidden="true"></i></button>
-            <button id="ban" class="btn btn-warning" data-class="btn btn-warning" onclick="filter('ban')"><i class="fa fa-ban" aria-hidden="true"></i></button>
-            <button id="new" class="btn btn-success" data-class="btn btn-success" onclick="filter('new')"><i class="fa fa-check-square" aria-hidden="true"></i></button> 
-        </div>
-        
+
         </div>
     </div>
    <div class="panel-body">
@@ -46,39 +89,33 @@
        <table class="table table-striped table-bordered table-list">
         <thead>
          <tr>
-            <th class="avatar"></th>
-            <th>Producto</th>
-            <th>Unidades</th>
-            <th>Precio</th>
-            <th>Fecha</th>
+         	<th></th>
+            <th>Referencia</th>
+            <th>Fecha Pedido</th>
+            <th>Dirección</th>
+            <th>Importe</th>
+            <th>Fecha Entrega</th>
             <th>Estado</th>
           </tr> 
          </thead>
          <tbody>
-          <tr class="ok">
-             <td class="avatar"><img src="https://pbs.twimg.com/profile_images/746779035720683521/AyHWtpGY_400x400.jpg"></td>
-             <td>Camiseta </td>
-             <td>10 </td>
-             <td>180€</td>
-             <td>27/05/2017</td>
-             <td><span class="label label-success">Entregado</span></td>
+
+         <?php foreach ($body['pedidos'] as $pedido): ?>
+          <tr>
+          	 <th><a class="btn btn-info" data-toggle="modal" href="#formLineasPedido" onclick="crearLineas(<?= $pedido['id']?>);"><span class="glyphicon glyphicon-info-sign"></span></a></th>
+             <td><?= $pedido['id']."_".$pedido['num_ref']?></td>
+             <td><?= $pedido['fecha']?></td>
+             <td><?= $pedido['direccion']?></td>
+             <td style="text-align: right"><?= $pedido['importe']."€"?></td>
+             <td><?= $pedido['fecha_entrega']?></td>
+             <?php if($pedido['estado'] == "Pendiente"):?>
+             <td><span class="label label-warning"><?= $pedido['estado']?></span></td>
+             <?php else:?>
+			 <td><span class="label label-success"><?= $pedido['estado']?></span></td>	 			
+			 <?php endif;?>
           </tr>
-          <tr class="ban">
-            <td class="avatar"><img src="https://pbs.twimg.com/profile_images/746779035720683521/AyHWtpGY_400x400.jpg"></td>
-             <td>Camiseta </td>
-             <td>10 </td>
-             <td>180€</td>
-             <td>27/05/2017</td>
-             <td><span class="label label-success">Entregado</span></td>
-          </tr>
-          <tr class="new">
-             <td class="avatar"><img src="https://pbs.twimg.com/profile_images/746779035720683521/AyHWtpGY_400x400.jpg"></td>
-             <td>Camiseta </td>
-             <td>10 </td>
-             <td>180€</td>
-             <td>27/05/2017</td>
-             <td><span class="label label-warning">Pendiente</span></td>
-            </tr>
+
+    	  <?php endforeach;?> 
           </tbody>
         </table>
       </div><!-- END id="list" -->
@@ -104,21 +141,3 @@
 </div>
 </div>
 </section>
-
-
-<script type="text/javascript">
-function filter($state){
-	var x   = document.getElementsByClassName($state);
-	var btn = document.getElementById($state);
-
-	if (btn.className == "btn"){
-	    btn.className = btn.dataset.class;
-		for (i = 0; i < x.length; i++) {x[i].className = " animated fadeInLeft "+$state;}
-		}
-		else{ 
-		for (i = 0; i < x.length; i++) {x[i].className = " animated fadeOutRight "+$state;}
-		 btn.className = "btn";
-		}
-
-	}
-</script>

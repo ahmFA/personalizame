@@ -62,6 +62,10 @@ class Pedido_model extends CI_Model{
 		return R::findOne('pedido','where num_ref = ? and usuario_id = ?',[$pedido_numref,$id_usuario]);
 	}
 	
+	public function getPorUsuario($id_usuario){
+		return R::find('pedido','where usuario_id = ? order by fecha desc',[$id_usuario]);
+	}
+	
 }
 
 ?>

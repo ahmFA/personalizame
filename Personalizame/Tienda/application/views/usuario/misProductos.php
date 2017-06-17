@@ -71,42 +71,24 @@ var conexion;
 			//envioCarrito();
 		}	
 		else{
+			//mensaje de error
 			document.getElementById("idBanner_carrito").innerHTML ="<div class=\"container alert alert-danger col-xs-5\"> <strong>ERROR</strong> Cantidad incorrecta</div>";
+
+			//eliminar otros mensajes de aviso que pudiese haber en pantalla 
+			if(document.getElementById("idMensajeBanner") != null){
+				document.getElementById("idMensajeBanner").parentNode.removeChild(document.getElementById("idMensajeBanner"));
+			}
 		}
 	}
 
 </script>
 
-<!-- Modal -->
-  <div class="modal fade" id="formAvisoCarrito" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-        	<button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title"><?= $body['mensajeModal'] ?></h4>
-        </div>
-        <div class="modal-body">
-        </div>
-        <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
  
-<?php if(!empty($body['modal'])):?>
-<script type="text/javascript">
-		$(document).ready(function(){
-
-			$('#formAvisoCarrito').modal('show');
-
-		});
-		
-	</script>
-<?php endif; ?>
+	<?php if ($body['mensaje'] != ""):?>
+	<div id="idMensajeBanner" class="container alert alert-success col-xs-6">
+  		<strong><?= $body['mensaje'] ?></strong>
+	</div>
+	<?php endif;?>
 
 
 	<div class="row">
@@ -158,6 +140,7 @@ var conexion;
                
                <form id="idFormRemove" action="<?=base_url()?>usuario/borrarProducto" method="post" style="display: inline-block">
 					<input type="hidden" name="id_producto" value="<?= $producto['id']?>">
+					<input type="hidden" name="mensajeBanner" value="Producto eliminado">
 					<button class="btn btn-danger" onclick="function f() {document.getElementById('idFormRemove').submit();}"><i class="fa fa-trash" ></i></button>
 				</form>
             </div>
