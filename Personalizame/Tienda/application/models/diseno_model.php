@@ -9,8 +9,10 @@ class Diseno_model extends CI_Model{
 	 */
 	public function crear($id_usuario,$nombre_diseno,$comentario_diseno,$ubicacion,$id_imagen,$tamano_imagen,$tamano_imagen_ancho,$tamano_imagen_alto,$rotacion_imagen,$img_coordenada_x,$img_coordenada_y,$img_profundidad_z,$id_texto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion){
 		$diseno = R::dispense('diseno');
+		$user = R::load('usuario', $id_usuario);
 		
-		$diseno -> id_usuario = $id_usuario;
+		$user -> ownDisenolist[] = $diseno;
+
 		$diseno -> nombre_diseno = $nombre_diseno;
 		$diseno -> comentario_diseno = $comentario_diseno;
 		$diseno -> ubicacion = $ubicacion;
@@ -54,6 +56,7 @@ class Diseno_model extends CI_Model{
 		$diseno -> precio = $precioI + $precioT;
 		$diseno -> coste = $costeI + $costeT;
 		
+		R::store($user);
 		R::store($diseno);
 		R::close();
 	}
@@ -78,8 +81,7 @@ class Diseno_model extends CI_Model{
 	 * recuperar diseños que cumplen el filtro
 	 */
 	public function getFiltrados($filtroUsuario,$filtroNombreDiseno){
-		//mirar como hacerlo para los casos en que venga un idUsuario ya que no puede ser Like sino un igual
-		return R::find('diseno','where nombre_diseno like ? and id_usuario like ? and disponible = "Si" order by id',['%'.$filtroNombreDiseno.'%','%'.$filtroUsuario.'%']);
+		return R::find('diseno','where nombre_diseno like ? and usuario_id like ? and disponible = "Si" order by id',['%'.$filtroNombreDiseno.'%','%'.$filtroUsuario.'%']);
 	}
 
 	/*
@@ -124,7 +126,7 @@ class Diseno_model extends CI_Model{
 	
 	//cuando inserto los datos necesito recuperar el id que le han asignado para pasarlo a otro bean, asi lo recupero
 	public function getPorCampos($id_usuario,$id_sesion,$nombre_diseno,$ubicacion){
-		return R::findOne('diseno','where nombre_diseno = ? and ubicacion = ? and (id_usuario = ? or id_sesion = ?)',[$nombre_diseno,$ubicacion,$id_usuario,$id_sesion]);
+		return R::findOne('diseno','where nombre_diseno = ? and ubicacion = ? and (usuario_id = ? or id_sesion = ?)',[$nombre_diseno,$ubicacion,$id_usuario,$id_sesion]);
 	}
 }
 ?>

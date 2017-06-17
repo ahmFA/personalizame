@@ -49,7 +49,7 @@
 		</tr>
 		<?php foreach($body['productos'] as $producto): ?>
 		<tr>
-			<td><?= $producto->id_usuario ?></td>
+			<td><?= $producto->usuario_id ?></td>
 			<td><?= $producto->nombre_producto ?></td>
 			<td><?= $producto->articulo->nombre_imagen ?></td>
 			<td><?= $producto->color->nombre ?></td>

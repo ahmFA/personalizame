@@ -42,7 +42,7 @@ class Producto extends CI_Controller{
 	/*
 	 * recoge datos del formulario y los pasa al modelo
 	 */
-	public function crearPost() { //AJAX
+	public function crearPost() { 
 		$id_usuario = $_POST['id_usuario'];
 		$id_articulo = $_POST['id_articulo'];
 		$id_talla = $_POST['id_talla'];
@@ -264,7 +264,7 @@ class Producto extends CI_Controller{
 		 * 		CONTROLAR SI VIENEN DISEÑOS Y GESTIONARLOS
 		 * ***********************************************************
 		 */
-		
+	
 		$this->load->model('diseno_model');				
 		//Los disenos son opcionales por lo que podrian venir vacios 
 		//solo se hace insert si vienen datos de textos y/o imagenes
@@ -280,6 +280,27 @@ class Producto extends CI_Controller{
 			//usando nombre,ubicacion, usuario o sesion recuperar el id que le ha otorgado al diseño para pasarselo al producto
 			$datosDisenoF = $this->diseno_model->getPorCampos($id_usuario,$id_sesion,$nombre_diseno,$ubicacion);
 			$id_diseno_front = $datosDisenoF->id;
+			
+			//++++++++++ para guardar diseño del usuario en servidor ++++++++++
+			$canvas_trans_front = $_POST['canvas_trans_front'];
+			
+			if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/disenos/')){
+				mkdir($_SERVER['DOCUMENT_ROOT'].'/img/disenos/');
+			}
+				
+			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/disenos/';
+			
+			// Filter out the headers (data:,) part.
+			$filteredData=substr($canvas_trans_front, strpos($canvas_trans_front, ",")+1);
+			// Need to decode before saving since the data we received is already base64 encoded
+			$decodedData=base64_decode($filteredData);
+			
+			// store in server
+			$fp = fopen($directorio.$nombre_diseno, 'wb');
+			$ok = fwrite( $fp, $decodedData);
+			fclose( $fp );
+			
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			
 		}else{
 			$id_diseno_front = 0;
@@ -297,6 +318,27 @@ class Producto extends CI_Controller{
 			//usando nombre,ubicacion, usuario o sesion recuperar el id que le ha otorgado al diseño para pasarselo al producto
 			$datosDisenoB = $this->diseno_model->getPorCampos($id_usuario,$id_sesion,$nombre_diseno,$ubicacion);
 			$id_diseno_back = $datosDisenoB->id;
+			
+			//++++++++++ para guardar diseño del usuario en servidor ++++++++++
+			$canvas_trans_back = $_POST['canvas_trans_back'];
+				
+			if(!file_exists($_SERVER['DOCUMENT_ROOT'].'/img/disenos/')){
+				mkdir($_SERVER['DOCUMENT_ROOT'].'/img/disenos/');
+			}
+			
+			$directorio = $_SERVER['DOCUMENT_ROOT'].'/img/disenos/';
+				
+			// Filter out the headers (data:,) part.
+			$filteredData=substr($canvas_trans_back, strpos($canvas_trans_back, ",")+1);
+			// Need to decode before saving since the data we received is already base64 encoded
+			$decodedData=base64_decode($filteredData);
+				
+			// store in server
+			$fp = fopen($directorio.$nombre_diseno, 'wb');
+			$ok = fwrite( $fp, $decodedData);
+			fclose( $fp );
+				
+			//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			
 		}else{
 			$id_diseno_back = 0;

@@ -89,39 +89,6 @@ var conexion, conexion2;
 		}
 	}
 
-	//******* Ahora aprobecho otra llamada de AJAX para imagenes/color por lo que no necesito esta   
-	//******* y sobraria el fichero XfondoArticulo que modificaba cosas en los estilos
-
-	//conexion Ajax para traer el fondo del articulo seleccionado y el color
-//	function crearFondoArticulo(){
-//		conexion = new XMLHttpRequest();
-//		
-//		var datos = "id_articulo="+document.getElementById("idArticulo").value+"&id_color_base="+$('input[name="id_color_base"]:checked').data("valor");
-//		conexion.open('POST', '<?=base_url()?>producto/mostrarFondoArticulo', true);
-//		conexion.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-//		conexion.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-//		conexion.send(datos);
-//		conexion.onreadystatechange = function() {
-//			if (conexion.readyState==4 && conexion.status==200) {
-//				mostrarFondoArticulo();
-//			}
-//		}
-//	} 
-
-	//mostrar el fondo seleccionado en este caso background en estylo css
-//	function mostrarFondoArticulo(){
-//		document.getElementById("idFondo_articulo").innerHTML = "";
-//		document.getElementById("idFondo_articulo").innerHTML = conexion.responseText ;
-
-		//cambiar las imagenes de fondo segun articulo seleccionado
-//		modificarImagenesDeFondo();
-
-		//cambiar color de fondo segun color seleccionado
-//		modificarColorDeFondo();
-		
-		//manda datos al canvas oculto que acumula todo
-//		componerProductoFinal();
-//	}
 
 	//conexion Ajax para traer el listado de imagenes de la categoría seleccionada
 	function crearListaImagenes(){
@@ -251,21 +218,7 @@ var conexion, conexion2;
 			 <input type="file" id="files" name="files"></span>
 			 <span class="btn btn-success" id="idImagenUser" onclick="selectImagen('user',-1)">Aplicar Imagen</span>
 			 <output id="list"></output>	
-			 
-                   <!--          
-                   <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="fileinput-preview thumbnail" data-trigger="fileinput"></div>
-                        	<div>
-                            	<span class="btn btn-info btn-file">
-                                	<span class="fileinput-new">Seleccionar imagen</span>
-                                	<span class="fileinput-exists">Cambiar</span>
-                                	<input type="file" name="imagen" id="imagen">
-                                </span>
-                                <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput" id="quitar">Quitar</a>
-                                <span class="btn btn-success fileinput-exists" id="idImagenUser" onclick="selectImagen('user',-1)">OK</span>
-                            </div>
-                       	</div>
-                       	--> 
+
          </div>
 	</div>
 	
@@ -423,6 +376,8 @@ var conexion, conexion2;
 		
 		<!-- campos ocultos que pasarán los canvas para guardar diseños y producto -->
 		<input type="hidden" name="canvas_final_binario" id="canvas_final_binario"> 
+		<input type="hidden" name="canvas_trans_front" id="canvas_trans_front">
+		<input type="hidden" name="canvas_trans_back" id="canvas_trans_back">
 		<input type="hidden" name="img_front_datos_binarios" id="img_front_datos_binarios">	
 		<input type="hidden" name="img_back_datos_binarios" id="img_back_datos_binarios">
 		
@@ -889,6 +844,7 @@ var conexion, conexion2;
 			document.getElementById("img_front_tamano_alto").value = "";			
 			document.getElementById("img_front_profundidad_z").value = "";
 			document.getElementById("img_front_datos_binarios").value = "";
+			document.getElementById("canvas_trans_front").value = "";
 		}
 		else{
 			for(i = canvas_back.size()-1; i >= 0; i--){
@@ -919,6 +875,7 @@ var conexion, conexion2;
 			document.getElementById("img_back_tamano_alto").value = "";
 			document.getElementById("img_back_profundidad_z").value = "";
 			document.getElementById("img_back_datos_binarios").value = "";
+			document.getElementById("canvas_trans_back").value = "";
 		}
 
 		//limpia datos en el canvas oculto que acumula todo
@@ -980,6 +937,8 @@ var conexion, conexion2;
 							ctx.drawImage(img2, 450, 50,parseInt(canvas_back.width), parseInt(canvas_back.height));
 	
 							document.getElementById("canvas_final_binario").value = canvas.toDataURL('image/png') ;
+							document.getElementById("canvas_trans_front").value = document.getElementById('canvas_front').toDataURL("image/png");
+							document.getElementById("canvas_trans_back").value = document.getElementById('canvas_back').toDataURL("image/png");
 							
 							//guarda la imagen final de producto como codigo para pasarla como otro parametro mas
 						}

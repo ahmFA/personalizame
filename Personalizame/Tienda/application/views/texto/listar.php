@@ -52,7 +52,7 @@
 		<tbody>
             <?php foreach ($textos as $texto):?>
 										<tr>
-			<td><?= $texto->idUsuario ?></td>
+			<td><?= $texto->usuario_id ?></td>
 			<td><?= $texto->datos_texto ?></td>
 			<td><?= $texto->tamano_fuente ?></td>
 			<td><?= $texto->fuente->nombre ?></td>

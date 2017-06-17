@@ -46,7 +46,7 @@
 		</tr>
 		<?php foreach($body['disenos'] as $diseno): ?>
 		<tr>
-			<td><?= $diseno->id_usuario ?></td>
+			<td><?= $diseno->usuario_id ?></td>
 			<td><?= $diseno->nombre_diseno ?></td>
 			<td><?= $diseno->ubicacion ?></td>
 			<td><?= $diseno->fecha_alta ?></td>
