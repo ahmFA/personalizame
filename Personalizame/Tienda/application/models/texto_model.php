@@ -9,8 +9,10 @@ class Texto_model extends CI_Model{
 	 */
 	public function crear($idUsuario,$datos_texto,$tamano_fuente,$id_fuente,$rotacion,$texto_alto,$texto_ancho,$id_color,$coordenada_x,$coordenada_y,$precio,$coste,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$idSesion){
 		$texto = R::dispense('texto');
+		$user = R::load('usuario', $idUsuario);
 		
-		$texto -> idUsuario = $idUsuario;
+		$user -> ownTextolist[] = $texto;
+		
 		$texto -> datos_texto = $datos_texto;
 		$texto -> tamano_fuente = $tamano_fuente;
 		//$texto -> idFuente = $idFuente;
@@ -36,6 +38,7 @@ class Texto_model extends CI_Model{
 		$fuente -> xownTextolist[] = $texto; 
 		$color -> xownTextolist[] = $texto; 
 		
+		R::store($user);
 		R::store($color);
 		R::store($fuente);
 		//R::store($tamano);
@@ -63,15 +66,14 @@ class Texto_model extends CI_Model{
 	 * recuperar textos que cumplen el filtro
 	 */
 	public function getFiltrados($filtroUsuario,$filtroDatosTexto){
-		//mirar como hacerlo para los casos en que venga un idUsuario ya que no puede ser Like sino un igual
-		return R::find('texto','where datos_texto like ? and id_usuario like ? order by id',['%'.$filtroDatosTexto.'%','%'.$filtroUsuario.'%']);
+		return R::find('texto','where datos_texto like ? and usuario_id like ? order by id',['%'.$filtroDatosTexto.'%','%'.$filtroUsuario.'%']);
 	}
 	
 	/*
 	 * Lista un número determinado de tamaños
 	 */
 	public function getFiltradosConLimite($filtroUsuario,$filtroDatosTexto, $inicio){
-		return R::find('texto','where datos_texto like ? and id_usuario like ? order by id LIMIT ?,5',['%'.$filtroDatosTexto.'%','%'.$filtroUsuario.'%' ,$inicio]);
+		return R::find('texto','where datos_texto like ? and usuario_id like ? order by id LIMIT ?,5',['%'.$filtroDatosTexto.'%','%'.$filtroUsuario.'%' ,$inicio]);
 	}
 
 	/*
@@ -115,7 +117,7 @@ class Texto_model extends CI_Model{
 
 	//cuando inserto los datos necesito recuperar el id que le han asignado para pasarlo a otro bean asi lo recupero
 	public function getPorCampos($id_usuario,$id_sesion,$txt_datos){
-		return R::findOne('texto','where datos_texto = ? and (id_usuario = ? or id_sesion = ?)',[$txt_datos,$id_usuario,$id_sesion]);
+		return R::findOne('texto','where datos_texto = ? and (usuario_id = ? or id_sesion = ?)',[$txt_datos,$id_usuario,$id_sesion]);
 	}
 }
 ?>

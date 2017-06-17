@@ -9,8 +9,10 @@ class Producto_model extends CI_Model{
 	 */
 	public function crear($id_usuario,$id_articulo,$id_talla,$id_color_base,$id_diseno_front,$id_diseno_back,$nombre_producto,$imagen_producto,$fecha_alta,$fecha_baja,$motivo_baja,$disponible,$id_sesion){
 		$producto = R::dispense('producto');
+		$user = R::load('usuario', $id_usuario);
 		
-		$producto -> id_usuario = $id_usuario;
+		$user -> ownProductolist[] = $producto;
+		
 		$producto -> nombre_producto = $nombre_producto;
 		$producto -> imagen_producto = $imagen_producto;
 		$producto -> id_diseno_front = $id_diseno_front;
@@ -54,6 +56,8 @@ class Producto_model extends CI_Model{
 		$producto -> precio = $articulo->precio + $precioF + $precioB;
 		$producto -> coste = $articulo->coste + $costeF + $costeB;
 		
+		
+		R::store($user);
 		R::store($articulo);
 		R::store($talla);
 		R::store($colorB);
@@ -81,8 +85,7 @@ class Producto_model extends CI_Model{
 	 * recuperar productos que cumplen el filtro
 	 */
 	public function getFiltrados($filtroUsuario,$filtroNombreProducto){
-		//mirar como hacerlo para los casos en que venga un idUsuario ya que no puede ser Like sino un igual
-		return R::find('producto','where nombre_producto like ? and id_usuario like ? and disponible = "Si" order by id',['%'.$filtroNombreProducto.'%','%'.$filtroUsuario.'%']);
+		return R::find('producto','where nombre_producto like ? and usuario_id like ? and disponible = "Si" order by id',['%'.$filtroNombreProducto.'%','%'.$filtroUsuario.'%']);
 	}
 
 	/*
@@ -154,7 +157,7 @@ class Producto_model extends CI_Model{
 	 * recuperar productos que son de un usuario
 	 */
 	public function getPorUsuario($id_usuario){
-		return R::find('producto','where id_usuario like ? and disponible = "Si" order by fecha_alta desc',[$id_usuario]);
+		return R::find('producto','where usuario_id like ? and disponible = "Si" order by fecha_alta desc',[$id_usuario]);
 	}
 	
 	public function getPorUsuarioConLimite($id_usuario, $inicio){
