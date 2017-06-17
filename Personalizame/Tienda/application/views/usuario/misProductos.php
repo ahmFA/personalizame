@@ -159,12 +159,14 @@ var conexion;
    
    <div class="panel-footer text-center">
    		<ul class="pagination">
-	 	  <li ><a>«</a></li>
+	 <!--  <li ><a>«</a></li>
 		   <li class="active"><a href="#">1</a></li>
            <li ><a href="#">2</a></li>
            <li ><a href="#">3</a></li>
-		   <li ><a>»</a></li>
-         </ul>
+		   <li ><a>»</a></li> -->	 
+		    <?= $botones ?>
+         </ul> 
+        
    </div>
   </div><!--END panel-table-->
   </div>

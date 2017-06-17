@@ -527,10 +527,38 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function misProductos($mensaje = ""){
-		$datos ['body']['mensaje'] = $mensaje;
 		
+		$datos ['body']['mensaje'] = $mensaje;
 		$this->load->model('producto_model');
-		$datos['body']['productos'] = $this->producto_model->getPorUsuario($_SESSION['idUsuario']);
+		$productos = $this->producto_model->getPorUsuario($_SESSION['idUsuario']);
+		// PAGINACIÓN
+		
+		$tamanio_pagina = 4;
+		$pagina = isset($_REQUEST['pagina'])? $_REQUEST['pagina']: 1;
+		$num_productos = count($productos);
+		$total_paginas = ceil($num_productos/$tamanio_pagina);
+		$inicio = ($pagina-1)*$tamanio_pagina;
+		$botones = '';
+		
+		for($i = 1; $i<= $total_paginas; $i++){
+			if($i == $pagina){
+				$botones .= '<li class="active"><a>'.$i.'</a></li>';
+			}else{
+				$botones .= '<li><a href="misProductos?pagina='.$i.'">'.$i.'</a></li>';
+			}
+		
+		}
+		
+		//$datos['previo'] = ($pagina == 1)? 'disabled': '';
+		//$datos['next'] = ($pagina == $total_paginas) || ($num_usuarios == 0)? 'disabled': '';
+		
+		$datos['botones'] = $botones;
+		//$datos['paginaAnt'] = $pagina-1;
+		//$datos['paginaSig'] = $pagina+1;
+		
+		
+		
+		$datos['body']['productos'] = $this->producto_model->getPorUsuarioConLimite($_SESSION['idUsuario'], $inicio);
 				
 		enmarcar2($this,'usuario/misProductos',$datos);
 	}
