@@ -510,30 +510,52 @@ class Usuario extends CI_Controller{
 	
 	
 	public function misPedidos(){
-		enmarcar2($this,'usuario/misPedidos');
+		$this->load->model('pedido_model');
+		
+		$datos['body']['pedidos'] = $this->pedido_model->getPorUsuario($_SESSION['idUsuario']);
+		
+		enmarcar2($this,'usuario/misPedidos', $datos);
 	}
 	
-	public function misProductos($modal = FALSE){
-		$mensaje = '';
-		if($modal){
-			$mensaje .= '<span class="alert-success">Enviado a cesta correctamente</span><br/>';
-		}
-		$datos ['body']['modal'] = $modal;
-		$datos ['body']['mensajeModal'] = $mensaje;
+	public function misPedidosPost(){
+		$id_pedido = $_POST['id_pedido'];
+		$this->load->model('lineap_model');
+		
+		$datos['body']['lineasp'] = $this->lineap_model->getPorCampos($id_pedido);
+	
+		$this->load->view('usuario/XlineasPedido',$datos);
+	}
+	
+	public function misProductos($mensaje = ""){
+		$datos ['body']['mensaje'] = $mensaje;
 		
 		$this->load->model('producto_model');
 		$datos['body']['productos'] = $this->producto_model->getPorUsuario($_SESSION['idUsuario']);
-		
+				
 		enmarcar2($this,'usuario/misProductos',$datos);
 	}
 	
 	public function borrarProducto(){
-		$id_producto = $_POST['id_producto'];	
+		$id_producto = $_POST['id_producto'];
+		$mensaje = $_POST['mensajeBanner'];
+		
 		$this->load->model('producto_model');
+		$producto = $this->producto_model->getPorId($id_producto);
+		
+		// ++++ Eliminar imagen de carpeta server +++++
+		$fichero = $_SERVER['DOCUMENT_ROOT'].'/img/productos/'.$producto['imagen_producto'];
+			
+		if(file_exists($fichero)){
+			chmod($_SERVER['DOCUMENT_ROOT'].'/img/productos/', 0777);
+			chmod($fichero, 0777);
+			unlink($fichero);
+		}
+		// ++++++++++++++++++++++++++++++++++++++++++++
+		
 		
 		$this->producto_model->borrar($id_producto,$_SESSION['perfil']);
 		
-		$this->misProductos();
+		$this->misProductos($mensaje);
 	}
 	
 	public function crearDiseno(){
@@ -567,6 +589,7 @@ class Usuario extends CI_Controller{
 		$_SESSION['productos'][$producto]['precio'] = ($produc->precio *$_POST['cantidad']);
 		$_SESSION['productos'][$producto]['id'] = $_SESSION['num_producto'];
 		$_SESSION['productos'][$producto]['id_produc'] = $produc->id;
+		$_SESSION['productos'][$producto]['coste'] = $produc->coste;
 		$_SESSION['productos'][$producto]['imagen_produc'] = $produc->imagen_producto;
 		
 		$_SESSION['num_producto']++;
@@ -576,8 +599,10 @@ class Usuario extends CI_Controller{
 		
 		$datos['carrito'] = $_SESSION['carrito'];
 		//$this->load->view('usuario/XactualizaCarrito', $datos);	
-		$modal = TRUE;
-		$this->misProductos($modal);
+		
+		//$modal = TRUE;
+		//$this->misProductos($modal);
+		$this->cesta();
 	}
 	
 	public function quitarCarrito(){
@@ -610,7 +635,30 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function pagoRealizado(){
+		$this->load->model('pedido_model');
+		$this->load->model('lineap_model');
 		
+		$direccion_entrega_pedido = $_POST['direccion_entrega_pedido'];
+		$persona_entrega_pedido = $_POST['persona_entrega_pedido'];
+		$importe_total_pedido = $_POST['importe_total_pedido'];
+		$contacto_entrega_pedido = $_POST['contacto_entrega_pedido'];
+		$pedido_numref = strftime("%Y%m%d%H%M%S");
+		
+		if(isset($_SESSION['productos']) && isset($_SESSION['idUsuario'])){
+			
+			$this->pedido_model->crear($_SESSION['idUsuario'], $direccion_entrega_pedido, $importe_total_pedido, $persona_entrega_pedido, $contacto_entrega_pedido, $pedido_numref);
+			
+			$datosPedido = $this->pedido_model->getPorCampos($_SESSION['idUsuario'],$pedido_numref);
+			$id_pedido = $datosPedido->id; //recupero id del pedido para pasarselo a las lineas que lo componen
+			
+			//recorrer los diferentes productos y crear una linea de pedido por cada uno
+			foreach($_SESSION['productos'] as $producto){
+				
+				$this->lineap_model->crear($id_pedido, $producto['id_produc'], $producto['articulo']['precio'], $producto['coste'], $producto['cantidad']);
+			}
+		}
+		
+		//limpiar cesta
 		unset($_SESSION['productos']);
 		
 		$_SESSION['num_producto'] = 0;

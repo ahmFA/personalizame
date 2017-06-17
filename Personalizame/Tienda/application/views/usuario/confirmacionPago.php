@@ -112,7 +112,11 @@
 					<br><hr>
 							 <div class="col-md-4 col-md-offset-4">
 							 	<form action="<?= base_url() ?>usuario/pagoRealizado" method="post">
-								   <input type="submit" class="btn btn-success" id="continue" name="continue" value="Pagar">
+							 		<input type="hidden" name="importe_total_pedido" value="<?=$_SESSION['precioTotalPedido']+4.95 ?>">
+							 		<input type="hidden" name="persona_entrega_pedido" value="<?=$comprador['titular']?>">
+							 		<input type="hidden" name="direccion_entrega_pedido" value="<?=$comprador['direccion'].", ".$comprador['cp'].", ".$comprador['localidad'].", ".$comprador['provincia'].", ".$comprador['pais']?>">
+								   	<input type="hidden" name="contacto_entrega_pedido" value="<?=$comprador['mail'] ?>">
+								   	<input type="submit" class="btn btn-success" id="continue" name="continue" value="Pagar">
 								</form>   
 							</div>
 

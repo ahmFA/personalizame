@@ -2,14 +2,17 @@
 
 class Pedido_model extends CI_Model{
 	
-	public function crear($usuario, $direccion, $importe){
+	public function crear($usuario, $direccion, $importe, $persona, $contacto, $numref){
 		
 		$p = R::dispense('pedido');
 		$user = R::load('usuario', $usuario);
 		
 		$user -> ownPedidolist[] = $p;
 		$p->nick_user = $user->nick;
+		$p->num_ref = $numref;
 		$p->direccion = $direccion;
+		$p->persona = $persona;
+		$p->contacto =$contacto;
 		$p->fecha = strftime("%Y/%m/%d");;
 		$p->importe = $importe;
 		$p->fecha_entrega = '';
@@ -53,6 +56,14 @@ class Pedido_model extends CI_Model{
 
 		R::store($p);
 		R::close();
+	}
+	
+	public function getPorCampos($id_usuario,$pedido_numref){
+		return R::findOne('pedido','where num_ref = ? and usuario_id = ?',[$pedido_numref,$id_usuario]);
+	}
+	
+	public function getPorUsuario($id_usuario){
+		return R::find('pedido','where usuario_id = ? order by fecha desc',[$id_usuario]);
 	}
 	
 }
