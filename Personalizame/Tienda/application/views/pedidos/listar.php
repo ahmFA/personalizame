@@ -50,11 +50,12 @@ Listado de pedidos<small>Introduce el filtro que desees para una búsqueda más 
 		</form>
 
 	</div>
-	<table id="data-table-command"
+	<table id="data-table-command "
 		class="table table-striped table-vmiddle">
 		<thead>
 			<tr>
 				<th data-column-id="sender">Usuario</th>
+				<th data-column-id="received" data-order="desc">Referencia</th>
 				<th data-column-id="received" data-order="desc">Dirección de entrega</th>
 				<th data-column-id="received" data-order="desc">Fecha</th>
 				<th data-column-id="received" data-order="desc">Importe</th>
@@ -68,6 +69,7 @@ Listado de pedidos<small>Introduce el filtro que desees para una búsqueda más 
                                    <?php foreach ($pedidos as $pedido):?>
 										<tr>
 				<td><?=$pedido['usuario']->nick?></td>
+				<td><?=$pedido['num_ref']?></td>
 				<td><?=$pedido['direccion']?></td>
 				<td><?=$pedido['fecha']?></td>
 				<td><?=$pedido['importe']?></td>
