@@ -161,7 +161,7 @@ class Producto_model extends CI_Model{
 	}
 	
 	public function getPorUsuarioConLimite($id_usuario, $inicio){
-		return R::find('producto','where id_usuario like ? and disponible = "Si" order by fecha_alta desc LIMIT ?,4',[$id_usuario, $inicio]);
+		return R::find('producto','where usuario_id like ? and disponible = "Si" order by fecha_alta desc LIMIT ?,4',[$id_usuario, $inicio]);
 	}
 }
 ?>
