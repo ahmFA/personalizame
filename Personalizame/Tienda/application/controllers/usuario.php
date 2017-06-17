@@ -567,6 +567,7 @@ class Usuario extends CI_Controller{
 		$_SESSION['productos'][$producto]['precio'] = ($produc->precio *$_POST['cantidad']);
 		$_SESSION['productos'][$producto]['id'] = $_SESSION['num_producto'];
 		$_SESSION['productos'][$producto]['id_produc'] = $produc->id;
+		$_SESSION['productos'][$producto]['coste'] = $produc->coste;
 		$_SESSION['productos'][$producto]['imagen_produc'] = $produc->imagen_producto;
 		
 		$_SESSION['num_producto']++;
@@ -610,7 +611,30 @@ class Usuario extends CI_Controller{
 	}
 	
 	public function pagoRealizado(){
+		$this->load->model('pedido_model');
+		$this->load->model('lineap_model');
 		
+		$direccion_entrega_pedido = $_POST['direccion_entrega_pedido'];
+		$persona_entrega_pedido = $_POST['persona_entrega_pedido'];
+		$importe_total_pedido = $_POST['importe_total_pedido'];
+		$contacto_entrega_pedido = $_POST['contacto_entrega_pedido'];
+		$pedido_numref = strftime("%Y%m%d%H%M%S");
+		
+		if(isset($_SESSION['productos']) && isset($_SESSION['idUsuario'])){
+			
+			$this->pedido_model->crear($_SESSION['idUsuario'], $direccion_entrega_pedido, $importe_total_pedido, $persona_entrega_pedido, $contacto_entrega_pedido, $pedido_numref);
+			
+			$datosPedido = $this->pedido_model->getPorCampos($_SESSION['idUsuario'],$pedido_numref);
+			$id_pedido = $datosPedido->id; //recupero id del pedido para pasarselo a las lineas que lo componen
+			
+			//recorrer los diferentes productos y crear una linea de pedido por cada uno
+			foreach($_SESSION['productos'] as $producto){
+				
+				$this->lineap_model->crear($id_pedido, $producto['id_produc'], $producto['articulo']['precio'], $producto['coste'], $producto['cantidad']);
+			}
+		}
+		
+		//limpiar cesta
 		unset($_SESSION['productos']);
 		
 		$_SESSION['num_producto'] = 0;
