@@ -26,7 +26,88 @@
 						<h4>Categorías</h4>
 					</div>
 					<div class="content">
-						<form action="<?= base_url() ?>producto/crear" method="post" name="catDeportes">
+						<ul>
+							 <li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Deportes">Deportes</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Deportes</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Terror">Terror</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Terror</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Infantil">Infantil</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Infantil</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Animales">Animales</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Animales</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Ficción">Ciencia Ficción</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Ciencia Ficción</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Profesiones">Profesiones</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Profesiones</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Humor">Humor</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Humor</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="<?=base_url() ?>producto/crear/?categoria=Gaming">Gaming</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Humor</a>
+							<?php endif; ?>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					Copyright &copy; Personalízame -  Desarrollado por Alejandro y Luis de 2º de DAW
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- Footer -->
+<!-- 
+
+							
+							
+							
+							
+							<form action="<?= base_url() ?>producto/crear" method="post" name="catDeportes">
 							<input type="hidden" name="categoria" value="Deportes">
 						</form>
 						<form action="<?= base_url() ?>producto/crear" method="post" name="catFiccion">
@@ -107,78 +188,4 @@
 							<a data-toggle="modal" href="#myModal">Gaming</a>
 							<?php endif; ?>
 							</li>
-						</ul>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="copyright">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					Copyright &copy; Personalízame -  Desarrollado por Alejandro y Luis de 2º de DAW
-				</div>
-			</div>
-		</div>
-	</div>
-</footer>
-<!-- Footer -->
-<!-- 
-
-							 <li>
-							<?php if(isset($_SESSION['idUsuario'])): ?>
-							<a href="<?=base_url() ?>producto/crear/?categoria=Deportes">Deportes</a>
-							<?php else:?>
-							<a data-toggle="modal" href="#myModal">Deportes</a>
-							<?php endif; ?>
-							</li>
-							<li>
-							<?php if(isset($_SESSION['idUsuario'])): ?>
-							<a href="<?=base_url() ?>producto/crear/?categoria=Terror">Terror</a>
-							<?php else:?>
-							<a data-toggle="modal" href="#myModal">Terror</a>
-							<?php endif; ?>
-							</li>
-							<li>
-							<?php if(isset($_SESSION['idUsuario'])): ?>
-							<a href="<?=base_url() ?>producto/crear/?categoria=Infantil">Infantil</a>
-							<?php else:?>
-							<a data-toggle="modal" href="#myModal">Infantil</a>
-							<?php endif; ?>
-							</li>
-							<li>
-							<?php if(isset($_SESSION['idUsuario'])): ?>
-							<a href="<?=base_url() ?>producto/crear/?categoria=Animales">Animales</a>
-							<?php else:?>
-							<a data-toggle="modal" href="#myModal">Animales</a>
-							<?php endif; ?>
-							</li>
-							<li>
-							<?php if(isset($_SESSION['idUsuario'])): ?>
-							<a href="<?=base_url() ?>producto/crear/?categoria=Ficción">Ciencia Ficción</a>
-							<?php else:?>
-							<a data-toggle="modal" href="#myModal">Ciencia Ficción</a>
-							<?php endif; ?>
-							</li>
-							<li>
-							<?php if(isset($_SESSION['idUsuario'])): ?>
-							<a href="<?=base_url() ?>producto/crear/?categoria=Profesiones">Profesiones</a>
-							<?php else:?>
-							<a data-toggle="modal" href="#myModal">Profesiones</a>
-							<?php endif; ?>
-							</li>
-							<li>
-							<?php if(isset($_SESSION['idUsuario'])): ?>
-							<a href="<?=base_url() ?>producto/crear/?categoria=Humor">Humor</a>
-							<?php else:?>
-							<a data-toggle="modal" href="#myModal">Humor</a>
-							<?php endif; ?>
-							</li>
-							<li>
-							<?php if(isset($_SESSION['idUsuario'])): ?>
-							<a href="<?=base_url() ?>producto/crear/?categoria=Gaming">Gaming</a>
-
-
  -->
