@@ -26,15 +26,87 @@
 						<h4>Categorías</h4>
 					</div>
 					<div class="content">
+						<form action="<?= base_url() ?>producto/crear" method="post" name="catDeportes">
+					<input type="hidden" name="categoria" value="Deportes">
+					</form>
+					<form action="<?= base_url() ?>producto/crear" method="post" name="catFiccion">
+						<input type="hidden" name="categoria" value="Ficción">
+					</form>
+					<form action="<?= base_url() ?>producto/crear" method="post" name="catGaming">
+						<input type="hidden" name="categoria" value="Gaming">
+					</form>
+					<form action="<?= base_url() ?>producto/crear" method="post" name="catProfesiones">
+						<input type="hidden" name="categoria" value="Profesiones">
+					</form>
+					<form action="<?= base_url() ?>producto/crear" method="post" name="catHumor">
+						<input type="hidden" name="categoria" value="Humor">
+					</form>
+					<form action="<?= base_url() ?>producto/crear" method="post" name="catInfantil">
+						<input type="hidden" name="categoria" value="Infantil">
+					</form>
+					<form action="<?= base_url() ?>producto/crear" method="post" name="catTerror">
+						<input type="hidden" name="categoria" value="Terror">
+					</form>
+					<form action="<?= base_url() ?>producto/crear" method="post" name="catAnimales">
+						<input type="hidden" name="categoria" value="Animales">
+					</form>
 						<ul>
-							<li><a href="#">Deportes</a></li>
-							<li><a href="#">Terror</a></li>
-							<li><a href="#">Infantil</a></li>
-							<li><a href="#">Animales</a></li>
-							<li><a href="#">Ciencia Ficción</a></li>
-							<li><a href="#">Profesiones</a></li>
-							<li><a href="#">Humor</a></li>
-							<li><a href="#">Gaming</a></li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="javascript:document.catDeportes.submit()" class="portfolio-link" data-toggle="modal">Deportes</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Deportes</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="javascript:document.catTerror.submit()" class="portfolio-link" data-toggle="modal">Terror</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Terror</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="javascript:document.catInfantil.submit()" class="portfolio-link" data-toggle="modal">Infantil</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Infantil</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="javascript:document.catAnimales.submit()" class="portfolio-link" data-toggle="modal">Animales</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Animales</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="javascript:document.catFiccion.submit()" class="portfolio-link" data-toggle="modal">Ciencia Ficción</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Ciencia Ficción</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="javascript:document.catProfesiones.submit()" class="portfolio-link" data-toggle="modal">Profesiones</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Profesiones</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="javascript:document.catHumor.submit()" class="portfolio-link" data-toggle="modal">Humor</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Humor</a>
+							<?php endif; ?>
+							</li>
+							<li>
+							<?php if(isset($_SESSION['idUsuario'])): ?>
+							<a href="javascript:document.catGaming.submit()" class="portfolio-link" data-toggle="modal">Gaming</a>
+							<?php else:?>
+							<a data-toggle="modal" href="#myModal">Gaming</a>
+							<?php endif; ?>
+							</li>
 						</ul>
 					</div>
 

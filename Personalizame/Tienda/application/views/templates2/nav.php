@@ -28,7 +28,7 @@
 					<?php if($_SESSION['perfil'] == 'Administrador'):?>
 						<li><a href="<?=base_url()?>home/indexAdmin">ADMIN</a></li>
 					<?php else :?>
-						<li><a href="<?=base_url()?>usuario/perfil">Mi perfil</a></li>	
+						<li><a href="<?=base_url()?>usuario/perfil">Perfil</a></li>	
 					<?php endif;?>
 					
 					<li><a href="<?=base_url()?>usuario/logout">LOGOUT</a></li>
