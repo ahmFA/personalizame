@@ -639,7 +639,7 @@ class Usuario extends CI_Controller{
 		$_SESSION['total_productos']--;
 		$_SESSION['carrito']--;
 		
-		$this->cesta();
+		$this->load->view('usuario/quitarCarritoPost');
 	}
 	
 	public function confirmacionPago(){
@@ -694,9 +694,12 @@ class Usuario extends CI_Controller{
 		$_SESSION['carrito'] = 0;
 		$_SESSION['precioTotalPedido'] = 0;
 		
-		enmarcar2($this,'usuario/confirmacionPagoPost');
+		$this->load->view('usuario/pagoRealizado');
 	}
 	
+	public function muestraConfirmacionPago(){
+		enmarcar2($this,'usuario/confirmacionPagoPost');
+	}
 	
 }
 ?>

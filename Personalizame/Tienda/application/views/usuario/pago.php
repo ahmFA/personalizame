@@ -156,6 +156,7 @@
 <!-- Button -->
 
   <div class="col-md-4 col-md-offset-4">
+  	<a href="<?= base_url() ?>usuario/cesta" class="btn btn-info">Atrás</a>
     <input type="button" class="btn btn-success" id="continue" name="continue" value="Confirmar y Pagar">
   </div>
 </form>

@@ -13,7 +13,7 @@
 		</div>
     </header>
     
-<div class="container" style="padding-bottom: 400px; padding-top: 100px; background-color: #daE67a;">
+<div class="container-fluid" style="padding-bottom: 400px; padding-top: 100px; background-color: #ddef8d;">
 	<div class="row">
 		<div class="col-sm-8 col-sm-offset-2">
 			<h3 style="color: green;">Su compra ha sido realizada con éxito</h3>

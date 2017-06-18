@@ -14,7 +14,7 @@
     </header>
 
     
-        <section class="box-content box-style">
+        <section class="box-content box-style" style="background: #d5e0dc;">
 			<div class="container">
 				<div class="row heading">
 					 <div class="col-md-12">
@@ -289,7 +289,7 @@ var conexion, conexion2;
 			<br/><br/>
 			<p><label>Agrega un texto a tu diseño</label></p>
 			
-			<div class="form-group col-md-4">
+			<div class="form-group col-md-8">
 				<label for="idDatosTexto">Texto </label> 
 				<input class="form-control" id="idDatosTexto" type="text" name="datos_texto" maxlength="20" placeholder="escribe aquí" title="El Texto puede contener entre 1 y 20 caracteres"> <br/>
 			</div>
@@ -324,7 +324,7 @@ var conexion, conexion2;
 		        </select><br/>
 			</div>
 			<div class="form-group col-md-4">	
-				<span class="btn btn-success" id="idBotonAplicar">Aplicar texto</span>
+				<span class="btn btn-success" id="idBotonAplicar" style="margin-top: 11%;">Aplicar texto</span>
 			</div>
 			<!-- fin datos texto  -->	
 		</div>
@@ -394,7 +394,7 @@ var conexion, conexion2;
 	<div class="row">
 		<div class="col-md-4 ">
 			<input class="btn btn-info" id="idBotonEnviar" type="button" value="Guardar" onclick="validarTodo()">
-			<input class="btn btn-success" id="idBotonEnviarCarrito" type="button" value="Guardar y Comprar" onclick="validarTodo()">
+		<!-- 	<input class="btn btn-success" id="idBotonEnviarCarrito" type="button" value="Guardar y Comprar" onclick="validarTodo()">   -->
 		</div>
 	</div>
 	</form>
