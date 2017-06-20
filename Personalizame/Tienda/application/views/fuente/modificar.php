@@ -39,7 +39,7 @@
 
 <div class="card">
 	<div class="card-header">
-		<h2>Modificar datos de tamaño</h2>
+		<h2>Modifica los datos de la fuente</h2>
 	</div>
 	<div class="row">
 	<div class="col-sm-5">

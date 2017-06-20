@@ -51,7 +51,7 @@
                         <td class="col-sm-1 col-md-1" style="text-align: center">
                         <input type="text" class="form-control" id="exampleInputEmail1" readonly="readonly" value="<?= $producto['cantidad'] ?>">
                         </td>
-                        <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['articulo']['precio'] ?></strong></td>
+                        <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['articulo']['precio'] ?>€</strong></td>
                         <td class="col-sm-1 col-md-1 text-center"><strong><?=$producto['precio'] ?>€</strong></td><td class="col-sm-1 col-md-1">
                         <form id="idFormdelete" action="<?= base_url() ?>usuario/quitarCarrito" method="post">
                         	<input type="hidden" name="num_producto" value="<?=$producto['id'] ?>">

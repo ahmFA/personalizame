@@ -127,7 +127,6 @@
                         <ul>
                             <li><a href="<?= base_url()?>fuente/crear">Alta</a></li>
                             <li><a href="<?= base_url()?>fuente/listar">Listado y Gestión</a></li>
-                            <li><a href="<?= base_url()?>fuente/borrar">Baja</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">

@@ -20,4 +20,16 @@
 			<h4>Gracias por confiar en Personalízame</h4>
 		</div>
 	</div>
+	<!-- Esto es lo nuevo -->
+	<div class="row">
+		<div class="col-sm-2 col-sm-offset-5">
+			<form action="<?= base_url() ?>usuario/generaPDF" method="post">
+				<input type="hidden" name="persona" value="<?= $persona ?>">
+				<input type="hidden" name="direccion" value="<?= $direccion ?>">
+				<input type="hidden" name="precio_total" value="<?= $precio_total ?>">
+				<input type="submit" class="btn btn-info" value="Descargar PDF del pedido">
+			</form>
+		</div>
+	</div>
+	<!--  FIN de lo nuevo  -->
 </div>

@@ -51,7 +51,7 @@ function comprobarPedido(){
 
 <div class="card">
 	<div class="card-header">
-		<h2>Edita la imagen</h2>
+		<h2>Edita el pedido</h2>
 	</div>
 	<div class="row">
 	<div class="col-sm-7">

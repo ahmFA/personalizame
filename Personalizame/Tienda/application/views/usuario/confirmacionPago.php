@@ -94,9 +94,9 @@
  <?php foreach ($productosCompra as $producto):?>
 	 <tr>
 	 	<td><?= $producto['articulo']['nombre'] ?> - <?= $producto['color'] ?> - <?= $producto['talla'] ?></td>
-	 	<td><?=$producto['articulo']['precio'] ?></td>
-	 	<td><?=$producto['cantidad'] ?></td>
-	 	<td><?=$producto['precio'] ?></td>
+	 	<td><?=$producto['articulo']['precio'] ?>€</td>
+	 	<td><?=$producto['cantidad'] ?> unidad/es</td>
+	 	<td><?=$producto['precio'] ?>€</td>
 	 </tr>
                   <!-- <div class="form-group">
 							<label class="col-md-4 control-label"><?= $producto['articulo']['nombre'] ?> - <?= $producto['color'] ?> - <?= $producto['talla'] ?></label>
@@ -130,7 +130,7 @@
 							 		<input type="hidden" name="direccion_entrega_pedido" value="<?=$comprador['direccion'].", ".$comprador['cp'].", ".$comprador['localidad'].", ".$comprador['provincia'].", ".$comprador['pais']?>">
 								   	<input type="hidden" name="contacto_entrega_pedido" value="<?=$comprador['mail'] ?>">
 								   	<input type="button" class="btn btn-info" value="Volver" onclick="javascript:window.history.back();">
-								   	<input type="submit" class="btn btn-success" id="continue" name="continue" value="Pagar">
+								   	<input type="submit" class="btn btn-success" id="continue" name="continue" value="Comprar">
 								</form>   
 							</div>
 							<br>

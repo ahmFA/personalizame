@@ -685,6 +685,16 @@ class Usuario extends CI_Controller{
 				$this->lineap_model->crear($id_pedido, $producto['id_produc'], $producto['articulo']['precio'], $producto['coste'], $producto['cantidad']);
 			}
 		}
+
+		
+		//Esto es lo nuevo
+		$datos['persona'] = $persona_entrega_pedido;
+		$datos['direccion'] = $direccion_entrega_pedido;
+		$datos['precio_total'] = $importe_total_pedido;
+		$_SESSION['pedidoUsuario'] = isset($_SESSION['productos']) ? $_SESSION['productos'] : $_SESSION['pedidoUsuario'];
+		//Fin de lo nuevo
+		
+		
 		
 		//limpiar cesta
 		unset($_SESSION['productos']);
@@ -694,11 +704,52 @@ class Usuario extends CI_Controller{
 		$_SESSION['carrito'] = 0;
 		$_SESSION['precioTotalPedido'] = 0;
 		
-		$this->load->view('usuario/pagoRealizado');
+		//$this->load->view('usuario/pagoRealizado');
+		enmarcar2($this,'usuario/confirmacionPagoPost', $datos);
 	}
-	
+	/*
 	public function muestraConfirmacionPago(){
 		enmarcar2($this,'usuario/confirmacionPagoPost');
+	}
+	*/
+	public function generaPDF(){
+		$persona = $_POST['persona'];
+		$dirección = $_POST['direccion'];
+		$precioTotal = $_POST['precio_total'];
+		
+		
+		$data = [];
+		
+		$hoy = date("dmyhis");
+		$base = base_url();
+		//load the view and saved it into $html variable
+		$html = '<img width="100" height="130" src="'.$base.'assets/images/logo.png" style="float:left;"><div style="color:#c1bf2c; font-size:40px;float:left; margin-left: 10px; padding-top: 60px;">Personalízame</div>';
+		$html .= '<h1 style="text-align:center;">PEDIDO</h1>';
+		$html.= '<h2>Persona titular del pedido</h2>';
+		$html.= '<h3>'.$persona.'</h3>';
+		$html.= '<h2>Dirección de entrega</h2>';
+		$html.= '<h3>'.$dirección.'</h3>';
+		$html.= '<h2>Productos</h2>';
+		$html.= '<table style="width:100%;text-align:center;"><tr><th>Artículo</th><th>Precio unidad</th><th>Cantidad</th><th>Precio Total</th></tr>';
+		foreach ($_SESSION['pedidoUsuario'] as $producto){
+			$html.= '<tr><td>'.$producto['articulo']['nombre'].'</td><td>'.$producto['articulo']['precio'].' €</td><td>'.$producto['cantidad'].' unidad/es</td><td>'.$producto['precio'].' €</td></tr>';
+			
+		}
+		$html .= '</table>';
+		$html .= '<h3 style="text-align:right;">Subtotal: '.($precioTotal-4.95).'€</h3>';
+		$html .= '<h4 style="text-align:right;">Precio de envío: 4.95€</h4>';
+		$html .= '<h2 style="text-align:right;">Total: '.$precioTotal.'€</h2>';
+		// $html = $this->load->view('v_dpdf',$date,true);
+			
+		//$html="asdf";
+		//this the the PDF filename that user will get to download
+		$pdfFilePath = "pedido_".$hoy.".pdf";
+		
+		//load mPDF library
+		$this->load->library('M_pdf');
+		$mpdf = new mPDF('c', 'A4-L');
+		$mpdf->WriteHTML($html);
+		$mpdf->Output($pdfFilePath, "D");
 	}
 	
 }
